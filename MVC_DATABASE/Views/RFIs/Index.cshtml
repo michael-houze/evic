@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MVC_DATABASE.Models.RFI>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CATEGORY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EXPIRES)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATEGORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXPIRES)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RFIID })
+        </td>
+    </tr>
+}
+
+</table>

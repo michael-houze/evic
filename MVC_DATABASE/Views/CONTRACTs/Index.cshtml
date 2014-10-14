@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MVC_DATABASE.Models.CONTRACT>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RFPID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTRACT_PATH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RFPID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTRACT_PATH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CONTRACTID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CONTRACTID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CONTRACTID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,1067 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EVICEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CONTRACT">
+          <Key>
+            <PropertyRef Name="CONTRACTID" />
+          </Key>
+          <Property Name="CONTRACTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TEMPLATEID" Type="int" Nullable="false" />
+          <Property Name="RFPID" Type="int" Nullable="false" />
+          <Property Name="CONTRACT_PATH" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FIRSTNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LASTNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMPSTATUS" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="LOG" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OFFEREDCATEGORY">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CATEGORY" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ACCEPTED" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTCATEGORY">
+          <Key>
+            <PropertyRef Name="CATEGORY" />
+          </Key>
+          <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RFI">
+          <Key>
+            <PropertyRef Name="RFIID" />
+          </Key>
+          <Property Name="RFIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEMPLATEID" Type="int" Nullable="false" />
+          <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CREATED" Type="datetime" Nullable="false" />
+          <Property Name="EXPIRES" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RFIINVITE">
+          <Key>
+            <PropertyRef Name="RFIID" />
+          </Key>
+          <Property Name="RFIID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="GHX_PATH" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="RFP">
+          <Key>
+            <PropertyRef Name="RFPID" />
+          </Key>
+          <Property Name="RFPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFIID" Type="int" />
+          <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" />
+          <Property Name="TEMPLATEID" Type="int" Nullable="false" />
+          <Property Name="CREATED" Type="datetime" Nullable="false" />
+          <Property Name="EXPIRES" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RFPINVITE">
+          <Key>
+            <PropertyRef Name="RFPID" />
+          </Key>
+          <Property Name="RFPID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="OFFER_PATH" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="TEMPLATE">
+          <Key>
+            <PropertyRef Name="TEMPLATEID" />
+          </Key>
+          <Property Name="TEMPLATEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TYPE" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="PATH" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="REPORTVAR" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VENDOR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FULLNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ORGANIZATION" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SANCTIONED" Type="bit" Nullable="false" />
+          <Property Name="VENDSTATUS" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="LOG" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="VENDORCONTACT">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CONTACTEMAIL" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CONTACTNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CONTACTPHONE" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CONTACTEMAIL" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CONTRACT_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="CONTRACT" Type="Self.CONTRACT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CONTRACT">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTRACT_TEMPLATE">
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="1" />
+          <End Role="CONTRACT" Type="Self.CONTRACT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE">
+              <PropertyRef Name="TEMPLATEID" />
+            </Principal>
+            <Dependent Role="CONTRACT">
+              <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EMPLOYEE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OFFEREDCATEGORY_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="OFFEREDCATEGORY" Type="Self.OFFEREDCATEGORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OFFEREDCATEGORY">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFI_TEMPLATE">
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="1" />
+          <End Role="RFI" Type="Self.RFI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE">
+              <PropertyRef Name="TEMPLATEID" />
+            </Principal>
+            <Dependent Role="RFI">
+              <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFIINVITE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="RFIINVITE" Type="Self.RFIINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RFIINVITE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFP_RFI">
+          <End Role="RFI" Type="Self.RFI" Multiplicity="0..1" />
+          <End Role="RFP" Type="Self.RFP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIID" />
+            </Principal>
+            <Dependent Role="RFP">
+              <PropertyRef Name="RFIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFP_TEMPLATE">
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="1" />
+          <End Role="RFP" Type="Self.RFP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE">
+              <PropertyRef Name="TEMPLATEID" />
+            </Principal>
+            <Dependent Role="RFP">
+              <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFPINVITE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="RFPINVITE" Type="Self.RFPINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RFPINVITE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDOR_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="VENDOR" Type="Self.VENDOR" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VENDOR">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDORCONTACT_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="VENDORCONTACT" Type="Self.VENDORCONTACT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VENDORCONTACT">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EVICEntitiesModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CONTRACT" EntityType="Self.CONTRACT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OFFEREDCATEGORY" EntityType="Self.OFFEREDCATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTCATEGORY" EntityType="Self.PRODUCTCATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RFI" EntityType="Self.RFI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RFIINVITE" EntityType="Self.RFIINVITE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RFP" EntityType="Self.RFP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RFPINVITE" EntityType="Self.RFPINVITE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENDOR" EntityType="Self.VENDOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENDORCONTACT" EntityType="Self.VENDORCONTACT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CONTRACT_AspNetUsers" Association="Self.FK_CONTRACT_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CONTRACT" EntitySet="CONTRACT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTRACT_TEMPLATE" Association="Self.FK_CONTRACT_TEMPLATE">
+            <End Role="TEMPLATE" EntitySet="TEMPLATE" />
+            <End Role="CONTRACT" EntitySet="CONTRACT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_AspNetUsers" Association="Self.FK_EMPLOYEE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OFFEREDCATEGORY_AspNetUsers" Association="Self.FK_OFFEREDCATEGORY_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="OFFEREDCATEGORY" EntitySet="OFFEREDCATEGORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFI_TEMPLATE" Association="Self.FK_RFI_TEMPLATE">
+            <End Role="TEMPLATE" EntitySet="TEMPLATE" />
+            <End Role="RFI" EntitySet="RFI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFIINVITE_AspNetUsers" Association="Self.FK_RFIINVITE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFIINVITE" EntitySet="RFIINVITE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFP_RFI" Association="Self.FK_RFP_RFI">
+            <End Role="RFI" EntitySet="RFI" />
+            <End Role="RFP" EntitySet="RFP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFP_TEMPLATE" Association="Self.FK_RFP_TEMPLATE">
+            <End Role="TEMPLATE" EntitySet="TEMPLATE" />
+            <End Role="RFP" EntitySet="RFP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFPINVITE_AspNetUsers" Association="Self.FK_RFPINVITE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFPINVITE" EntitySet="RFPINVITE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDOR_AspNetUsers" Association="Self.FK_VENDOR_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VENDOR" EntitySet="VENDOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDORCONTACT_AspNetUsers" Association="Self.FK_VENDORCONTACT_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VENDORCONTACT" EntitySet="VENDORCONTACT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EVICEntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="AspNetUsers" ToRole="CONTRACT" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_AspNetUsers" FromRole="AspNetUsers" ToRole="EMPLOYEE" />
+          <NavigationProperty Name="OFFEREDCATEGORies" Relationship="Self.FK_OFFEREDCATEGORY_AspNetUsers" FromRole="AspNetUsers" ToRole="OFFEREDCATEGORY" />
+          <NavigationProperty Name="RFIINVITEs" Relationship="Self.FK_RFIINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFIINVITE" />
+          <NavigationProperty Name="RFPINVITEs" Relationship="Self.FK_RFPINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFPINVITE" />
+          <NavigationProperty Name="VENDOR" Relationship="Self.FK_VENDOR_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDOR" />
+          <NavigationProperty Name="VENDORCONTACTs" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDORCONTACT" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="CONTRACT">
+          <Key>
+            <PropertyRef Name="CONTRACTID" />
+          </Key>
+          <Property Name="CONTRACTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
+          <Property Name="RFPID" Type="Int32" Nullable="false" />
+          <Property Name="CONTRACT_PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="CONTRACT" ToRole="AspNetUsers" />
+          <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_CONTRACT_TEMPLATE" FromRole="CONTRACT" ToRole="TEMPLATE" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FIRSTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EMPSTATUS" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LOG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_EMPLOYEE_AspNetUsers" FromRole="EMPLOYEE" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="OFFEREDCATEGORY">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CATEGORY" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ACCEPTED" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_OFFEREDCATEGORY_AspNetUsers" FromRole="OFFEREDCATEGORY" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="PRODUCTCATEGORY">
+          <Key>
+            <PropertyRef Name="CATEGORY" />
+          </Key>
+          <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RFI">
+          <Key>
+            <PropertyRef Name="RFIID" />
+          </Key>
+          <Property Name="RFIID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
+          <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_RFI_TEMPLATE" FromRole="RFI" ToRole="TEMPLATE" />
+          <NavigationProperty Name="RFPs" Relationship="Self.FK_RFP_RFI" FromRole="RFI" ToRole="RFP" />
+        </EntityType>
+        <EntityType Name="RFIINVITE">
+          <Key>
+            <PropertyRef Name="RFIID" />
+          </Key>
+          <Property Name="RFIID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GHX_PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RFIINVITE_AspNetUsers" FromRole="RFIINVITE" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="RFP">
+          <Key>
+            <PropertyRef Name="RFPID" />
+          </Key>
+          <Property Name="RFPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFIID" Type="Int32" />
+          <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="RFI" Relationship="Self.FK_RFP_RFI" FromRole="RFP" ToRole="RFI" />
+          <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_RFP_TEMPLATE" FromRole="RFP" ToRole="TEMPLATE" />
+        </EntityType>
+        <EntityType Name="RFPINVITE">
+          <Key>
+            <PropertyRef Name="RFPID" />
+          </Key>
+          <Property Name="RFPID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OFFER_PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RFPINVITE_AspNetUsers" FromRole="RFPINVITE" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="TEMPLATE">
+          <Key>
+            <PropertyRef Name="TEMPLATEID" />
+          </Key>
+          <Property Name="TEMPLATEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TYPE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="REPORTVAR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_TEMPLATE" FromRole="TEMPLATE" ToRole="CONTRACT" />
+          <NavigationProperty Name="RFIs" Relationship="Self.FK_RFI_TEMPLATE" FromRole="TEMPLATE" ToRole="RFI" />
+          <NavigationProperty Name="RFPs" Relationship="Self.FK_RFP_TEMPLATE" FromRole="TEMPLATE" ToRole="RFP" />
+        </EntityType>
+        <EntityType Name="VENDOR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ORGANIZATION" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SANCTIONED" Type="Boolean" Nullable="false" />
+          <Property Name="VENDSTATUS" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOG" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_VENDOR_AspNetUsers" FromRole="VENDOR" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="VENDORCONTACT">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CONTACTEMAIL" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CONTACTNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CONTACTPHONE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CONTACTEMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="VENDORCONTACT" ToRole="AspNetUsers" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTRACT_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="CONTRACT" Type="Self.CONTRACT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CONTRACT">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EMPLOYEE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OFFEREDCATEGORY_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="OFFEREDCATEGORY" Type="Self.OFFEREDCATEGORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OFFEREDCATEGORY">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFIINVITE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="RFIINVITE" Type="Self.RFIINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RFIINVITE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFPINVITE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="RFPINVITE" Type="Self.RFPINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RFPINVITE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDOR_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="VENDOR" Type="Self.VENDOR" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VENDOR">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDORCONTACT_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="VENDORCONTACT" Type="Self.VENDORCONTACT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VENDORCONTACT">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTRACT_TEMPLATE">
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="1" />
+          <End Role="CONTRACT" Type="Self.CONTRACT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE">
+              <PropertyRef Name="TEMPLATEID" />
+            </Principal>
+            <Dependent Role="CONTRACT">
+              <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFI_TEMPLATE">
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="1" />
+          <End Role="RFI" Type="Self.RFI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE">
+              <PropertyRef Name="TEMPLATEID" />
+            </Principal>
+            <Dependent Role="RFI">
+              <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFP_RFI">
+          <End Role="RFI" Type="Self.RFI" Multiplicity="0..1" />
+          <End Role="RFP" Type="Self.RFP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIID" />
+            </Principal>
+            <Dependent Role="RFP">
+              <PropertyRef Name="RFIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFP_TEMPLATE">
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="1" />
+          <End Role="RFP" Type="Self.RFP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE">
+              <PropertyRef Name="TEMPLATEID" />
+            </Principal>
+            <Dependent Role="RFP">
+              <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="EVICsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="CONTRACTs" EntityType="Self.CONTRACT" />
+          <EntitySet Name="EMPLOYEEs" EntityType="Self.EMPLOYEE" />
+          <EntitySet Name="OFFEREDCATEGORies" EntityType="Self.OFFEREDCATEGORY" />
+          <EntitySet Name="PRODUCTCATEGORies" EntityType="Self.PRODUCTCATEGORY" />
+          <EntitySet Name="RFIs" EntityType="Self.RFI" />
+          <EntitySet Name="RFIINVITEs" EntityType="Self.RFIINVITE" />
+          <EntitySet Name="RFPs" EntityType="Self.RFP" />
+          <EntitySet Name="RFPINVITEs" EntityType="Self.RFPINVITE" />
+          <EntitySet Name="TEMPLATEs" EntityType="Self.TEMPLATE" />
+          <EntitySet Name="VENDORs" EntityType="Self.VENDOR" />
+          <EntitySet Name="VENDORCONTACTs" EntityType="Self.VENDORCONTACT" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTRACT_AspNetUsers" Association="Self.FK_CONTRACT_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CONTRACT" EntitySet="CONTRACTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_AspNetUsers" Association="Self.FK_EMPLOYEE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OFFEREDCATEGORY_AspNetUsers" Association="Self.FK_OFFEREDCATEGORY_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="OFFEREDCATEGORY" EntitySet="OFFEREDCATEGORies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFIINVITE_AspNetUsers" Association="Self.FK_RFIINVITE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFIINVITE" EntitySet="RFIINVITEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFPINVITE_AspNetUsers" Association="Self.FK_RFPINVITE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFPINVITE" EntitySet="RFPINVITEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDOR_AspNetUsers" Association="Self.FK_VENDOR_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VENDOR" EntitySet="VENDORs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDORCONTACT_AspNetUsers" Association="Self.FK_VENDORCONTACT_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VENDORCONTACT" EntitySet="VENDORCONTACTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTRACT_TEMPLATE" Association="Self.FK_CONTRACT_TEMPLATE">
+            <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
+            <End Role="CONTRACT" EntitySet="CONTRACTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFI_TEMPLATE" Association="Self.FK_RFI_TEMPLATE">
+            <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
+            <End Role="RFI" EntitySet="RFIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFP_RFI" Association="Self.FK_RFP_RFI">
+            <End Role="RFI" EntitySet="RFIs" />
+            <End Role="RFP" EntitySet="RFPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFP_TEMPLATE" Association="Self.FK_RFP_TEMPLATE">
+            <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
+            <End Role="RFP" EntitySet="RFPs" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EVICEntitiesModelStoreContainer" CdmEntityContainer="EVICsEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTRACTs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.CONTRACT">
+              <MappingFragment StoreEntitySet="CONTRACT">
+                <ScalarProperty Name="CONTRACTID" ColumnName="CONTRACTID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
+                <ScalarProperty Name="RFPID" ColumnName="RFPID" />
+                <ScalarProperty Name="CONTRACT_PATH" ColumnName="CONTRACT_PATH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEEs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.EMPLOYEE">
+              <MappingFragment StoreEntitySet="EMPLOYEE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FIRSTNAME" ColumnName="FIRSTNAME" />
+                <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+                <ScalarProperty Name="EMPSTATUS" ColumnName="EMPSTATUS" />
+                <ScalarProperty Name="LOG" ColumnName="LOG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OFFEREDCATEGORies">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.OFFEREDCATEGORY">
+              <MappingFragment StoreEntitySet="OFFEREDCATEGORY">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="ACCEPTED" ColumnName="ACCEPTED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTCATEGORies">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.PRODUCTCATEGORY">
+              <MappingFragment StoreEntitySet="PRODUCTCATEGORY">
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RFIs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.RFI">
+              <MappingFragment StoreEntitySet="RFI">
+                <ScalarProperty Name="RFIID" ColumnName="RFIID" />
+                <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="EXPIRES" ColumnName="EXPIRES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RFIINVITEs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.RFIINVITE">
+              <MappingFragment StoreEntitySet="RFIINVITE">
+                <ScalarProperty Name="RFIID" ColumnName="RFIID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GHX_PATH" ColumnName="GHX_PATH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RFPs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.RFP">
+              <MappingFragment StoreEntitySet="RFP">
+                <ScalarProperty Name="RFPID" ColumnName="RFPID" />
+                <ScalarProperty Name="RFIID" ColumnName="RFIID" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="EXPIRES" ColumnName="EXPIRES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RFPINVITEs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.RFPINVITE">
+              <MappingFragment StoreEntitySet="RFPINVITE">
+                <ScalarProperty Name="RFPID" ColumnName="RFPID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OFFER_PATH" ColumnName="OFFER_PATH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMPLATEs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.TEMPLATE">
+              <MappingFragment StoreEntitySet="TEMPLATE">
+                <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="PATH" ColumnName="PATH" />
+                <ScalarProperty Name="REPORTVAR" ColumnName="REPORTVAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDORs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.VENDOR">
+              <MappingFragment StoreEntitySet="VENDOR">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="ORGANIZATION" ColumnName="ORGANIZATION" />
+                <ScalarProperty Name="SANCTIONED" ColumnName="SANCTIONED" />
+                <ScalarProperty Name="VENDSTATUS" ColumnName="VENDSTATUS" />
+                <ScalarProperty Name="LOG" ColumnName="LOG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDORCONTACTs">
+            <EntityTypeMapping TypeName="EVICEntitiesModel.VENDORCONTACT">
+              <MappingFragment StoreEntitySet="VENDORCONTACT">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CONTACTNAME" ColumnName="CONTACTNAME" />
+                <ScalarProperty Name="CONTACTPHONE" ColumnName="CONTACTPHONE" />
+                <ScalarProperty Name="CONTACTEMAIL" ColumnName="CONTACTEMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EVICEntitiesModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

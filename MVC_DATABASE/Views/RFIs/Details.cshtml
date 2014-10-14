@@ -1,0 +1,50 @@
+﻿@model MVC_DATABASE.Models.RFI
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RFI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CATEGORY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATEGORY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXPIRES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXPIRES)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEMPLATE.TYPE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RFIID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

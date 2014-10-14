@@ -1,0 +1,137 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using MVC_DATABASE.Models;
+
+namespace MVC_DATABASE.Controllers
+{
+    public class RFPsController : Controller
+    {
+        private EVICsEntities db = new EVICsEntities();
+
+        // GET: RFPs
+        public async Task<ActionResult> Index()
+        {
+            var rFPs = db.RFPs.Include(r => r.RFI).Include(r => r.TEMPLATE);
+            return View(await rFPs.ToListAsync());
+        }
+
+        // GET: RFPs/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RFP rFP = await db.RFPs.FindAsync(id);
+            if (rFP == null)
+            {
+                return HttpNotFound();
+            }
+            return View(rFP);
+        }
+
+        // GET: RFPs/Create
+        public ActionResult Create()
+        {
+            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY");
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+            return View();
+        }
+
+        // POST: RFPs/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
+        {
+            if (ModelState.IsValid)
+            {
+                db.RFPs.Add(rFP);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
+            return View(rFP);
+        }
+
+        // GET: RFPs/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RFP rFP = await db.RFPs.FindAsync(id);
+            if (rFP == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
+            return View(rFP);
+        }
+
+        // POST: RFPs/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(rFP).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
+            return View(rFP);
+        }
+
+        // GET: RFPs/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RFP rFP = await db.RFPs.FindAsync(id);
+            if (rFP == null)
+            {
+                return HttpNotFound();
+            }
+            return View(rFP);
+        }
+
+        // POST: RFPs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            RFP rFP = await db.RFPs.FindAsync(id);
+            db.RFPs.Remove(rFP);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

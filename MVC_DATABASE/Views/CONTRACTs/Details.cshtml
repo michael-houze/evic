@@ -1,0 +1,50 @@
+﻿@model MVC_DATABASE.Models.CONTRACT
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CONTRACT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RFPID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFPID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRACT_PATH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRACT_PATH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEMPLATE.TYPE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CONTRACTID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
