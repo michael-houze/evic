@@ -18,8 +18,7 @@ namespace MVC_DATABASE.Models
 
         public int RFIID { get; set; }
 
-        [Required]
-        [StringLength(128, ErrorMessage = "Must be under 128 characters.")]
+       
         public string Id { get; set; }
 
         [Required]
