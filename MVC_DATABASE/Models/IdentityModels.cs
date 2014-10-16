@@ -21,7 +21,7 @@ namespace MVC_DATABASE.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("aspnet-MVC_DATABASE-20141006063842", throwIfV1Schema: false)
+            : base("name=BaptistHealthConnection", throwIfV1Schema: false)
         {
         }
 
