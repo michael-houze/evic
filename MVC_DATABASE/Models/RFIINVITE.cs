@@ -11,22 +11,13 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class RFIINVITE
     {
-
         public int RFIID { get; set; }
-
-       
         public string Id { get; set; }
-
-        [Required]
-        [StringLength(255, ErrorMessage = "Must be under 255 characters.")]
-        [Display(Name = "GHX_PATH")]
-        [DataType(DataType.Text)]
         public string GHX_PATH { get; set; }
-
+    
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace MVC_DATABASE.Controllers
 {
     public class CONTRACTsController : Controller
     {
-        private EVICsEntities db = new EVICsEntities();
+        private BaptistEntities db = new BaptistEntities();
 
         // GET: CONTRACTs
         public async Task<ActionResult> Index()

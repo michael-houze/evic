@@ -25,7 +25,7 @@ namespace MVC_DATABASE.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-        private EVICsEntities db = new EVICsEntities();
+        private BaptistEntities db = new BaptistEntities();
 
         public AccountController()
         {

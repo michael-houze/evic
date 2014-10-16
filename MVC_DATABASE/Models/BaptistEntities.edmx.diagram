@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9319c34ce63d4d08a7fc35f0455ded78" Name="Diagram1">
+        <EntityTypeShape EntityType="BaptistModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.AspNetRole" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.AspNetUserClaim" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.AspNetUserLogin" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.AspNetUserRole" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.AspNetUser" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.CONTRACT" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.EMPLOYEE" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.OFFEREDCATEGORY" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.PRODUCTCATEGORY" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.RFI" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.RFIINVITE" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.RFP" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.RFPINVITE" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.TEMPLATE" Width="1.5" PointX="3.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.VENDOR" Width="1.5" PointX="3" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="BaptistModel.VENDORCONTACT" Width="1.5" PointX="3" PointY="20.125" IsExpanded="true" />
+        <AssociationConnector Association="BaptistModel.FK_CONTRACT_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_EMPLOYEE_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_OFFEREDCATEGORY_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_RFIINVITE_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_RFPINVITE_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_VENDOR_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_VENDORCONTACT_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_CONTRACT_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_RFI_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_RFP_RFI" ManuallyRouted="false" />
+        <AssociationConnector Association="BaptistModel.FK_RFP_TEMPLATE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

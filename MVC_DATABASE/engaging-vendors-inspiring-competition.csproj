@@ -171,71 +171,74 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserRole.cs">
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaptistEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaptistEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaptistEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaptistEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaptistEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CONTRACT.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLOYEE.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EVICEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EVICEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EVICEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EVICEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EVICEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EVICEntities.edmx</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OFFEREDCATEGORY.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRODUCTCATEGORY.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RFI.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\RFICreate.cs" />
     <Compile Include="Models\RFIINVITE.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RFP.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RFPINVITE.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TEMPLATE.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VENDOR.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VENDORCONTACT.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\RFICreate.cs" />
     <Compile Include="Models\ViewModels\VendorRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -250,22 +253,22 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\EVICEntities.edmx">
+    <EntityDeploy Include="Models\BaptistEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EVICEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>BaptistEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\EVICEntities.Context.tt">
+    <Content Include="Models\BaptistEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EVICEntities.edmx</DependentUpon>
-      <LastGenOutput>EVICEntities.Context.cs</LastGenOutput>
+      <DependentUpon>BaptistEntities.edmx</DependentUpon>
+      <LastGenOutput>BaptistEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EVICEntities.edmx.diagram">
-      <DependentUpon>EVICEntities.edmx</DependentUpon>
+    <Content Include="Models\BaptistEntities.edmx.diagram">
+      <DependentUpon>BaptistEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\EVICEntities.tt">
+    <Content Include="Models\BaptistEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EVICEntities.edmx</DependentUpon>
-      <LastGenOutput>EVICEntities.cs</LastGenOutput>
+      <DependentUpon>BaptistEntities.edmx</DependentUpon>
+      <LastGenOutput>BaptistEntities.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

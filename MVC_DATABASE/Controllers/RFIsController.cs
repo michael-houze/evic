@@ -13,7 +13,7 @@ namespace MVC_DATABASE.Controllers
 {
     public class RFIsController : Controller
     {
-        private EVICsEntities db = new EVICsEntities();
+        private BaptistEntities db = new BaptistEntities();
 
         // GET: RFIs
         public async Task<ActionResult> Index()

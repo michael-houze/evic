@@ -11,21 +11,11 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class VENDOR
     {
         public string Id { get; set; }
-      
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be between {1} and {2} characters long.", MinimumLength = 3)]
-        [DataType(DataType.Text)]
-        [Display(Name = "Full Name")]
         public string FULLNAME { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be between {1} and {2} characters long.", MinimumLength = 3)]
-        [DataType(DataType.Text)]
-        [Display(Name = "Organization")]
         public string ORGANIZATION { get; set; }
         public bool SANCTIONED { get; set; }
         public string VENDSTATUS { get; set; }

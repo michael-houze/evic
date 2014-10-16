@@ -13,10 +13,10 @@ namespace MVC_DATABASE.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EVICsEntities : DbContext
+    public partial class BaptistEntities : DbContext
     {
-        public EVICsEntities()
-            : base("name=EVICsEntities")
+        public BaptistEntities()
+            : base("name=BaptistEntities")
         {
         }
     
@@ -29,6 +29,7 @@ namespace MVC_DATABASE.Models
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CONTRACT> CONTRACTs { get; set; }
         public virtual DbSet<EMPLOYEE> EMPLOYEEs { get; set; }

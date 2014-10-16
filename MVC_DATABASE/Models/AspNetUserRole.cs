@@ -12,16 +12,9 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RFP
+    public partial class AspNetUserRole
     {
-        public int RFPID { get; set; }
-        public Nullable<int> RFIID { get; set; }
-        public string CATEGORY { get; set; }
-        public int TEMPLATEID { get; set; }
-        public System.DateTime CREATED { get; set; }
-        public System.DateTime EXPIRES { get; set; }
-    
-        public virtual RFI RFI { get; set; }
-        public virtual TEMPLATE TEMPLATE { get; set; }
+        public string UserId { get; set; }
+        public string RoleId { get; set; }
     }
 }
