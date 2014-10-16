@@ -18,7 +18,7 @@ namespace MVC_DATABASE.Models
        public RegisterViewModel RegisterViewModel{get; set;}
        public VENDOR VENDOR { get; set; }
        public VENDORCONTACT VENDORCONTACT { get; set; }
-       public List<PRODUCTCATEGORY> CategoryList { get; set; }
+       public ICollection<string> CategoryList { get; set; }
     }
 
 

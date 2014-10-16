@@ -14,6 +14,11 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Data.Entity;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+
+
 namespace MVC_DATABASE.Controllers
 {
     [Authorize]
@@ -147,8 +152,9 @@ namespace MVC_DATABASE.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            vendorRegister.CategoryList = new List<string>();
             ViewBag.CATEGORY = new MultiSelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
-            return View();          
+            return View(vendorRegister);          
         }
 
         //
@@ -165,13 +171,21 @@ namespace MVC_DATABASE.Controllers
                 var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
                 if (result.Succeeded)
                 {
-
+                    //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                    //Roles.AddUserToRole(user.Id, "Vendor");
                     var vendor = new VENDOR { Id = user.Id, FULLNAME = model.VENDOR.FULLNAME, ORGANIZATION = model.VENDOR.ORGANIZATION };
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
                     vendor.VENDSTATUS = "Pending";
                     vendor.SANCTIONED = false;
+                    foreach(var x in model.CategoryList)
+                    {                        
+                        var offeredCategory = new OFFEREDCATEGORY {Id = user.Id, CATEGORY = x, ACCEPTED = false};
+                        db.OFFEREDCATEGORies.Add(offeredCategory);
+                    }
+                    
                     db.VENDORs.Add(vendor);
                     db.VENDORCONTACTs.Add(vendorcontact);
+
                     await db.SaveChangesAsync();
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

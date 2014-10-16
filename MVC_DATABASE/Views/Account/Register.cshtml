@@ -79,7 +79,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CategoryList, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.ListBox("CATEGORY", null, htmlAttributes: new { @class = "form-control" })
+            <!--Html.ListBox("CATEGORY", null, htmlAttributes: new MultiSelectList("CATEGORY"))-->
+            @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY))
         </div>
     </div>
 
