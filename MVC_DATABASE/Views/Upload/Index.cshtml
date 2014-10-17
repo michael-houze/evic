@@ -1,0 +1,27 @@
+﻿@model MVC_DATABASE.Models.ViewModels.UploadViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="bg-success">
+    <h1>File Selection Module</h1>
+    <p class="">
+        This module provides a means to select a file, validate it, store it in a relative file location and record the relative location in a database.
+        The file will be stored in the ~/App_Data/File_Uploads/ folder.  The entry in the database will strore the relative location as a string, using a
+        varchar(100) variable.
+    </p>
+</div>
+
+<hr />
+
+@using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.TextBoxFor(m => m.File, new { type = "file" })
+    @Html.ValidationMessageFor(m => m.File)<br />
+
+    <br />
+
+    <input type="submit" value="Upload" class="btn btn-primary" />
+}
+
