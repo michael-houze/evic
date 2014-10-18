@@ -27,12 +27,50 @@ namespace MVC_DATABASE.Controllers
         private BaptistEntities db = new BaptistEntities();
         private RFIEmployeeIndex rFIEmployeeIndex = new RFIEmployeeIndex();
         // GET: RFIs
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            rFIEmployeeIndex.VendorResponseCount = new int();
+            rFIEmployeeIndex.RFIInviteList = new List<string>();
+            rFIEmployeeIndex.VendorResponseCount = 0;
+            rFIEmployeeIndex.TemplateList = new List<TEMPLATE>();
+            
+            foreach(var item in db.TEMPLATEs)
+            {
+                if (item.TYPE == "GHX")
+                {
+                    rFIEmployeeIndex.TemplateList.Add(item);
+                }
+            }
 
-            var rFIs = db.RFIs.Include(r => r.TEMPLATE);
-            return View(await rFIs.ToListAsync());
+            ViewBag.Category = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
+            ViewBag.Templates = new SelectList(rFIEmployeeIndex.TemplateList, "TEMPLATEID", "TEMPLATEID");
+            return View(rFIEmployeeIndex);
+        }
+
+        public ActionResult GetAcceptedVendors(RFIEmployeeIndex model)
+        {
+            List<string> AcceptedVendorId = new List<string>();
+         foreach(var x in db.OFFEREDCATEGORies)
+            {
+                if (x.CATEGORY == model.RFI.CATEGORY)
+                {
+                    if (x.ACCEPTED == true)
+                    {
+                        AcceptedVendorId.Add(x.Id);
+                    }
+                }
+            }
+            foreach(var x in db.VENDORs)
+            {
+                foreach(var y in AcceptedVendorId)
+                {
+                    if (y == x.Id)
+                    {
+                        model.AcceptedVendorsList.Add(x);
+                    }
+                }
+            }
+            ViewBag.AcceptedVendors = new MultiSelectList(model.AcceptedVendorsList, "Id", "ORGANIZATION");
+            return View(model);
         }
 
         // GET: RFIs/Details/5

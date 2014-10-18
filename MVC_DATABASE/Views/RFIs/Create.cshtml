@@ -1,11 +1,11 @@
-﻿@model MVC_DATABASE.Models.RFI
+﻿@model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create RFI";
 
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -15,28 +15,39 @@
         <h4>RFI</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            @Html.LabelFor(m => m.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RFI.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TEMPLATEID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TEMPLATEID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.RFI.CATEGORY, (SelectList)ViewBag.Category)
+                @Html.ValidationMessageFor(model => model.RFI.CATEGORY, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.templateId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CATEGORY", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CATEGORY, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.templateId, (SelectList)ViewBag.Templates)
+                @Html.ValidationMessageFor(m => m.templateId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EXPIRES, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RFI.EXPIRES, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.EXPIRES, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EXPIRES, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.RFI.EXPIRES, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RFI.EXPIRES, "", new { @class = "text-danger" })
             </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RFIInviteList, htmlAttributes: new { @class = "control-label col-md-2" }) 
+            @if(ViewBag.AcceptedVendors != null)
+            { 
+            <div class="col-md-10">
+                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors))
+            </div>
+            }
         </div>
 
         <div class="form-group">
@@ -50,3 +61,43 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+$("#RFI_CATEGORY").change(function () {
+
+alert("DropDown selected value is changed ");
+
+var DropDownSelectedVal = $("#RFI_CATEGORY :selected").val();
+
+if (DropDownSelectedVal != null) {
+
+$.ajax({
+
+@(Url.Action("GetAcceptedVendors", Model));,
+
+data: { "CATEGORY": DropDownSelectedVal },
+
+success: function (response) {
+
+alert("If Alert Shown this means Ajax call is working properly");
+
+},
+
+error: function (xhr) {
+
+alert("Something went wrong, please try again");
+
+}
+
+});
+
+}
+
+});
+
+});
+
+</script>

@@ -12,22 +12,35 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
+            @Html.DisplayNameFor(model => model.RFI.RFIID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RFI.CREATED)
+            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RFI.EXPIRES)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RFI.TEMPLATE.TYPE)
+            @Html.DisplayNameFor(model => model.VendorResponseCount)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.RFIList) {
+    foreach (var x in Model.RFIInviteList)
+    {
+        if (item.RFIID == x.RFIID)
+        {
+            if (x.GHX_PATH != null)
+            {
+                Model.VendorResponseCount++;
+            }
+        }
+    }
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RFIID)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.CATEGORY)
         </td>
@@ -35,11 +48,12 @@
             @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.VendorResponseCount)
+            @Html.DisplayFor(modelItem => Model.VendorResponseCount)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
+            @Html.ActionLink("Responses", "Responses", new { id=item.RFIID})
         </td>
     </tr>
 }
