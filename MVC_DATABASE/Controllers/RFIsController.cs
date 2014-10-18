@@ -1,23 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System;
+using System.Globalization;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MVC_DATABASE.Models.ViewModels;
 
 namespace MVC_DATABASE.Controllers
 {
     public class RFIsController : Controller
     {
         private BaptistEntities db = new BaptistEntities();
-
+        private RFIEmployeeIndex rFIEmployeeIndex = new RFIEmployeeIndex();
         // GET: RFIs
         public async Task<ActionResult> Index()
         {
+            rFIEmployeeIndex.VendorResponseCount = new int();
+
             var rFIs = db.RFIs.Include(r => r.TEMPLATE);
             return View(await rFIs.ToListAsync());
         }

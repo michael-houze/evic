@@ -157,7 +157,6 @@
         <EntityType Name="VENDORCONTACT">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="CONTACTEMAIL" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CONTACTNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -286,7 +285,7 @@
         </Association>
         <Association Name="FK_VENDORCONTACT_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="VENDORCONTACT" Type="Self.VENDORCONTACT" Multiplicity="*" />
+          <End Role="VENDORCONTACT" Type="Self.VENDORCONTACT" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -426,7 +425,7 @@
           <NavigationProperty Name="RFIINVITEs" Relationship="Self.FK_RFIINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFIINVITE" />
           <NavigationProperty Name="RFPINVITEs" Relationship="Self.FK_RFPINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFPINVITE" />
           <NavigationProperty Name="VENDOR" Relationship="Self.FK_VENDOR_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDOR" />
-          <NavigationProperty Name="VENDORCONTACTs" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDORCONTACT" />
+          <NavigationProperty Name="VENDORCONTACT" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDORCONTACT" />
         </EntityType>
         <EntityType Name="CONTRACT">
           <Key>
@@ -537,7 +536,6 @@
         <EntityType Name="VENDORCONTACT">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="CONTACTEMAIL" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CONTACTNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
@@ -619,7 +617,7 @@
         </Association>
         <Association Name="FK_VENDORCONTACT_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="VENDORCONTACT" Type="Self.VENDORCONTACT" Multiplicity="*" />
+          <End Role="VENDORCONTACT" Type="Self.VENDORCONTACT" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />

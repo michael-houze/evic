@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.RFI>
+﻿@model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CATEGORY)
+            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CREATED)
+            @Html.DisplayNameFor(model => model.RFI.CREATED)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EXPIRES)
+            @Html.DisplayNameFor(model => model.RFI.EXPIRES)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+            @Html.DisplayNameFor(model => model.RFI.TEMPLATE.TYPE)
         </th>
         <th></th>
     </tr>
@@ -32,18 +32,14 @@
             @Html.DisplayFor(modelItem => item.CATEGORY)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CREATED)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
+            @Html.DisplayFor(modelItem => item.VendorResponseCount)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RFIID })
         </td>
     </tr>
 }

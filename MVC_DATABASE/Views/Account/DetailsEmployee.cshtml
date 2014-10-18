@@ -1,0 +1,63 @@
+﻿@model MVC_DATABASE.Models.ViewModels.AccountManagement
+@{
+    ViewBag.Title = "DetailsEmployee";
+}
+
+<div>
+    <h4>Employee Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.FIRSTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.FIRSTNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.LASTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.LASTNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.EMPSTATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.EMPSTATUS)
+        </dd>
+    </dl>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditEmployee", new { id = Model.AspNetUser.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

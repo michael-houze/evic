@@ -1,0 +1,118 @@
+﻿@model MVC_DATABASE.Models.ViewModels.AccountManagement
+@{
+    ViewBag.Title = "Edit Vendor";
+}
+
+<h2>Edit Vendor</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+            <h4>Vendor Details</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vendor.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Vendor.Id, new {  @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vendor.ORGANIZATION, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Vendor.ORGANIZATION, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vendor.FULLNAME, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Vendor.FULLNAME, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AspNetUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.AspNetUser.Email, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AspNetUser.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.AspNetUser.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.VendorContact.CONTACTNAME, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.VendorContact.CONTACTNAME, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.VendorContact.CONTACTEMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.VendorContact.CONTACTEMAIL, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.VendorContact.CONTACTPHONE, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.VendorContact.CONTACTPHONE, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vendor.VENDSTATUS, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="editor-field">
+                        @Html.RadioButtonFor(model => model.Vendor.VENDSTATUS, "ACTIVE") Activate
+                        @Html.RadioButtonFor(model => model.Vendor.VENDSTATUS, "DEACTIVATED") Deactivate
+                    </div>
+                </div>
+            </div>
+       
+            <div class="form-group">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OfferedCategory.Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OfferedCategory.CATEGORY)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OfferedCategory.ACCEPTED)
+                        </th>
+                        <th></th>
+                    </tr>
+                    @for (var i = 0; i < Model.OfferedCategoryList.Count;i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.TextBoxFor(m => m.OfferedCategoryList[i].Id, new { @readonly = "readonly" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.OfferedCategoryList[i].CATEGORY, new { @readonly = "readonly" })
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(m => m.OfferedCategoryList[i].ACCEPTED)
+                            </td>
+                        </tr>
+                    }
+                </table>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>    
+        </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

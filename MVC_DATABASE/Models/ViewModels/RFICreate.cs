@@ -16,7 +16,7 @@ namespace MVC_DATABASE.Models
     public class RFICreate
     {
         public RFI RFI { get; set; }
-        public List<VENDOR> VendorList { get; set; }
+        public List<string> VendorList { get; set; }
 
     }
 }

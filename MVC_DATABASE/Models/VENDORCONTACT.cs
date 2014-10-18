@@ -11,28 +11,12 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class VENDORCONTACT
     {
         public string Id { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be between {1} and {2} characters long.", MinimumLength = 3)]
-        [DataType(DataType.Text)]
-        [Display(Name = "Contact Name")]
         public string CONTACTNAME { get; set; }
-
-        [Required(ErrorMessage= "Please enter a valid phone number.")]
-        [DataType(DataType.PhoneNumber)]
-        [Phone]
-        [Display(Name = "Phone Number")]
         public string CONTACTPHONE { get; set; }
-
-        [Required(ErrorMessage= "Please enter a valid email address.")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
-        [Display(Name = "Email")]
         public string CONTACTEMAIL { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

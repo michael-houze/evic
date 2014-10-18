@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9319c34ce63d4d08a7fc35f0455ded78" Name="Diagram1">
+      <Diagram DiagramId="7b91d9f2dde243ae85e133238708cec9" Name="Diagram1">
         <EntityTypeShape EntityType="BaptistModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BaptistModel.AspNetRole" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BaptistModel.AspNetUserClaim" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />

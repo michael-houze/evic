@@ -16,6 +16,8 @@ using System.Data.SqlTypes;
 using System.Data.Entity;
 using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MVC_DATABASE.Models.ViewModels;
+using System.Net;
 
 
 
@@ -48,6 +50,9 @@ namespace MVC_DATABASE.Controllers
                 _userManager = value;
             }
         }
+
+
+
 
         //
         // GET: /Account/Login
@@ -175,7 +180,7 @@ namespace MVC_DATABASE.Controllers
                     //Roles.AddUserToRole(user.Id, "Vendor");
                     var vendor = new VENDOR { Id = user.Id, FULLNAME = model.VENDOR.FULLNAME, ORGANIZATION = model.VENDOR.ORGANIZATION };
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
-                    vendor.VENDSTATUS = "Pending";
+                    vendor.VENDSTATUS = "PENDING";
                     vendor.SANCTIONED = false;
                     foreach(var x in model.CategoryList)
                     {                        
@@ -433,6 +438,216 @@ namespace MVC_DATABASE.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        private AccountManagement accountManagement = new AccountManagement();
+
+        // GET: Vendors and employees (if admin)
+        public ActionResult Index()
+        {
+            accountManagement.VendorList = new List<VENDOR>();
+            accountManagement.VendorList = db.VENDORs.ToList<VENDOR>();
+                //change when roles are added
+            if(User.Identity.IsAuthenticated)
+            {
+                accountManagement.EmployeeList = new List<EMPLOYEE>();
+                accountManagement.EmployeeList = db.EMPLOYEEs.ToList<EMPLOYEE>();
+            }
+            return View(accountManagement);
+        }
+
+        // GET: Vendor/Details/5
+        public async Task<ActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
+
+            if (accountManagement.AspNetUser == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                accountManagement.Vendor = await db.VENDORs.FindAsync(id);
+                accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(id);
+
+                List<OFFEREDCATEGORY> offeredlist = new List<OFFEREDCATEGORY>();
+                foreach(var x in db.OFFEREDCATEGORies)
+                {
+                    if (x.Id == accountManagement.Vendor.Id)
+                    {
+                        offeredlist.Add(x);
+                        
+                    }
+                }
+                accountManagement.OfferedCategoryList = offeredlist;
+            }
+            return View(accountManagement);
+        }
+
+        // GET: Vendors/Edit/5
+        public async Task<ActionResult> EditVendor(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
+
+            if (accountManagement.AspNetUser == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                accountManagement.Vendor = await db.VENDORs.FindAsync(id);
+                accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(id);
+
+                List<OFFEREDCATEGORY> offeredlist = new List<OFFEREDCATEGORY>();
+                foreach (var x in db.OFFEREDCATEGORies)
+                {
+                    if (x.Id == accountManagement.Vendor.Id)
+                    {
+                        offeredlist.Add(x);
+
+                    }
+                }
+                accountManagement.OfferedCategoryList = offeredlist;
+            }
+            ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
+
+            return View(accountManagement);
+        }
+   
+        // POST: Vendors/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditVendor(AccountManagement model)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                db.Entry(model.Vendor).State = EntityState.Modified;
+
+                foreach(var x in model.OfferedCategoryList)
+                    {                        
+                        db.Entry(x).State = EntityState.Modified;
+                    }
+                await db.SaveChangesAsync();
+                return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
+            }
+            ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
+            return View(model);
+        }
+
+        // GET: Employees/Details/5
+        public async Task<ActionResult> DetailsEmployee(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
+            
+            if (accountManagement.AspNetUser == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                accountManagement.Employee = await db.EMPLOYEEs.FindAsync(id);
+            }
+            return View(accountManagement);
+        }
+
+        private EmployeeCreate employeeCreate = new EmployeeCreate();
+
+        //authorize admin
+        // GET: Employee/Create
+        public ActionResult Create()
+        {
+            return View(employeeCreate);
+        }
+
+        // POST: /Employee/Create
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(EmployeeCreate model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email, PhoneNumber = model.RegisterViewModel.Phone };
+
+                var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
+                if (result.Succeeded)
+                {
+                    //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                    //Roles.AddUserToRole(user.Id, "Vendor");
+                    var employee = new EMPLOYEE { Id = user.Id, FIRSTNAME = model.Employee.FIRSTNAME, LASTNAME = model.Employee.LASTNAME};
+                    employee.EMPSTATUS = "ACTIVE";
+
+                    db.EMPLOYEEs.Add(employee);
+
+                    await db.SaveChangesAsync();
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Account");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        // GET: Employees/Edit/5
+        public async Task<ActionResult> EditEmployee(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
+
+            if (accountManagement.AspNetUser == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                accountManagement.Employee = await db.EMPLOYEEs.FindAsync(id);
+            }
+
+            return View(accountManagement);
+        }
+
+        // POST: Employees/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditEmployee(AccountManagement model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(model.Employee).State = EntityState.Modified;
+
+                await db.SaveChangesAsync();
+                return RedirectToAction("DetailsEmployee", "Account", new { id = model.Employee.Id });
+            }
+
+            return View(model);
         }
 
         #region Helpers
