@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RFI.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.RFI.CATEGORY, (SelectList)ViewBag.Category, htmlAttributes: new { @class = "CategorySelect"})
+                @Html.DropDownListFor(m => m.RFI.CATEGORY, (SelectList)ViewBag.Category)
                 @Html.ValidationMessageFor(model => model.RFI.CATEGORY, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -62,4 +62,42 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<script type="text/javascript">
 
+$(document).ready(function () {
+
+$("#RFI_CATEGORY").change(function () {
+
+alert("DropDown selected value is changed ");
+
+var DropDownSelectedVal = $("#RFI_CATEGORY :selected").val();
+
+if (DropDownSelectedVal != null) {
+
+$.ajax({
+
+@(Url.Action("GetAcceptedVendors", Model));,
+
+data: { "CATEGORY": DropDownSelectedVal },
+
+success: function (response) {
+
+alert("If Alert Shown this means Ajax call is working properly");
+
+},
+
+error: function (xhr) {
+
+alert("Something went wrong, please try again");
+
+}
+
+});
+
+}
+
+});
+
+});
+
+</script>

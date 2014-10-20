@@ -16,7 +16,7 @@ namespace MVC_DATABASE.Models.ViewModels
         public PRODUCTCATEGORY ProductCategory { get; set; }
         public ICollection<TEMPLATE> TemplateList { get; set; }
         public ICollection<RFI> RFIList { get; set; }
-        public ICollection<RFIINVITE> RFIInviteList { get; set; }
+        public ICollection<string> RFIInviteList { get; set; }
         public ICollection<VENDOR> AcceptedVendorsList { get; set; }
         public int VendorResponseCount { get; set; }
         
