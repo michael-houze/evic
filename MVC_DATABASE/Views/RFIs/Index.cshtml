@@ -25,18 +25,23 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model.RFIList) {
-    foreach (var x in Model.RFIInviteList)
-    {
-        if (item.RFIID == x.RFIID)
+    @if(Model.RFIList != null)
+    { 
+        foreach (var item in Model.RFIList)
         {
-            if (x.GHX_PATH != null)
+            foreach (var x in Model.RFIInviteList)
             {
-                Model.VendorResponseCount++;
+                if (item.RFIID == x.RFIID)
+                {
+                    if (x.GHX_PATH != null)
+                    {
+                        Model.VendorResponseCount++;
+                    }
+                }
             }
-        }
-    }
+        
+    
+        
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.RFIID)
@@ -57,5 +62,29 @@
         </td>
     </tr>
 }
+}
 
 </table>
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+$(".CategorySelect").change(function () {
+
+    alert("DropDown selected value is changed ");
+
+    
+
+var DropDownSelectedVal = $("#RFI_CATEGORY :selected").val();
+
+if (DropDownSelectedVal != null) {
+    @Model.ProductCategory = 
+ 
+
+}
+
+});
+
+});
+
+</script>
