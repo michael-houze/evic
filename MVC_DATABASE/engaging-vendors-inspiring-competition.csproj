@@ -359,6 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\File_Uploads\" />
+    <Folder Include="App_Data\Videos\Vendor\" />
     <Folder Include="Views\Query\" />
   </ItemGroup>
   <ItemGroup>
