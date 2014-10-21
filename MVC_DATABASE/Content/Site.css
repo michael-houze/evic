@@ -474,13 +474,6 @@
     padding-right: 15px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 400px;
-}
-
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -488,8 +481,18 @@ textarea {
     white-space: normal;
 }
 
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 340px;
+}
+
+.register-form {
+
+}
+
 #categorySelect {
-    height: 600px;
-    width: 500px;
+    height: 500px;
 }
 >>>>>>> origin/master
