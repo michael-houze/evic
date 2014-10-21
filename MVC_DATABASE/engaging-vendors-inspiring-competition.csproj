@@ -251,7 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Models\bootstrap.min.css" />
     <Content Include="Content\Images\BaptistLogo.png" />
     <Content Include="Content\Images\Caldendar.PNG" />
     <Content Include="favicon.ico" />
@@ -277,7 +277,7 @@
       <DependentUpon>BaptistEntities.edmx</DependentUpon>
       <LastGenOutput>BaptistEntities.cs</LastGenOutput>
     </Content>
-    <Content Include="App_Data\Templates\GHX Template V2.xlsx" />
+    <Content Include="Content\Templates\GHX Template V2.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\GetAcceptedCategoryVendors.js" />
@@ -359,8 +359,9 @@
     <Content Include="Views\Account\EditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\File_Uploads\" />
-    <Folder Include="App_Data\Videos\Vendor\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\File_Uploads\" />
+    <Folder Include="Content\Videos\Vendor\" />
     <Folder Include="Views\Query\" />
   </ItemGroup>
   <ItemGroup>
