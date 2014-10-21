@@ -276,6 +276,7 @@
       <DependentUpon>BaptistEntities.edmx</DependentUpon>
       <LastGenOutput>BaptistEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="App_Data\Templates\GHX Template V2.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\GetAcceptedCategoryVendors.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

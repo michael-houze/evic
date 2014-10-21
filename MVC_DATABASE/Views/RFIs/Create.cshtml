@@ -1,9 +1,31 @@
 ﻿@model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
+@using MVC_DATABASE.Controllers
 
 @{
     ViewBag.Title = "Create RFI";
 
 }
+<script type="text/javascript">
+    $(function () {
+        $("select#CategorySelect").change(function () {
+            if ($("select#CategorySelect").val() != "-1") {
+                $.ajax({
+                    url: "~/RFIs/GetAcceptedVendor",
+                    type: 'POST',
+                    datatype: "json",
+                    data: $("#CategorySelect").val(),
+                    success: function (response) {
+
+                    },
+                    error: function (xhr, status, error) {
+                        //                                  
+                        alert(error);
+                    }
+                });
+            }
+        });
+    })
+</script>
 
 <h2>@ViewBag.Title</h2>
 
@@ -41,13 +63,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RFIInviteList, htmlAttributes: new { @class = "control-label col-md-2" }) 
-            @if(ViewBag.AcceptedVendors != null)
-            { 
+            @Html.LabelFor(model => model.RFIInviteList, htmlAttributes: new { @class = "control-label col-md-2" })       
+            
             <div class="col-md-10">
-                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors))
-            </div>
+            @if(ViewBag.AcceptedVendors != null)
+            {
+                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors, htmlAttributes: new { @class = "rfiinvitelist"})
             }
+            </div>
+            
+            
         </div>
 
         <div class="form-group">

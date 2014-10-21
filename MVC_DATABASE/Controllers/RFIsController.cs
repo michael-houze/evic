@@ -29,7 +29,7 @@ namespace MVC_DATABASE.Controllers
         // GET: RFIs
         public ActionResult Index()
         {
-            rFIEmployeeIndex.RFIInviteList = new List<RFIINVITE>();
+            rFIEmployeeIndex.RFIInviteList = new List<string>();
             rFIEmployeeIndex.VendorResponseCount = 0;
             rFIEmployeeIndex.TemplateList = new List<TEMPLATE>();
             
@@ -46,46 +46,7 @@ namespace MVC_DATABASE.Controllers
             return View(rFIEmployeeIndex);
         }
 
-        public IQueryable vendorProductsQuery(PRODUCTCATEGORY pe)
-        {
-            BaptistEntities dbo = new BaptistEntities();
-            var vendorProductsQuery = from v in dbo.VENDORs
-                                      join c in dbo.OFFEREDCATEGORies
-                                      on v.Id equals c.Id
-                                      join p in dbo.PRODUCTCATEGORies
-                                      on c.CATEGORY equals p.CATEGORY
-                                      where c.ACCEPTED == true && c.CATEGORY == pe.ToString()
-                                      select new { v.ORGANIZATION };
-
-            return vendorProductsQuery;
-        }
-
-      /*  public ActionResult GetAcceptedVendors(RFIEmployeeIndex model)
-        {
-            List<string> AcceptedVendorId = new List<string>();
-         foreach(var x in db.OFFEREDCATEGORies)
-            {
-                if (x.CATEGORY == model.RFI.CATEGORY.ToString())
-                {
-                    if (x.ACCEPTED == true)
-                    {
-                        AcceptedVendorId.Add(x.Id);
-                    }
-                }
-            }
-            foreach(var x in db.VENDORs)
-            {
-                foreach(var y in AcceptedVendorId)
-                {
-                    if (y == x.Id)
-                    {
-                        model.AcceptedVendorsList.Add(x);
-                    }
-                }
-            }
-            ViewBag.AcceptedVendors = new MultiSelectList(model.AcceptedVendorsList, "Id", "ORGANIZATION");
-            return View(model);
-        } */
+       
 
         // GET: RFIs/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -107,6 +68,7 @@ namespace MVC_DATABASE.Controllers
         {
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
             ViewBag.CATEGORY = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
+            ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
             return View();
         }
 
@@ -125,8 +87,39 @@ namespace MVC_DATABASE.Controllers
             }
 
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFI.TEMPLATEID);
+            ViewBag.CATEGORY = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
             return View(rFI);
         }
+
+        [HttpGet]
+        public ActionResult GetAcceptedVendors()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetAcceptedVendors(SelectListItem ProductCategory)
+        {
+
+            BaptistEntities dbo = new BaptistEntities();
+            
+            var vendorProductsQuery = from v in dbo.VENDORs
+                                      join c in dbo.OFFEREDCATEGORies
+                                      on v.Id equals c.Id
+                                      join p in dbo.PRODUCTCATEGORies
+                                      on c.CATEGORY equals p.CATEGORY
+                                      where c.ACCEPTED == true
+                                      where c.CATEGORY.ToString() == ProductCategory.ToString()
+                                      select new { v };
+            ICollection<VENDOR> AcceptedVendors = new List<VENDOR>();
+            AcceptedVendors = (List<VENDOR>)vendorProductsQuery;
+
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+            ViewBag.CATEGORY = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
+            ViewBag.AcceptedVendors = new MultiSelectList(AcceptedVendors, "Id", "ORGANIZATION");
+
+            return View();
+        } 
 
         // GET: RFIs/Edit/5
         public async Task<ActionResult> Edit(int? id)
