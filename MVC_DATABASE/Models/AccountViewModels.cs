@@ -66,13 +66,13 @@ namespace MVC_DATABASE.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email Address")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(12, ErrorMessage = "The {0} must be between {1} and {2} characters long.", MinimumLength = 10)]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Primary Contact Number")]
+        [Display(Name = "Phone Number")]
         public string Phone { get; set; } 
 
         [Required]
@@ -82,7 +82,7 @@ namespace MVC_DATABASE.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -91,7 +91,7 @@ namespace MVC_DATABASE.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email Address")]
         public string Email { get; set; }
 
         [Required]
@@ -101,7 +101,7 @@ namespace MVC_DATABASE.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
@@ -112,7 +112,7 @@ namespace MVC_DATABASE.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email Address")]
         public string Email { get; set; }
     }
 }

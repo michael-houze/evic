@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC_DATABASE.Models
 {
@@ -18,6 +19,7 @@ namespace MVC_DATABASE.Models
        public RegisterViewModel RegisterViewModel{get; set;}
        public VENDOR VENDOR { get; set; }
        public VENDORCONTACT VENDORCONTACT { get; set; }
+       [Display(Name = "Select Your Companies Product Categories")]
        public ICollection<string> CategoryList { get; set; }
     }
 

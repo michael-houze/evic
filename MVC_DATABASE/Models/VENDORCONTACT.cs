@@ -11,12 +11,16 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class VENDORCONTACT
     {
         public string Id { get; set; }
+        [Display(Name = "Secondary Representative")]
         public string CONTACTNAME { get; set; }
+        [Display(Name = "Secondary Phone Number")]
         public string CONTACTPHONE { get; set; }
+        [Display(Name = "Secondary Email Address")]
         public string CONTACTEMAIL { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
