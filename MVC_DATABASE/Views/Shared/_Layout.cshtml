@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Baptist Health Supply Solutions</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="@Url.Content("~/Content/Site.css")"
@@ -16,13 +16,15 @@
 
 <body>
 <div id="frame">
-    <div id="header">
-        <div class="banner">
-            <a href="http://www.bhsi.com/">
-                <img alt="logo" src="~/content/images/baptistlogo.png" />
-            </a>
-        </div>
-     <div class="col-lg-4 bottom">
+<div id="header">
+
+     <div class="banner">
+         <a href="http://www.bhsi.com/">
+             <img alt="logo" src="~/content/images/baptistlogo.png" />
+         </a>
+     </div>
+
+     <div class="subnav btn-oldstyle2">
         @if (Request.IsAuthenticated)
         {
             @Html.Partial("_LoggedIn")
@@ -36,17 +38,24 @@
     <div id="nav">
         <div id="tabs">
             <div class="btn-oldstyle">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">RFI</a></li>
-                <li><a href="#">RFP</a></li>
-                <li><a href="#">Account Management</a></li>
-                <li><a href="#">Contracts</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Help</a></li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                    <li>@Html.ActionLink("RFI", "Index", "RFIs", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                    <li>@Html.ActionLink("RFP", "Index", "RFPs", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                    <li>@Html.ActionLink("Account Management", "Index", "Account", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                    <li>@Html.ActionLink("Contracts", "Index", "Contracts", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                    <li>@Html.ActionLink("Help", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                }
             </div> <!--btn-oldstyle-->
         </div> <!--tabs-->
     </div> <!--nav-->
-    </div> <!--header-->
+
+</div> <!--header-->
 
 <div id="body-content">
     @RenderBody()
