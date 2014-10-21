@@ -206,6 +206,9 @@ namespace MVC_DATABASE.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            model.CategoryList = new List<string>();
+            
+            ViewBag.CATEGORY = new MultiSelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
             return View(model);
         }
 

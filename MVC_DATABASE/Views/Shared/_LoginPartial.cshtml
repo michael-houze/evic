@@ -12,8 +12,13 @@
             </a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
                 <!-- Login form here -->
+<<<<<<< HEAD
                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", style = "width:395px" }))
             {
+=======
+               @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", style = "width:400px" }))
+               {
+>>>>>>> origin/master
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
