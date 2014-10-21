@@ -3,11 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>@ViewBag.Title - Baptist Health Supply Solutions</title>
-=======
     <title>@ViewBag.Title - Baptist Health Supply Chain Solutions</title>
->>>>>>> origin/master
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="@Url.Content("~/Content/Site.css")"
@@ -19,49 +15,6 @@
    </head>
 
 <body>
-<<<<<<< HEAD
-<div id="frame">
-<div id="header">
-
-     <div class="banner">
-         <a href="http://www.bhsi.com/">
-             <img alt="logo" src="~/content/images/baptistlogo.png" />
-         </a>
-     </div>
-
-     <div class="subnav btn-oldstyle2">
-        @if (Request.IsAuthenticated)
-        {
-            @Html.Partial("_LoggedIn")
-        }
-        else
-        {
-            @Html.Partial("_LoginPartial")
-        }
-    </div>
-
-    <div id="nav">
-        <div id="tabs">
-            <div class="btn-oldstyle">
-                @if (Request.IsAuthenticated)
-                {
-                    <li>@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                }
-                else
-                {
-                    <li>@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                    <li>@Html.ActionLink("RFI", "Index", "RFIs", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                    <li>@Html.ActionLink("RFP", "Index", "RFPs", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                    <li>@Html.ActionLink("Account Management", "Index", "Account", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                    <li>@Html.ActionLink("Contracts", "Index", "Contracts", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                    <li>@Html.ActionLink("Help", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                }
-            </div> <!--btn-oldstyle-->
-        </div> <!--tabs-->
-    </div> <!--nav-->
-
-</div> <!--header-->
-=======
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -80,7 +33,6 @@
                     }
                       
                 </div>
->>>>>>> origin/master
 
                 <div class="col-lg-1"></div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
