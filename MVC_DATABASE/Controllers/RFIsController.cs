@@ -29,20 +29,8 @@ namespace MVC_DATABASE.Controllers
         // GET: RFIs
         public ActionResult Index()
         {
-            rFIEmployeeIndex.RFIInviteList = new List<string>();
-            rFIEmployeeIndex.VendorResponseCount = 0;
-            rFIEmployeeIndex.TemplateList = new List<TEMPLATE>();
-            
-            foreach(var item in db.TEMPLATEs)
-            {
-                if (item.TYPE == "GHX")
-                {
-                    rFIEmployeeIndex.TemplateList.Add(item);
-                }
-            }
-
-            ViewBag.Category = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
-            ViewBag.Templates = new SelectList(rFIEmployeeIndex.TemplateList, "TEMPLATEID", "TEMPLATEID");
+            rFIEmployeeIndex.RFIList = new List<RFI>();
+            rFIEmployeeIndex.RFIList = db.RFIs.ToList<RFI>();
             return View(rFIEmployeeIndex);
         }
 
@@ -67,7 +55,13 @@ namespace MVC_DATABASE.Controllers
         public ActionResult Create()
         {
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
-            ViewBag.CATEGORY = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
+            var result = from r in db.OFFEREDCATEGORies
+                         where r.ACCEPTED == true
+                         select r.CATEGORY;
+
+
+            IQueryable<string> acceptedCategories = result.Distinct();
+            ViewBag.CATEGORY = acceptedCategories;
             ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
             return View();
         }
@@ -77,18 +71,33 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "RFIID,TEMPLATEID,CATEGORY,CREATED,EXPIRES")] RFI rFI)
+        public async Task<ActionResult> Create(RFIEmployeeIndex model)
         {
+
             if (ModelState.IsValid)
             {
-                db.RFIs.Add(rFI);
+                var rfi = model.RFI;
+                db.RFIs.Add(model.RFI);
+                foreach (var x in model.RFIInviteList)
+                {
+                    var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x};
+                    
+                    db.RFIINVITEs.Add(rfiinvite);
+                }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFI.TEMPLATEID);
-            ViewBag.CATEGORY = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
-            return View(rFI);
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+
+            var result = from r in db.OFFEREDCATEGORies
+                         where r.ACCEPTED == true
+                         select r.CATEGORY;
+
+
+            IQueryable<string> acceptedCategories = result.Distinct();
+            ViewBag.CATEGORY = acceptedCategories;
+            return View(model);
         }
 
         [HttpGet]
@@ -98,7 +107,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAcceptedVendors(SelectListItem ProductCategory)
+        public ActionResult GetAcceptedVendors(string ProductCategory)
         {
 
             BaptistEntities dbo = new BaptistEntities();
@@ -109,14 +118,18 @@ namespace MVC_DATABASE.Controllers
                                       join p in dbo.PRODUCTCATEGORies
                                       on c.CATEGORY equals p.CATEGORY
                                       where c.ACCEPTED == true
-                                      where c.CATEGORY.ToString() == ProductCategory.ToString()
+                                      where c.CATEGORY.ToString() == ProductCategory
                                       select new { v };
-            ICollection<VENDOR> AcceptedVendors = new List<VENDOR>();
-            AcceptedVendors = (List<VENDOR>)vendorProductsQuery;
+            
 
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
-            ViewBag.CATEGORY = new SelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
-            ViewBag.AcceptedVendors = new MultiSelectList(AcceptedVendors, "Id", "ORGANIZATION");
+            var result = from r in db.OFFEREDCATEGORies
+                         where r.ACCEPTED == true
+                         select r.CATEGORY;
+
+            IQueryable<string> acceptedCategories = result.Distinct();
+            ViewBag.CATEGORY = acceptedCategories;
+            ViewBag.AcceptedVendors = vendorProductsQuery;
 
             return View();
         } 

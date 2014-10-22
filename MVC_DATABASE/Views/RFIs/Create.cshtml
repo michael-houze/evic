@@ -5,27 +5,21 @@
     ViewBag.Title = "Create RFI";
 
 }
-<script type="text/javascript">
-    $(function () {
-        $("select#CategorySelect").change(function () {
-            if ($("select#CategorySelect").val() != "-1") {
-                $.ajax({
-                    url: "~/RFIs/GetAcceptedVendor",
-                    type: 'POST',
-                    datatype: "json",
-                    data: $("#CategorySelect").val(),
-                    success: function (response) {
 
-                    },
-                    error: function (xhr, status, error) {
-                        //                                  
-                        alert(error);
-                    }
+@section Scripts {
+    <script type="text/jscript">
+        $('#CATEGORY').click(function () {
+            $.getJSON('/RFIs/GetAcceptedVendors' + $('#CATEGORY').val(), function (data) {
+                var url = "/RFIs/GetAcceptedVendors"
+                var productCategory = $("#CATEGORY").val().toString();
+                $.post(url, { ProductCategory : productCategory }, function (data) {
+                    
+                
                 });
-            }
-        });
-    })
-</script>
+            })
+        })
+        </script>
+    }
 
 <h2>@ViewBag.Title</h2>
 
@@ -41,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RFI.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.RFI.CATEGORY, (SelectList)ViewBag.Category, htmlAttributes: new { @class = "CategorySelect"})
+                @Html.DropDownListFor(m => m.RFI.CATEGORY, new SelectList (ViewBag.Category))
                 @Html.ValidationMessageFor(model => model.RFI.CATEGORY, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -68,7 +62,7 @@
             <div class="col-md-10">
             @if(ViewBag.AcceptedVendors != null)
             {
-                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors, htmlAttributes: new { @class = "rfiinvitelist"})
+                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors)
             }
             </div>
             

@@ -7,7 +7,7 @@
 
 
 
-<h2>ViewBag.Title</h2>
+<h2>@ViewBag.Title</h2>
 
 
 
@@ -73,7 +73,7 @@
                 </div>
                 <!--Html.ListBox("CATEGORY", null, htmlAttributes: new MultiSelectList("CATEGORY"))-->
                 <div class="col-sm-12">
-                    @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY, new { @id = "categorySelect", @class = "form-control" })
+                    @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY, new { @class = "form-control" })
                 </div>
             </div>
             
