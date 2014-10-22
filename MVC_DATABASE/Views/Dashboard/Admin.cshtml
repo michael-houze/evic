@@ -1,0 +1,38 @@
+﻿@model MVC_DATABASE.Models.ViewModels.AdminDashboard
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2 class="text-center">Administrator Dashboard</h2>
+
+<hr />
+
+<div class="alert alert-info alert-dismissible text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    Welcome to the Administrator Dashboard
+</div>
+
+<hr />
+
+<div id="calendar" class=".calendar-body"></div>
+
+<script>
+
+	$(document).ready(function() {
+
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay'
+			},
+			editable: true,
+			eventLimit: true,
+			events: []
+		});
+
+	});
+
+</script>
+

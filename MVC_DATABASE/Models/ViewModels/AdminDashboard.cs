@@ -5,8 +5,7 @@ using System.Web;
 
 namespace MVC_DATABASE.Models.ViewModels
 {
-    public class Dashboard
+    public class AdminDashboard
     {
-        public int unregisteredVendors;
     }
 }
