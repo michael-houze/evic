@@ -12,7 +12,8 @@
 {
     <div class="alert alert-warning alert-dismissible text-center" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        There are currently @Html.DisplayFor( model => model.pendingVendors ) vendor applications awaiting approval
+        There are currently @Html.DisplayFor( model => model.pendingVendors ) vendor applications awaiting approval.<br />
+        Go to the @Html.ActionLink("Account Management", "Index", "Account") page to respond.
     </div>
 }
 else
