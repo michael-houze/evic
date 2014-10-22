@@ -28,7 +28,7 @@ namespace MVC_DATABASE.Controllers
         public ActionResult Index()
         {
             Dashboard model = new Dashboard();
-            model.unregisteredVendors = 3334444;
+            model.unregisteredVendors = -11111111;
             return View(model);
         }
     }
