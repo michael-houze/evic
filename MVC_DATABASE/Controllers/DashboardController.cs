@@ -1,4 +1,5 @@
-﻿using MVC_DATABASE.Models.ViewModels;
+﻿using MVC_DATABASE.Models;
+using MVC_DATABASE.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,14 @@ namespace MVC_DATABASE.Controllers
 {
     public class DashboardController : Controller
     {
+        private BaptistEntities db = new BaptistEntities();
+
         // GET: Dashboard
         public ActionResult Admin()
         {
             AdminDashboard model = new AdminDashboard();
+
+            model.pendingVendors = getPendingVendorCount();
 
             return View( model );
         }
@@ -29,6 +34,13 @@ namespace MVC_DATABASE.Controllers
             VendorDashboard model = new VendorDashboard();
 
             return View( model );
+        }
+
+        private int getPendingVendorCount()
+        {
+            var pendingVendors = db.VENDORs.Where(model => model.VENDSTATUS == "PENDING").Count();
+
+            return pendingVendors;
         }
     }
 }

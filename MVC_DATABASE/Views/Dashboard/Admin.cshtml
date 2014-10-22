@@ -13,6 +13,14 @@
     Welcome to the Administrator Dashboard
 </div>
 
+@if( Model.pendingVendors > 0 )
+{
+    <div class="alert alert-warning alert-dismissible text-center" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        There are currently @Html.DisplayFor( model => model.pendingVendors ) vendors awaiting system access approval
+    </div>
+}
+
 <hr />
 
 <div id="calendar" class=".calendar-body"></div>
