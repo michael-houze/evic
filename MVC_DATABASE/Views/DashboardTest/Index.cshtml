@@ -1,9 +1,20 @@
-﻿
+﻿@model MVC_DATABASE.Models.ViewModels.Dashboard
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Dashboard Test Controller</h2>
+<h2>@Html.DisplayFor(model => model.unregisteredVendors)</h2>
+
+<div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    Vendor Gould's Medical Supply has responded to RFI #11-2222
+</div>
+
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    There a currently 3 Vendor Registration applications that need responses
+</div>
 
 <div id="calendar" class=".calendar-body"></div>
 

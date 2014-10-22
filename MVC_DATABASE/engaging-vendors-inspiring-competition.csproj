@@ -242,6 +242,7 @@
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
+    <Compile Include="Models\ViewModels\Dashboard.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
     <Compile Include="Models\ViewModels\RFICreate.cs" />
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
