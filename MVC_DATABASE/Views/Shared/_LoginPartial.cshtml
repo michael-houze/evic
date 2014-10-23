@@ -3,17 +3,17 @@
 
 @model LoginViewModel
 
-   
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Log in <span class="caret"></span>
-            </a>
-            <div class="dropdown-menu navbar-inverse" style="padding: 15px; padding-bottom: 0px;">
-                <!-- Login form here -->
-               @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", style = "width:400px" }))
-               {
+
+<ul class="nav navbar-nav navbar-right">
+
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            Login <span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+            <!-- Login form here -->
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", style = "width:395px" }))
+            {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -29,23 +29,16 @@
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
-                </div>
-                <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="checkbox">
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
+                            <input type="submit" value="Login" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-               }
-            </div>
-        </li>
-    </ul>
+            }
+        </div>
+    </li>
+</ul>
 
-}
