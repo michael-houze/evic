@@ -129,6 +129,7 @@ namespace MVC_DATABASE.Controllers
 
             IQueryable<string> acceptedCategories = result.Distinct();
             ViewBag.CATEGORY = acceptedCategories;
+            
             ViewBag.AcceptedVendors = vendorProductsQuery;
 
             return View();
@@ -146,8 +147,19 @@ namespace MVC_DATABASE.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFI.TEMPLATEID);
-            return View(rFI);
+            rFIEmployeeIndex.EditRFIInviteList = new List<RFIINVITE>();
+            rFIEmployeeIndex.RFI = await db.RFIs.FindAsync(id);
+
+                var result = from r in db.VENDORs
+                             join p in db.RFIINVITEs
+                         on r.Id equals p.Id
+                         where p.RFIID == id
+                         select r;
+
+            
+            ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
+            
+            return View(rFIEmployeeIndex);
         }
 
         // POST: RFIs/Edit/5
