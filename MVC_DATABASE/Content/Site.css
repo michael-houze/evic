@@ -47,7 +47,11 @@
     #nav {
         min-height: 56px;
     }
-		
+	
+    .navbar-nav.navbar-right:last-child {
+        margin-right: 0px;
+    }
+    	
     .subnav {
 		width: 310px;
 		height: auto;
@@ -156,7 +160,7 @@
 		font-size: 16px;
 	}
 
-}
+
 
 	#nav {
 		width: inherit;
@@ -198,10 +202,10 @@
 		height: 155px;
 	}
 
-#header .banner img {
-    width: 100%;
-    height: auto;
-}
+    #header .banner img {
+        width: 100%;
+        height: auto;
+    }
 
     .btn {
         width: auto;
@@ -211,6 +215,8 @@
         margin-bottom: 9px;
 	}
 			
+
+}
 
 :root {
 	background: rgb(76,76,76); /* Old browsers */
@@ -533,3 +539,15 @@ hr {
 .b {
         font-weight: bold;
     }
+
+#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+.calendar-body {
+    margin: 40px 10px;
+		padding: 0;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+}
