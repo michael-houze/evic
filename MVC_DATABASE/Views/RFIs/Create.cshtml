@@ -12,7 +12,7 @@
             $.getJSON('/RFIs/GetAcceptedVendors' + $('#CATEGORY').val(), function (data) {
                 var url = "/RFIs/GetAcceptedVendors"
                 var productCategory = $("#CATEGORY").val().toString();
-                $.post(url, { ProductCategory : productCategory }, function (data) {
+                $.ajax(url, { ProductCategory : productCategory }, function (data) {
                     
                 
                 });
