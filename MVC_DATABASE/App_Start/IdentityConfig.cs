@@ -19,7 +19,34 @@ namespace MVC_DATABASE
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+
+            //Credentials ---Added by Bongo.
+            var credentialUserName = "baptisthealthtest@gmail.com";
+            var sentFrom = "baptisthealthtest@gmail.com";
+            var pwd = "Pa555w0rd";
+
+            //Configures the client ---Added by Bongo.
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+
+            //Creates the credentials --Added by Bongo.
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+            client.EnableSsl = true;
+            client.Credentials = credentials;
+
+            //Creates the message. ---Added by Bongo.
+            var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+
+            //Sends the message. --Added by Bongo
+            return client.SendMailAsync(mail);
+
+
+
+           // return Task.FromResult(0); <-----This is what this method was originally returning.
         }
     }
 
@@ -71,6 +98,11 @@ namespace MVC_DATABASE
             {
                 MessageFormat = "Your security code is {0}"
             });
+
+            //Added by Bongo. Sets Email and SMS services on the ApplicationUserManager instance.
+            manager.EmailService = new EmailService();
+            manager.SmsService = new SmsService();
+
             manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
             {
                 Subject = "Security Code",
