@@ -3,50 +3,59 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Baptist Health Supply Solutions</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="@Url.Content("~/Content/Site.css")"
           rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"
             type="text/javascript"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="row">
-                <div class="col-lg-7">
+    <div id="frame">
+        <div id="header">
+
+            <div class="banner">
+                <a href="http://www.bhsi.com/">
                     <img alt="logo" src="~/content/images/baptistlogo.png" />
-                </div>
+                </a>
+            </div>
 
-                <div class="col-lg-1"></div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="nav">
+                <div id="tabs">
+                    <div class="btn-oldstyle">
+                        <li>@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                    </div> <!--btn-oldstyle-->
+                </div> <!--tabs-->
+            </div> <!--nav-->
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("RFI", "Index", "RFI")</li>
-                        <li>@Html.ActionLink("RFP", "Index", "RFP")</li>
-                        <li>@Html.ActionLink("Contract", "Index", "Contract")</li>
-                        <li>@Html.ActionLink("Reports", "Index", "Reports")  </li>
-                    </ul>
-                    <div class="col-lg-1"></div>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.row  -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Baptist Health Supply Chain Management</p>
-        </footer>
-    </div>
+        </div> <!--header-->
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        <div id="body-content">
+            @RenderBody()
+        </div>
+
+        <div id="footer">
+            <p>&copy; Copyright 2014 Baptist Health. All Rights Reserved.</p>
+            <p>2701 Eastpoint Parkway | Louisville, Kentucky 40223 | (502) 896-5000</p>
+            <br>
+            <nav>
+                <a href="http://bhsi.com/Left+Navigation/About/Compliance">Compliance</a> |
+                <a href="http://bhsi.com/Left+Navigation/About/Legal+Disclaimer">Disclaimer</a> |
+                <a href="http://bhsi.com/">Home</a> |
+                <a href="http://bhsi.com/Left+Navigation/About/Mission+Statement">Mission Statement</a> |
+                <a href="http://bhsi.com/Left+Navigation/About/Privacy+Notice">Privacy Notice</a> |
+                <a href="http://bhsi.com/Homepage/Site+Map">Site Map</a> |
+                <a href="https://www.bhsi.com/portal/site/bhsi/contactus">Contact Us</a> |
+                <a href="http://m.bhsi.com/">Mobile</a>
+            </nav>
+        </div> <!--footer-->
+    </div> <!--frame-->
     @RenderSection("scripts", required: false)
+
 </body>
+
 </html>
