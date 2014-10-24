@@ -18,7 +18,7 @@ namespace MVC_DATABASE.Models
         public int RFIID { get; set; }
         public string Id { get; set; }
 
-        [Required]
+        
         [Display(Name = "GHX_PATH")]
         [DataType(DataType.Text)]
         public string GHX_PATH { get; set; }

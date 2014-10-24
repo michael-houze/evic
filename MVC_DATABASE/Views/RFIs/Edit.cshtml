@@ -14,64 +14,72 @@
         <h4>RFI</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.RFI.RFIID)
+   
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RFI.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RFI.RFIID, "RFIID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.RFI.TEMPLATEID, new { @readonly = "readonly", @class = "form-control" })
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RFI.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.RFI.CATEGORY, new { @readonly = "readonly", @class = "form-control" })
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RFI.CREATED, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.RFI.CREATED, new { @readonly = "readonly", @class = "form-control" })
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RFI.EXPIRES, htmlAttributes: new { @class = "control-label col-md-2" })          
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.RFI.EXPIRES, new { @readonly = "readonly", @class = "form-control" })
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                @Html.LabelFor(model => model.RFIInviteList, htmlAttributes: new { @class = "control-label" })
-            </div>     
-            <div class="col-sm-12">
-                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors, new { @readonly = "readonly", @class = "form-control" })
+                @Html.TextBoxFor(model => model.RFI.RFIID, new { @readonly = "readonly", @class = "form-control" })
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-12">
-                @Html.LabelFor(model => model.RFIInviteList, htmlAttributes: new { @class = "control-label" })
-            </div>
-            <div class="col-sm-12">
-                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors, new { @readonly = "readonly", @class = "form-control" })
-            </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RFI.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.RFI.TEMPLATEID, new { @readonly = "readonly", @class = "form-control" })
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RFI.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.RFI.CATEGORY, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RFI.CREATED, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.RFI.CREATED, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RFI.EXPIRES, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.RFI.EXPIRES, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.RFIInviteVendorList, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-sm-12">
+                    @Html.ListBoxFor(model => model.RFIInviteVendorList, (MultiSelectList)ViewBag.AcceptedVendors, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.RFIInviteList, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-sm-12">
+                    @Html.ListBoxFor(model => model.RFIInviteList, (MultiSelectList)ViewBag.SelectVendors, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
         </div>
-    </div>
 }
 
 <div>
