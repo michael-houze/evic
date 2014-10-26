@@ -43,12 +43,32 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RFI rFI = await db.RFIs.FindAsync(id);
-            if (rFI == null)
+            rFIEmployeeIndex.RFI = await db.RFIs.FindAsync(id);
+            if (rFIEmployeeIndex.RFI == null)
             {
                 return HttpNotFound();
             }
-            return View(rFI);
+
+            rFIEmployeeIndex.VendorList = new List<VENDOR>();
+
+            var vendorlist = new List<VENDOR>();
+            // this is returning duplicate vendors...
+            foreach (var x in db.RFIINVITEs)
+            {
+                if (x.RFIID == id)
+                {
+                    foreach(var y in db.VENDORs)
+                    {
+                        if(x.Id == y.Id)
+                        {
+                           vendorlist.Add(y);
+                        }
+                    }                   
+                }
+            }
+
+            rFIEmployeeIndex.VendorList = vendorlist;
+            return View(rFIEmployeeIndex);
         }
 
         // GET: RFIs/Create
@@ -142,13 +162,13 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RFI rFI = await db.RFIs.FindAsync(id);
-            if (rFI == null)
+            rFIEmployeeIndex.RFI = await db.RFIs.FindAsync(id);
+            if (rFIEmployeeIndex.RFI == null)
             {
                 return HttpNotFound();
             }
             rFIEmployeeIndex.EditRFIInviteList = new List<RFIINVITE>();
-            rFIEmployeeIndex.RFI = await db.RFIs.FindAsync(id);
+         
 
             var vendorProductsQuery = from v in db.VENDORs
                                       join c in db.OFFEREDCATEGORies
