@@ -86,6 +86,17 @@ namespace MVC_DATABASE.Controllers
                 return View(model);
             }
 
+            // Require the user to have a confirmed email before they can log on.
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    //ViewBag.errorMessage = "You must confirm your email in order to log on.";
+                    return View("EmailNotConfirmed");
+                }
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -192,7 +203,7 @@ namespace MVC_DATABASE.Controllers
                     db.VENDORCONTACTs.Add(vendorcontact);
 
                     await db.SaveChangesAsync();
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                   // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false); <<---- Not originally commented out. Commented out to prevent log in until the user is confirmed.
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
