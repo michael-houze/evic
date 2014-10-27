@@ -58,33 +58,10 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
-            @Html.ActionLink("Responses", "Responses", new { id=item.RFIID})
+            @Html.ActionLink("Responses", "VendorResponse", new { id=item.RFIID})
         </td>
     </tr>
 }
 }
 
 </table>
-<script type="text/javascript">
-
-$(document).ready(function () {
-
-$(".CategorySelect").change(function () {
-
-    alert("DropDown selected value is changed ");
-
-    
-
-var DropDownSelectedVal = $("#RFI_CATEGORY :selected").val();
-
-if (DropDownSelectedVal != null) {
-    @Model.ProductCategory = 
- 
-
-}
-
-});
-
-});
-
-</script>

@@ -50,26 +50,14 @@
             @Html.DisplayFor(model => model.RFI.EXPIRES)
         </dd>
     </dl>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VendorList)
-            </th>
-            <th></th>
-        </tr>
-        @if (Model.VendorList != null)
-        { 
-            foreach (var item in Model.VendorList)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ORGANIZATION)
-                    </td>
-                </tr>
-            }
-        }
-    </table>
-</div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.RFIInviteVendorList, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-sm-12">
+            @Html.ListBoxFor(model => model.RFIInviteVendorList, (MultiSelectList)ViewBag.AcceptedVendors, new { @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+<br/>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.RFI.RFIID }) |
     @Html.ActionLink("Back to List", "Index")

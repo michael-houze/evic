@@ -1,0 +1,35 @@
+﻿@model MVC_DATABASE.Models.ViewModels.RFIResponse
+
+@{
+    ViewBag.Title = "Vendor Response";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.rfiinvite.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rfiinvite.GHX_PATH)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model.inviteList != null)
+    {
+        foreach (var item in Model.inviteList)
+        {
+            var path = item.GHX_PATH;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    <a href= @path> Product Catalog </a>
+                </td>
+            </tr>
+        }
+    }
+
+</table>

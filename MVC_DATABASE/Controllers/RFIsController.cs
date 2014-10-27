@@ -49,25 +49,14 @@ namespace MVC_DATABASE.Controllers
                 return HttpNotFound();
             }
 
-            rFIEmployeeIndex.VendorList = new List<VENDOR>();
+            var result = from r in db.VENDORs
+                         join p in db.RFIINVITEs
+                     on r.Id equals p.Id
+                         where p.RFIID == id
+                         select r;
 
-            var vendorlist = new List<VENDOR>();
-            // this is returning duplicate vendors...
-            foreach (var x in db.RFIINVITEs)
-            {
-                if (x.RFIID == id)
-                {
-                    foreach(var y in db.VENDORs)
-                    {
-                        if(x.Id == y.Id)
-                        {
-                           vendorlist.Add(y);
-                        }
-                    }                   
-                }
-            }
+            ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
 
-            rFIEmployeeIndex.VendorList = vendorlist;
             return View(rFIEmployeeIndex);
         }
 
@@ -272,6 +261,41 @@ namespace MVC_DATABASE.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        RFIResponse responsemodel = new RFIResponse();
+ 
+        public async Task<ActionResult> VendorResponse(int? id)
+        {
+ 
+ 
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            responsemodel.rfi = await db.RFIs.FindAsync(id);
+
+            if (responsemodel.rfi == null)
+            {
+                return HttpNotFound();
+            }
+
+            responsemodel.inviteList = new List<RFIINVITE>();
+
+            foreach (var x in db.RFIINVITEs.ToList())
+            {
+
+                if (x.RFIID == id)
+                {
+                        
+                        responsemodel.inviteList.Add(x);
+                    
+                }
+            }
+
+
+            return View(responsemodel);
         }
     }
 }
