@@ -14,7 +14,7 @@
     {
         <div class="alert alert-info text-center dashboard" role="alert">
             There are currently @Html.DisplayFor(model => model.pendingRFIs) RFIs awaiting your response.<br />
-            Go to the @Html.ActionLink("Account Management", "Index", "Account", null, new { @class = "dashboard" }) page to respond.<br />
+            Go to the @Html.ActionLink("RFI Management", "Index", "RFIs", null, new { @class = "dashboard" }) page to respond.<br />
         </div>
     }
     else
@@ -28,7 +28,7 @@
     {
         <div class="alert alert-info text-center dashboard" role="alert">
             There are currently @Html.DisplayFor(model => model.pendingRFPs) RFPs awaiting your response.<br />
-            Go to the @Html.ActionLink("Account Management", "Index", "Account", null, new { @class = "dashboard" }) page to respond.<br />
+            Go to the @Html.ActionLink("RFP Management", "Index", "RFPs", null, new { @class = "dashboard" }) page to respond.<br />
         </div>
     }
     else
