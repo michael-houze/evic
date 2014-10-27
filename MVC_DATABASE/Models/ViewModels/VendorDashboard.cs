@@ -7,5 +7,10 @@ namespace MVC_DATABASE.Models.ViewModels
 {
     public class VendorDashboard
     {
+        // The number of RFIs awaiting response from vendor
+        public int pendingRFIs;
+
+        // The number of RFPs awaiting response from vendor
+        public int pendingRFPs;
     }
 }
