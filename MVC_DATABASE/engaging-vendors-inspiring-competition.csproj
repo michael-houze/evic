@@ -209,6 +209,7 @@
     <Compile Include="Models\CONTRACT.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContractSummary.cs" />
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
@@ -229,12 +230,14 @@
     <Compile Include="Models\RFIINVITE.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RFISummary.cs" />
     <Compile Include="Models\RFP.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RFPINVITE.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RFPSummary.cs" />
     <Compile Include="Models\TEMPLATE.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>

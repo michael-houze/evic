@@ -10,9 +10,26 @@
 
     <hr />
 
-    <div class="alert alert-success text-center" role="alert">
-        Welcome to the Employee Dashboard
-    </div>
+    @for (var rfi = 0; rfi < Model.rfiSummaries.Count(); rfi++)
+    {
+        <div class="alert alert-info text-center" role="alert">
+            RFI @Html.DisplayFor(model => model.rfiSummaries[rfi].RFINumber) has expired and has @Html.DisplayFor(model => model.rfiSummaries[rfi].ResponseCount) reponses.
+        </div>
+    }
+
+    @for (var rfp = 0; rfp < Model.rfpSummaries.Count(); rfp++)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            RFP @Html.DisplayFor(model => model.rfpSummaries[rfp].RFPNumber) has expired and has @Html.DisplayFor(model => model.rfpSummaries[rfp].ResponseCount) reponses.
+        </div>
+    }
+
+    @for (var contract = 0; contract < Model.contractSummaries.Count(); contract++)
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            Contract @Html.DisplayFor(model => model.contractSummaries[contract].ContractNumber) has expired and has @Html.DisplayFor(model => model.contractSummaries[contract].ResponseCount) reponses.
+        </div>
+    }
 
     <hr />
 
