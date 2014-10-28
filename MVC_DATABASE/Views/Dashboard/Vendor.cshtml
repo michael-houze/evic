@@ -26,7 +26,7 @@
 
     @if (Model.pendingRFPs > 0)
     {
-        <div class="alert alert-info text-center dashboard" role="alert">
+        <div class="alert alert-danger text-center dashboard" role="alert">
             There are currently @Html.DisplayFor(model => model.pendingRFPs) RFPs awaiting your response.<br />
             Go to the @Html.ActionLink("RFP Management", "Index", "RFPs", null, new { @class = "dashboard" }) page to respond.<br />
         </div>

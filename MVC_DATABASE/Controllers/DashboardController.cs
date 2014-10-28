@@ -36,6 +36,9 @@ namespace MVC_DATABASE.Controllers
             model.pendingRFIs = getPendingVendorRFICount();
             model.pendingRFPs = getPendingVendorRFPCount();
 
+            // temp
+            model.pendingRFIs = 0;
+
             return View( model );
         }
 

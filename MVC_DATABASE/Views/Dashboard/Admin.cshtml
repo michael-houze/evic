@@ -12,7 +12,7 @@
 
     @if (Model.pendingVendors > 0)
     {
-        <div class="alert alert-info text-center dashboard" role="alert">
+        <div class="alert alert-warning text-center dashboard" role="alert">
             There are currently @Html.DisplayFor(model => model.pendingVendors) vendor applications awaiting approval.<br />
             Go to the @Html.ActionLink("Account Management", "Index", "Account", null , new { @class = "dashboard" }) page to respond.<br />
         </div>

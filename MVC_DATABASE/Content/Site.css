@@ -648,20 +648,36 @@ h1.dashboard {
     font-weight: bold;
 }
 
+.alert-danger {
+    background-color: #C7BED8;
+    border-color: #9C8AB4;
+    color: #4A176D;
+    font-size: 16px;
+    font-weight:normal;
+}
+
 .alert-info {
-color: #EA6A2A;
-background-color: #FFD090;
-border-color: #FFB777;
-font-weight:normal;
-font-size: 16px;
+    background-color: #D9EDF5;
+    border-color: #B8DDEC;
+    color: #4DB3D0;
+    font-size: 16px;
+    font-weight:normal;
 }
 
 .alert-success {
-color: #009DBD;
-background-color: #66FFFF;
-border-color: #4DEAFF;
-font-weight:normal;
-font-size: 16px;
+    background-color: #C8C9CB;
+    border-color: #B3B4B7;
+    color: #77787A;
+    font-size: 16px;
+    font-weight:normal;
+}
+
+.alert-warning {
+    background-color: #FBDDC5;
+    border-color: #F3A26D;
+    color: #EA6D21;
+    font-size: 16px;
+    font-weight:normal;
 }
 
 a.dashboard {
