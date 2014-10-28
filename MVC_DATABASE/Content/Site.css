@@ -297,10 +297,14 @@ hr {
 
 #body-content{
     position: relative;
-	background-color: #f5f5c9;
+	background-color: white;
 	float: left;
 	margin-top: 0;
 	margin-bottom: 0;
+}
+
+hr{
+    border-color: #77787b;
 }
 
 img {
