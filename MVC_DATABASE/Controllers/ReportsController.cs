@@ -9,7 +9,7 @@ namespace MVC_DATABASE.Controllers
     public class ReportsController : Controller
     {
         // GET: Reports
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View();
         }
