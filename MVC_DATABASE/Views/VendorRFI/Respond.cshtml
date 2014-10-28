@@ -1,0 +1,17 @@
+﻿@model MVC_DATABASE.Models.RFIINVITE
+
+@{
+    ViewBag.Title = "Respond";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Respond</h2>
+
+@using (Html.BeginForm("Respond", "VendorRFI", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="OK" />
+}
+
+
+

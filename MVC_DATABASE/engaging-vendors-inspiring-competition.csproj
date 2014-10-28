@@ -255,6 +255,7 @@
     <Compile Include="Models\ViewModels\EmployeeDashboard.cs" />
     <Compile Include="Models\ViewModels\ReportRFP.cs" />
     <Compile Include="Models\ViewModels\RFICreate.cs" />
+    <Compile Include="Models\ViewModels\RFIInvite.cs" />
     <Compile Include="Models\ViewModels\RFIResponse.cs" />
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
     <Compile Include="Models\ViewModels\RFIEmployeeIndex.cs" />
@@ -407,17 +408,18 @@
     <Content Include="Views\RolesAdmin\Edit.cshtml" />
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
     <Content Include="Views\RFIs\VendorResponse.cshtml" />
+    <Content Include="Views\VendorRFI\Respond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\File_Uploads\" />
     <Folder Include="Content\Fonts\MyriadPro\" />
     <Folder Include="Content\RFIs\5\" />
+    <Folder Include="Content\RFIs\TestFolder\" />
     <Folder Include="Content\Videos\Vendor\" />
     <Folder Include="Views\Query\" />
     <Folder Include="Views\Reports\" />
     <Folder Include="Views\UserAdmin\" />
-    <Folder Include="Views\VendorRFI\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
