@@ -180,8 +180,8 @@
 	#tabs {
 		padding-top: 1.5px;
 		padding-bottom: 1.5px;
-		margin-left: 65px;
-		margin-right: 65px;
+		margin-left: 80px;
+		margin-right: auto;
 	}
 		
 	#tabs li {
@@ -236,7 +236,6 @@
         border-bottom-right-radius: 0px;
     }
 
-<<<<<<< HEAD
     .loggedin:last-child {
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
@@ -244,10 +243,6 @@
 }
 
 html {
-=======
-h1, h3, h4, h5, h6,
-p, a {
->>>>>>> origin/master
     font-family: "sans-serif", "Cambria";
 }
 
@@ -269,7 +264,7 @@ h1 {
 }
 
 hr {
-    border-color: #77787b;
+    border-color: #A7A7A7 -moz-use-text-color -moz-use-text-color;
 }
 
 .b {
@@ -302,11 +297,7 @@ hr {
 
 #body-content{
     position: relative;
-<<<<<<< HEAD
 	background-color: #f5f5c9;
-=======
-	background-color: white;
->>>>>>> origin/master
 	float: left;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -677,6 +668,3 @@ a.dashboard {
 		max-width: 900px;
 		margin: 0 auto;
 }
-
-
-
