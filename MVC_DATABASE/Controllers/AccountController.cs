@@ -740,7 +740,7 @@ namespace MVC_DATABASE.Controllers
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
                new { userId = userID, code = code }, protocol: Request.Url.Scheme);
             await UserManager.SendEmailAsync(userID, subject,
-               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+               "Please confirm your account by clicking this link: " + callbackUrl);
 
             return callbackUrl;
         }
