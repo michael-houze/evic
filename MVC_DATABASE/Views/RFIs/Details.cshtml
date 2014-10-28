@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.RFI
+﻿@model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
 
 @{
     ViewBag.Title = "Details";
@@ -11,40 +11,54 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CATEGORY)
+            @Html.DisplayNameFor(model => model.RFI.RFIID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CATEGORY)
+            @Html.DisplayFor(model => model.RFI.RFIID)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CREATED)
+            @Html.DisplayNameFor(model => model.RFI.TEMPLATEID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CREATED)
+            @Html.DisplayFor(model => model.RFI.TEMPLATEID)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EXPIRES)
+            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EXPIRES)
+            @Html.DisplayFor(model => model.RFI.CATEGORY)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+            @Html.DisplayNameFor(model => model.RFI.CREATED)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TEMPLATE.TYPE)
+            @Html.DisplayFor(model => model.RFI.CREATED)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.RFI.EXPIRES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFI.EXPIRES)
+        </dd>
     </dl>
-</div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.RFIInviteVendorList, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-sm-12">
+            @Html.ListBoxFor(model => model.RFIInviteVendorList, (MultiSelectList)ViewBag.AcceptedVendors, new { @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+<br/>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RFIID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RFI.RFIID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

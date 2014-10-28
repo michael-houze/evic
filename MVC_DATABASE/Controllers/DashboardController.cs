@@ -33,6 +33,9 @@ namespace MVC_DATABASE.Controllers
         {
             VendorDashboard model = new VendorDashboard();
 
+            model.pendingRFIs = getPendingVendorRFICount();
+            model.pendingRFPs = getPendingVendorRFPCount();
+
             return View( model );
         }
 
@@ -42,5 +45,20 @@ namespace MVC_DATABASE.Controllers
 
             return pendingVendors;
         }
+
+        private int getPendingVendorRFICount()
+        {
+            // This method will return the number of RFIs with pending status from given vendor
+
+            return 58;
+        }
+
+        private int getPendingVendorRFPCount()
+        {
+            // This method will return the number of RFPs with pending status from given vendor
+
+            return 35;
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class CONTRACT
     {
@@ -18,6 +19,11 @@ namespace MVC_DATABASE.Models
         public string Id { get; set; }
         public int TEMPLATEID { get; set; }
         public int RFPID { get; set; }
+
+        [Required]
+        [StringLength(255, ErrorMessage = "Must be under 255 characters.")]
+        [Display(Name = "Contract Path")]
+        [DataType(DataType.Text)]
         public string CONTRACT_PATH { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
