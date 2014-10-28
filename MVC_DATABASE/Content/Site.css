@@ -29,19 +29,15 @@
 	}
 		
 	#body-content{
-        min-height: 1000px;
-        max-width: 1100px; 
+        min-height: 650px;
         height: auto;
 		border-top: solid #515254 2px;
 		border-left: solid #515254 8px;
 		border-right: solid #515254 8px;
 		border-bottom: solid #515254 8px;
         margin: 10px;
-        /* Set padding to keep content from hitting the edges */
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 15px;
         overflow: hidden;
-
 	}
 
     #nav {
@@ -53,7 +49,7 @@
     }
     	
     .subnav {
-		width: 310px;
+		width: auto;
 		height: auto;
 		margin: 0px;
 	}
@@ -82,15 +78,16 @@
         margin-top: 28px;
     }
 
-    .form-group .col-md-10 {
+    .subnav .form-group .col-md-10 {
         margin-right: -20px;
+        width: 150px;
     }
 
-    .form-group {
+    .subnav .form-group {
         width: 380px;
     }
 
-    .control-label {
+    .subnav .control-label {
         color: #EFECE1;
     }
 
@@ -104,53 +101,69 @@
 
     .subnav .form-horizontal .col-md-2 .control-label label {
         margin-left: 20px;
-        width: 100px;
+        width: auto;
     }
 
     .subnav .form-group .col-md-2 {
         width: 70px;
     }
 
-    .subnav .form-group .col-md-offset-2 {
+    .subnav .form-group .col-md-offset-2 .col-md-10 {
         margin-left: 0px;
+        width: 300px;
     }
 
-    .subnav .checkbox input {
-        margin-bottom: -16px;
+    .subnav .form-horizontal .form-group .checkbox input {
+        width: 10px;
     }
 
-    .subnav .form-group .col-md-offset-2:last-child {
+    .subnav .checkbox input[type="checkbox"] {
+        margin-left: 0px;
+        margin-top: 18.9px;
+    }
+
+    .subnav .form-horizontal .form-group .checkbox {
+        width: 280px;
+        margin-left: 55px;
+    }
+
+    .subnav .checkbox .label {
+        margin-left: 70px;
+    }
+
+    .subnav .form-horizontal .form-group .col-md-offset-2:last-child {
         padding-top: 10px;
         padding-bottom: 4px;
         margin-left: 130px;
     }
   
-    .subnav .btn {
+    .subnav .form-horizontal .form-group .checkbox .btn {
         padding: 8px 18px;
         font-size: 16px;
         border-radius: 6px;
         margin-bottom: 9px;
+        width: auto;
+        margin-top: 5px;
     }
 
     .subnav .form-horizontal .form-group:last-child {
-        padding-bottom: 8px;
+        padding-bottom: 0px;
     }
 
     .col-md-2 {
         width: 350px;
     }
 
-    .col-md-10,
-    .form-group {
-        width: auto;
+    .subnav .col-md-10 .form-group {
+        width: 150px;
     }
 
     .form-control {
         width: 320px;
     }
 
-    .col-md-offset-2 {
-        width: auto;
+    .subnav .col-md-offset-2 {
+        width: 150px;
         margin-left: 40%;
         margin-right: auto;
     }
@@ -159,8 +172,6 @@
 		color: #F1F1F2;
 		font-size: 16px;
 	}
-
-
 
 	#nav {
 		width: inherit;
@@ -198,8 +209,8 @@
 		margin-left: 10px;
 		margin-right: auto;
 		margin-bottom: 10px;
-		width: 627.6px;
-		height: 155px;
+		width: auto;
+        height: auto;
 	}
 
     #header .banner img {
@@ -214,28 +225,37 @@
         border-radius: 6px;
         margin-bottom: 9px;
 	}
-			
 
+    .loggedin:first-child {
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .loggedin:first-child a:hover {
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .loggedin:last-child {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
 }
 
-:root {
-	background: rgb(76,76,76); /* Old browsers */
-		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjNGM0YyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEyJSIgc3RvcC1jb2xvcj0iIzU5NTk1OSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI1JSIgc3RvcC1jb2xvcj0iIzY2NjY2NiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM5JSIgc3RvcC1jb2xvcj0iIzQ3NDc0NyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc2JSIgc3RvcC1jb2xvcj0iIzJiMmIyYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkxJSIgc3RvcC1jb2xvcj0iIzFjMWMxYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxMzEzMTMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-		background: -moz-linear-gradient(top,  rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(76,76,76,1)), color-stop(12%,rgba(89,89,89,1)), color-stop(25%,rgba(102,102,102,1)), color-stop(39%,rgba(71,71,71,1)), color-stop(76%,rgba(43,43,43,1)), color-stop(91%,rgba(28,28,28,1)), color-stop(100%,rgba(19,19,19,1))); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* IE10+ */
-		background: linear-gradient(to bottom,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-8 */
-	}
-
-h1, h2, h3, h4, h5, h6,
-p, a {
+html {
     font-family: "sans-serif", "Cambria";
 }
 
+body {
+    background: #4c4c4c; /* Old browsers */
+        background: -moz-linear-gradient(left,  #4c4c4c 0%, #2d2d2d 25%, #131313 50%, #2d2d2d 75%, #4c4c4c 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,#4c4c4c), color-stop(25%,#2d2d2d), color-stop(50%,#131313), color-stop(75%,#2d2d2d), color-stop(100%,#4c4c4c)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left,  #4c4c4c 0%,#2d2d2d 25%,#131313 50%,#2d2d2d 75%,#4c4c4c 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left,  #4c4c4c 0%,#2d2d2d 25%,#131313 50%,#2d2d2d 75%,#4c4c4c 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(left,  #4c4c4c 0%,#2d2d2d 25%,#131313 50%,#2d2d2d 75%,#4c4c4c 100%); /* IE10+ */
+        background: linear-gradient(to right,  #4c4c4c 0%,#2d2d2d 25%,#131313 50%,#2d2d2d 75%,#4c4c4c 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#4c4c4c',GradientType=1 ); /* IE6-9 */
+}
 
 h1 {
     font-weight: bold;
@@ -259,8 +279,7 @@ hr {
 	height: auto;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column */
+/* Override the default bootstrap behavior where horizontal description lists will truncate terms that are too long to fit in the left column */
 .dl-horizontal dt {
     white-space: normal;
 }
@@ -278,7 +297,7 @@ hr {
 
 #body-content{
     position: relative;
-	background-color: #FFF7D1;
+	background-color: #f5f5c9;
 	float: left;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -445,10 +464,14 @@ img {
   font-family: "sans-serif", "Cambria";
 }
 
-.dropdown-menu {
+.subnav .dropdown-menu {
     background-color: #b2b2b2;
     border: ridge 3px #a3a3a3;
     font-family: "sans-serif", "Cambria";
+}
+
+.subnav .navbar-nav > li > .dropdown-menu {
+    margin-top: 2px;
 }
 
 #nav {
@@ -547,7 +570,7 @@ img {
 #calendar {
 		max-width: 900px;
 		margin: 0 auto;
-	}
+}
 
 .calendar-body {
     margin: 40px 10px;
