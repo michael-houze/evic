@@ -172,6 +172,7 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\VendorContractController.cs" />
     <Compile Include="Controllers\VendorRFIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -251,6 +252,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
+    <Compile Include="Models\ViewModels\Contract.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
     <Compile Include="Models\ViewModels\EmployeeDashboard.cs" />
     <Compile Include="Models\ViewModels\ReportRFP.cs" />
@@ -409,9 +411,11 @@
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
     <Content Include="Views\RFIs\VendorResponse.cshtml" />
     <Content Include="Views\VendorRFI\Respond.cshtml" />
+    <Content Include="Views\VendorContract\Response.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\ContractStore\TestContracts\" />
     <Folder Include="Content\File_Uploads\" />
     <Folder Include="Content\Fonts\MyriadPro\" />
     <Folder Include="Content\RFIs\5\" />
