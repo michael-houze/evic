@@ -411,7 +411,8 @@
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
     <Content Include="Views\RFIs\VendorResponse.cshtml" />
     <Content Include="Views\VendorRFI\Respond.cshtml" />
-    <Content Include="Views\VendorContract\Response.cshtml" />
+    <Content Include="Views\VendorContract\Index.cshtml" />
+    <Content Include="Views\VendorContract\Respond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
