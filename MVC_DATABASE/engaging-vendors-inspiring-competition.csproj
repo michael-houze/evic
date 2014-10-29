@@ -209,6 +209,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaptistEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\CONTRACT.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
@@ -307,7 +308,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />

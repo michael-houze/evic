@@ -33,11 +33,17 @@
 
     <hr />
 
+    @Model.calendarEvents
+
+    <hr />
+
     <div id="calendar">
 
         <script>
 
             $(document).ready(function () {
+
+                var events = JSON.parse('@Html.Raw(Model.calendarEvents)'); 
 
                 $('#calendar').fullCalendar({
                     header: {
@@ -47,7 +53,7 @@
                     },
                     editable: true,
                     eventLimit: true,
-                    events: []
+                    eventSources: [ events ]
                 });
 
             });

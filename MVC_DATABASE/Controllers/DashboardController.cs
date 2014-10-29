@@ -1,5 +1,6 @@
 ﻿using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace MVC_DATABASE.Controllers
             model.rfiSummaries = getExpiredRFIs();
             model.rfpSummaries = getExpiredRFPs();
             model.contractSummaries = getExpiredContracts();
+            model.calendarEvents = getCalendarEvents();
 
             return View( model );
         }
@@ -134,6 +136,33 @@ namespace MVC_DATABASE.Controllers
             summaries.Add(sum2);
 
             return summaries;
+        }
+
+        private string getCalendarEvents()
+        {
+            string calendarEvents = "";
+            List<CalendarEvent> moreEvents = new List<CalendarEvent>();
+            CalendarEvent[] evenMoreEvents = new CalendarEvent[2];
+
+            CalendarEvent event1 = new CalendarEvent();
+            event1.title = "RFI #1234 Expires";
+            event1.allDay = true;
+            event1.start = DateTime.Today;
+            event1.color = "#66FF33";
+            moreEvents.Add(event1);
+
+            CalendarEvent event2 = new CalendarEvent();
+            event2.title = "RFP #4321 Expires";
+            event2.allDay = true;
+            event2.start = DateTime.Today;
+            event2.color = "CC00CC";
+            moreEvents.Add(event2);
+
+            calendarEvents = JsonConvert.SerializeObject(moreEvents);
+
+            System.Diagnostics.Debug.WriteLine(calendarEvents);
+
+            return calendarEvents;
         }
 
     }
