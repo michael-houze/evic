@@ -23,9 +23,7 @@
         <th>
             @Html.DisplayNameFor(model => model.RFI.CATEGORY)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
-        </th>
+
         <th></th>
     </tr>
 
@@ -42,9 +40,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RFI.CATEGORY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFPID }) |

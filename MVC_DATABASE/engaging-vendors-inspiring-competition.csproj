@@ -259,6 +259,7 @@
     <Compile Include="Models\ViewModels\RFICreate.cs" />
     <Compile Include="Models\ViewModels\RFIInvite.cs" />
     <Compile Include="Models\ViewModels\RFIResponse.cs" />
+    <Compile Include="Models\ViewModels\RFPCreate.cs" />
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
     <Compile Include="Models\ViewModels\RFIEmployeeIndex.cs" />
     <Compile Include="Models\ViewModels\VendorDashboard.cs" />
