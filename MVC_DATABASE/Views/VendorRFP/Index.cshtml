@@ -1,0 +1,57 @@
+﻿@model MVC_DATABASE.Models.RFP
+@model IEnumerable<MVC_DATABASE.Models.RFP>
+
+@{
+    ViewBag.Title = "RFP";
+}
+
+<h2>RFP</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            <label class="control-label">RFP ID</label>
+        </th>
+        <th>
+            <label class="control-label">Category</label>
+        </th>
+        <th>
+            <label class="control-label">Created</label>
+        </th>
+        <th>
+            <label class="control-label">Expires</label>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RFPID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATEGORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RFI.EXPIRES)
+        </td>
+        <td>
+            @if (Request.IsAuthenticated)
+            { 
+                @Html.ActionLink("Respond", "Respond", new { id = item.RFPID })
+            }
+            else
+            { 
+                @Html.ActionLink("Details", "Details", new { id = item.RFPID })
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+
