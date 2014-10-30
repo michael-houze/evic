@@ -145,7 +145,7 @@ namespace MVC_DATABASE.Controllers
         //Vendor RFPs
 
         // GET: RFPs/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> VendorEdit(int? id)
         {
             if (id == null)
             {
@@ -166,7 +166,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
+        public async Task<ActionResult> VendorEdit([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
         {
             if (ModelState.IsValid)
             {
