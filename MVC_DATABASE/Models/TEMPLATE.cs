@@ -11,7 +11,6 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class TEMPLATE
     {
@@ -23,16 +22,8 @@ namespace MVC_DATABASE.Models
         }
     
         public int TEMPLATEID { get; set; }
-
-        [Required(ErrorMessage = "You must select a type of template.")]
-        [Display(Name = "Type")]
-        [DataType(DataType.Text)]
         public string TYPE { get; set; }
-
-        [Display(Name = "Path")]
-        [DataType(DataType.Text)]
         public string PATH { get; set; }
-
         public string REPORTVAR { get; set; }
     
         public virtual ICollection<CONTRACT> CONTRACTs { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BaptistModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BaptistEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -84,12 +84,12 @@
         </EntityType>
         <EntityType Name="OFFEREDCATEGORY">
           <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="CATEGORY" />
+            <PropertyRef Name="primarykey" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ACCEPTED" Type="bit" Nullable="false" />
+          <Property Name="primarykey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="PRODUCTCATEGORY">
           <Key>
@@ -106,11 +106,13 @@
           <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CREATED" Type="datetime" Nullable="false" />
           <Property Name="EXPIRES" Type="datetime" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="RFIINVITE">
           <Key>
-            <PropertyRef Name="RFIID" />
+            <PropertyRef Name="PRIMARYKEY" />
           </Key>
+          <Property Name="PRIMARYKEY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RFIID" Type="int" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="GHX_PATH" Type="nvarchar" MaxLength="255" />
@@ -125,14 +127,16 @@
           <Property Name="TEMPLATEID" Type="int" Nullable="false" />
           <Property Name="CREATED" Type="datetime" Nullable="false" />
           <Property Name="EXPIRES" Type="datetime" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="RFPINVITE">
           <Key>
-            <PropertyRef Name="RFPID" />
+            <PropertyRef Name="PRIMARYKEY" />
           </Key>
           <Property Name="RFPID" Type="int" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="OFFER_PATH" Type="nvarchar" MaxLength="255" />
+          <Property Name="PRIMARYKEY" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TEMPLATE">
           <Key>
@@ -148,11 +152,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="FULLNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ORGANIZATION" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SANCTIONED" Type="bit" Nullable="false" />
           <Property Name="VENDSTATUS" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="LOG" Type="varchar(max)" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="VENDORCONTACT">
           <Key>
@@ -162,6 +167,32 @@
           <Property Name="CONTACTNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CONTACTPHONE" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CONTACTEMAIL" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'cis420.cis420.OrganizationRFIInvite' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OrganizationRFIInvite">
+          <Key>
+            <PropertyRef Name="rfiid" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="organization" />
+          </Key>
+          <Property Name="rfiid" Type="int" Nullable="false" />
+          <Property Name="id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="organization" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ghx_path" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'cis420.cis420.OrganizationRFPInvite' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OrganizationRFPInvite">
+          <Key>
+            <PropertyRef Name="rfpid" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="organization" />
+          </Key>
+          <Property Name="rfpid" Type="int" Nullable="false" />
+          <Property Name="id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="organization" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="offer_path" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK_CONTRACT_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -223,7 +254,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RFIINVITE_AspNetUsers">
+        <Association Name="fk_rfiinvite_id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="RFIINVITE" Type="Self.RFIINVITE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -232,6 +263,18 @@
             </Principal>
             <Dependent Role="RFIINVITE">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rfiinvite_rfiid">
+          <End Role="RFI" Type="Self.RFI" Multiplicity="1" />
+          <End Role="RFIINVITE" Type="Self.RFIINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIID" />
+            </Principal>
+            <Dependent Role="RFIINVITE">
+              <PropertyRef Name="RFIID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -271,6 +314,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_rfpinvite_id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="RFPINVITE" Type="Self.RFPINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RFPINVITE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VENDOR_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="VENDOR" Type="Self.VENDOR" Multiplicity="0..1" />
@@ -295,7 +350,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BaptistModelStoreContainer">
+        <Function Name="sp_Send_RFI_Invite_Email" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cis420">
+          <Parameter Name="from" Type="varchar" Mode="In" />
+          <Parameter Name="to" Type="varchar" Mode="In" />
+          <Parameter Name="subject" Type="varchar" Mode="In" />
+          <Parameter Name="body" Type="varchar" Mode="In" />
+          <Parameter Name="bodytype" Type="varchar" Mode="In" />
+          <Parameter Name="output_mesg" Type="varchar" Mode="InOut" />
+          <Parameter Name="output_desc" Type="varchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="BaptistEntitiesModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -313,6 +377,22 @@
           <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VENDOR" EntityType="Self.VENDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VENDORCONTACT" EntityType="Self.VENDORCONTACT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationRFIInvite" EntityType="Self.OrganizationRFIInvite" store:Type="Views" store:Schema="cis420">
+            <DefiningQuery>SELECT 
+    [OrganizationRFIInvite].[rfiid] AS [rfiid], 
+    [OrganizationRFIInvite].[id] AS [id], 
+    [OrganizationRFIInvite].[organization] AS [organization], 
+    [OrganizationRFIInvite].[ghx_path] AS [ghx_path]
+    FROM [cis420].[OrganizationRFIInvite] AS [OrganizationRFIInvite]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OrganizationRFPInvite" EntityType="Self.OrganizationRFPInvite" store:Type="Views" store:Schema="cis420">
+            <DefiningQuery>SELECT 
+    [OrganizationRFPInvite].[rfpid] AS [rfpid], 
+    [OrganizationRFPInvite].[id] AS [id], 
+    [OrganizationRFPInvite].[organization] AS [organization], 
+    [OrganizationRFPInvite].[offer_path] AS [offer_path]
+    FROM [cis420].[OrganizationRFPInvite] AS [OrganizationRFPInvite]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CONTRACT_AspNetUsers" Association="Self.FK_CONTRACT_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="CONTRACT" EntitySet="CONTRACT" />
@@ -333,8 +413,12 @@
             <End Role="TEMPLATE" EntitySet="TEMPLATE" />
             <End Role="RFI" EntitySet="RFI" />
           </AssociationSet>
-          <AssociationSet Name="FK_RFIINVITE_AspNetUsers" Association="Self.FK_RFIINVITE_AspNetUsers">
+          <AssociationSet Name="fk_rfiinvite_id" Association="Self.fk_rfiinvite_id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFIINVITE" EntitySet="RFIINVITE" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rfiinvite_rfiid" Association="Self.fk_rfiinvite_rfiid">
+            <End Role="RFI" EntitySet="RFI" />
             <End Role="RFIINVITE" EntitySet="RFIINVITE" />
           </AssociationSet>
           <AssociationSet Name="FK_RFP_RFI" Association="Self.FK_RFP_RFI">
@@ -346,6 +430,10 @@
             <End Role="RFP" EntitySet="RFP" />
           </AssociationSet>
           <AssociationSet Name="FK_RFPINVITE_AspNetUsers" Association="Self.FK_RFPINVITE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFPINVITE" EntitySet="RFPINVITE" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rfpinvite_id" Association="Self.fk_rfpinvite_id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="RFPINVITE" EntitySet="RFPINVITE" />
           </AssociationSet>
@@ -362,7 +450,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BaptistModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BaptistEntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -422,8 +510,9 @@
           <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="AspNetUsers" ToRole="CONTRACT" />
           <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_AspNetUsers" FromRole="AspNetUsers" ToRole="EMPLOYEE" />
           <NavigationProperty Name="OFFEREDCATEGORies" Relationship="Self.FK_OFFEREDCATEGORY_AspNetUsers" FromRole="AspNetUsers" ToRole="OFFEREDCATEGORY" />
-          <NavigationProperty Name="RFIINVITEs" Relationship="Self.FK_RFIINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFIINVITE" />
+          <NavigationProperty Name="RFIINVITEs" Relationship="Self.fk_rfiinvite_id" FromRole="AspNetUsers" ToRole="RFIINVITE" />
           <NavigationProperty Name="RFPINVITEs" Relationship="Self.FK_RFPINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFPINVITE" />
+          <NavigationProperty Name="RFPINVITEs1" Relationship="Self.fk_rfpinvite_id" FromRole="AspNetUsers" ToRole="RFPINVITE" />
           <NavigationProperty Name="VENDOR" Relationship="Self.FK_VENDOR_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDOR" />
           <NavigationProperty Name="VENDORCONTACT" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDORCONTACT" />
         </EntityType>
@@ -452,12 +541,12 @@
         </EntityType>
         <EntityType Name="OFFEREDCATEGORY">
           <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="CATEGORY" />
+            <PropertyRef Name="primarykey" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ACCEPTED" Type="Boolean" Nullable="false" />
+          <Property Name="primarykey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_OFFEREDCATEGORY_AspNetUsers" FromRole="OFFEREDCATEGORY" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="PRODUCTCATEGORY">
@@ -475,17 +564,21 @@
           <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_RFI_TEMPLATE" FromRole="RFI" ToRole="TEMPLATE" />
+          <NavigationProperty Name="RFIINVITEs" Relationship="Self.fk_rfiinvite_rfiid" FromRole="RFI" ToRole="RFIINVITE" />
           <NavigationProperty Name="RFPs" Relationship="Self.FK_RFP_RFI" FromRole="RFI" ToRole="RFP" />
         </EntityType>
         <EntityType Name="RFIINVITE">
           <Key>
-            <PropertyRef Name="RFIID" />
+            <PropertyRef Name="PRIMARYKEY" />
           </Key>
+          <Property Name="PRIMARYKEY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RFIID" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="GHX_PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RFIINVITE_AspNetUsers" FromRole="RFIINVITE" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.fk_rfiinvite_id" FromRole="RFIINVITE" ToRole="AspNetUsers" />
+          <NavigationProperty Name="RFI" Relationship="Self.fk_rfiinvite_rfiid" FromRole="RFIINVITE" ToRole="RFI" />
         </EntityType>
         <EntityType Name="RFP">
           <Key>
@@ -497,17 +590,20 @@
           <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
           <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RFI" Relationship="Self.FK_RFP_RFI" FromRole="RFP" ToRole="RFI" />
           <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_RFP_TEMPLATE" FromRole="RFP" ToRole="TEMPLATE" />
         </EntityType>
         <EntityType Name="RFPINVITE">
           <Key>
-            <PropertyRef Name="RFPID" />
+            <PropertyRef Name="PRIMARYKEY" />
           </Key>
           <Property Name="RFPID" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OFFER_PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PRIMARYKEY" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RFPINVITE_AspNetUsers" FromRole="RFPINVITE" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.fk_rfpinvite_id" FromRole="RFPINVITE" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="TEMPLATE">
           <Key>
@@ -526,11 +622,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FULLNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ORGANIZATION" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SANCTIONED" Type="Boolean" Nullable="false" />
           <Property Name="VENDSTATUS" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LOG" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_VENDOR_AspNetUsers" FromRole="VENDOR" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="VENDORCONTACT">
@@ -542,6 +639,28 @@
           <Property Name="CONTACTPHONE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CONTACTEMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="VENDORCONTACT" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="OrganizationRFIInvite">
+          <Key>
+            <PropertyRef Name="rfiid" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="organization" />
+          </Key>
+          <Property Name="rfiid" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="organization" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ghx_path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OrganizationRFPInvite">
+          <Key>
+            <PropertyRef Name="rfpid" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="organization" />
+          </Key>
+          <Property Name="rfpid" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="organization" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="offer_path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_CONTRACT_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
@@ -579,7 +698,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RFIINVITE_AspNetUsers">
+        <Association Name="fk_rfiinvite_id">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
           <End Role="RFIINVITE" Type="Self.RFIINVITE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -592,6 +711,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RFPINVITE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="RFPINVITE" Type="Self.RFPINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RFPINVITE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rfpinvite_id">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
           <End Role="RFPINVITE" Type="Self.RFPINVITE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -651,6 +782,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_rfiinvite_rfiid">
+          <End Role="RFI" Type="Self.RFI" Multiplicity="1" />
+          <End Role="RFIINVITE" Type="Self.RFIINVITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIID" />
+            </Principal>
+            <Dependent Role="RFIINVITE">
+              <PropertyRef Name="RFIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RFP_RFI">
           <End Role="RFI" Type="Self.RFI" Multiplicity="0..1" />
           <End Role="RFP" Type="Self.RFP" Multiplicity="*" />
@@ -693,6 +836,8 @@
           <EntitySet Name="TEMPLATEs" EntityType="Self.TEMPLATE" />
           <EntitySet Name="VENDORs" EntityType="Self.VENDOR" />
           <EntitySet Name="VENDORCONTACTs" EntityType="Self.VENDORCONTACT" />
+          <EntitySet Name="OrganizationRFIInvites" EntityType="Self.OrganizationRFIInvite" />
+          <EntitySet Name="OrganizationRFPInvites" EntityType="Self.OrganizationRFPInvite" />
           <AssociationSet Name="FK_CONTRACT_AspNetUsers" Association="Self.FK_CONTRACT_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="CONTRACT" EntitySet="CONTRACTs" />
@@ -705,11 +850,15 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="OFFEREDCATEGORY" EntitySet="OFFEREDCATEGORies" />
           </AssociationSet>
-          <AssociationSet Name="FK_RFIINVITE_AspNetUsers" Association="Self.FK_RFIINVITE_AspNetUsers">
+          <AssociationSet Name="fk_rfiinvite_id" Association="Self.fk_rfiinvite_id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="RFIINVITE" EntitySet="RFIINVITEs" />
           </AssociationSet>
           <AssociationSet Name="FK_RFPINVITE_AspNetUsers" Association="Self.FK_RFPINVITE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RFPINVITE" EntitySet="RFPINVITEs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rfpinvite_id" Association="Self.fk_rfpinvite_id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="RFPINVITE" EntitySet="RFPINVITEs" />
           </AssociationSet>
@@ -729,6 +878,10 @@
             <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
             <End Role="RFI" EntitySet="RFIs" />
           </AssociationSet>
+          <AssociationSet Name="fk_rfiinvite_rfiid" Association="Self.fk_rfiinvite_rfiid">
+            <End Role="RFI" EntitySet="RFIs" />
+            <End Role="RFIINVITE" EntitySet="RFIINVITEs" />
+          </AssociationSet>
           <AssociationSet Name="FK_RFP_RFI" Association="Self.FK_RFP_RFI">
             <End Role="RFI" EntitySet="RFIs" />
             <End Role="RFP" EntitySet="RFPs" />
@@ -737,15 +890,24 @@
             <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
             <End Role="RFP" EntitySet="RFPs" />
           </AssociationSet>
+          <FunctionImport Name="sp_Send_RFI_Invite_Email">
+            <Parameter Name="from" Mode="In" Type="String" />
+            <Parameter Name="to" Mode="In" Type="String" />
+            <Parameter Name="subject" Mode="In" Type="String" />
+            <Parameter Name="body" Mode="In" Type="String" />
+            <Parameter Name="bodytype" Mode="In" Type="String" />
+            <Parameter Name="output_mesg" Mode="InOut" Type="String" />
+            <Parameter Name="output_desc" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BaptistModelStoreContainer" CdmEntityContainer="BaptistEntities">
+        <EntityContainerMapping StorageEntityContainer="BaptistEntitiesModelStoreContainer" CdmEntityContainer="BaptistEntities">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="BaptistModel.C__MigrationHistory">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -755,7 +917,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="BaptistModel.AspNetRole">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -763,7 +925,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="BaptistModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -773,7 +935,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="BaptistModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -782,7 +944,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserRoles">
-            <EntityTypeMapping TypeName="BaptistModel.AspNetUserRole">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.AspNetUserRole">
               <MappingFragment StoreEntitySet="AspNetUserRoles">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -790,7 +952,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="BaptistModel.AspNetUser">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -808,7 +970,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTRACTs">
-            <EntityTypeMapping TypeName="BaptistModel.CONTRACT">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.CONTRACT">
               <MappingFragment StoreEntitySet="CONTRACT">
                 <ScalarProperty Name="CONTRACTID" ColumnName="CONTRACTID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -819,7 +981,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EMPLOYEEs">
-            <EntityTypeMapping TypeName="BaptistModel.EMPLOYEE">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.EMPLOYEE">
               <MappingFragment StoreEntitySet="EMPLOYEE">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FIRSTNAME" ColumnName="FIRSTNAME" />
@@ -830,35 +992,38 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFEREDCATEGORies">
-            <EntityTypeMapping TypeName="BaptistModel.OFFEREDCATEGORY">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.OFFEREDCATEGORY">
               <MappingFragment StoreEntitySet="OFFEREDCATEGORY">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
                 <ScalarProperty Name="ACCEPTED" ColumnName="ACCEPTED" />
+                <ScalarProperty Name="primarykey" ColumnName="primarykey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PRODUCTCATEGORies">
-            <EntityTypeMapping TypeName="BaptistModel.PRODUCTCATEGORY">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.PRODUCTCATEGORY">
               <MappingFragment StoreEntitySet="PRODUCTCATEGORY">
                 <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RFIs">
-            <EntityTypeMapping TypeName="BaptistModel.RFI">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.RFI">
               <MappingFragment StoreEntitySet="RFI">
                 <ScalarProperty Name="RFIID" ColumnName="RFIID" />
                 <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
                 <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
                 <ScalarProperty Name="CREATED" ColumnName="CREATED" />
                 <ScalarProperty Name="EXPIRES" ColumnName="EXPIRES" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RFIINVITEs">
-            <EntityTypeMapping TypeName="BaptistModel.RFIINVITE">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.RFIINVITE">
               <MappingFragment StoreEntitySet="RFIINVITE">
+                <ScalarProperty Name="PRIMARYKEY" ColumnName="PRIMARYKEY" />
                 <ScalarProperty Name="RFIID" ColumnName="RFIID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GHX_PATH" ColumnName="GHX_PATH" />
@@ -866,7 +1031,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RFPs">
-            <EntityTypeMapping TypeName="BaptistModel.RFP">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.RFP">
               <MappingFragment StoreEntitySet="RFP">
                 <ScalarProperty Name="RFPID" ColumnName="RFPID" />
                 <ScalarProperty Name="RFIID" ColumnName="RFIID" />
@@ -874,20 +1039,22 @@
                 <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
                 <ScalarProperty Name="CREATED" ColumnName="CREATED" />
                 <ScalarProperty Name="EXPIRES" ColumnName="EXPIRES" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RFPINVITEs">
-            <EntityTypeMapping TypeName="BaptistModel.RFPINVITE">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.RFPINVITE">
               <MappingFragment StoreEntitySet="RFPINVITE">
                 <ScalarProperty Name="RFPID" ColumnName="RFPID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OFFER_PATH" ColumnName="OFFER_PATH" />
+                <ScalarProperty Name="PRIMARYKEY" ColumnName="PRIMARYKEY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEMPLATEs">
-            <EntityTypeMapping TypeName="BaptistModel.TEMPLATE">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.TEMPLATE">
               <MappingFragment StoreEntitySet="TEMPLATE">
                 <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
                 <ScalarProperty Name="TYPE" ColumnName="TYPE" />
@@ -897,19 +1064,20 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VENDORs">
-            <EntityTypeMapping TypeName="BaptistModel.VENDOR">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.VENDOR">
               <MappingFragment StoreEntitySet="VENDOR">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
                 <ScalarProperty Name="ORGANIZATION" ColumnName="ORGANIZATION" />
                 <ScalarProperty Name="SANCTIONED" ColumnName="SANCTIONED" />
                 <ScalarProperty Name="VENDSTATUS" ColumnName="VENDSTATUS" />
                 <ScalarProperty Name="LOG" ColumnName="LOG" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VENDORCONTACTs">
-            <EntityTypeMapping TypeName="BaptistModel.VENDORCONTACT">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.VENDORCONTACT">
               <MappingFragment StoreEntitySet="VENDORCONTACT">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CONTACTNAME" ColumnName="CONTACTNAME" />
@@ -918,6 +1086,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationRFIInvites">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.OrganizationRFIInvite">
+              <MappingFragment StoreEntitySet="OrganizationRFIInvite">
+                <ScalarProperty Name="rfiid" ColumnName="rfiid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="organization" ColumnName="organization" />
+                <ScalarProperty Name="ghx_path" ColumnName="ghx_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationRFPInvites">
+            <EntityTypeMapping TypeName="BaptistEntitiesModel.OrganizationRFPInvite">
+              <MappingFragment StoreEntitySet="OrganizationRFPInvite">
+                <ScalarProperty Name="rfpid" ColumnName="rfpid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="organization" ColumnName="organization" />
+                <ScalarProperty Name="offer_path" ColumnName="offer_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_Send_RFI_Invite_Email" FunctionName="BaptistEntitiesModel.Store.sp_Send_RFI_Invite_Email" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using MVC_DATABASE.Models;
 
 
 namespace MVC_DATABASE.Controllers
@@ -20,7 +21,7 @@ namespace MVC_DATABASE.Controllers
         
         public ActionResult Respond(string Id)
         {
-            var response = new RFIInvite { Id = Id };
+            var response = new RFIINVITE { Id = Id };
 
             return View();
         }

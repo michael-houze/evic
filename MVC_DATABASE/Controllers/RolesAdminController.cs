@@ -14,7 +14,7 @@ namespace MVC_DATABASE.Controllers
     [Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
-        private BaptistEntities db = new BaptistEntities();
+        public BaptistEntities db = new BaptistEntities();
 
         public RolesAdminController()
         {

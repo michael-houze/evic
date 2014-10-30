@@ -1,5 +1,6 @@
 ﻿using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace MVC_DATABASE.Controllers
             AdminDashboard model = new AdminDashboard();
 
             model.pendingVendors = getPendingVendorCount();
+            model.calendarEvents = getCalendarEvents();
 
             return View( model );
         }
@@ -28,6 +30,7 @@ namespace MVC_DATABASE.Controllers
             model.rfiSummaries = getExpiredRFIs();
             model.rfpSummaries = getExpiredRFPs();
             model.contractSummaries = getExpiredContracts();
+            model.calendarEvents = getCalendarEvents();
 
             return View( model );
         }
@@ -38,6 +41,7 @@ namespace MVC_DATABASE.Controllers
 
             model.pendingRFIs = getPendingVendorRFICount();
             model.pendingRFPs = getPendingVendorRFPCount();
+            model.calendarEvents = getCalendarEvents();
 
             return View( model );
         }
@@ -134,6 +138,27 @@ namespace MVC_DATABASE.Controllers
             summaries.Add(sum2);
 
             return summaries;
+        }
+
+        private string getCalendarEvents()
+        {
+            string serializedEvents;
+            List<CalendarEvent> events = new List<CalendarEvent>();
+            CalendarEvent tempEvent = new CalendarEvent();
+
+            foreach( var rfi in db.RFIs)
+            {
+                events.Add(new CalendarEvent("RFI #" + rfi.RFIID.ToString() + " Expires", true, rfi.EXPIRES, "#4DB3D0"));
+            }
+
+            foreach (var rfp in db.RFPs)
+            {
+                events.Add(new CalendarEvent("RFP #" + rfp.RFPID.ToString() + " Expires", true, rfp.EXPIRES, "#4A176D"));
+            }
+
+            serializedEvents = JsonConvert.SerializeObject(events);
+
+            return serializedEvents;
         }
 
     }
