@@ -64,6 +64,7 @@ namespace MVC_DATABASE.Controllers
         public ActionResult Create()
         {
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+
             var result = from r in db.OFFEREDCATEGORies
                          where r.ACCEPTED == true
                          select r.CATEGORY;
@@ -266,8 +267,8 @@ namespace MVC_DATABASE.Controllers
             base.Dispose(disposing);
         }
 
-        RFIResponse responsemodel = new RFIResponse();
- 
+        RFIResponse.RFIList responsemodel = new RFIResponse.RFIList();
+       
         public async Task<ActionResult> VendorResponse(int? id)
         {
  

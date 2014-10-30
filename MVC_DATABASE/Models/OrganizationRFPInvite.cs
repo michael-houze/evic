@@ -12,15 +12,11 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CONTRACT
+    public partial class OrganizationRFPInvite
     {
-        public int CONTRACTID { get; set; }
-        public string Id { get; set; }
-        public int TEMPLATEID { get; set; }
-        public int RFPID { get; set; }
-        public string CONTRACT_PATH { get; set; }
-    
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual TEMPLATE TEMPLATE { get; set; }
+        public int rfpid { get; set; }
+        public string id { get; set; }
+        public string organization { get; set; }
+        public string offer_path { get; set; }
     }
 }
