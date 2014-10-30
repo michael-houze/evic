@@ -5,8 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-using MVC_DATABASE.Models;
-
 
 namespace MVC_DATABASE.Controllers
 {
@@ -21,7 +19,7 @@ namespace MVC_DATABASE.Controllers
 
         public ActionResult Respond(string Id)
         {
-            var vresponse = new CONTRACT { Id = Id };
+            var vresponse = new Contract { Id = Id };
 
             return View();
         }
@@ -45,27 +43,6 @@ namespace MVC_DATABASE.Controllers
             return RedirectToAction("Index");
         }
 
-        //public ActionResult Download(int? id, string name)
-        //{
-
-
-        //    string fileName = name;
-
-        //    var uploads = (from u in MVC_DATABASE.Contract
-        //                   where u.Id == id
-        //                   select u.CONTRACT_PATH).FirstOrDefault();
-
-
-        //    if (uploads != null)
-        //    {
-
-        //        string folder = Path.GetFullPath(uploads);
-        //        //HttpContext.Response.AddHeader("content-dispostion", "attachment; filename=" + fileName);
-        //        return File(new FileStream(folder + "/" + fileName, FileMode.Open), "content-dispostion", fileName);
-        //    }
-
-        //    throw new ArgumentException("Invalid file name of file not exist");
-        //}
 
         public string Details()
         {

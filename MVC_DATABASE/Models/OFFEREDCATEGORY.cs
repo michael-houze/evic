@@ -17,7 +17,6 @@ namespace MVC_DATABASE.Models
         public string Id { get; set; }
         public string CATEGORY { get; set; }
         public bool ACCEPTED { get; set; }
-        public int primarykey { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

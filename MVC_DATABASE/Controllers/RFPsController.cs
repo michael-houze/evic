@@ -8,7 +8,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC_DATABASE.Models;
-using MVC_DATABASE.Models.ViewModels;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -41,35 +40,28 @@ namespace MVC_DATABASE.Controllers
         // GET: RFPs/Create
         public ActionResult Create()
         {
-            var result = from r in db.OFFEREDCATEGORies
-                         where r.ACCEPTED == true
-                         select r.CATEGORY;
-
-
-            IQueryable<string> acceptedCategories = result.Distinct();
-            ViewBag.CATEGORY = acceptedCategories;
             ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY");
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
             return View();
         }
-        public RFPCreate rfpcreate = new RFPCreate();
+
         // POST: RFPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RFPCreate model)
+        public async Task<ActionResult> Create([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
         {
             if (ModelState.IsValid)
             {
-                db.RFPs.Add(model.rfp);
+                db.RFPs.Add(rFP);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", model.rfp.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", model.rfp.TEMPLATEID);
-            return View(model);
+            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
+            return View(rFP);
         }
 
         // GET: RFPs/Edit/5

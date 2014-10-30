@@ -1,0 +1,14 @@
+﻿@model MVC_DATABASE.Models.CONTRACT
+
+@{
+    ViewBag.Title = "Response";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Response (Contract)</h2>
+
+@using (Html.BeginForm("Respond", "VendorContract", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="OK" />
+}

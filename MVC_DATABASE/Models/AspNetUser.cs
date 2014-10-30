@@ -20,7 +20,6 @@ namespace MVC_DATABASE.Models
             this.OFFEREDCATEGORies = new HashSet<OFFEREDCATEGORY>();
             this.RFIINVITEs = new HashSet<RFIINVITE>();
             this.RFPINVITEs = new HashSet<RFPINVITE>();
-            this.RFPINVITEs1 = new HashSet<RFPINVITE>();
         }
     
         public string Id { get; set; }
@@ -41,7 +40,6 @@ namespace MVC_DATABASE.Models
         public virtual ICollection<OFFEREDCATEGORY> OFFEREDCATEGORies { get; set; }
         public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }
         public virtual ICollection<RFPINVITE> RFPINVITEs { get; set; }
-        public virtual ICollection<RFPINVITE> RFPINVITEs1 { get; set; }
         public virtual VENDOR VENDOR { get; set; }
         public virtual VENDORCONTACT VENDORCONTACT { get; set; }
     }

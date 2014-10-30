@@ -40,13 +40,8 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.VENDOR.FirstName, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.VENDOR.FirstName, new { @class = "form-control", @placeholder = "Please enter your full name." })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.VENDOR.LastName, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.VENDOR.LastName, new { @class = "form-control", @placeholder = "Please enter your full name." })
+                @Html.LabelFor(m => m.VENDOR.FULLNAME, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.VENDOR.FULLNAME, new { @class = "form-control", @placeholder = "Please enter your full name." })
             </div>
 
             <div class="form-group">

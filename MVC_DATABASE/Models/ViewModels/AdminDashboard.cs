@@ -9,7 +9,5 @@ namespace MVC_DATABASE.Models.ViewModels
     {
         // The number of vendors who has a status
         public int pendingVendors;
-
-        public string calendarEvents;
     }
 }

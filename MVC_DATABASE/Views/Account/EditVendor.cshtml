@@ -26,19 +26,11 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vendor.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Vendor.FULLNAME, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.Vendor.FirstName, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Vendor.FULLNAME, new { @readonly = "readonly", @class = "form-control" })
                 </div>
             </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Vendor.LastName, new { @readonly = "readonly", @class = "form-control" })
-            </div>
-        </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.AspNetUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

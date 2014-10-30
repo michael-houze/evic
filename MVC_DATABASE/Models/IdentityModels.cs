@@ -79,7 +79,7 @@ namespace MVC_DATABASE.Models
         IDisposable
     {
         public ApplicationUserStore()
-            : this(new IdentityDbContext("name=BaptistHealthConnection"))
+            : this(new IdentityDbContext())
         {
             base.DisposeContext = true;
         }

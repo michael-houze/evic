@@ -11,24 +11,34 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class RFI
     {
         public RFI()
         {
-            this.RFIINVITEs = new HashSet<RFIINVITE>();
             this.RFPs = new HashSet<RFP>();
         }
-    
+
         public int RFIID { get; set; }
+
         public int TEMPLATEID { get; set; }
+
+        [Required(ErrorMessage = "You must select at least one category.")]
+        [Display(Name = "Category")]
+        [DataType(DataType.Text)]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters.")]
         public string CATEGORY { get; set; }
+
+        [DataType(DataType.Date)]
         public System.DateTime CREATED { get; set; }
+
+        [Required(ErrorMessage = "You must enter an expiration date.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Expires")]
         public System.DateTime EXPIRES { get; set; }
-        public string STATUS { get; set; }
-    
+
         public virtual TEMPLATE TEMPLATE { get; set; }
-        public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }
         public virtual ICollection<RFP> RFPs { get; set; }
     }
 }

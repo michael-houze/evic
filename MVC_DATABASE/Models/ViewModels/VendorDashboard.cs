@@ -12,7 +12,5 @@ namespace MVC_DATABASE.Models.ViewModels
 
         // The number of RFPs awaiting response from vendor
         public int pendingRFPs;
-
-        public string calendarEvents;
     }
 }

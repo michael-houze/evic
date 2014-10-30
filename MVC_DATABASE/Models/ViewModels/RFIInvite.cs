@@ -5,9 +5,9 @@ using System.Web;
 
 namespace MVC_DATABASE.Models.ViewModels
 {
-    public class RFPCreate
+    public class RFIInvite
     {
-        public RFP rfp { get; set; }
-        public RFPINVITE rfpinvite { get; set; }
+        public string Id {get; set;}
+        public string GHX_PATH {get; set;}
     }
 }
