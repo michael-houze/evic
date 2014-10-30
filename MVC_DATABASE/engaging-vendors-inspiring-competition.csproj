@@ -225,6 +225,12 @@
     <Compile Include="Models\OFFEREDCATEGORY.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrganizationRFIInvite.cs">
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrganizationRFPInvite.cs">
+      <DependentUpon>BaptistEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PRODUCTCATEGORY.cs">
       <DependentUpon>BaptistEntities.tt</DependentUpon>
     </Compile>
@@ -253,12 +259,10 @@
     </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
-    <Compile Include="Models\ViewModels\Contract.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
     <Compile Include="Models\ViewModels\EmployeeDashboard.cs" />
     <Compile Include="Models\ViewModels\ReportRFP.cs" />
     <Compile Include="Models\ViewModels\RFICreate.cs" />
-    <Compile Include="Models\ViewModels\RFIInvite.cs" />
     <Compile Include="Models\ViewModels\RFIResponse.cs" />
     <Compile Include="Models\ViewModels\RFPCreate.cs" />
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
@@ -285,6 +289,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Templates\GHX Template V2.xlsx" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <EntityDeploy Include="Models\BaptistEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BaptistEntities.Designer.cs</LastGenOutput>
@@ -308,6 +318,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />

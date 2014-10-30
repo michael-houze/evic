@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using MVC_DATABASE.Models;
+
 
 namespace MVC_DATABASE.Controllers
 {
@@ -19,7 +21,7 @@ namespace MVC_DATABASE.Controllers
 
         public ActionResult Respond(string Id)
         {
-            var vresponse = new Contract { Id = Id };
+            var vresponse = new CONTRACT { Id = Id };
 
             return View();
         }

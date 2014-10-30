@@ -62,14 +62,14 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.RFPs.Add(rFP);
+                db.RFPs.Add(model.rfp);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
-            return View(rFP);
+            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", model.rfp.RFIID);
+            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", model.rfp.TEMPLATEID);
+            return View(model);
         }
 
         // GET: RFPs/Edit/5
