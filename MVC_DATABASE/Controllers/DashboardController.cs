@@ -140,29 +140,23 @@ namespace MVC_DATABASE.Controllers
 
         private string getCalendarEvents()
         {
-            string calendarEvents = "";
-            List<CalendarEvent> moreEvents = new List<CalendarEvent>();
-            CalendarEvent[] evenMoreEvents = new CalendarEvent[2];
+            string serializedEvents;
+            List<CalendarEvent> events = new List<CalendarEvent>();
+            CalendarEvent tempEvent = new CalendarEvent();
 
-            CalendarEvent event1 = new CalendarEvent();
-            event1.title = "RFI #1234 Expires";
-            event1.allDay = true;
-            event1.start = DateTime.Today;
-            event1.color = "#66FF33";
-            moreEvents.Add(event1);
+            foreach( var rfi in db.RFIs)
+            {
+                events.Add(new CalendarEvent("RFI #" + rfi.RFIID.ToString() + " Expires", true, rfi.EXPIRES, "#4DB3D0"));
+            }
 
-            CalendarEvent event2 = new CalendarEvent();
-            event2.title = "RFP #4321 Expires";
-            event2.allDay = true;
-            event2.start = DateTime.Today;
-            event2.color = "CC00CC";
-            moreEvents.Add(event2);
+            foreach (var rfp in db.RFPs)
+            {
+                events.Add(new CalendarEvent("RFP #" + rfp.RFPID.ToString() + " Expires", true, rfp.EXPIRES, "#4A176D"));
+            }
 
-            calendarEvents = JsonConvert.SerializeObject(moreEvents);
+            serializedEvents = JsonConvert.SerializeObject(events);
 
-            System.Diagnostics.Debug.WriteLine(calendarEvents);
-
-            return calendarEvents;
+            return serializedEvents;
         }
 
     }
