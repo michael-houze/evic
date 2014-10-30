@@ -87,11 +87,14 @@ namespace MVC_DATABASE.Controllers
             {
                 var rfi = model.RFI;
                 db.RFIs.Add(model.RFI);
-                foreach (var x in model.RFIInviteList)
+                if (model.RFIInviteList != null)
                 {
-                    var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x};
-                    
-                    db.RFIINVITEs.Add(rfiinvite);
+                    foreach (var x in model.RFIInviteList)
+                    {
+                        var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x };
+
+                        db.RFIINVITEs.Add(rfiinvite);
+                    }
                 }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
