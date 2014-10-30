@@ -18,6 +18,7 @@ namespace MVC_DATABASE.Controllers
             AdminDashboard model = new AdminDashboard();
 
             model.pendingVendors = getPendingVendorCount();
+            model.calendarEvents = getCalendarEvents();
 
             return View( model );
         }
@@ -40,6 +41,7 @@ namespace MVC_DATABASE.Controllers
 
             model.pendingRFIs = getPendingVendorRFICount();
             model.pendingRFPs = getPendingVendorRFPCount();
+            model.calendarEvents = getCalendarEvents();
 
             return View( model );
         }

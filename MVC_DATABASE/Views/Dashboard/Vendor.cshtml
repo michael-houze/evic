@@ -46,6 +46,8 @@
 
             $(document).ready(function () {
 
+                var events = JSON.parse('@Html.Raw(Model.calendarEvents)');
+
                 $('#calendar').fullCalendar({
                     header: {
                         left: 'prev,next today',
@@ -54,7 +56,7 @@
                     },
                     editable: true,
                     eventLimit: true,
-                    events: []
+                    eventSources: [ events ]
                 });
 
             });
