@@ -1,17 +1,20 @@
 ﻿@model MVC_DATABASE.Models.ViewModels.RFPCreate
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create RFP";
 }
-
-<h2>Create</h2>
+<center>
+    <h1>Create RFP</h1>
+    <div>
+        @Html.ActionLink("Back to RFP Home", "Index")
+    </div>
+</center>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>RFP</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -47,13 +50,10 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-1 col-md-10">
+                @Html.ActionLink("Cancel", "Index")
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

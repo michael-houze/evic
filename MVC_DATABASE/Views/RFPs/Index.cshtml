@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<MVC_DATABASE.Models.RFP>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "RFP Home";
 }
+                      <center>
+                          <h1>RFP Home</h1>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+                          <p>
+                              @Html.ActionLink("Create New RFP", "Create")
+                          </p>
+                      </center>
 <table class="table">
     <tr>
         <th>
@@ -19,9 +20,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EXPIRES)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
         </th>
 
         <th></th>
@@ -39,9 +37,6 @@
             @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RFI.CATEGORY)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFPID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RFPID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.RFPID })
@@ -50,3 +45,8 @@
 }
 
 </table>
+<center>
+                      <p>
+                          @Html.ActionLink("Create New RFP", "Create")
+                      </p>
+</center>
