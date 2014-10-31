@@ -1,0 +1,33 @@
+﻿@model IEnumerable<mvc_database.models.viewmodels>
+
+@{
+    ViewBag.Title = "RFP - Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center>
+    <h1>RFP Details</h1>
+    <br />
+    @Html.ActionLink("Back to RFP List", "Index")
+</center>
+
+<div class="rfp-details">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label">RFP ID#: </label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFPID)
+        </dd>
+
+    </dl>
+
+    <center>
+        <p>
+            @Html.ActionLink("Back to RFP Home", "VendorIndex")
+        </p>
+    </center>
+
+</div>
