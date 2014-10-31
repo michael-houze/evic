@@ -298,5 +298,33 @@ namespace MVC_DATABASE.Controllers
 
             return View(responsemodel);
         }
+
+        public ActionResult VendorIndex()
+        {
+            EVICEntities dbo = new EVICEntities();
+
+            List<VendorRFI> vendorRFI = new List<VendorRFI>();
+
+            var vendorInvitedRFIs = from i in dbo.RFIINVITEs
+                                    join v in dbo.VENDORs on i.Id equals v.Id
+                                    join r in dbo.RFIs on i.RFIID equals r.RFIID
+                                    where i.Id == this.User.Identity.GetUserId()
+                                    orderby i.RFIID
+                                    select new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
+
+            return View(vendorInvitedRFIs);
+        }
+
+        public string Respond()
+        {
+            return "Respond to the RFI by uploading their GHX.";
+        }
+
+        public string Details()
+        {
+            return "Check what they submitted.";
+        }
+
+
     }
 }
