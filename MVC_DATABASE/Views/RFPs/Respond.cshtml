@@ -1,31 +1,48 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.RFPVendorIndex>
+﻿@Model IEnumerable<MVC_DATABASE.Models.ViewModels.Respond>
 
-@{
-    ViewBag.Title = "RFP - Respond";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    @{
+        ViewBag.Title = "RFP - Respond";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-<h2>Respond</h2>
+    <div class="rfp-respond">
+        <center>
+            <h1>RFP Details</h1>
+            <br />
+            @Html.ActionLink("Back to RFP List", "Index")
+        </center>
 
-<hr />
-
-<div class="rfp-respond">
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="form-group">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
                 <label class="control-label">RFP ID#: </label>
-                @Html.DisplayFor(modelItem => .RFPID, new { @class = "result-label" })
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="form-group">
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RFPID)
+            </dd>
+
+            <dt>
                 <label class="control-label">Category: </label>
-                @Html.DisplayFor(modelItem => item.CATEGORY, new { @class = "result-label" })
-            </div>
-        </div>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CATEGORY)
+            </dd>
+
+            <dt>
+
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RFPID)
+            </dd>
+
+        </dl>
+
+        <center>
+            <p>
+                @Html.ActionLink("Back to RFP Home", "VendorIndex")
+            </p>
+        </center>
     </div>
-</div>
 

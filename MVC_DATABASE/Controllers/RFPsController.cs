@@ -144,7 +144,9 @@ namespace MVC_DATABASE.Controllers
         }
 
         //Vendor RFPs
+
         RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
+
         [HttpGet]
         public ActionResult VendorIndex(int? id)
         {
@@ -159,6 +161,14 @@ namespace MVC_DATABASE.Controllers
                                    select new RFPVendorIndex { VendorRFP = r, VendorRFPInvite = i }; ;
 
             return View(VendorRFPIDQuery);
-        } 
+        }
+
+        [HttpGet]
+        public ActionResult Respond(int RFPID)
+        {
+            var respond = new RFP { RFPID = RFPID };
+
+            return View();
+        }
     }
 }

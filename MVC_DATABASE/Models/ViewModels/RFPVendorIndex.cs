@@ -10,5 +10,7 @@ namespace MVC_DATABASE.Models.ViewModels
         public RFP VendorRFP { get; set; }
 
         public RFPINVITE VendorRFPInvite { get; set; }
+
+        public RFP Respond { get; set; }
     }
 }
