@@ -179,84 +179,12 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
-    <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserRole.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BaptistEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BaptistEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BaptistEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BaptistEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BaptistEntities.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\CalendarEvent.cs" />
-    <Compile Include="Models\CONTRACT.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ContractSummary.cs" />
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EMPLOYEE.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\OFFEREDCATEGORY.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrganizationRFIInvite.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrganizationRFPInvite.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PRODUCTCATEGORY.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RFI.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RFIINVITE.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\RFISummary.cs" />
-    <Compile Include="Models\RFP.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RFPINVITE.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\RFPSummary.cs" />
-    <Compile Include="Models\TEMPLATE.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VENDOR.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VENDORCONTACT.cs">
-      <DependentUpon>BaptistEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
@@ -295,23 +223,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <EntityDeploy Include="Models\BaptistEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BaptistEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\BaptistEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BaptistEntities.edmx</DependentUpon>
-      <LastGenOutput>BaptistEntities.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\BaptistEntities.edmx.diagram">
-      <DependentUpon>BaptistEntities.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\BaptistEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BaptistEntities.edmx</DependentUpon>
-      <LastGenOutput>BaptistEntities.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\Templates\GHX Template V2.xlsx" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

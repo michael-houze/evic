@@ -189,18 +189,20 @@ namespace MVC_DATABASE.Controllers
                 var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
                 if (result.Succeeded)
                 {
-                    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-                    Roles.AddUserToRole(user.Id, "Vendor");
+                    //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                    //Roles.AddUserToRole(user.Id, "Vendor");
                     var vendor = new VENDOR { Id = user.Id, FirstName = model.VENDOR.FirstName, LastName = model.VENDOR.LastName, ORGANIZATION = model.VENDOR.ORGANIZATION };
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
                     vendor.VENDSTATUS = "PENDING";
                     vendor.SANCTIONED = false;
-                    foreach(var x in model.CategoryList)
-                    {                        
-                        var offeredCategory = new OFFEREDCATEGORY {Id = user.Id, CATEGORY = x, ACCEPTED = false};
-                        db.OFFEREDCATEGORies.Add(offeredCategory);
+                    if (model.CategoryList != null)
+                    {
+                        foreach (var x in model.CategoryList)
+                        {
+                            var offeredCategory = new OFFEREDCATEGORY { Id = user.Id, CATEGORY = x, ACCEPTED = false };
+                            db.OFFEREDCATEGORies.Add(offeredCategory);
+                        }
                     }
-                    
                     db.VENDORs.Add(vendor);
                     db.VENDORCONTACTs.Add(vendorcontact);
 
