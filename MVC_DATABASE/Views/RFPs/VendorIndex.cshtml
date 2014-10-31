@@ -1,8 +1,8 @@
-﻿@model MVC_DATABASE.Models.RFP
-@model IEnumerable<MVC_DATABASE.Models.RFP>
+﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.RFPVendorIndex>
 
 @{
     ViewBag.Title = "RFP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>RFP</h2>
@@ -37,16 +37,16 @@
             @Html.DisplayFor(modelItem => item.CREATED)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RFI.EXPIRES)
+            @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
         <td>
-            @if (Request.IsAuthenticated)
+            @if (item.OFFERPATH == null)
             { 
                 @Html.ActionLink("Respond", "Respond", new { id = item.RFPID })
             }
             else
             { 
-                @Html.ActionLink("Details", "Details", new { id = item.RFPID })
+                @Html.ActionLink("Details", "VendorRFPDetails", new { id = item.RFPID })
             }
         </td>
     </tr>

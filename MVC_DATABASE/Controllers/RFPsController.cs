@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
 
@@ -143,41 +144,21 @@ namespace MVC_DATABASE.Controllers
         }
 
         //Vendor RFPs
-
-        // GET: RFPs/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
+        [HttpGet]
+        public ActionResult VendorIndex(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RFP rFP = await db.RFPs.FindAsync(id);
-            if (rFP == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
-            return View(rFP);
-        }
 
-        // POST: RFPs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rFP).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
-            return View(rFP);
-        }
+            BaptistEntities dbo = new BaptistEntities();
 
+            var VendorRFPIDQuery = from r in dbo.RFPs
+                                   join i in dbo.RFPINVITEs
+                                   on r.RFPID equals i.RFPID
+                                   where i.Id == this.User.Identity.GetUserId()
+                                   orderby r.RFPID
+                                   select new RFPVendorIndex { VendorRFP = r, VendorRFPInvite = i }; ;
+
+            return View(VendorRFPIDQuery);
+        } 
     }
 }
