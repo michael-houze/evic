@@ -145,7 +145,7 @@ namespace MVC_DATABASE.Controllers
             
             ViewBag.AcceptedVendors = vendorProductsQuery;
 
-            return View();
+            return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
         } 
 
         // GET: RFIs/Edit/5
