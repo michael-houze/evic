@@ -744,5 +744,27 @@ namespace MVC_DATABASE.Controllers
 
             return callbackUrl;
         }
+
+        private async Task<string> SendEmailAccountAccepted(string userID, string subject)
+        {
+            string message;
+
+            if (vendorRegister.VENDOR.VENDSTATUS == "ACTIVE")
+            {
+                message = "Your account have been accepted. Click this link to login.";
+            }
+            else
+            {
+                message = "You're account has not been approved. Please contact Baptist Health in order to inquire the reason";
+            }
+
+            string code = await UserManager.GenerateUserTokenAsync(userID);
+            var callbackUrl = Url.Action("AccountAccepted", "Account",
+                new { userID = userID, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userID, subject, message + callbackUrl);
+
+            return callbackUrl;
+
+        }
     }
 }
