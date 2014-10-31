@@ -86,8 +86,8 @@ namespace MVC_DATABASE.Controllers
 
             if (ModelState.IsValid)
             {
-                var rfi = model.RFI;
-                db.RFIs.Add(model.RFI);
+                var rfi = new RFI {TEMPLATEID = model.RFI.TEMPLATEID, CATEGORY = model.RFI.CATEGORY, CREATED = DateTime.Now, EXPIRES = model.RFI.EXPIRES, STATUS = "Open"  };
+                db.RFIs.Add(rfi);
                 if (model.RFIInviteList != null)
                 {
                     foreach (var x in model.RFIInviteList)
