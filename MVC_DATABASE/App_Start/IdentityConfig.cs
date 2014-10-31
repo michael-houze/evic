@@ -118,11 +118,6 @@ namespace MVC_DATABASE
             }
             return manager;
         }
-
-        internal Task<string> GenerateUserTokenAsync(string userID)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
