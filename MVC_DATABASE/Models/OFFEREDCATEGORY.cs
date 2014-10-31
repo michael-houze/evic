@@ -14,10 +14,10 @@ namespace MVC_DATABASE.Models
     
     public partial class OFFEREDCATEGORY
     {
+        public int PRIMARYKEY { get; set; }
         public string Id { get; set; }
         public string CATEGORY { get; set; }
         public bool ACCEPTED { get; set; }
-        public int primarykey { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

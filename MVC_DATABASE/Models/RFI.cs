@@ -25,7 +25,6 @@ namespace MVC_DATABASE.Models
         public string CATEGORY { get; set; }
         public System.DateTime CREATED { get; set; }
         public System.DateTime EXPIRES { get; set; }
-        public string STATUS { get; set; }
     
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }

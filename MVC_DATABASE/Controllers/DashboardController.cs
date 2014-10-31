@@ -11,7 +11,7 @@ namespace MVC_DATABASE.Controllers
 {
     public class DashboardController : Controller
     {
-        private BaptistEntities db = new BaptistEntities();
+        private EVICEntities db = new EVICEntities();
 
         public ActionResult Admin()
         {

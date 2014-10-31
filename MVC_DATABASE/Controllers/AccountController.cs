@@ -27,7 +27,7 @@ namespace MVC_DATABASE.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-        private BaptistEntities db = new BaptistEntities();
+        private EVICEntities db = new EVICEntities();
 
         public AccountController()
         {
@@ -191,7 +191,7 @@ namespace MVC_DATABASE.Controllers
                 {
                     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
                     Roles.AddUserToRole(user.Id, "Vendor");
-                    var vendor = new VENDOR { Id = user.Id, FirstName = model.VENDOR.FirstName, LastName = model.VENDOR.LastName, ORGANIZATION = model.VENDOR.ORGANIZATION };
+                    var vendor = new VENDOR { Id = user.Id, FIRSTNAME = model.VENDOR.FIRSTNAME, LASTNAME = model.VENDOR.LASTNAME, ORGANIZATION = model.VENDOR.ORGANIZATION };
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
                     vendor.VENDSTATUS = "PENDING";
                     vendor.SANCTIONED = false;

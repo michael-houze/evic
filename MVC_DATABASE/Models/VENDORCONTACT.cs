@@ -14,6 +14,7 @@ namespace MVC_DATABASE.Models
     
     public partial class VENDORCONTACT
     {
+        public int PRIMARYKEY { get; set; }
         public string Id { get; set; }
         public string CONTACTNAME { get; set; }
         public string CONTACTPHONE { get; set; }

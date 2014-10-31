@@ -12,13 +12,11 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
-    public partial class BaptistEntities : DbContext
+    public partial class EVICEntities : DbContext
     {
-        public BaptistEntities()
-            : base("name=BaptistEntities")
+        public EVICEntities()
+            : base("name=EVICEntities")
         {
         }
     
@@ -44,32 +42,5 @@ namespace MVC_DATABASE.Models
         public virtual DbSet<TEMPLATE> TEMPLATEs { get; set; }
         public virtual DbSet<VENDOR> VENDORs { get; set; }
         public virtual DbSet<VENDORCONTACT> VENDORCONTACTs { get; set; }
-        public virtual DbSet<OrganizationRFIInvite> OrganizationRFIInvites { get; set; }
-        public virtual DbSet<OrganizationRFPInvite> OrganizationRFPInvites { get; set; }
-    
-        public virtual int sp_Send_RFI_Invite_Email(string from, string to, string subject, string body, string bodytype, ObjectParameter output_mesg, ObjectParameter output_desc)
-        {
-            var fromParameter = from != null ?
-                new ObjectParameter("from", from) :
-                new ObjectParameter("from", typeof(string));
-    
-            var toParameter = to != null ?
-                new ObjectParameter("to", to) :
-                new ObjectParameter("to", typeof(string));
-    
-            var subjectParameter = subject != null ?
-                new ObjectParameter("subject", subject) :
-                new ObjectParameter("subject", typeof(string));
-    
-            var bodyParameter = body != null ?
-                new ObjectParameter("body", body) :
-                new ObjectParameter("body", typeof(string));
-    
-            var bodytypeParameter = bodytype != null ?
-                new ObjectParameter("bodytype", bodytype) :
-                new ObjectParameter("bodytype", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Send_RFI_Invite_Email", fromParameter, toParameter, subjectParameter, bodyParameter, bodytypeParameter, output_mesg, output_desc);
-        }
     }
 }

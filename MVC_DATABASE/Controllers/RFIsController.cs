@@ -24,7 +24,7 @@ namespace MVC_DATABASE.Controllers
 {
     public class RFIsController : Controller
     {
-        private BaptistEntities db = new BaptistEntities();
+        private EVICEntities db = new EVICEntities();
         private RFIEmployeeIndex rFIEmployeeIndex = new RFIEmployeeIndex();
         // GET: RFIs
         public ActionResult Index()
@@ -120,7 +120,7 @@ namespace MVC_DATABASE.Controllers
         public ActionResult GetAcceptedVendors(string ProductCategory)
         {
 
-            BaptistEntities dbo = new BaptistEntities();
+            EVICEntities dbo = new EVICEntities();
             
             var vendorProductsQuery = from v in dbo.VENDORs
                                       join c in dbo.OFFEREDCATEGORies

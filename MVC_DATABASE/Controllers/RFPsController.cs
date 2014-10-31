@@ -15,7 +15,7 @@ namespace MVC_DATABASE.Controllers
 {
     public class RFPsController : Controller
     {
-        private BaptistEntities db = new BaptistEntities();
+        private EVICEntities db = new EVICEntities();
 
         // GET: RFPs
         public async Task<ActionResult> Index()
@@ -149,7 +149,7 @@ namespace MVC_DATABASE.Controllers
         public ActionResult VendorIndex(int? id)
         {
 
-            BaptistEntities dbo = new BaptistEntities();
+            EVICEntities dbo = new EVICEntities();
 
             var VendorRFPIDQuery = from r in dbo.RFPs
                                    join i in dbo.RFPINVITEs

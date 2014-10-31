@@ -8,7 +8,7 @@ namespace MVC_DATABASE.Models.ViewModels
 {
     public class RFIEmployeeIndex
     {
-        BaptistEntities db = new BaptistEntities();
+        EVICEntities db = new EVICEntities();
 
         
         public RFI RFI { get; set; }

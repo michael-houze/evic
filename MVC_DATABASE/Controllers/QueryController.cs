@@ -16,7 +16,7 @@ namespace MVC_DATABASE.Controllers
         // GET: Query
         public IQueryable vendorProductsQuery()
         {
-            BaptistEntities dbo = new BaptistEntities();
+            EVICEntities dbo = new EVICEntities();
             var vendorProductsQuery = from v in dbo.VENDORs
                                       join c in dbo.OFFEREDCATEGORies
                                       on v.Id equals c.Id
@@ -30,7 +30,7 @@ namespace MVC_DATABASE.Controllers
 
         public IQueryable vendorRFIInviteQuery()
         {
-            BaptistEntities dbo = new BaptistEntities();
+            EVICEntities dbo = new EVICEntities();
             var vendorRFIInviteQuery = from v in dbo.VENDORs
                                        join i in dbo.RFIINVITEs
                                        on v.Id equals i.Id

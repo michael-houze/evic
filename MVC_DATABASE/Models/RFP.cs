@@ -14,15 +14,20 @@ namespace MVC_DATABASE.Models
     
     public partial class RFP
     {
+        public RFP()
+        {
+            this.RFPINVITEs = new HashSet<RFPINVITE>();
+        }
+    
         public int RFPID { get; set; }
         public Nullable<int> RFIID { get; set; }
         public string CATEGORY { get; set; }
         public int TEMPLATEID { get; set; }
         public System.DateTime CREATED { get; set; }
         public System.DateTime EXPIRES { get; set; }
-        public string STATUS { get; set; }
     
         public virtual RFI RFI { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }
+        public virtual ICollection<RFPINVITE> RFPINVITEs { get; set; }
     }
 }

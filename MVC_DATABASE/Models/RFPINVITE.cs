@@ -14,12 +14,12 @@ namespace MVC_DATABASE.Models
     
     public partial class RFPINVITE
     {
+        public int PRIMARYKEY { get; set; }
         public int RFPID { get; set; }
         public string Id { get; set; }
         public string OFFER_PATH { get; set; }
-        public int PRIMARYKEY { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual RFP RFP { get; set; }
     }
 }

@@ -15,12 +15,12 @@ namespace MVC_DATABASE.Models
     public partial class VENDOR
     {
         public string Id { get; set; }
+        public string FIRSTNAME { get; set; }
+        public string LASTNAME { get; set; }
         public string ORGANIZATION { get; set; }
         public bool SANCTIONED { get; set; }
         public string VENDSTATUS { get; set; }
         public string LOG { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }
