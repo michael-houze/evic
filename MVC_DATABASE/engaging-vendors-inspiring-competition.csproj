@@ -29,6 +29,25 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="BaptistHealthConnection-Deployment" Order="1" Enabled="True">
+          <Destination Path="Data Source=184.168.47.17%3bInitial Catalog=cis420%3bPersist Security Info=True%3bUser ID=cis420%3bPassword=g0cards!" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=184.168.47.17%3bInitial Catalog=cis420%3bIntegrated Security=False%3bUser ID=cis420%3bPassword=g0cards!" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\BaptistHealthConnection-Deployment_SchemaAndData.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="EVICEntities-Deployment" Order="3" Enabled="True">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=184.168.47.17%3bInitial Catalog=cis420%3bIntegrated Security=False%3bUser ID=cis420%3bPassword=g0cards!%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\EVICEntities-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -277,7 +296,6 @@
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\fullcalendar.print.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Models\bootstrap.min.css" />
     <Content Include="Content\Images\BaptistLogo.png" />
     <Content Include="Content\Images\Caldendar.PNG" />
     <Content Include="favicon.ico" />
@@ -314,7 +332,6 @@
       <DependentUpon>EVICEntities.edmx</DependentUpon>
       <LastGenOutput>EVICEntities.cs</LastGenOutput>
     </Content>
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />

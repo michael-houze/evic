@@ -189,8 +189,8 @@ namespace MVC_DATABASE.Controllers
                 var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
                 if (result.Succeeded)
                 {
-                    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-                    Roles.AddUserToRole(user.Id, "Vendor");
+                    //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                    //Roles.AddUserToRole(user.Id, "Vendor");
                     var vendor = new VENDOR { Id = user.Id, FIRSTNAME = model.VENDOR.FIRSTNAME, LASTNAME = model.VENDOR.LASTNAME, ORGANIZATION = model.VENDOR.ORGANIZATION };
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
                     vendor.VENDSTATUS = "PENDING";
@@ -497,7 +497,11 @@ namespace MVC_DATABASE.Controllers
             else
             {
                 accountManagement.Vendor = await db.VENDORs.FindAsync(id);
-                accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(id);
+                var contactPK = from x in db.VENDORCONTACTs
+                              where x.Id == id
+                              select x.PRIMARYKEY;
+                
+                accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(contactPK.FirstOrDefault());
 
                 List<OFFEREDCATEGORY> offeredlist = new List<OFFEREDCATEGORY>();
                 foreach(var x in db.OFFEREDCATEGORies)
@@ -529,7 +533,11 @@ namespace MVC_DATABASE.Controllers
             else
             {
                 accountManagement.Vendor = await db.VENDORs.FindAsync(id);
-                accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(id);
+                var contactPK = from x in db.VENDORCONTACTs
+                                where x.Id == id
+                                select x.PRIMARYKEY;
+
+                accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(contactPK.FirstOrDefault());
 
                 List<OFFEREDCATEGORY> offeredlist = new List<OFFEREDCATEGORY>();
                 foreach (var x in db.OFFEREDCATEGORies)
@@ -560,7 +568,9 @@ namespace MVC_DATABASE.Controllers
                 db.Entry(model.Vendor).State = EntityState.Modified;
 
                 foreach(var x in model.OfferedCategoryList)
-                    {                        
+                    {
+                       
+                        
                         db.Entry(x).State = EntityState.Modified;
                     }
                 await db.SaveChangesAsync();
