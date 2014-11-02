@@ -545,12 +545,10 @@ namespace MVC_DATABASE.Controllers
                     if (x.Id == accountManagement.Vendor.Id)
                     {
                         offeredlist.Add(x);
-
                     }
                 }
                 accountManagement.OfferedCategoryList = offeredlist;
-            }
-            ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
+            }           
 
             return View(accountManagement);
         }
@@ -569,9 +567,8 @@ namespace MVC_DATABASE.Controllers
 
                 foreach(var x in model.OfferedCategoryList)
                     {
-                       
-                        
                         db.Entry(x).State = EntityState.Modified;
+                        
                     }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});

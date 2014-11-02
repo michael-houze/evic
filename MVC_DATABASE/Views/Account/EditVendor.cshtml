@@ -96,6 +96,7 @@
                     </tr>
                     @for (var i = 0; i < Model.OfferedCategoryList.Count;i++)
                     {
+                        @Html.TextBoxFor(m => m.OfferedCategoryList[i].PRIMARYKEY, new { @class = "hidden" })
                         <tr>
                             <td>
                                 @Html.TextBoxFor(m => m.OfferedCategoryList[i].Id, new { @readonly = "readonly" })
@@ -106,7 +107,7 @@
                             <td>
                                 @Html.CheckBoxFor(m => m.OfferedCategoryList[i].ACCEPTED)
                             </td>
-                        </tr>
+                        </tr>                       
                     }
                 </table>
                 </div>
