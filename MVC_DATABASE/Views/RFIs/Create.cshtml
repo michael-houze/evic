@@ -13,12 +13,46 @@
                 var url = "/RFIs/GetAcceptedVendors"
                 var productCategory = $("#CATEGORY").val().toString();
                 $.ajax(url, { ProductCategory : productCategory }, function (data) {
+                    //$('#CATEGORY').change(function () {
+                    //    debugger;
+                    //  /*  $.getJSON('/RFIs/GetAcceptedVendors' + $('#CATEGORY').val(), function (data) { */ 
+                    //        var url = "/RFIs/GetAcceptedVendors"
+                    //        var productCategory = $("#CATEGORY").val().toString();
+                    //            OnSuccessPopulateListBox(data);
+
+                    $("#RFI_CATEGORY").on("change", function (e) {
+                        var dropValue = $(this).val();
+                        debugger;
+                        //var url = "RFIs/GetAcceptedVendors?ProductCategory=" + dropValue;
+                        var url = '@Url.Action("GetAcceptedVendors", "RFIs")';
+                        var data = dropValue;
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            data: data,
+                            datatype: 'JSON',
+                            success: function (data) { OnSuccessPopulateListBox(data); },
+                            error: function (data) { showError(data); }
+                        });
+                    });
                     
                 
                 });
             })
         })
+        //});
+        // })
+        //})
+        function OnSuccessPopulateListBox(data) {
+            debugger;
+
+        }
+        function showError(data) {
+            debugger;
+        }
         </script>
+    }
+    
     }
 
 <h2>@ViewBag.Title</h2>
