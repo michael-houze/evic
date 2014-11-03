@@ -13,7 +13,8 @@
         $('.datepicker').datepicker(); //Initialise any date pickers
     });
 </script>
-    @*<script type="text/jscript">
+    <script type="text/jscript">
+        $("#RFIListInvite").empty()
         $('#CATEGORY').click(function () {
             $.getJSON('/RFIs/GetAcceptedVendors' + $('#CATEGORY').val(), function (data) {
                 var url = "/RFIs/GetAcceptedVendors"
@@ -25,7 +26,6 @@
                     //        var url = "/RFIs/GetAcceptedVendors"
                     //        var productCategory = $("#CATEGORY").val().toString();
                     //            OnSuccessPopulateListBox(data);
-                    $("#RFIListInvite").empty()
                     $("#RFI_CATEGORY").on("change", function (e) {
                         var dropValue = $(this).val();
                         debugger;
@@ -50,13 +50,14 @@
         // })
         //})
         function OnSuccessPopulateListBox(data) {
+            $("#RFIListInvite").empty()
             debugger;
 
         }
         function showError(data) {
             debugger;
         }
-        </script>*@
+        </script>
     }
     
     
