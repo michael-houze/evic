@@ -5,6 +5,9 @@
  */
 
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+*{
+    color:black;
+}
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -123,6 +126,7 @@ button {
 button,
 select {
   text-transform: none;
+  
 }
 button,
 html input[type="button"],
@@ -2402,7 +2406,7 @@ input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
   line-height: 34px;
-  line-height: 1.42857143 \0;
+  line-height: 1.428571430;
 }
 input[type="date"].input-sm,
 input[type="time"].input-sm,

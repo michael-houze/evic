@@ -86,13 +86,18 @@ namespace MVC_DATABASE.Controllers
 
             if (ModelState.IsValid)
             {
-                var rfi = model.RFI;
+                var expires = model.RFI.EXPIRES - DateTime.Now;
+                var rfi = new RFI { TEMPLATEID = model.RFI.TEMPLATEID, CATEGORY = model.RFI.CATEGORY, CREATED = DateTime.Now, EXPIRES = DateTime.Now };
+                //rfi.EXPIRES = (DateTime)model.RFI.EXPIRES;
                 db.RFIs.Add(model.RFI);
-                foreach (var x in model.RFIInviteList)
+                if (model.RFIInviteList != null)
                 {
-                    var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x};
-                    
-                    db.RFIINVITEs.Add(rfiinvite);
+                    foreach (var x in model.RFIInviteList)
+                    {
+                        var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x };
+
+                        db.RFIINVITEs.Add(rfiinvite);
+                    }
                 }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -107,17 +112,11 @@ namespace MVC_DATABASE.Controllers
 
             IQueryable<string> acceptedCategories = result.Distinct();
             ViewBag.CATEGORY = acceptedCategories;
+            ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult GetAcceptedVendors()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult GetAcceptedVendors(string ProductCategory)
+        public JsonResult GetAcceptedVendors(string ProductCategory)
         {
 
             EVICEntities dbo = new EVICEntities();
@@ -320,7 +319,7 @@ namespace MVC_DATABASE.Controllers
             return "Respond to the RFI by uploading their GHX.";
         }
 
-        public string Details()
+        public string stringDetails()
         {
             return "Check what they submitted.";
         }

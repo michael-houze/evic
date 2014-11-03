@@ -38,10 +38,7 @@
                         Model.VendorResponseCount++;
                     }
                 }
-            }*/
-        
-    
-        
+            }*/        
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.RFIID)
@@ -52,9 +49,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
-        <td>
+        @*/* <td>
             @Html.DisplayFor(modelItem => Model.VendorResponseCount)
-        </td>
+        </td> */*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
