@@ -337,7 +337,7 @@ img {
 
 #footer nav a {
 	color: #585858;
-	font-family: "sans-serif", "Cambria";
+	font-family: 'myriad-pro semibold';
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	text-decoration: none;
 	font-size: 12px;
@@ -688,4 +688,8 @@ a.dashboard {
 
 .control-label {
     color: #000000;
+}
+
+.home {
+    font-family: 'myriad-pro semibold';
 }
