@@ -33,29 +33,38 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RFP rFP = await db.RFPs.FindAsync(id);
-            if (rFP == null)
+            rfpcreate.rfp = await db.RFPs.FindAsync(id);
+            if (rfpcreate.rfp == null)
             {
                 return HttpNotFound();
             }
-            return View(rFP);
+            var result = from r in db.VENDORs
+                         join p in db.RFPINVITEs
+                         on r.Id equals p.Id
+                         where p.RFPID == id
+                         select r;
+
+            ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
+            return View(rfpcreate);
         }
 
         // GET: RFPs/Create
         public ActionResult Create()
         {
-            var result = from r in db.OFFEREDCATEGORies
-                         where r.ACCEPTED == true
-                         select r.CATEGORY;
-
-
-            IQueryable<string> acceptedCategories = result.Distinct();
-            ViewBag.CATEGORY = acceptedCategories;
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY");
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+            var template = from x in db.TEMPLATEs
+                           where x.TYPE == "RFP"
+                           select x;
+            var expired = from y in db.RFIs
+                          where y.EXPIRES <= DateTime.Now
+                          select y;
+            ViewBag.RFIID = new SelectList(expired, "RFIID", "RFIID");
+            ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
+            ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
             return View();
         }
+
         public RFPCreate rfpcreate = new RFPCreate();
+
         // POST: RFPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -65,13 +74,32 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.RFPs.Add(model.rfp);
+                model.rfp.RFI = await db.RFIs.FindAsync(model.rfiid);
+                var rFP = new RFP { RFIID = model.rfiid, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = DateTime.Now, EXPIRES = model.rfp.EXPIRES};
+                db.RFPs.Add(rFP);
+                if (model.RFPInviteList != null)
+                {
+                    foreach (var x in model.RFPInviteList)
+                    {
+                        var rfpinvite = new RFPINVITE { RFPID = rFP.RFPID, Id = x };
+
+                        db.RFPINVITEs.Add(rfpinvite);
+                    }
+                }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", model.rfp.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", model.rfp.TEMPLATEID);
+        //if we got this far something failed, reload form
+            var template = from x in db.TEMPLATEs
+                           where x.TYPE == "RFP"
+                           select x;
+            var expired = from y in db.RFIs
+                          where y.EXPIRES <= DateTime.Now
+                          select y;
+            ViewBag.RFIID = new SelectList(expired, "RFIID", "RFIID");
+            ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
+            ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
             return View(model);
         }
 
@@ -82,14 +110,27 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RFP rFP = await db.RFPs.FindAsync(id);
-            if (rFP == null)
+            rfpcreate.rfp = await db.RFPs.FindAsync(id);
+            if (rfpcreate.rfp == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
-            return View(rFP);
+            var vendorRFIQuery = from v in db.VENDORs
+                                 join c in db.RFIINVITEs
+                                 on v.Id equals c.Id
+                                 where c.RFIID == (int)rfpcreate.rfp.RFIID
+                                 select v;
+
+            var result = from r in db.VENDORs
+                         join p in db.RFPINVITEs
+                         on r.Id equals p.Id
+                         where p.RFPID == id
+                         select r;
+
+            ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
+            ViewBag.SelectVendors = new MultiSelectList(vendorRFIQuery, "Id", "Organization");
+
+            return View(rfpcreate);
         }
 
         // POST: RFPs/Edit/5
@@ -97,53 +138,77 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "RFPID,RFIID,CATEGORY,TEMPLATEID,CREATED,EXPIRES")] RFP rFP)
+        public async Task<ActionResult> Edit(RFPCreate model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rFP).State = EntityState.Modified;
+                var rFP = model.rfp;
+
+                if (model.RFPInviteList != null)
+                {
+                    foreach (var x in model.RFPInviteList)
+                    {
+                        var RFPInvite = new RFPINVITE { RFPID = rFP.RFPID, Id = x, OFFER_PATH = string.Empty };
+                        db.RFPINVITEs.Add(RFPInvite);
+                    }
+                }
+
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Details", "RFPs", new { id = rFP.RFPID});
             }
-            ViewBag.RFIID = new SelectList(db.RFIs, "RFIID", "CATEGORY", rFP.RFIID);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", rFP.TEMPLATEID);
-            return View(rFP);
+            var vendorRFIQuery = from v in db.VENDORs
+                                 join c in db.RFIINVITEs
+                                 on v.Id equals c.Id
+                                 where c.RFIID == (int)rfpcreate.rfp.RFIID
+                                 select v;
+
+            var result = from r in db.VENDORs
+                         join p in db.RFPINVITEs
+                         on r.Id equals p.Id
+                         where p.RFPID == model.rfp.RFPID
+                         select r;
+
+            ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
+            ViewBag.SelectVendors = new MultiSelectList(vendorRFIQuery, "Id", "Organization");
+
+            return View(rfpcreate);
         }
 
-        // GET: RFPs/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RFP rFP = await db.RFPs.FindAsync(id);
-            if (rFP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(rFP);
-        }
+        //// GET: RFPs/Delete/5
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    RFP rFP = await db.RFPs.FindAsync(id);
+        //    if (rFP == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(rFP);
+        //}
 
-        // POST: RFPs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            RFP rFP = await db.RFPs.FindAsync(id);
-            db.RFPs.Remove(rFP);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //// POST: RFPs/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DeleteConfirmed(int id)
+        //{
+        //    RFP rFP = await db.RFPs.FindAsync(id);
+        //    db.RFPs.Remove(rFP);
+        //    await db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         //Vendor RFPs
 

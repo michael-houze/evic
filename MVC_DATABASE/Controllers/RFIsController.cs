@@ -20,15 +20,18 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
 
+
 namespace MVC_DATABASE.Controllers
 {
     public class RFIsController : Controller
     {
         private EVICEntities db = new EVICEntities();
         private RFIEmployeeIndex rFIEmployeeIndex = new RFIEmployeeIndex();
+
         // GET: RFIs
         public ActionResult Index()
         {
+            
             rFIEmployeeIndex.RFIList = new List<RFI>();
             rFIEmployeeIndex.RFIList = db.RFIs.ToList<RFI>();
             return View(rFIEmployeeIndex);
@@ -63,13 +66,15 @@ namespace MVC_DATABASE.Controllers
         // GET: RFIs/Create
         public ActionResult Create()
         {
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+            var template = from x in db.TEMPLATEs
+                           where x.TYPE == "GHX"
+                           select x;
+
+            ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
 
             var result = from r in db.OFFEREDCATEGORies
                          where r.ACCEPTED == true
                          select r.CATEGORY;
-
-
             IQueryable<string> acceptedCategories = result.Distinct();
             ViewBag.CATEGORY = acceptedCategories;
             ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
@@ -295,7 +300,7 @@ namespace MVC_DATABASE.Controllers
 
             return View(responsemodel);
         }
-
+        
         public FileResult DownloadGHX(string path)
         {
          
@@ -317,7 +322,7 @@ namespace MVC_DATABASE.Controllers
             
         }
 
-        public ActionResult VendorIndex()
+        public ActionResult VendorIndex(string id)
         {
             EVICEntities dbo = new EVICEntities();
 

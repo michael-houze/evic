@@ -20,23 +20,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.rfp.RFIID, "RFIID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("RFIID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.rfiid, (SelectList)ViewBag.RFIID)
                 @Html.ValidationMessageFor(model => model.rfp.RFIID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.rfp.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.rfp.CATEGORY, new SelectList (ViewBag.Category))
-                @Html.ValidationMessageFor(model => model.rfp.CATEGORY, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.rfp.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TEMPLATEID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.templateid, (SelectList)ViewBag.TEMPLATEID)
                 @Html.ValidationMessageFor(model => model.rfp.TEMPLATEID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -46,6 +38,17 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.rfp.EXPIRES, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.rfp.EXPIRES, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RFPInviteList, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @if (ViewBag.AcceptedVendors != null)
+                {
+                    @Html.ListBoxFor(m => m.RFPInviteList, (MultiSelectList)ViewBag.AcceptedVendors)
+                }
             </div>
         </div>
 

@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.RFP
+﻿@model MVC_DATABASE.Models.ViewModels.RFPCreate
 
 @{
     ViewBag.Title = "RFP Details";
@@ -11,54 +11,62 @@
            <hr />
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.RFPID)
+                    @Html.DisplayNameFor(model => model.rfp.RFPID)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.RFPID)
+                    @Html.DisplayFor(model => model.rfp.RFPID)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.RFIID)
+                    @Html.DisplayNameFor(model => model.rfp.RFIID)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.RFIID)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CATEGORY)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CATEGORY)
+                    @Html.DisplayFor(model => model.rfp.RFIID)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.CREATED)
+                    @Html.DisplayNameFor(model => model.rfp.TEMPLATEID)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.CREATED)
+                    @Html.DisplayFor(model => model.rfp.TEMPLATEID)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.EXPIRES)
+                    @Html.DisplayNameFor(model => model.rfp.CATEGORY)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.EXPIRES)
+                    @Html.DisplayFor(model => model.rfp.CATEGORY)
                 </dd>
+
                 <dt>
-                    @Html.DisplayNameFor(model => model.STATUS)
+                    @Html.DisplayNameFor(model => model.rfp.CREATED)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.STATUS)
+                    @Html.DisplayFor(model => model.rfp.CREATED)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.rfp.EXPIRES)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.rfp.EXPIRES)
                 </dd>
             </dl>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.RFPInvitedVendors, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-sm-12">
+            @Html.ListBoxFor(model => model.RFPInvitedVendors, (MultiSelectList)ViewBag.AcceptedVendors, new { @readonly = "readonly", @class = "form-control" })
+        </div>
     </div>
     <center>
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.RFPID }) |
+            @Html.ActionLink("Edit", "Edit", new { id = Model.rfp.RFPID }) |
             @Html.ActionLink("Back to RFP Home", "Index")
         </p>
     </center>
