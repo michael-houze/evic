@@ -242,6 +242,10 @@ html {
     font-family: "sans-serif", "Cambria";
 }
 
+* {
+    color: black;
+}
+
 body {
     background: #4c4c4c; /* Old browsers */
         background: -moz-linear-gradient(left,  #4c4c4c 0%, #2d2d2d 25%, #131313 50%, #2d2d2d 75%, #4c4c4c 100%); /* FF3.6+ */

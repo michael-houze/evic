@@ -42,34 +42,30 @@
                     <div class="btn-oldstyle">
                         @if (Request.IsAuthenticated)
                         {
-                            <ul>
-                                   <li> 
-                                    @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
-                                   </li>
-                                   <li> 
-                                     @Html.ActionLink("RFI", "Index", "RFIs", routeValues: null, htmlAttributes: new { id = "RFILink" })
-                                   </li>
-                                    <li>
-                                     @Html.ActionLink("RFP", "Index", "RFPs", routeValues: null, htmlAttributes: new { id = "RFPLink" })
-                                    </li>
-                                            <li>
-                                                @Html.ActionLink("Contracts", "Index", "Contracts", routeValues: null, htmlAttributes: new { id = "contractsLink" })
-                                            </li>
-                                            <li>
-                                                @Html.ActionLink("Reports", "Index", "Reports", routeValues: null, htmlAttributes: new { id = "reportsLink" })
-                                            </li>
-                                            <li>
-                                                @Html.ActionLink("Account Management", "Index", "Account", routeValues: null, htmlAttributes: new { id = "MGMTLink" })
-                                            </li>
-                                            <li>  @Html.ActionLink("Help", "Index", "Home", routeValues: null, htmlAttributes: new { id = "helpLink" })</li>
-                            </ul>
+                            <li> 
+                            @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
+                            </li>
+                            <li> 
+                                @Html.ActionLink("RFI", "Index", "RFIs", routeValues: null, htmlAttributes: new { id = "RFILink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("RFP", "Index", "RFPs", routeValues: null, htmlAttributes: new { id = "RFPLink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Contracts", "Index", "Contracts", routeValues: null, htmlAttributes: new { id = "contractsLink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Reports", "Index", "Reports", routeValues: null, htmlAttributes: new { id = "reportsLink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Account Management", "Index", "Account", routeValues: null, htmlAttributes: new { id = "MGMTLink" })
+                            </li>
+                            <li>  @Html.ActionLink("Help", "Index", "Home", routeValues: null, htmlAttributes: new { id = "helpLink" })</li>
                         }
                         else
                         {
-                            <ul>
-                                <li> @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
-                                <li> @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            </ul>
+                            <li> @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+                            <li> @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                         }
                     </div> <!--btn-oldstyle-->
                 </div> <!--tabs-->

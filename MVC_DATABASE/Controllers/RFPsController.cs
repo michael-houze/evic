@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
 
@@ -145,6 +147,38 @@ namespace MVC_DATABASE.Controllers
 
         //Vendor RFPs
 
+        RFPVendorRespond.RFPList respondmodel = new RFPVendorRespond.RFPList();
+
+        [HttpGet]
+        public async Task<ActionResult> VendorRespond(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            respondmodel.rfp = await db.RFPs.FindAsync(id);
+
+            if (respondmodel.rfp == null)
+            {
+                return HttpNotFound();
+            }
+
+            respondmodel.inviteList = new List<RFPINVITE>();
+
+            foreach (var x in db.RFPINVITEs.ToList())
+            {
+
+                if (x.RFPID == id)
+                {
+
+                    respondmodel.inviteList.Add(x);
+
+                }
+            }
+            return View(respondmodel);
+        }
+
         RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
 
         [HttpGet]
@@ -153,22 +187,16 @@ namespace MVC_DATABASE.Controllers
 
             EVICEntities dbo = new EVICEntities();
 
+            var user_ids = User.Identity.GetUserId();
+
             var VendorRFPIDQuery = from r in dbo.RFPs
                                    join i in dbo.RFPINVITEs
                                    on r.RFPID equals i.RFPID
-                                   where i.Id == this.User.Identity.GetUserId()
+                                   where i.Id == user_ids
                                    orderby r.RFPID
-                                   select new RFPVendorIndex { VendorRFP = r, VendorRFPInvite = i }; ;
+                                   select new RFPVendorIndex { VendorRFP = r, VendorRFPInvite = i };
 
             return View(VendorRFPIDQuery);
-        }
-
-        [HttpGet]
-        public ActionResult Respond(int RFPID)
-        {
-            var respond = new RFP { RFPID = RFPID };
-
-            return View();
         }
     }
 }

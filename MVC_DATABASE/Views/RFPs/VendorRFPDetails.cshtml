@@ -1,33 +1,56 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels>
+﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond.RFPList
 
 @{
-    ViewBag.Title = "RFP - Details";
+    ViewBag.Title = "RFP - Respond";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<center>
-    <h1>RFP Details</h1>
-    <br />
-    @Html.ActionLink("Back to RFP List", "Index")
-</center>
+<div class="rfp-respond">
+    <center>
+        <h1>RFP - Respond</h1>
+    </center>
 
-<div class="rfp-details">
+    <table class="table">
+        <tr>
+            <th>
+                <label class="control-label">RFP ID </label>
+            </th>
+            <th>
+                <label class="control-label">RFI ID </label>
+            </th>
+            <th>
+                <label class="control-label">Category</label>
+            </th>
+            <th>
+                <label class="control-label">Created</label>
+            </th>
+            <th>
+                <label class="control-label">Expires</label>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFP.RFPID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.RFP.RFIID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFP.CREATED)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFP.EXPIRES)
+            </td>
+        </tr>
+    </table>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            <label class="control-label">RFP ID#: </label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RFPID)
-        </dd>
-
-    </dl>
 
     <center>
-        <p>
-            @Html.ActionLink("Back to RFP Home", "VendorIndex")
-        </p>
+        @Html.ActionLink("Back to RFP Home", "VendorIndex")
     </center>
 
 </div>

@@ -28,25 +28,25 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.RFPID)
+            @Html.DisplayFor(modelItem => item.RFP.RFPID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CATEGORY)
+            @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CREATED)
+            @Html.DisplayFor(modelItem => item.RFP.CREATED)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EXPIRES)
+            @Html.DisplayFor(modelItem => item.RFP.EXPIRES)
         </td>
         <td>
-            @if (item.OFFERPATH == null)
+            @if (item.RFPINVITE.OFFERPATH == null)
             { 
-                @Html.ActionLink("Respond", "Respond", new { id = item.RFPID })
+                @Html.ActionLink("Respond", "Respond", new { id = item.RFP.RFPID })
             }
             else
             { 
-                @Html.ActionLink("Details", "VendorRFPDetails", new { id = item.RFPID })
+                @Html.ActionLink("Details", "VendorRFPDetails", new { id = item.RFP.RFPID })
             }
         </td>
     </tr>

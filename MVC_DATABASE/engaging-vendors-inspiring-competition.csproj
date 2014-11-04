@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
+    <Compile Include="Models\ViewModels\RFPVendorRespond.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
     <Compile Include="Models\ViewModels\EmployeeDashboard.cs" />
     <Compile Include="Models\ViewModels\ReportRFP.cs" />
@@ -543,6 +544,7 @@
     <Folder Include="Content\Fonts\MyriadPro\" />
     <Folder Include="Content\RFIs\5\" />
     <Folder Include="Content\RFIs\TestFolder\" />
+    <Folder Include="Content\RFPs\" />
     <Folder Include="Content\Videos\Vendor\" />
     <Folder Include="Views\Query\" />
     <Folder Include="Views\Reports\" />
