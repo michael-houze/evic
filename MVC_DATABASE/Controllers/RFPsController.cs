@@ -177,6 +177,60 @@ namespace MVC_DATABASE.Controllers
             return View(rfpcreate);
         }
 
+        RFPResponse responsemodel = new RFPResponse();
+
+        public async Task<ActionResult> VendorResponse(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            responsemodel.rfp = await db.RFPs.FindAsync(id);
+
+            if (responsemodel.rfp == null)
+            {
+                return HttpNotFound();
+            }
+
+            responsemodel.inviteList = new List<RFPINVITE>();
+            responsemodel.vendorlist = new List<VENDOR>();
+            foreach (var x in db.RFPINVITEs.ToList())
+            {
+
+                if (x.RFPID == id)
+                {
+                    VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
+                    responsemodel.inviteList.Add(x);
+                    responsemodel.vendorlist.Add(vendor);
+                }
+            }
+
+
+
+            return View(responsemodel);
+        }
+
+        public FileResult DownloadOffer(string path)
+        {
+
+            //select vendors Id from RFPINVITE
+            var InviteId = from x in db.RFPINVITEs
+                           where x.OFFER_PATH == path
+                           select x.Id;
+            //Get vendor items from Id
+            VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
+            //select RFPID
+            var rfpId = from y in db.RFPINVITEs
+                        where y.OFFER_PATH == path
+                        select y.RFPID;
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfpId.FirstOrDefault().ToString());
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
+        }
         //// GET: RFPs/Delete/5
         //public async Task<ActionResult> Delete(int? id)
         //{

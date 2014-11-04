@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.ViewModels.RFIResponse
+﻿@model MVC_DATABASE.Models.ViewModels.RFPResponse
 
 @{
     ViewBag.Title = "Vendor Response";
@@ -6,14 +6,14 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@Html.ActionLink("Back to RFI Home", "Index")
+@Html.ActionLink("Back to RFP Home", "Index")
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.rfiinvite.GHX_PATH)
+            @Html.DisplayNameFor(model => model.rfpinvite.OFFER_PATH)
         </th>
         <th></th>
     </tr>
@@ -21,29 +21,29 @@
     {
         foreach (var item in Model.inviteList)
         {
-            var path = item.GHX_PATH;
+            var path = item.OFFER_PATH;
             string noResponse = "No Response";
             var vendorOrg = from x in Model.vendorlist
                             where x.Id == item.Id
                             select x.ORGANIZATION;
-            string organization = vendorOrg.FirstOrDefault().ToString();                     
+            string organization = vendorOrg.FirstOrDefault().ToString();
             <tr>
                 <td>
                     @organization
                 </td>
                 <td>
-                    @if(string.IsNullOrWhiteSpace(path))
-                    {                       
-                       @ViewBag.NoResponse
+                    @if (string.IsNullOrWhiteSpace(path))
+                    {
+                        @ViewBag.NoResponse
                     }
                     else
                     {
-                        @Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, "DownloadGHX", new { path = item.GHX_PATH })
+                        @Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, "DownloadOffer", new { path = item.OFFER_PATH })
                     }
-                    
+
                 </td>
             </tr>
-        
+       
         }
     }
 

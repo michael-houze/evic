@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
+    <Compile Include="Models\ViewModels\RFPResponse.cs" />
     <Compile Include="Models\ViewModels\RFPVendorRespond.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
     <Compile Include="Models\ViewModels\EmployeeDashboard.cs" />
@@ -538,6 +539,7 @@
     <Content Include="Views\RFPs\Respond.cshtml" />
     <Content Include="Views\RFPs\VendorRFPDetails.cshtml" />
     <Content Include="Views\RFIs\VendorIndex.cshtml" />
+    <Content Include="Views\RFPs\VendorResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
