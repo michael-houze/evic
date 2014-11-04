@@ -270,7 +270,7 @@ namespace MVC_DATABASE.Controllers
 
         RFPVendorRespond.RFPList respondmodel = new RFPVendorRespond.RFPList();
 
-        [HttpGet]
+        
         public async Task<ActionResult> VendorRespond(int? id)
         {
             if (id == null)
@@ -302,22 +302,26 @@ namespace MVC_DATABASE.Controllers
 
         RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
 
-        [HttpGet]
-        public ActionResult VendorIndex(int? id)
+        
+        public ActionResult VendorIndex()
         {
 
             EVICEntities dbo = new EVICEntities();
 
             var user_ids = User.Identity.GetUserId();
 
-            var VendorRFPIDQuery = from r in dbo.RFPs
+            rfpvendorindex.rfplist = new List<RFP>();
+
+            var VendorRFPQuery = from r in dbo.RFPs
                                    join i in dbo.RFPINVITEs
                                    on r.RFPID equals i.RFPID
                                    where i.Id == user_ids
                                    orderby r.RFPID
-                                   select new RFPVendorIndex { VendorRFP = r, VendorRFPInvite = i };
+                                   select r;
 
-            return View(VendorRFPIDQuery);
+            rfpvendorindex.rfplist = VendorRFPQuery.ToList();
+
+            return View(rfpvendorindex);
         }
     }
 }
