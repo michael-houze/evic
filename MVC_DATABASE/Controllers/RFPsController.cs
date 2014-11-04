@@ -127,6 +127,7 @@ namespace MVC_DATABASE.Controllers
                          where p.RFPID == id
                          select r;
 
+            vendorRFIQuery = vendorRFIQuery.Where(x => !result.Contains(x));
             ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
             ViewBag.SelectVendors = new MultiSelectList(vendorRFIQuery, "Id", "Organization");
 
@@ -157,6 +158,7 @@ namespace MVC_DATABASE.Controllers
 
                 return RedirectToAction("Details", "RFPs", new { id = rFP.RFPID});
             }
+            //if we got this far something failed, reload form
             var vendorRFIQuery = from v in db.VENDORs
                                  join c in db.RFIINVITEs
                                  on v.Id equals c.Id
@@ -168,7 +170,7 @@ namespace MVC_DATABASE.Controllers
                          on r.Id equals p.Id
                          where p.RFPID == model.rfp.RFPID
                          select r;
-
+            vendorRFIQuery = vendorRFIQuery.Where(x => !result.Contains(x));
             ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
             ViewBag.SelectVendors = new MultiSelectList(vendorRFIQuery, "Id", "Organization");
 

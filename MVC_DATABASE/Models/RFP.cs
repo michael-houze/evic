@@ -11,6 +11,7 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class RFP
     {
@@ -18,12 +19,28 @@ namespace MVC_DATABASE.Models
         {
             this.RFPINVITEs = new HashSet<RFPINVITE>();
         }
-    
+        
+        [Display(Name="RFP ID")]
         public int RFPID { get; set; }
-        public Nullable<int> RFIID { get; set; }
+
+        [Required]
+        [Display(Name = "RFI ID", Prompt = "Select RFI ID", Description = "RFI ID for RFP")]
+        public int RFIID { get; set; }
+
+        [Display(Name = "Category")]
         public string CATEGORY { get; set; }
+
+        [Required]
+        [Display(Name = "Template ID", Prompt = "Select Template ID", Description = "Template ID for RFP")]
+        [DataType(DataType.Text)]
         public int TEMPLATEID { get; set; }
+
+        [Display(Name = "Created")]
         public System.DateTime CREATED { get; set; }
+
+        [Required]
+        [Display(Name = "Expiration Date", Prompt = "Select Expiration Date", Description = "Expiration Date for RFP")]
+        [DataType(DataType.Date)]
         public System.DateTime EXPIRES { get; set; }
     
         public virtual RFI RFI { get; set; }

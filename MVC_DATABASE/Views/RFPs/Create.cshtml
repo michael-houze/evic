@@ -18,7 +18,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.rfp.RFIID, "RFIID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.rfp.RFIID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.rfiid, (SelectList)ViewBag.RFIID)
                 @Html.ValidationMessageFor(model => model.rfp.RFIID, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.rfp.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.rfp.TEMPLATEID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.templateid, (SelectList)ViewBag.TEMPLATEID)
                 @Html.ValidationMessageFor(model => model.rfp.TEMPLATEID, "", new { @class = "text-danger" })

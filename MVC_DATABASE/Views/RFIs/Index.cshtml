@@ -1,7 +1,7 @@
 ﻿    @model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "RFI";
 }
 
 <h2>Index</h2>
@@ -19,9 +19,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RFI.EXPIRES)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VendorResponseCount)
         </th>
         <th></th>
     </tr>
@@ -49,9 +46,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
-        @*/* <td>
-            @Html.DisplayFor(modelItem => Model.VendorResponseCount)
-        </td> */*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
