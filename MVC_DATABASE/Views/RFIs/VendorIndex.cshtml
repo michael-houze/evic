@@ -1,14 +1,44 @@
 ﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.VendorRFI>
 @{
-    ViewBag.Title = "VendorIndex";
+    ViewBag.Title = "Vendor RFI Index";
 }
 
 <h2>VendorIndex</h2>
-<p>Display all the RFIs for the associated vendor.</p>
+
+<table class="table">
+    <tr>
+        <th>
+            <label class="control-label">RFI ID</label>
+        </th>
+        <th>
+            <label class="control-label">Category</label>
+        </th>
+        <th>
+            <label class="control-label">Created</label>
+        </th>
+        <th>
+            <label class="control-label">Expires</label>
+        </th>
+        <th></th>
+    </tr>
 
 @foreach (var item in Model)
 {
-    <div>
-        
-    </div>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.rfiInvite.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rfi.CATEGORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rfi.CREATED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rfi.EXPIRES)
+        </td>
+
+    </tr>   
 }
+
+</table>

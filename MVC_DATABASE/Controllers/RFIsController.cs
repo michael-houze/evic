@@ -326,12 +326,12 @@ namespace MVC_DATABASE.Controllers
         {
             EVICEntities dbo = new EVICEntities();
 
-            List<VendorRFI> vendorRFI = new List<VendorRFI>();
+            var user_id = User.Identity.GetUserId();
 
             var vendorInvitedRFIs = from i in dbo.RFIINVITEs
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFIs on i.RFIID equals r.RFIID
-                                    where i.Id == this.User.Identity.GetUserId()
+                                    where i.Id == user_id
                                     orderby i.RFIID
                                     select new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
 
