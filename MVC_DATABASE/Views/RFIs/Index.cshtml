@@ -4,23 +4,28 @@
     ViewBag.Title = "RFI";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Create New RFI", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Current/Open Requests for Information</h2>
+    </div>
+</div>
+<br />
+<table class="table table-striped table-hover">
     <tr>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.RFI.RFIID)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.RFI.CATEGORY)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.RFI.EXPIRES)
         </th>
-        <th></th>
+        <th class="text-center">RFI Actions</th>
     </tr>
     @if(Model.RFIList != null)
     { 
@@ -37,19 +42,19 @@
                 }
             }*/        
     <tr>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.RFIID)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.CATEGORY)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.EXPIRES)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RFIID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RFIID }) |
-            @Html.ActionLink("Responses", "VendorResponse", new { id=item.RFIID})
+        <td class="text-center">
+            @Html.ActionLink("Edit", "Edit", new { id = item.RFIID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.RFIID }) |
+            @Html.ActionLink("Vendor Responses", "VendorResponse", new { id = item.RFIID })
         </td>
     </tr>
 }
