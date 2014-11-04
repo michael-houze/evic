@@ -43,7 +43,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             <li> 
-                            @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
+                            @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink", @class = "home" })
                             </li>
                             <li> 
                                 @Html.ActionLink("RFI", "Index", "RFIs", routeValues: null, htmlAttributes: new { id = "RFILink" })

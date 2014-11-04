@@ -239,7 +239,7 @@
 }
 
 html {
-    font-family: "sans-serif", "Cambria";
+    font-family: 'myriad-pro semibold';
 }
 
 * {
@@ -315,7 +315,7 @@ img {
 		background: linear-gradient(to right,  #77787b 0%,#a8a9ad 17%,#cccdd1 32%,#cccdd1 68%,#a8a9ad 83%,#77787b 100%); /* W3C */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#77787b', endColorstr='#77787b',GradientType=1 ); /* IE6-9 */
 	color: #585858;
-	font-family: "sans-serif", "Cambria";
+	font-family: 'myriad-pro semibold';
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	font-size: 12px;
 }
@@ -380,7 +380,7 @@ img {
 .subnav li a {
 	display: block;
 	text-decoration: none;
-    font-family: "sans-serif", "Cambria";
+    font-family: 'myriad-pro semibold';
 	font-weight: bold;
 	color: #F1F1F2;
 	-webkit-transition: color .25s ease-in;
@@ -458,13 +458,13 @@ img {
 .nav .open > a:focus {
   background-color: #9A9A9A;
   border-color: #428bca;
-  font-family: "sans-serif", "Cambria";
+  font-family: 'myriad-pro semibold';
 }
 
 .subnav .dropdown-menu {
     background-color: #b2b2b2;
     border: ridge 3px #a3a3a3;
-    font-family: "sans-serif", "Cambria";
+    font-family: 'myriad-pro semibold';
 }
 
 .subnav .navbar-nav > li > .dropdown-menu {
@@ -498,7 +498,7 @@ img {
 #tabs li a {
 	display: block;
 	text-decoration: none;
-    font-family: "sans-serif", "Cambria";
+    font-family: 'myriad-pro semibold';
 	font-weight: bold;
 	color: #e4faff;
 	 -webkit-transition: color .25s ease-in;
