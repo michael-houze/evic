@@ -11,6 +11,8 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    
     
     public partial class RFI
     {
@@ -23,7 +25,9 @@ namespace MVC_DATABASE.Models
         public int RFIID { get; set; }
         public int TEMPLATEID { get; set; }
         public string CATEGORY { get; set; }
+        [DataType(DataType.Date)]
         public System.DateTime CREATED { get; set; }
+        [DataType(DataType.Date)]
         public System.DateTime EXPIRES { get; set; }
     
         public virtual TEMPLATE TEMPLATE { get; set; }

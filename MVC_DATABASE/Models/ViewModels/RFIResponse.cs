@@ -26,37 +26,14 @@ namespace MVC_DATABASE.Models.ViewModels
 
     public class RFIResponse
     {
-        public class RFIList
-        {
-            public RFI rfi { get; set; }
+
+            public RFI rfi { get; set; }            
             public RFIINVITE rfiinvite { get; set; }
+            public VENDOR vendor { get; set; }
             public ICollection<RFIINVITE> inviteList { get; set; }
-        }
-        public List<FileNames> GetFiles()
-        {
-           
-            List<FileNames> lstFiles = new List<FileNames>();
-            DirectoryInfo dirInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/RFIs"));
-           
-            int i = 0;
-            foreach (var item in dirInfo.GetFiles())
-            {
+            public ICollection<VENDOR> vendorlist { get; set; }
+        
 
-                lstFiles.Add(new FileNames() {
-
-                    FileId = i + 1, FileName = item.Name, FilePath = dirInfo.FullName+@"\"+item.Name});
-                    i = i + 1;
-                }
-               
-                return lstFiles;
-            }
-        }
-
-    public class FileNames
-    {
-        public int FileId { get; set; }
-        public string FileName { get; set; }
-        public string FilePath { get; set; }
     }
-    }
+}
  

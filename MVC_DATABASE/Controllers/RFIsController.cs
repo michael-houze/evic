@@ -73,7 +73,8 @@ namespace MVC_DATABASE.Controllers
             IQueryable<string> acceptedCategories = result.Distinct();
             ViewBag.CATEGORY = acceptedCategories;
             ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
-            return View();
+
+            return View(rFIEmployeeIndex);
         }
 
         // POST: RFIs/Create
@@ -86,10 +87,8 @@ namespace MVC_DATABASE.Controllers
 
             if (ModelState.IsValid)
             {
-                var expires = model.RFI.EXPIRES - DateTime.Now;
-                var rfi = new RFI { TEMPLATEID = model.RFI.TEMPLATEID, CATEGORY = model.RFI.CATEGORY, CREATED = DateTime.Now, EXPIRES = DateTime.Now };
-                //rfi.EXPIRES = (DateTime)model.RFI.EXPIRES;
-                db.RFIs.Add(model.RFI);
+                var rfi = new RFI { TEMPLATEID = model.templateId, CATEGORY = model.RFI.CATEGORY, CREATED = DateTime.Now, EXPIRES = model.RFI.EXPIRES };
+                db.RFIs.Add(rfi);
                 if (model.RFIInviteList != null)
                 {
                     foreach (var x in model.RFIInviteList)
@@ -263,12 +262,10 @@ namespace MVC_DATABASE.Controllers
             base.Dispose(disposing);
         }
 
-        RFIResponse.RFIList responsemodel = new RFIResponse.RFIList();
+        RFIResponse responsemodel = new RFIResponse();
        
         public async Task<ActionResult> VendorResponse(int? id)
         {
- 
- 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -282,20 +279,42 @@ namespace MVC_DATABASE.Controllers
             }
 
             responsemodel.inviteList = new List<RFIINVITE>();
-
+            responsemodel.vendorlist = new List<VENDOR>();
             foreach (var x in db.RFIINVITEs.ToList())
             {
 
                 if (x.RFIID == id)
                 {
-                        
+                    VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
                         responsemodel.inviteList.Add(x);
-                    
+                        responsemodel.vendorlist.Add(vendor);
                 }
             }
 
 
+
             return View(responsemodel);
+        }
+
+        public FileResult DownloadGHX(string path)
+        {
+         
+                //select vendors Id from RFIINVITE
+                var InviteId = from x in db.RFIINVITEs
+                               where x.GHX_PATH == path
+                               select x.Id;
+                //Get vendor items from Id
+                VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
+                //select RFIID
+                var rfiId = from y in db.RFIINVITEs
+                            where y.GHX_PATH == path
+                            select y.RFIID;
+
+                string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
+
+                return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            
+            
         }
 
         public ActionResult VendorIndex()

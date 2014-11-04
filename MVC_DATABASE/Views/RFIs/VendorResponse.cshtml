@@ -1,7 +1,8 @@
-﻿@model MVC_DATABASE.Models.ViewModels.RFIResponse.RFIList
+﻿@model MVC_DATABASE.Models.ViewModels.RFIResponse
 
 @{
     ViewBag.Title = "Vendor Response";
+    ViewBag.NoResponse = "No Response";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -9,7 +10,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.rfiinvite.Id)
+            @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.rfiinvite.GHX_PATH)
@@ -21,12 +22,25 @@
         foreach (var item in Model.inviteList)
         {
             var path = item.GHX_PATH;
+            string noResponse = "No Response";
+            var vendorOrg = from x in Model.vendorlist
+                            where x.Id == item.Id
+                            select x.ORGANIZATION;
+            string organization = vendorOrg.FirstOrDefault().ToString();                     
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @organization
                 </td>
                 <td>
-                    @*@Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, )*@
+                    @if(string.IsNullOrWhiteSpace(path))
+                    {                       
+                       @ViewBag.NoResponse
+                    }
+                    else
+                    {
+                        @Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, "DownloadGHX", new { path = item.GHX_PATH })
+                    }
+                    
                 </td>
             </tr>
         }
