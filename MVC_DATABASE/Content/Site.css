@@ -91,7 +91,7 @@
     input,
     select,
     textarea {
-        width: 320px;
+        width: 320px;   
         margin-left: 10px;
     }
 
@@ -692,4 +692,12 @@ a.dashboard {
 
 .home {
     font-family: 'myriad-pro semibold';
+}
+
+.category-box {
+    max-width: 600px;
+}
+
+#categorySelect {
+    height: 600px;
 }

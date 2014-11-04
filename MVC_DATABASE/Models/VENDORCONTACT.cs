@@ -18,6 +18,7 @@ namespace MVC_DATABASE.Models
         public int PRIMARYKEY { get; set; }
         public string Id { get; set; }
 
+
         [Required]
         [Display(Name = "Secondary Contact's Full Name", Prompt = "Enter Secondary Contact's Full Name", Description = "Vendor Contact's Full Name")]
         public string CONTACTNAME { get; set; }

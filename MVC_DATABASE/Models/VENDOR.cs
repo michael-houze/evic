@@ -13,10 +13,10 @@ namespace MVC_DATABASE.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     
-    
     public partial class VENDOR
     {
         public string Id { get; set; }
+
 
         [Required]
         [Display(Name="First Name",Prompt="Enter First Name",Description="Vendor First Name")]
