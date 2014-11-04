@@ -61,12 +61,12 @@
 
             <div class="form-group">
                 @Html.LabelFor(m => m.VENDORCONTACT.CONTACTEMAIL, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.VENDORCONTACT.CONTACTEMAIL, new { @class = "form-control", @placeholder = "Please enter a secondary contact email." })
+                @Html.TextBoxFor(m => m.VENDORCONTACT.CONTACTEMAIL, new { @class = "form-control", @placeholder = "Please enter a secondary email." })
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.VENDORCONTACT.CONTACTPHONE, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.VENDORCONTACT.CONTACTPHONE, new { @class = "form-control", @placeholder = "Please enter a secondary contact phone number." })
+                @Html.TextBoxFor(m => m.VENDORCONTACT.CONTACTPHONE, new { @class = "form-control", @placeholder = "Please enter a secondary phone number." })
             </div>
         </div>
 
@@ -74,11 +74,11 @@
         <div class="col-sm-7">
             <div class="row">
                 <div class="col-sm-12">
-                    @Html.LabelFor(model => model.CategoryList, htmlAttributes: new { @class = "control-label" })
+                    @Html.LabelFor(model => model.CategoryList, htmlAttributes: new { @class = "control-label " })
                 </div>
                 <!--Html.ListBox("CATEGORY", null, htmlAttributes: new MultiSelectList("CATEGORY"))-->
                 <div class="col-sm-12">
-                    @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY, new { @class = "form-control" })
+                    @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY, new { @id = "categorySelect", @class = "form-control category-box" })
                 </div>
             </div>
             
