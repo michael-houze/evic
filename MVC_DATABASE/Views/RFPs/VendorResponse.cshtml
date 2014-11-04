@@ -22,7 +22,6 @@
         foreach (var item in Model.inviteList)
         {
             var path = item.OFFER_PATH;
-            string noResponse = "No Response";
             var vendorOrg = from x in Model.vendorlist
                             where x.Id == item.Id
                             select x.ORGANIZATION;
