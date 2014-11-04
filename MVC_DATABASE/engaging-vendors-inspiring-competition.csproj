@@ -283,6 +283,7 @@
     <Compile Include="Models\ViewModels\RFPCreate.cs" />
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
     <Compile Include="Models\ViewModels\RFIEmployeeIndex.cs" />
+    <Compile Include="Models\ViewModels\VendorContract.cs" />
     <Compile Include="Models\ViewModels\VendorDashboard.cs" />
     <Compile Include="Models\ViewModels\VendorRegister.cs" />
     <Compile Include="Models\ViewModels\RFPVendorIndex.cs" />
@@ -534,7 +535,7 @@
     <Content Include="Views\VendorRFI\Respond.cshtml" />
     <Content Include="Views\VendorContract\Response.cshtml" />
     <Content Include="Views\RFPs\VendorIndex.cshtml" />
-    <Content Include="Views\VendorContract\Index.cshtml" />
+    <Content Include="Views\VendorContract\VendorIndex.cshtml" />
     <Content Include="Views\VendorContract\Respond.cshtml" />
     <Content Include="Views\RFPs\Respond.cshtml" />
     <Content Include="Views\RFPs\VendorRFPDetails.cshtml" />
