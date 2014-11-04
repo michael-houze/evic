@@ -59,12 +59,12 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var rfi in db.RFIs)
             {
-                events.Add(new CalendarEvent("RFI #" + rfi.RFIID.ToString() + " Expires", true, rfi.EXPIRES, "#4DB3D0"));
+                events.Add(new CalendarEvent("RFI #" + rfi.RFIID.ToString() + " Expires", true, rfi.EXPIRES, "#74C0D9"));
             }
 
             foreach (var rfp in db.RFPs)
             {
-                events.Add(new CalendarEvent("RFP #" + rfp.RFPID.ToString() + " Expires", true, rfp.EXPIRES, "#613E82"));
+                events.Add(new CalendarEvent("RFP #" + rfp.RFPID.ToString() + " Expires", true, rfp.EXPIRES, "#9C8AB4"));
             }
 
             serializedEvents = JsonConvert.SerializeObject(events);
