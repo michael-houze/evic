@@ -25,6 +25,8 @@ namespace MVC_DATABASE.Controllers
 {
     public class VendorContractController : Controller
     {
+        private EVICEntities db = new EVICEntities();
+
         //
         // GET: /VendorContract/
         public ActionResult Index()
@@ -32,11 +34,59 @@ namespace MVC_DATABASE.Controllers
             return View();
         }
 
-        public ActionResult Respond(string Id)
-        {
-            var vresponse = new CONTRACT { Id = Id };
 
-            return View();
+
+        VendorContract responsemodel = new VendorContract();
+
+        public async Task<ActionResult> VendorResponse(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            responsemodel.contract = await db.CONTRACTs.FindAsync(id);
+
+            if (responsemodel.contract == null)
+            {
+                return HttpNotFound();
+            }
+
+            responsemodel.contractlist = new List<CONTRACT>();
+            responsemodel.vendorlist = new List<VENDOR>();
+
+            foreach (var x in db.CONTRACTs.ToList())
+            {
+
+                if (x.CONTRACTID == id)
+                {
+                    VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
+                    responsemodel.contractlist.Add(x);
+                    responsemodel.vendorlist.Add(vendor);
+                }
+            }
+
+            return View(responsemodel);
+        }
+
+        public FileResult DownloadContract(string path)
+        {
+
+            //select vendors Id from CONTRACTs
+            var InviteId = from x in db.CONTRACTs
+                           where x.CONTRACT_PATH == path
+                           select x.Id;
+            //Get vendor items from Id
+            CONTRACT contract = db.CONTRACTs.Find(InviteId.FirstOrDefault());
+            //select CONTRACTID
+            var contractId = from y in db.CONTRACTs
+                             where y.CONTRACT_PATH == path
+                             select y.CONTRACTID;
+
+            string fileName = (contract.CONTRACT_PATH.ToString() + " - " + contractId.FirstOrDefault().ToString());
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
         }
 
         //
@@ -58,42 +108,24 @@ namespace MVC_DATABASE.Controllers
         //    return RedirectToAction("Index");
         //}
 
-        //public ActionResult Download(int? id, string name)
-        //{
-
-
-        //    string fileName = name;
-
-        //    var uploads = (from u in MVC_DATABASE.Contract
-        //                   where u.Id == id
-        //                   select u.CONTRACT_PATH).FirstOrDefault();
-
-
-        //    if (uploads != null)
-        //    {
-
-        //        string folder = Path.GetFullPath(uploads);
-        //        //HttpContext.Response.AddHeader("content-dispostion", "attachment; filename=" + fileName);
-        //        return File(new FileStream(folder + "/" + fileName, FileMode.Open), "content-dispostion", fileName);
-        //    }
-
-        //    throw new ArgumentException("Invalid file name of file not exist");
-        //}
+        VendorContract vendorContract = new VendorContract();
 
         public ActionResult VendorIndex()
         {
             EVICEntities db = new EVICEntities();
             var user = User.Identity.GetUserId();
+            
+            vendorContract.contractlist = new List<CONTRACT>();
 
-            List<VendorContract> vendorContract = new List<VendorContract>();
+            var vendorContractsQuery = from c in db.CONTRACTs
+                                       join v in db.VENDORs on c.Id equals v.Id
+                                       where c.Id == user
+                                       orderby c.CONTRACTID
+                                       select c;
 
-            var vendorContracts = from c in db.CONTRACTs
-                                    join v in db.VENDORs on c.Id equals v.Id
-                                    where c.Id == user
-                                    orderby c.CONTRACTID
-                                    select new VendorContract { contract = c, vendor = v };
+            vendorContract.contractlist = vendorContractsQuery.ToList();
 
-            return View(vendorContracts);
+            return View(vendorContract);
         }
 
         public string Details()

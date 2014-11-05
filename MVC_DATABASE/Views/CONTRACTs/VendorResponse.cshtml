@@ -1,0 +1,53 @@
+﻿@model MVC_DATABASE.Models.ViewModels.VendorContract
+
+@{
+    ViewBag.Title = "Vendor Response";
+    ViewBag.NoResponse = "No Response";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.ActionLink("Back to Contract Home", "Index")
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.contract.CONTRACT_PATH)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model.contractlist != null)
+    {
+        foreach (var item in Model.contractlist)
+        {
+            var path = item.CONTRACT_PATH;
+
+            var vendorOrg = from x in Model.vendorlist
+                            where x.Id == item.Id
+                            select x.ORGANIZATION;
+            string organization = vendorOrg.FirstOrDefault().ToString();
+            <tr>
+                <td>
+                    @organization
+                </td>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(path))
+                    {
+                        @ViewBag.NoResponse
+                    }
+                    else
+                    {
+                        @Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, "DownloadContract", new { path = item.CONTRACT_PATH })
+                    }
+
+                </td>
+            </tr>
+
+        }
+    }
+
+</table>
+
+
+

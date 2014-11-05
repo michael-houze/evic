@@ -535,12 +535,13 @@
     <Content Include="Views\VendorRFI\Respond.cshtml" />
     <Content Include="Views\VendorContract\Response.cshtml" />
     <Content Include="Views\RFPs\VendorIndex.cshtml" />
-    <Content Include="Views\VendorContract\VendorIndex.cshtml" />
-    <Content Include="Views\VendorContract\Respond.cshtml" />
+    <Content Include="Views\CONTRACTs\Respond.cshtml" />
     <Content Include="Views\RFPs\Respond.cshtml" />
     <Content Include="Views\RFPs\VendorRFPDetails.cshtml" />
     <Content Include="Views\RFIs\VendorIndex.cshtml" />
     <Content Include="Views\RFPs\VendorResponse.cshtml" />
+    <Content Include="Views\CONTRACTs\VendorIndex.cshtml" />
+    <Content Include="Views\CONTRACTs\VendorResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
