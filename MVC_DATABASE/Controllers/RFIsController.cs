@@ -338,9 +338,9 @@ namespace MVC_DATABASE.Controllers
             return View(vendorInvitedRFIs);
         }
 
-        public string Respond()
+        public ActionResult Respond()
         {
-            return "Respond to the RFI by uploading their GHX.";
+            return View();
         }
 
         public string stringDetails()
