@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace MVC_DATABASE.Controllers
 {
-    public class ReportsController : Controller
+    public class ReportController : Controller
     {
-        // GET: Reports
-        public ViewResult Index()
+        // GET: Report
+        public ActionResult Index()
         {
             return View();
         }

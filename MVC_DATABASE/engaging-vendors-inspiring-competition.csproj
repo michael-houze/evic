@@ -186,7 +186,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
-    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RFIsController.cs" />
     <Compile Include="Controllers\RFPsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
+    <Compile Include="Models\ViewModels\ReportRecord.cs" />
     <Compile Include="Models\ViewModels\RFPResponse.cs" />
     <Compile Include="Models\ViewModels\RFPVendorRespond.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreate.cs" />
@@ -542,6 +543,7 @@
     <Content Include="Views\RFPs\VendorResponse.cshtml" />
     <Content Include="Views\CONTRACTs\VendorIndex.cshtml" />
     <Content Include="Views\CONTRACTs\VendorResponse.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -553,7 +555,6 @@
     <Folder Include="Content\RFPs\" />
     <Folder Include="Content\Videos\Vendor\" />
     <Folder Include="Views\Query\" />
-    <Folder Include="Views\Reports\" />
     <Folder Include="Views\UserAdmin\" />
   </ItemGroup>
   <ItemGroup>
