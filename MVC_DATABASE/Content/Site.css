@@ -478,24 +478,20 @@ img {
 	margin: 0 auto;
 	padding: 0;
 	list-style: none;
-	/*background-color: #009dbd;*/
-    background-color: #4DB3D0;
-    
-        border-color: #00819c;
-        /*background-image: -webkit-gradient(linear, left 0%, left 100%, from(#00c7f0), to(#009dbd));
-        background-image: -webkit-linear-gradient(top, #00c7f0, 0%, #009dbd, 100%);
-        background-image: -moz-linear-gradient(top, #00c7f0 0%, #009dbd 100%);
-        background-image: linear-gradient(to bottom, #00c7f0 0%, #009dbd 100%);*/
+	background-color: #c4c423;
+        border-color: #a8a81e;
+        background-image: -webkit-gradient(linear, left 0%, left 100%, from(#dcdc3e), to(#c4c423));
+        background-image: -webkit-linear-gradient(top, #dcdc3e, 0%, #c4c423, 100%);
+        background-image: -moz-linear-gradient(top, #dcdc3e 0%, #c4c423 100%);
+        background-image: linear-gradient(to bottom, #dcdc3e 0%, #c4c423 100%);
         background-repeat: repeat-x;
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00c7f0', endColorstr='#ff009dbd', GradientType=0);
-	color: #e4faff;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdcdc3e', endColorstr='#ffc4c423', GradientType=0);
 	border-bottom: solid #515254 1px;
 	border-top: solid #515254 3px;
 	}
 	
 #tabs li {
 	float: left;
-	color: #e4faff;
 	}
   
 #tabs li a {
@@ -503,7 +499,7 @@ img {
 	text-decoration: none;
     font-family: 'myriad-pro semibold';
 	font-weight: bold;
-	color: #e4faff;
+	color: #f5f5c9;
 	 -webkit-transition: color .25s ease-in;
 		-moz-transition: color .25s ease-in;
 		  -o-transition: color .25s ease-in;
@@ -517,19 +513,19 @@ img {
 }
 
 #tabs .btn-oldstyle li {
-	background-color: #009dbd;
-    border-color: #009dbd;
-    color: #e4faff;
+    background-color: #c4c423;
+    border-color: #c4c423;
+    color: #fff;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
-    background-color: #008ca9;
-        background-image: -moz-linear-gradient(top,#009dbd,#00738a);
-        background-image: -webkit-gradient(linear,0 0,0 100%,from(#009dbd),to(#00738a));
-        background-image: -webkit-linear-gradient(top,#009dbd,#00738a);
-        background-image: -o-linear-gradient(top,#009dbd,#00738a);
-        background-image: linear-gradient(to bottom,#009dbd,#00738a);
+    background-color: #b3b320;
+        background-image: -moz-linear-gradient(top,#c4c423,#99991b);
+        background-image: -webkit-gradient(linear,0 0,0 100%,from(#c4c423),to(#99991b));
+        background-image: -webkit-linear-gradient(top,#c4c423,#99991b);
+        background-image: -o-linear-gradient(top,#c4c423,#99991b);
+        background-image: linear-gradient(to bottom,#c4c423,#99991b);
         background-repeat: repeat-x;
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff009dbd', endColorstr='#ff00728a', GradientType=0);
-    border-color: #00738a #00738a #00333e;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc4c423', endColorstr='#ff98981b', GradientType=0);
+    border-color: #99991b #99991b #585810;
     border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
 	border: solid black 1px;
 	border-radius: 3px;
@@ -545,11 +541,11 @@ img {
 #tabs .btn-oldstyle li:hover {
 	text-decoration: none;
 	background-position: 0 -15px;
-	background-color: #00738a;
+	background-color: #a3a31d;
 }
 
 #tabs .btn-oldstyle li:hover > a:active {
-	background-color: #005c6f;
+	background-color: #4f4f0e;
     border-color: #00738a;
 }
 
