@@ -373,6 +373,8 @@
       <DependentUpon>EVICEntities.edmx</DependentUpon>
       <LastGenOutput>EVICEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />

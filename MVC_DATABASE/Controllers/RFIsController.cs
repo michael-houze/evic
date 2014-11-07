@@ -122,7 +122,6 @@ namespace MVC_DATABASE.Controllers
 
         public JsonResult GetAcceptedVendors(string ProductCategory)
         {
-
             EVICEntities dbo = new EVICEntities();
             
             var vendorProductsQuery = from v in dbo.VENDORs
