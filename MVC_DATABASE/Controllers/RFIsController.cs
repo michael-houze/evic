@@ -131,7 +131,7 @@ namespace MVC_DATABASE.Controllers
                                       on c.CATEGORY equals p.CATEGORY
                                       where c.ACCEPTED == true
                                       where c.CATEGORY.ToString() == ProductCategory
-                                      select new { v };
+                                      select new { v.ORGANIZATION };
             
 
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");

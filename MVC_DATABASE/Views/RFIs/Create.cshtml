@@ -9,41 +9,45 @@
 @section Scripts {
 
 <script type="text/javascript">
-    $(function () { // will trigger when the document is ready
-        $('.datepicker').datepicker(); //Initialise any date pickers
-    });
+    //$(function () { // will trigger when the document is ready
+    //    $('.datepicker').datepicker(); //Initialise any date pickers
+    //});
 </script>
     <script type="text/jscript">
-        $("#RFIInviteList").hide()
-       
+        $(function(){
+            $("#RFIInviteList").hide()
 
-        $("#RFI_CATEGORY").on("change", function (e) {
-            $("#RFI_CATEGORY").chosen().change("#RFIInviteList");
-            var dropValue = $(this).val();
-            debugger;
-            //var url = "RFIs/GetAcceptedVendors?ProductCategory=" + dropValue;
-            var url = "@Url.Action("GetAcceptedVendors", "RFIs")";
-            var data = dropValue;
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: data,
-                datatype: 'JSON',
-                contentType: "application/json",
-                success: function (data) { OnSuccessPopulateListBox(data); },
-                error: function (data) { showError(data); }
-                $("#RFIInviteList").trigger("chosen:updated");
+
+            $("#RFI_CATEGORY").on("change", function (e) {
+                //$("#RFI_CATEGORY").chosen().change("#RFIInviteList");
+                var dropValue = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetAcceptedVendors", "RFIs")",
+                    data: {
+                        ProductCategory: dropValue
+                    },
+                    datatype: 'JSON',
+                    contentType: "application/json"
+                })
+                    .done(OnSuccessPopulateListBox)
+                    .fail(function (data) { showError(data); });
             });
-        });
- 
-        function OnSuccessPopulateListBox(data) {
-            $("#RFIInviteList").empty()
-            debugger;
 
-        }
-        function showError(data) {
-            debugger;
-        }
+            //$("#RFIInviteList").trigger("chosen:updated");
+
+            function OnSuccessPopulateListBox(data) {
+                $("#RFIInviteList").empty()
+                data.forEach(function (vendor) {
+                    $("#RFIInviteList").append('<option>' + vendor.ORGANIZATION + '</option>')
+                });
+                $("#RFIInviteList").show()
+                //debugger;
+            }
+            function showError(data) {
+                debugger;
+            }
+        });
         </script>
     }
     
