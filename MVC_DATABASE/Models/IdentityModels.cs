@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System;
+using MVC_DATABASE.Migrations;
 
 namespace MVC_DATABASE.Models
 {
@@ -62,6 +63,7 @@ namespace MVC_DATABASE.Models
         public ApplicationDbContext()
             : base("name=BaptistHealthConnection")
         {
+            Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
 
         public static ApplicationDbContext Create()

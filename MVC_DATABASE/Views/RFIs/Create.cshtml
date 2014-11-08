@@ -39,7 +39,7 @@
             function OnSuccessPopulateListBox(data) {
                 $("#RFIInviteList").empty()
                 data.forEach(function (vendor) {
-                    $("#RFIInviteList").append('<option>' + vendor.ORGANIZATION + '</option>')
+                    $("#RFIInviteList").append('<option value =' + vendor.Id + '>' + vendor.ORGANIZATION + '</option>')
                 });
                 $("#RFIInviteList").show()
                 //debugger;

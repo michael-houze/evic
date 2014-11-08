@@ -11,71 +11,80 @@ using System.Collections.Generic;
 
 namespace MVC_DATABASE.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public class RolesAdminController : Controller
     {
-        public EVICEntities db = new EVICEntities();
+        public ApplicationDbContext db = new ApplicationDbContext();
 
-        public RolesAdminController()
-        {
-        }
 
-        public RolesAdminController(ApplicationUserManager userManager,
-            ApplicationRoleManager roleManager)
-        {
-            UserManager = userManager;
-            RoleManager = roleManager;
-        }
+        //public RolesAdminController()
+        //{
+        //}
 
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            set
-            {
-                _userManager = value;
-            }
-        }
+        //public RolesAdminController(ApplicationUserManager userManager,
+        //    ApplicationRoleManager roleManager)
+        //{
+        //    UserManager = userManager;
+        //    RoleManager = roleManager;
+        //}
 
-        private ApplicationRoleManager _roleManager;
-        public ApplicationRoleManager RoleManager
-        {
-            get
-            {
-                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-            }
-            private set
-            {
-                _roleManager = value;
-            }
-        }
+        //private ApplicationUserManager _userManager;
+        //public ApplicationUserManager UserManager
+        //{
+        //    get
+        //    {
+        //        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        //    }
+        //    set
+        //    {
+        //        _userManager = value;
+        //    }
+        //}
+
+        //private ApplicationRoleManager _roleManager;
+
+        //public ApplicationRoleManager RoleManager
+        //{
+        //    get
+        //    {
+        //        return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+        //    }
+        //    private set
+        //    {
+        //        _roleManager = value;
+        //    }
+        //}
 
         //
         // GET: /Roles/
         public ActionResult Index()
         {
-            return View(RoleManager.Roles);
+            var roleStore = new ApplicationRoleStore(db);
+            var roleManager = new ApplicationRoleManager(roleStore);
+            return View(roleManager.Roles);
         }
 
         //
         // GET: /Roles/Details/5
         public async Task<ActionResult> Details(string id)
         {
+            var roleStore = new ApplicationRoleStore(db);
+            var roleManager = new ApplicationRoleManager(roleStore);
+            var userStore = new ApplicationUserStore(db);
+            var userManager = new ApplicationUserManager(userStore);
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var role = await RoleManager.FindByIdAsync(id);
+            var role = await roleManager.FindByIdAsync(id);
             // Get the list of Users in this Role
             var users = new List<ApplicationUser>();
 
             // Get the list of Users in this Role
-            foreach (var user in UserManager.Users.ToList())
+            foreach (var user in userManager.Users.ToList())
             {
-                if (await UserManager.IsInRoleAsync(user.Id, role.Name))
+                if (await userManager.IsInRoleAsync(user.Id, role.Name))
                 {
                     users.Add(user);
                 }
@@ -100,8 +109,10 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
+                var roleStore = new ApplicationRoleStore(db);
+                var roleManager = new ApplicationRoleManager(roleStore);
                 var role = new ApplicationRole(roleViewModel.Name);
-                var roleresult = await RoleManager.CreateAsync(role);
+                var roleresult = await roleManager.CreateAsync(role);
                 if (!roleresult.Succeeded)
                 {
                     ModelState.AddModelError("", roleresult.Errors.First());
@@ -116,11 +127,13 @@ namespace MVC_DATABASE.Controllers
         // GET: /Roles/Edit/Admin
         public async Task<ActionResult> Edit(string id)
         {
+            var roleStore = new ApplicationRoleStore(db);
+            var roleManager = new ApplicationRoleManager(roleStore);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var role = await RoleManager.FindByIdAsync(id);
+            var role = await roleManager.FindByIdAsync(id);
             if (role == null)
             {
                 return HttpNotFound();
@@ -138,9 +151,11 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = await RoleManager.FindByIdAsync(roleModel.Id);
+                var roleStore = new ApplicationRoleStore(db);
+                var roleManager = new ApplicationRoleManager(roleStore);
+                var role = await roleManager.FindByIdAsync(roleModel.Id);
                 role.Name = roleModel.Name;
-                await RoleManager.UpdateAsync(role);
+                await roleManager.UpdateAsync(role);
                 return RedirectToAction("Index");
             }
             return View();
@@ -150,11 +165,13 @@ namespace MVC_DATABASE.Controllers
         // GET: /Roles/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
+            var roleStore = new ApplicationRoleStore(db);
+            var roleManager = new ApplicationRoleManager(roleStore);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var role = await RoleManager.FindByIdAsync(id);
+            var role = await roleManager.FindByIdAsync(id);
             if (role == null)
             {
                 return HttpNotFound();
@@ -170,11 +187,13 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
+                var roleStore = new ApplicationRoleStore(db);
+                var roleManager = new ApplicationRoleManager(roleStore);
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                var role = await RoleManager.FindByIdAsync(id);
+                var role = await roleManager.FindByIdAsync(id);
                 if (role == null)
                 {
                     return HttpNotFound();
@@ -182,11 +201,11 @@ namespace MVC_DATABASE.Controllers
                 IdentityResult result;
                 if (deleteUser != null)
                 {
-                    result = await RoleManager.DeleteAsync(role);
+                    result = await roleManager.DeleteAsync(role);
                 }
                 else
                 {
-                    result = await RoleManager.DeleteAsync(role);
+                    result = await roleManager.DeleteAsync(role);
                 }
                 if (!result.Succeeded)
                 {

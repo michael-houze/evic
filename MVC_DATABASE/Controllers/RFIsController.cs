@@ -98,6 +98,7 @@ namespace MVC_DATABASE.Controllers
                 {
                     foreach (var x in model.RFIInviteList)
                     {
+                        
                         var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x };
 
                         db.RFIINVITEs.Add(rfiinvite);
@@ -131,7 +132,7 @@ namespace MVC_DATABASE.Controllers
                                       on c.CATEGORY equals p.CATEGORY
                                       where c.ACCEPTED == true
                                       where c.CATEGORY.ToString() == ProductCategory
-                                      select new { v.ORGANIZATION };
+                                      select new { v.Id, v.ORGANIZATION };
             
 
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");

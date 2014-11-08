@@ -134,6 +134,15 @@ namespace MVC_DATABASE
         }
     }
 
+    public class ApplicationDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<Models.ApplicationDbContext>
+    {
+        protected override void Seed(ApplicationDbContext context)
+        {
+            base.Seed(context);
+        }
+    }
+
+
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
