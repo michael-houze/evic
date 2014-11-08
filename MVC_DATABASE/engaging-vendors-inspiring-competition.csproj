@@ -549,6 +549,7 @@
     <Content Include="Views\CONTRACTs\VendorIndex.cshtml" />
     <Content Include="Views\CONTRACTs\VendorResponse.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\RFIs\Respond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
