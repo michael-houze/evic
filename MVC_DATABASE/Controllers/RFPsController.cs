@@ -21,6 +21,7 @@ namespace MVC_DATABASE.Controllers
         public RFPCreate rfpcreate = new RFPCreate();
 
         // GET: RFPs
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
             var expired = from x in db.RFPs
@@ -40,6 +41,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: RFPs/Details/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,6 +64,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: RFPs/Create
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
         {
             var template = from x in db.TEMPLATEs
@@ -83,6 +86,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(RFPCreate model)
         {
             if (ModelState.IsValid)
@@ -118,6 +122,7 @@ namespace MVC_DATABASE.Controllers
 
 
         // GET: RFPs/Edit/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -153,6 +158,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(RFPCreate model)
         {
             if (ModelState.IsValid)
@@ -193,6 +199,7 @@ namespace MVC_DATABASE.Controllers
 
         RFPResponse responsemodel = new RFPResponse();
 
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> VendorResponse(int? id)
         {
             if (id == null)
@@ -225,6 +232,7 @@ namespace MVC_DATABASE.Controllers
             return View(responsemodel);
         }
 
+        [Authorize(Roles = "Administrator,Employee")]
         public FileResult DownloadOffer(string path)
         {
 
@@ -284,8 +292,8 @@ namespace MVC_DATABASE.Controllers
 
         RFPVendorRespond.RFPList respondmodel = new RFPVendorRespond.RFPList();
 
-        
-        public async Task<ActionResult> VendorRespond(int? id)
+        [Authorize(Roles = "Vendor")]
+        public async Task<ActionResult> Respond(int? id)
         {
             if (id == null)
             {
@@ -316,7 +324,7 @@ namespace MVC_DATABASE.Controllers
 
         RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
 
-        
+        [Authorize(Roles = "Vendor")]
         public ActionResult VendorIndex()
         {
 
