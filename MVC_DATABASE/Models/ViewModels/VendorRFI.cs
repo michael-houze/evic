@@ -10,6 +10,7 @@ namespace MVC_DATABASE.Models.ViewModels
  
     public VENDOR vendor { get; set; }
     public RFI rfi { get; set; }
+    public ICollection<RFI> rfiList { get; set; }
     public RFIINVITE rfiInvite { get; set; }
 
     }

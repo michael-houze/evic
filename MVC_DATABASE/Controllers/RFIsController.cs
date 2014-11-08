@@ -332,20 +332,31 @@ namespace MVC_DATABASE.Controllers
             
         }
 
+        //
+        //Collects list of Vendor's RFIs and displays
         public ActionResult VendorIndex()
         {
+            //Establish DB connection.
             EVICEntities dbo = new EVICEntities();
-
+            //Establish List of vendor's RFIs to transfer to View
+            VendorRFI vendorRfi = new VendorRFI();
+            //Gets user information
             var user_id = User.Identity.GetUserId();
+            //List containing VendorRFIs
+            vendorRfi.rfiList = new List<RFI>();
 
+            //Query for Vendor's specifi RFIs
             var vendorInvitedRFIs = from i in dbo.RFIINVITEs
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFIs on i.RFIID equals r.RFIID
                                     where i.Id == user_id
                                     orderby i.RFIID
-                                    select new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
+                                    select r; //new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
 
-            return View(vendorInvitedRFIs);
+            //Adds queried to list.
+            vendorRfi.rfiList = vendorInvitedRFIs.ToList();
+
+            return View(vendorRfi);
         }
 
         public ActionResult Respond()
@@ -353,7 +364,7 @@ namespace MVC_DATABASE.Controllers
             return View();
         }
 
-        public string stringDetails()
+        public string Details()
         {
             return "Check what they submitted.";
         }

@@ -1,44 +1,58 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.VendorRFI>
+﻿@model MVC_DATABASE.Models.ViewModels.VendorRFI
+
+@using Microsoft.AspNet.Identity;
+
 @{
-    ViewBag.Title = "Vendor RFI Index";
+    ViewBag.Title = "RFIs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>VendorIndex</h2>
+<h2>Vendor RFIs</h2>
 
 <table class="table">
     <tr>
         <th>
-            <label class="control-label">RFI ID</label>
+            @Html.DisplayNameFor(model => model.rfi.RFIID)
         </th>
         <th>
-            <label class="control-label">Category</label>
+            @Html.DisplayNameFor(model => model.rfi.CATEGORY)
         </th>
         <th>
-            <label class="control-label">Created</label>
+            @Html.DisplayNameFor(model => model.rfi.CREATED)
         </th>
         <th>
-            <label class="control-label">Expires</label>
+            @Html.DisplayNameFor(model => model.rfi.EXPIRES)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model)
+@if (Model.rfiList != null)
 {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.rfiInvite.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.rfi.CATEGORY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.rfi.CREATED)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.rfi.EXPIRES)
-        </td>
-
-    </tr>   
+    foreach (var item in Model.rfiList)
+    {
+        var invite = item.RFIINVITEs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFIID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CATEGORY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CREATED)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EXPIRES)
+            </td>
+                @if (string.IsNullOrEmpty(invite.GHX_PATH))
+                {
+                    @Html.ActionLink("Respond", "Respond", new { id = item.RFIID })                    
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.RFIID })
+                }
+        </tr>        
+    }    
 }
-
 </table>
