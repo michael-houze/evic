@@ -469,6 +469,7 @@ namespace MVC_DATABASE.Controllers
         private AccountManagement accountManagement = new AccountManagement();
 
         // GET: Vendors and employees (if admin)
+        [Authorize(Roles="Administrator")]
         public ActionResult Index()
         {
             accountManagement.VendorList = new List<VENDOR>();
@@ -483,6 +484,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: Vendor/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -519,6 +521,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: Vendors/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> EditVendor(string id)
         {
             if (id == null)
@@ -559,6 +562,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> EditVendor(AccountManagement model)
         {
             if (ModelState.IsValid)
@@ -579,6 +583,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: Employees/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DetailsEmployee(string id)
         {
             if (id == null)
@@ -602,6 +607,7 @@ namespace MVC_DATABASE.Controllers
 
         //authorize admin
         // GET: Employee/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View(employeeCreate);
@@ -611,6 +617,7 @@ namespace MVC_DATABASE.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Create(EmployeeCreate model)
         {
             if (ModelState.IsValid)
@@ -643,6 +650,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: Employees/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> EditEmployee(string id)
         {
             if (id == null)
@@ -668,6 +676,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> EditEmployee(AccountManagement model)
         {
             if (ModelState.IsValid)

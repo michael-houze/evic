@@ -29,6 +29,7 @@ namespace MVC_DATABASE.Controllers
         private RFIEmployeeIndex rFIEmployeeIndex = new RFIEmployeeIndex();
 
         // GET: RFIs
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
             var expired = from x in db.RFIs
@@ -50,6 +51,7 @@ namespace MVC_DATABASE.Controllers
        
 
         // GET: RFIs/Details/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -74,6 +76,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: RFIs/Create
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
         {
             var template = from x in db.TEMPLATEs
@@ -97,6 +100,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(RFIEmployeeIndex model)
         {
 
@@ -159,6 +163,7 @@ namespace MVC_DATABASE.Controllers
         } 
 
         // GET: RFIs/Edit/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -197,6 +202,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(RFIEmployeeIndex model)
         {
             if (ModelState.IsValid)
@@ -243,6 +249,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: RFIs/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -260,6 +267,7 @@ namespace MVC_DATABASE.Controllers
         // POST: RFIs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             RFI rFI = await db.RFIs.FindAsync(id);
@@ -278,7 +286,8 @@ namespace MVC_DATABASE.Controllers
         }
 
         RFIResponse responsemodel = new RFIResponse();
-       
+
+       [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> VendorResponse(int? id)
         {
             if (id == null)
@@ -310,7 +319,8 @@ namespace MVC_DATABASE.Controllers
 
             return View(responsemodel);
         }
-        
+
+        [Authorize(Roles = "Administrator,Employee")]
         public FileResult DownloadGHX(string path)
         {
          
@@ -332,6 +342,7 @@ namespace MVC_DATABASE.Controllers
             
         }
 
+        [Authorize(Roles = "Vendor")]
         public ActionResult VendorIndex()
         {
             EVICEntities dbo = new EVICEntities();
@@ -348,6 +359,7 @@ namespace MVC_DATABASE.Controllers
             return View(vendorInvitedRFIs);
         }
 
+        [Authorize(Roles = "Vendor")]
         public ActionResult Respond()
         {
             return View();
