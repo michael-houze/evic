@@ -18,12 +18,25 @@ namespace MVC_DATABASE.Controllers
     public class RFPsController : Controller
     {
         private EVICEntities db = new EVICEntities();
+        public RFPCreate rfpcreate = new RFPCreate();
 
         // GET: RFPs
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var rFPs = db.RFPs.Include(r => r.RFI).Include(r => r.TEMPLATE);
-            return View(await rFPs.ToListAsync());
+            var expired = from x in db.RFPs
+                          where x.EXPIRES <= DateTime.Now
+                          select x;
+            var open = from x in db.RFPs
+                       where x.EXPIRES > DateTime.Now
+                       select x;
+
+            rfpcreate.ExpiredRFPList = new List<RFP>();
+            rfpcreate.ExpiredRFPList = expired.ToList<RFP>();
+            rfpcreate.OpenRFPList = new List<RFP>();
+            rfpcreate.OpenRFPList = open.ToList<RFP>();
+
+
+            return View(rfpcreate);
         }
 
         // GET: RFPs/Details/5
@@ -63,7 +76,7 @@ namespace MVC_DATABASE.Controllers
             return View();
         }
 
-        public RFPCreate rfpcreate = new RFPCreate();
+    
 
         // POST: RFPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

@@ -13,6 +13,9 @@ namespace MVC_DATABASE.Models.ViewModels
         public int rfiid { get; set; }
         public RFPINVITE rfpinvite { get; set; }
 
+        public ICollection<RFP> OpenRFPList { get; set; }
+        public ICollection<RFP> ExpiredRFPList { get;  set; }
+
         [Display(Name= "Available Vendors")]
         public ICollection<string> RFPInviteList { get; set; }
 

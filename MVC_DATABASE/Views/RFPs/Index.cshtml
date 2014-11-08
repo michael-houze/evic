@@ -1,51 +1,108 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.RFP>
+﻿@model MVC_DATABASE.Models.ViewModels.RFPCreate
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "RFP";
 }
 
-<h2>RFP</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Create New RFP", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Current/Open Requests for Proposals</h2>
+    </div>
+</div>
+<br />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RFPID)
+            @Html.DisplayNameFor(model => model.rfp.RFPID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CATEGORY)
+            @Html.DisplayNameFor(model => model.rfp.CATEGORY)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CREATED)
+            @Html.DisplayNameFor(model => model.rfp.CREATED)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EXPIRES)
+            @Html.DisplayNameFor(model => model.rfp.EXPIRES)
         </th>
         <th></th>
     </tr>
+    @if(Model.OpenRFPList != null)
+    { 
+        foreach (var item in Model.OpenRFPList) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFPID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CATEGORY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CREATED)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EXPIRES)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.RFPID }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.RFPID }) |
+                    @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
+                </td>
+            </tr>
+        }
+    }
+</table>
 
-@foreach (var item in Model) {
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Create New RFP", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Expired Requests for Proposals</h2>
+    </div>
+</div>
+<br />
+<table class="table">
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RFPID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CATEGORY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CREATED)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EXPIRES)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RFPID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RFPID }) |
-            @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
-        </td>
+        <th>
+            @Html.DisplayNameFor(model => model.rfp.RFPID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rfp.CATEGORY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rfp.CREATED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rfp.EXPIRES)
+        </th>
+        <th></th>
     </tr>
-}
-
+    @if (Model.ExpiredRFPList != null)
+    { 
+    foreach (var item in Model.ExpiredRFPList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFPID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CATEGORY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CREATED)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EXPIRES)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.RFPID }) |
+                @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
+            </td>
+        </tr>
+    }
+    }
 </table>

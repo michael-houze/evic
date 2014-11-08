@@ -18,7 +18,9 @@ namespace MVC_DATABASE.Models.ViewModels
         public PRODUCTCATEGORY ProductCategory { get; set; }
         public ICollection<VENDOR> VendorList { get; set; }
         public ICollection<TEMPLATE> TemplateList { get; set; }
-        public ICollection<RFI> RFIList { get; set; }
+        public ICollection<RFI> OpenRFIList { get; set; }
+
+        public ICollection<RFI> ExpiredRFIList { get; set; }
 
         [Display(Name= "Available Vendors")]
         public ICollection<string> RFIInviteList { get; set; }

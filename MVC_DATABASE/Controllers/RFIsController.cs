@@ -31,9 +31,19 @@ namespace MVC_DATABASE.Controllers
         // GET: RFIs
         public ActionResult Index()
         {
-            
-            rFIEmployeeIndex.RFIList = new List<RFI>();
-            rFIEmployeeIndex.RFIList = db.RFIs.ToList<RFI>();
+            var expired = from x in db.RFIs
+                          where x.EXPIRES <= DateTime.Now
+                          select x;
+            var open = from x in db.RFIs
+                       where x.EXPIRES > DateTime.Now
+                       select x;
+
+            rFIEmployeeIndex.ExpiredRFIList = new List<RFI>();
+            rFIEmployeeIndex.ExpiredRFIList = expired.ToList<RFI>();
+            rFIEmployeeIndex.OpenRFIList = new List<RFI>();
+            rFIEmployeeIndex.OpenRFIList = open.ToList<RFI>();
+
+
             return View(rFIEmployeeIndex);
         }
 
@@ -322,7 +332,7 @@ namespace MVC_DATABASE.Controllers
             
         }
 
-        public ActionResult VendorIndex(string id)
+        public ActionResult VendorIndex()
         {
             EVICEntities dbo = new EVICEntities();
 
