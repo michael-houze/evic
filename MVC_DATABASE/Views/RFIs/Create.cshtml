@@ -15,10 +15,10 @@
 </script>
     <script type="text/jscript">
         $(function(){
-            $("#RFIInviteList").hide()
+            $("#RFPInviteList").hide()
 
 
-            $("#RFI_CATEGORY").on("change", function (e) {
+            $("#rfp_RFIID").on("change", function (e) {
                 //$("#RFI_CATEGORY").chosen().change("#RFIInviteList");
                 var dropValue = $(this).val();
                 $.ajax({
@@ -37,9 +37,9 @@
             //$("#RFIInviteList").trigger("chosen:updated");
 
             function OnSuccessPopulateListBox(data) {
-                $("#RFIInviteList").empty()
+                $("#RFPInviteList").empty()
                 data.forEach(function (vendor) {
-                    $("#RFIInviteList").append('<option>' + vendor.ORGANIZATION + '</option>')
+                    $("#RFPInviteList").append('<option>' + vendor.ORGANIZATION + '</option>')
                 });
                 $("#RFIInviteList").show()
                 //debugger;
@@ -49,7 +49,7 @@
             }
         });
         </script>
-    }
+    
     
     
 
