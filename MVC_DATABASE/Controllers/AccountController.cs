@@ -578,6 +578,7 @@ namespace MVC_DATABASE.Controllers
                     }
                 }
                 accountManagement.OfferedCategoryList = offeredlist;
+
             }           
 
             return View(accountManagement);
@@ -631,16 +632,10 @@ namespace MVC_DATABASE.Controllers
 
                         }
                     }
-                }
-                
                 await db.SaveChangesAsync();
-
-                
-               
-
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
-            }
-            ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
+                }                                                                                         
+
             return View(model);
         }
 

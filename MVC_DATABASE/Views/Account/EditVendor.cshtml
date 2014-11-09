@@ -72,10 +72,11 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Vendor.VENDSTATUS, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-lg-10">                 
                     <div class="editor-field">
-                        @Html.RadioButtonFor(model => model.Vendor.VENDSTATUS, "ACTIVE") Activate
-                        @Html.RadioButtonFor(model => model.Vendor.VENDSTATUS, "DEACTIVATED") Deactivate
+                        @Html.RadioButtonFor(model => model.Vendor.VENDSTATUS, "ACTIVE", new { Checked = "checked", @style = "width: 265px;" }) Activate
+                        <br />
+                        @Html.RadioButtonFor(model => model.Vendor.VENDSTATUS, "DEACTIVATED", new { @style = "width: 265px;" }) Deactivate 
                     </div>
                 </div>
             </div>
