@@ -374,12 +374,15 @@ namespace MVC_DATABASE.Controllers
         RFIVendorRespond.RFIList respondModel = new RFIVendorRespond.RFIList();
 
         [Authorize(Roles = "Vendor")]
-        public async Task<ActionResult> Respond(int? id)
+        public ActionResult Respond(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            respondModel.rfi = new RFI();
+            respondModel.rfi = db.RFIs.Find(id);
 
             if (respondModel.rfi == null)
             {
@@ -400,7 +403,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         [Authorize(Roles ="Vendor")]
-        public string Details()
+        public string VendorDetails()
         {
             return "Check what they submitted.";
         }

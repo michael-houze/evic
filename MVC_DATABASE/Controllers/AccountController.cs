@@ -90,13 +90,39 @@ namespace MVC_DATABASE.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user != null)
             {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                VENDOR vendor = await db.VENDORs.FindAsync(user.Id);
+                EMPLOYEE employee = await db.EMPLOYEEs.FindAsync(user.Id);
+                
+                if(employee != null)
+                {
+                    if (employee.EMPSTATUS == "PENDING")
+                    {
+                        return View("Pending");
+                    }
+                    else if (employee.EMPSTATUS == "DEACTIVATED")
+                    {
+                        return View("Deactivated");
+                    }
+                }
+                else if (vendor != null)
+                {
+                    if (vendor.VENDSTATUS == "PENDING")
+                    {
+                        return View("Pending");
+                    }
+                    else if (vendor.VENDSTATUS == "DEACTIVATED")
+                    {
+                        return View("Deactivated");
+                    }
+                }
+                else if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
                     //ViewBag.errorMessage = "You must confirm your email in order to log on.";
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend"); //Re-sends Confirmation Link.
 
                     return View("EmailNotConfirmed");
                 }
+                
             }
 
             // This doesn't count login failures towards account lockout

@@ -43,7 +43,7 @@
                 <div id="tabs">
                     <div class="btn-oldstyle">
                         
-                        @if (User.IsInRole("Employee"))
+                        @if (User.IsInRole("Employee") || User.IsInRole("Administrator"))
                         {
                             
                             <li> 

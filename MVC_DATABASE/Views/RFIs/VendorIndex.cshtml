@@ -44,6 +44,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EXPIRES)
             </td>
+            <td>
                 @if (string.IsNullOrEmpty(invite.GHX_PATH))
                 {
                     @Html.ActionLink("Respond", "Respond", new { id = item.RFIID })                    
@@ -52,6 +53,7 @@
                 {
                     @Html.ActionLink("Details", "Details", new { id = item.RFIID })
                 }
+             </td>
         </tr>        
     }    
 }
