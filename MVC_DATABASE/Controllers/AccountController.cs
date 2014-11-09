@@ -595,51 +595,40 @@ namespace MVC_DATABASE.Controllers
             if (ModelState.IsValid)
             {
                
-                db.Entry(model.Vendor).State = EntityState.Modified;
+               VENDOR vendor = await db.VENDORs.FindAsync(model.Vendor.Id);
+               string oldStatus = vendor.VENDSTATUS.ToString();
+
+               vendor.VENDSTATUS = model.Vendor.VENDSTATUS;               
 
                 foreach(var x in model.OfferedCategoryList)
                     {
                         db.Entry(x).State = EntityState.Modified;
                         
                     }
-                var userID = model.Vendor.Id;
+
                 string subject = "BHSCM Account Status Update";
-                var status = model.Vendor.VENDSTATUS;
-                var previousAccountStatus = db.Entry(model.Vendor).OriginalValues;
-                var newAccountStatus = db.Entry(model.Vendor).CurrentValues;
-                string deactivatedMessage = "Your account has been deactivated. Please contact a BHSCM representative in order to have your re-activated. ";
-                string activatedMessage = "Your account as been activated. You are now able to access the Baptist Health Supply Chain Management System. Login to see what categories you have been accepted for. ";
+                string deactivatedMessage = "Your account has been deactivated. Please contact a BHSCM representative in order to have your account re-activated. ";
+                string activatedMessage = "Your account has been activated. You are now able to access the Baptist Health Supply Chain Management System. Login to see what categories you have been accepted for. ";
 
-                //var statuses = db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged);
-               // if(db.Entry(model.Vendor.VENDSTATUS).State == EntityState.Modified)
-                if(previousAccountStatus != newAccountStatus)
-                //foreach (var entry in db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged))
+                if (vendor.VENDSTATUS.ToString() != oldStatus)
                 {
-                //    string s1 = entry.Property(p => p.VENDSTATUS).OriginalValue.ToString();
-                //    string s2 = entry.Property(p => p.VENDSTATUS).CurrentValue.ToString();
-                //    if (s1 != s2)
-                //    {
-                        if (status == "DEACTIVATED")
+                    if (vendor.VENDSTATUS.ToString() == "DEACTIVATED")
+                    {
+                        await UserManager.SendEmailAsync(model.Vendor.Id, subject,
+                          deactivatedMessage);
+                    }
+                    else
+                    {
+                        if (vendor.VENDSTATUS.ToString() == "ACTIVE")
                         {
-                            await UserManager.SendEmailAsync(userID, subject,
-                              deactivatedMessage);
-                        }
-                        else
-                        {
-                            if (status == "ACTIVE")
-                            {
-                                await UserManager.SendEmailAsync(userID, subject, activatedMessage);
-                            }
-
+                            await UserManager.SendEmailAsync(model.Vendor.Id, subject, activatedMessage);
                         }
                     }
+                }
                 await db.SaveChangesAsync();
 
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
-                }                                                                                                        
-                
-                ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
-
+                }                                                                                                                       
             return View(model);
         }
 
@@ -744,7 +733,32 @@ namespace MVC_DATABASE.Controllers
             if (ModelState.IsValid)
             {
 
-                db.Entry(model.Employee).State = EntityState.Modified;
+                EMPLOYEE employee = await db.EMPLOYEEs.FindAsync(model.Employee.Id);
+                string oldStatus = employee.EMPSTATUS.ToString();
+
+                employee.EMPSTATUS = model.Employee.EMPSTATUS;
+
+                string subject = "BHSCM Account Status Update";
+                string deactivatedMessage = "Your account has been deactivated. Please contact management in order to have your account re-activated. ";
+                string activatedMessage = "Your account has been activated. You are now able to access the Baptist Health Supply Chain Management System. ";
+
+                if (employee.EMPSTATUS.ToString() != oldStatus)
+                {
+                    if (employee.EMPSTATUS.ToString() == "DEACTIVATED")
+                    {
+                        await UserManager.SendEmailAsync(model.Employee.Id, subject,
+                          deactivatedMessage);
+                    }
+                    else
+                    {
+                        if (employee.EMPSTATUS.ToString() == "ACTIVE")
+                        {
+                            await UserManager.SendEmailAsync(model.Employee.Id, subject, activatedMessage);
+                        }
+                    }
+                }
+
+                //db.Entry(model.Employee).State = EntityState.Modified;
 
                 await db.SaveChangesAsync();
                 return RedirectToAction("DetailsEmployee", "Account", new { id = model.Employee.Id });
