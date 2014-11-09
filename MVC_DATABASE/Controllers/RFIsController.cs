@@ -405,6 +405,17 @@ namespace MVC_DATABASE.Controllers
             return "Check what they submitted.";
         }
 
+        public string Download()
+        {
+            return "Download";
+        }
+
+        public string Upload()
+        {
+            return "Upload.";
+        }
+
+
 
     }
 }

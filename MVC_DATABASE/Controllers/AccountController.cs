@@ -575,6 +575,7 @@ namespace MVC_DATABASE.Controllers
                         db.Entry(x).State = EntityState.Modified;
                         
                     }
+<<<<<<< HEAD
                 var userID = model.Vendor.Id;
                 string subject = "Account Status Update";
                 var status = model.Vendor.VENDSTATUS;
@@ -590,6 +591,8 @@ namespace MVC_DATABASE.Controllers
                 {
                     await UserManager.SendEmailAsync(userID, subject, "YAY");
                 }
+=======
+>>>>>>> origin/master
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
             }
