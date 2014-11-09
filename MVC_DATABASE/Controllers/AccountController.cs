@@ -582,6 +582,7 @@ namespace MVC_DATABASE.Controllers
                 var newAccountStatus = db.Entry(model.Vendor).CurrentValues;
                 string deactivatedMessage =  "Your account has been deactivated. Please contact a BHSCM representative in order to have your re-activated. ";
                 string activatedMessage = "Your account as been activated. You are now able to access the Baptist Health Supply Chain Management System. Login to see what categories you have been accepted for. ";
+               
                 if (previousAccountStatus != newAccountStatus)
                 {
                     if (status == "DEACTIVATED")
@@ -656,9 +657,10 @@ namespace MVC_DATABASE.Controllers
                     await db.SaveChangesAsync();
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string message = "Please confirm your account by clicking here:";
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", message + callbackUrl);
 
                     return RedirectToAction("Index", "Account");
                 }
