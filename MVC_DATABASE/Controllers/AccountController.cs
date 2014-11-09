@@ -606,23 +606,38 @@ namespace MVC_DATABASE.Controllers
                 var status = model.Vendor.VENDSTATUS;
                 var previousAccountStatus = db.Entry(model.Vendor).OriginalValues;
                 var newAccountStatus = db.Entry(model.Vendor).CurrentValues;
-                string deactivatedMessage =  "Your account has been deactivated. Please contact a BHSCM representative in order to have your re-activated. ";
+                string deactivatedMessage = "Your account has been deactivated. Please contact a BHSCM representative in order to have your re-activated. ";
                 string activatedMessage = "Your account as been activated. You are now able to access the Baptist Health Supply Chain Management System. Login to see what categories you have been accepted for. ";
-               
-                if (previousAccountStatus != newAccountStatus)
+
+                var statuses = db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged);
+                if(db.Entry(model.Vendor.VENDSTATUS).State == EntityState.Modified)
+                //foreach (var entry in db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged))
                 {
-                    if (status == "DEACTIVATED")
-                    {
-                        await UserManager.SendEmailAsync(userID, subject, 
-                          deactivatedMessage );
-                    }
-                    else
-                    {
-                        await UserManager.SendEmailAsync(userID, subject, activatedMessage);
+                //    string s1 = entry.Property(p => p.VENDSTATUS).OriginalValue.ToString();
+                //    string s2 = entry.Property(p => p.VENDSTATUS).CurrentValue.ToString();
+                //    if (s1 != s2)
+                //    {
+                        if (status == "DEACTIVATED")
+                        {
+                            await UserManager.SendEmailAsync(userID, subject,
+                              deactivatedMessage);
+                        }
+                        else
+                        {
+                            if (status == "ACTIVE")
+                            {
+                                await UserManager.SendEmailAsync(userID, subject, activatedMessage);
+                            }
+
+                        }
                     }
                 }
-
+                
                 await db.SaveChangesAsync();
+
+                
+               
+
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
             }
             ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
