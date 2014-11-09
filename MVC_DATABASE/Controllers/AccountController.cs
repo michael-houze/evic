@@ -580,16 +580,18 @@ namespace MVC_DATABASE.Controllers
                 var status = model.Vendor.VENDSTATUS;
                 var previousAccountStatus = db.Entry(model.Vendor).OriginalValues;
                 var newAccountStatus = db.Entry(model.Vendor).CurrentValues;
-
+                string deactivatedMessage =  "Your account has been deactivated. Please contact a BHSCM representative in order to have your re-activated. ";
+                string activatedMessage = "Your account as been activated. You are now able to access the Baptist Health Supply Chain Management System. ";
                 if (previousAccountStatus != newAccountStatus)
                 {
                     if (status == "DEACTIVATED")
                     {
-                        await UserManager.SendEmailAsync(userID, subject, "You did it. Go drink now.");
+                        await UserManager.SendEmailAsync(userID, subject, 
+                          deactivatedMessage );
                     }
                     else
                     {
-                        await UserManager.SendEmailAsync(userID, subject, "YAY");
+                        await UserManager.SendEmailAsync(userID, subject, activatedMessage);
                     }
                 }
 
