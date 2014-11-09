@@ -202,6 +202,15 @@ namespace MVC_DATABASE.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
+
+        //GET: /Manage/FirstName
+        //Doesn't have a view yet.
+        public ActionResult ChangeFirstName()
+        {
+            return View();
+        }
+
+
         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
