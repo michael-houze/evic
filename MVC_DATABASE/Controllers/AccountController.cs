@@ -609,8 +609,9 @@ namespace MVC_DATABASE.Controllers
                 string deactivatedMessage = "Your account has been deactivated. Please contact a BHSCM representative in order to have your re-activated. ";
                 string activatedMessage = "Your account as been activated. You are now able to access the Baptist Health Supply Chain Management System. Login to see what categories you have been accepted for. ";
 
-                var statuses = db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged);
-                if(db.Entry(model.Vendor.VENDSTATUS).State == EntityState.Modified)
+                //var statuses = db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged);
+               // if(db.Entry(model.Vendor.VENDSTATUS).State == EntityState.Modified)
+                if(previousAccountStatus != newAccountStatus)
                 //foreach (var entry in db.ChangeTracker.Entries<VENDOR>().Where(v => v.State != EntityState.Unchanged))
                 {
                 //    string s1 = entry.Property(p => p.VENDSTATUS).OriginalValue.ToString();
@@ -631,16 +632,14 @@ namespace MVC_DATABASE.Controllers
 
                         }
                     }
-                }
-                
                 await db.SaveChangesAsync();
 
-                
-               
-
-                return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
+                return RedirectToAction("Details", "Account", new { id = model.Vendor.Id });   
             }
-            ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
+
+                
+                
+                ViewBag.CATEGORY = new MultiSelectList(db.OFFEREDCATEGORies, "CATEGORY", "CATEGORY");
             return View(model);
         }
 
