@@ -548,10 +548,10 @@
     <Content Include="Views\RFPs\VendorResponse.cshtml" />
     <Content Include="Views\CONTRACTs\VendorIndex.cshtml" />
     <Content Include="Views\CONTRACTs\VendorResponse.cshtml" />
-    <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\RFIs\Respond.cshtml" />
     <Content Include="Views\Account\Pending.cshtml" />
     <Content Include="Views\Account\Deactivated.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

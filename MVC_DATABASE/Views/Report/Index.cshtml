@@ -1,7 +1,51 @@
-﻿
+﻿@model MVC_DATABASE.Models.ViewModels.ReportRecord
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Report";
 }
 
-<h2>Index</h2>
+<div class="col-lg-8">
+    <h2 class="text-center">Current/Open Requests for Proposals</h2>
+</div>
 
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rfp.RFPID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rfp.CATEGORY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rfp.CREATED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rfp.EXPIRES)
+        </th>
+        <th></th>
+    </tr>
+    @if(Model.RfpList != null)
+    { 
+        foreach (var r in Model.RfpList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => r.RFPID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => r.CATEGORY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => r.CREATED)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => r.EXPIRES)
+                </td>
+                <td>
+                    @Html.ActionLink("Vendor Response Report", "Details", new { id = r.RFPID })
+                </td>
+            </tr>            
+        }
+    }        
+</table>
