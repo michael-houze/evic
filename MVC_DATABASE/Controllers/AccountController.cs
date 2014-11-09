@@ -575,7 +575,6 @@ namespace MVC_DATABASE.Controllers
                         db.Entry(x).State = EntityState.Modified;
                         
                     }
-<<<<<<< HEAD
                 var userID = model.Vendor.Id;
                 string subject = "Account Status Update";
                 var status = model.Vendor.VENDSTATUS;
@@ -585,14 +584,15 @@ namespace MVC_DATABASE.Controllers
                 if (previousAccountStatus != newAccountStatus)
                 {
                     if (status == "DEACTIVATED")
+                    {
                         await UserManager.SendEmailAsync(userID, subject, "You did it. Go drink now.");
+                    }
+                    else
+                    {
+                        await UserManager.SendEmailAsync(userID, subject, "YAY");
+                    }
                 }
-                else
-                {
-                    await UserManager.SendEmailAsync(userID, subject, "YAY");
-                }
-=======
->>>>>>> origin/master
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
             }
