@@ -1,7 +1,71 @@
-﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond
+﻿@Model MVC_DATABASE.Models.ViewModels.RFIVendorRespond
+
 @{
     ViewBag.Title = "Respond";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Respond</h2>
+<div class="rfi-respond">
+    <center>
+        <h1>RFI - Response</h1>
+    </center>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.rfi.RFIID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rfi.CATEGORY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rfi.CREATED)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rfi.EXPIRES)
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => model.rfi.RFIID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.rfi.CATEGORY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.rfi.CREATED)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.rfi.EXPIRES)
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <p>Download the @Html.ActionLink("GHX Template", "Download") and complete to respond.</p>
+
+    <br />
+
+    @using (Html.BeginForm("Upload", "RFIs", FormMethod.Post, new {enctype= "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+        
+        <fieldset>
+            <legend>Upload completed GHX Template</legend>
+            <div class="editor-field">
+                @Html.TextBox("file", "", new {type = "file"})
+            </div>
+            <div class="editor-field">
+                <input type="submit" value="Upload" />
+            </div>
+        </fieldset>
+    }
+    
+    <br />
+
+    <center>
+        @Html.ActionLink("Return to RFI Home", "VendorIndex")
+    </center>
+</div>
 
