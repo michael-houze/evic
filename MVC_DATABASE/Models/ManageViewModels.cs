@@ -7,6 +7,12 @@ namespace MVC_DATABASE.Models
 {
     public class IndexViewModel
     {
+        public bool HasFirstName { get; set; }
+        public bool HasLastName { get; set; }
+        public bool HasContactName { get; set; }
+        public bool HasContactPhone { get; set; }
+        public bool HasContactEmail { get; set; }
+        public bool HasEmail { get; set; }
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
@@ -25,6 +31,58 @@ namespace MVC_DATABASE.Models
         public string Purpose { get; set; }
     }
 
+    public class ChangeFirstNameViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "New first name")]
+        public string NewFirstName { get; set; }
+    }
+
+    public class ChangeLastNameViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "New last name")]
+        public string NewLastName { get; set; }
+    }
+
+    public class ChangeEmailViewModel
+    {
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "New email address")]
+        public string NewEmailAddress { get; set; }
+    }
+
+    public class ChangeContactNameViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "New Contact Name")]
+        public string NewContactName { get; set; }
+    }
+
+    public class ChangeContactEmailViewModel
+    {
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "New email address")]
+        public string NewContactEmailAddress { get; set; }
+    }
+
+    public class ChangeContactPhoneNumberViewModel
+    {
+        [Required]
+        [Phone]
+        [Display(Name = "New Contact Phone Number")]
+        public string NewContactNumber { get; set; }
+    }
     public class SetPasswordViewModel
     {
         [Required]
