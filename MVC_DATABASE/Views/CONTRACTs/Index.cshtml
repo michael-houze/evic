@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.CONTRACT>
+﻿@model MVC_DATABASE.Models.ViewModels.ContractIndex
 
 @{
     ViewBag.Title = "Index";
@@ -12,38 +12,43 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RFPID)
+            @Html.DisplayNameFor(model => model.contract.CONTRACTID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CONTRACT_PATH)
+            @Html.DisplayNameFor(model => model.rfp.RFPID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            @Html.DisplayNameFor(model => model.rfp.CATEGORY)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+            @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.contract.CONTRACT_PATH)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in indexview) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.CONTRACTID)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.RFPID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATEGORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ORGANIZATION)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CONTRACT_PATH)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CONTRACTID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CONTRACTID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CONTRACTID })
+            @Html.ActionLink("Details", "Details", new { id=item.CONTRACTID })
         </td>
     </tr>
 }

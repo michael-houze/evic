@@ -8,18 +8,28 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC_DATABASE.Models;
+using MVC_DATABASE.Models.ViewModels;
 
 namespace MVC_DATABASE.Controllers
 {
     public class CONTRACTsController : Controller
     {
         private EVICEntities db = new EVICEntities();
-
+        private ContractIndex contractindex = new ContractIndex();
+        private ContractIndex.IndexType indextype = new ContractIndex.IndexType();
         // GET: CONTRACTs
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var cONTRACTs = db.CONTRACTs.Include(c => c.AspNetUser).Include(c => c.TEMPLATE);
-            return View(await cONTRACTs.ToListAsync());
+            
+            var indexview = from x in db.CONTRACTs
+                            join y in db.RFPs
+                            on x.RFPID equals y.RFPID
+                            join z in db.VENDORs
+                            on x.Id equals z.Id
+                            select new { x.CONTRACTID, y.RFPID, y.CATEGORY, z.ORGANIZATION, x.CONTRACT_PATH };
+            
+            
+            return View(indexview);
         }
 
         // GET: CONTRACTs/Details/5
