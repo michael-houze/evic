@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using LinqToExcel;
+using Remotion.Data.Linq;
 using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
 
@@ -68,8 +70,39 @@ namespace MVC_DATABASE.Controllers
             return View();
         }
 
-        public ActionResult RFPResponseReport()
+        public ActionResult RFPResponseReport(string path)
         {
+            string filePath = path;
+
+            var excelFile = new ExcelQueryFactory(filePath);
+            decimal TotalVariance = 0M;
+
+            List<ReportLine> RFP = new List<ReportLine>();
+
+            var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "AA24", "Financial Analysis")
+                        select l;
+
+            foreach (var l in lines)
+            {
+                ReportLine rfp = new ReportLine();
+                rfp.Description = l.Description;
+                rfp.AnnualUsage = l.AnnualUsage;
+                rfp.CurrentEachPrice = l.CurrentEachPrice;
+                rfp.NewEachPrice = l.NewEachPrice;
+                rfp.CurrentAnnualSpend = l.CurrentAnnualSpend;
+                rfp.NewAnnualSpend = l.NewAnnualSpend;
+                rfp.Variance = l.Variance;
+
+                RFP.Add(rfp);
+            }
+
+            //Used to get Total Variance for an RFP (includes all items).
+            foreach (ReportLine r in RFP)
+            {
+                if (r.Description != null)
+                    TotalVariance += r.Variance;
+            }
+
             return View();
         }
 
