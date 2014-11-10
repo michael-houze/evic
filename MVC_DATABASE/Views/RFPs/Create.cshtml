@@ -1,4 +1,48 @@
 ﻿@model MVC_DATABASE.Models.ViewModels.RFPCreate
+@using MVC_DATABASE.Controllers
+
+@section Scripts {
+
+    <script type="text/javascript">
+    //$(function () { // will trigger when the document is ready
+    //    $('.datepicker').datepicker(); //Initialise any date pickers
+    //});
+    </script>
+    <script type="text/jscript">
+        $(function(){
+            //$("#RFPInviteList").hide()
+            $("#rfp_RFIID").on("change", function (e) {
+                //$("#RFI_CATEGORY").chosen().change("#RFIInviteList");
+                var dropValue = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetAcceptedVendors", "RFPs")",
+                    data: {
+                        RFIID: dropValue
+                    },
+                    datatype: 'JSON',
+                    contentType: "application/json"
+                })
+                    .done(OnSuccessPopulateListBox)
+                    .fail(function (data) { showError(data); });
+            });
+
+            //$("#RFIInviteList").trigger("chosen:updated");
+
+            function OnSuccessPopulateListBox(data) {
+                $("#RFPInviteList").empty()
+                data.forEach(function (vendor) {
+                    $("#RFPInviteList").append('<option value =' + vendor.Id + '>' + vendor.ORGANIZATION + '</option>')
+                });
+                $("#RFPInviteList").show()
+                //debugger;
+            }
+            function showError(data) {
+                debugger;
+            }
+        });
+    </script>
+}
 
 @{
     ViewBag.Title = "Create RFP";
@@ -20,7 +64,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.rfp.RFIID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.rfiid, (SelectList)ViewBag.RFIID)
+                @Html.DropDownListFor(m => m.rfp.RFIID, (SelectList)ViewBag.RFIID)
                 @Html.ValidationMessageFor(model => model.rfp.RFIID, "", new { @class = "text-danger" })
             </div>
         </div>

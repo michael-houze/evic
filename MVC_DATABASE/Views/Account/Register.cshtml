@@ -78,7 +78,8 @@
                 </div>
                 <!--Html.ListBox("CATEGORY", null, htmlAttributes: new MultiSelectList("CATEGORY"))-->
                 <div class="col-sm-12">
-                    @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY, new { @class = "form-control" })
+                    Hold 'Ctrl' key to select multiple categories
+                    @Html.ListBoxFor(m => m.CategoryList, (MultiSelectList)ViewBag.CATEGORY, new { @class = "form-control", @style = "width: 400px; height: 750px" })
                 </div>
             </div>
             

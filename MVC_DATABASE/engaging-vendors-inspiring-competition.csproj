@@ -384,7 +384,7 @@
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\gcal.js" />
     <Content Include="Scripts\GetAcceptedCategoryVendors.js" />
-    <Content Include="Content\RFIs\6\GHX Template V2.xlsx" />
+    <Content Include="Content\RFIs\18\GHX Template V2.xlsx" />
     <Content Include="Content\Templates\Financial Analysis.xlsx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -561,6 +561,7 @@
     <Folder Include="Content\File_Uploads\" />
     <Folder Include="Content\Fonts\MyriadPro\" />
     <Folder Include="Content\RFIs\5\" />
+    <Folder Include="Content\RFIs\6\" />
     <Folder Include="Content\RFIs\TestFolder\" />
     <Folder Include="Content\RFPs\" />
     <Folder Include="Content\Videos\Vendor\" />

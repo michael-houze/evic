@@ -73,9 +73,16 @@ namespace MVC_DATABASE.Controllers
             var expired = from y in db.RFIs
                           where y.EXPIRES <= DateTime.Now
                           select y;
+
+            var vendor = from z in db.VENDORs
+                         join c in db.RFIINVITEs
+                         on z.Id equals c.Id
+                         where c.RFIID == expired.FirstOrDefault().RFIID
+                         select z;
+
             ViewBag.RFIID = new SelectList(expired, "RFIID", "RFIID");
             ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
-            ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
+            ViewBag.AcceptedVendors = new MultiSelectList(vendor, "Id", "ORGANIZATION");
             return View();
         }
 
@@ -92,7 +99,7 @@ namespace MVC_DATABASE.Controllers
             if (ModelState.IsValid)
             {
                 model.rfp.RFI = await db.RFIs.FindAsync(model.rfiid);
-                var rFP = new RFP { RFIID = model.rfiid, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = DateTime.Now, EXPIRES = model.rfp.EXPIRES};
+                var rFP = new RFP { RFIID = model.rfp.RFIID, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = DateTime.Now, EXPIRES = model.rfp.EXPIRES};
                 db.RFPs.Add(rFP);
                 if (model.RFPInviteList != null)
                 {
@@ -345,5 +352,32 @@ namespace MVC_DATABASE.Controllers
 
             return View(rfpvendorindex);
         }
+
+        public JsonResult GetAcceptedVendors(string RFIID)
+        {
+            EVICEntities dbo = new EVICEntities();
+
+
+            var vendorProductsQuery = from v in dbo.VENDORs
+                                      join c in dbo.RFIINVITEs
+                                      on v.Id equals c.Id
+                                      where c.RFIID.ToString() == RFIID
+                                      where c.GHX_PATH != string.Empty
+                                      select new { v.Id, v.ORGANIZATION };
+
+            var template = from x in db.TEMPLATEs
+                           where x.TYPE == "RFP"
+                           select x;
+            var expired = from y in db.RFIs
+                          where y.EXPIRES <= DateTime.Now
+                          select y;
+
+            ViewBag.RFIID = new SelectList(expired, "RFIID", "RFIID");
+            ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
+
+            ViewBag.AcceptedVendors = vendorProductsQuery;
+
+            return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
+        } 
     }
 }

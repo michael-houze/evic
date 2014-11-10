@@ -90,7 +90,15 @@ namespace MVC_DATABASE.Controllers
                          select r.CATEGORY;
             IQueryable<string> acceptedCategories = result.Distinct();
             ViewBag.CATEGORY = acceptedCategories;
-            ViewBag.AcceptedVendors = new MultiSelectList(db.VENDORs, "Id", "ORGANIZATION");
+
+            var vendors = from r in db.VENDORs
+                          join c in db.OFFEREDCATEGORies
+                          on r.Id equals c.Id
+                          where c.CATEGORY.ToString() == acceptedCategories.FirstOrDefault()
+                          where c.ACCEPTED == true
+                          select r;
+
+            ViewBag.AcceptedVendors = new MultiSelectList(vendors, "Id", "ORGANIZATION");
 
             return View(rFIEmployeeIndex);
         }
