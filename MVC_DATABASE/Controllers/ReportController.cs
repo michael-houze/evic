@@ -34,6 +34,7 @@ namespace MVC_DATABASE.Controllers
             return View(rfpRecord);
         }
 
+        public ReportDetails rfpDetails = new ReportDetails();
         //
         //Displays vendor responses for selected RFP on Index page.
         [Authorize(Roles = "Administrator, Employee")]
@@ -45,20 +46,31 @@ namespace MVC_DATABASE.Controllers
             }
 
             //Get associated RFPInvites
-            rfpRecord.RfpInviteList = new List<RFPINVITE>();
-            rfpRecord.VendorList = new List<VENDOR>();
+            rfpDetails.InviteList = new List<RFPINVITE>();
+            rfpDetails.VendorList = new List<VENDOR>();
 
             foreach (var r in db.RFPINVITEs.ToList())
             {
                 if (r.RFPID == id)
                 {
                     VENDOR vendor = await db.VENDORs.FindAsync(r.Id);
-                    rfpRecord.RfpInviteList.Add(r);
-                    rfpRecord.VendorList.Add(vendor);
+                    
+                    rfpDetails.InviteList.Add(r);
+                    rfpDetails.VendorList.Add(vendor);
                 }
             }
 
-            return View(rfpRecord);
+            return View(rfpDetails);
+        }
+
+        public ActionResult RFPReport()
+        {
+            return View();
+        }
+
+        public ActionResult RFPResponseReport()
+        {
+            return View();
         }
 
 

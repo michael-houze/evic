@@ -1,0 +1,50 @@
+﻿@model MVC_DATABASE.Models.ViewModels.ReportDetails
+
+@{
+    ViewBag.Title = "RFP Report";
+}
+
+<h2>RFP Report</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vendor.ORGANIZATION)
+        </th>
+        <th>
+            <label class="control-label">Vendor Response Report</label>
+        </th>
+    </tr>
+    @if (Model.InviteList != null)
+    {
+        foreach(var r in Model.InviteList)
+        {
+            //Gets file path to response.
+            var filePath = r.OFFER_PATH;
+            
+            //LINQ to extract organization who provided offer.
+            var organization = from v in Model.VendorList
+                               where v.Id == r.Id
+                               select v.ORGANIZATION;
+            //String to contain organization.
+            string responseOrg = organization.FirstOrDefault().ToString();
+            
+            <tr>
+                <td>
+                    @responseOrg
+                </td>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(filePath))
+                    {
+                        <!-- Response not available or received. -->
+                    }
+                    else
+                    {
+                        <!-- USE L TO E -->
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+
