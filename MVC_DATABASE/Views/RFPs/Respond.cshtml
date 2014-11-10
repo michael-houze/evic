@@ -7,7 +7,8 @@
 
 <div class="rfp-respond">
     <center>
-        <h1>RFP - Response</h1>
+        <h1>RFP - Respond</h1>
+        <h2>@Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)</h2>
     </center>
 
     <table class="table">
@@ -43,7 +44,7 @@
 
     <br />
 
-    <p>Download the @Html.ActionLink("GHX Template", "Download") and complete to respond.</p>
+    <p>Download the @Html.ActionLink("RFP Template", "Download") and complete to respond.</p>
 
     <br />
 
@@ -52,7 +53,7 @@
         @Html.AntiForgeryToken()
 
         <fieldset>
-            <legend>Upload completed GHX Template</legend>
+            <legend>Upload completed RFP Template</legend>
             <div class="editor-field">
                 @Html.TextBox("file", "", new { type = "file" })
             </div>
