@@ -205,12 +205,28 @@ namespace MVC_DATABASE.Controllers
 
         //GET: /Manage/FirstName
         //Doesn't have a view yet.
-        public ActionResult ChangeFirstName()
+        public ActionResult ChangeName()
         {
             return View();
         }
 
+        //POST: /Manage/FirstName
+        //Doesn't have a view yet.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task <ActionResult> ChangeName(ChangeNameViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if(user != null)
+            {
+              
+            }
+        }
         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
