@@ -21,7 +21,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Web.Hosting;
 
-
 namespace MVC_DATABASE.Models.ViewModels
 {
     public class RFPVendorRespond
@@ -29,33 +28,33 @@ namespace MVC_DATABASE.Models.ViewModels
         public class RFPList
         {
             public RFP rfp { get; set; }
-            public RFPINVITE rfpinvite { get; set; }
-            public ICollection<RFPINVITE> inviteList { get; set; }
+            public RFPINVITE rfpInvite { get; set; }
+            public ICollection<RFPINVITE> rfpInviteList { get; set; }
         }
-        public List<_fileNames> GetFiles()
+
+        public class FileNames_RFPRespond
         {
-           
-            List<_fileNames> lst_Files = new List<_fileNames>();
-            DirectoryInfo dirInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/RFPs"));
-           
-            int i = 0;
-            foreach (var item in dirInfo.GetFiles())
-            {
-
-                lst_Files.Add(new _fileNames() {
-
-                    FileId = i + 1, FileName = item.Name, FilePath = dirInfo.FullName+@"\"+item.Name});
-                    i = i + 1;
-                }
-               
-                return lst_Files;
-            }
+            public int FileId { get; set; }
+            public string FileName { get; set; }
+            public string FilePath { get; set; }
         }
 
-    public class _fileNames
-    {
-        public int FileId { get; set; }
-        public string FileName { get; set; }
-        public string FilePath { get; set; }
+        public List<FileNames_RFPRespond> GetFiles()
+        {
+            List<FileNames_RFPRespond> fileList = new List<FileNames_RFPRespond>();
+            DirectoryInfo dirInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/RFPs"));
+
+            int i = 0;
+            foreach (var file in dirInfo.GetFiles())
+            {
+                fileList.Add(new FileNames_RFPRespond()
+                {
+                    FileId = i + 1,
+                    FileName = file.Name,
+                    FilePath = dirInfo.FullName + @"\" + file.Name
+                });
+            }
+            return fileList;
+        }
     }
 }
