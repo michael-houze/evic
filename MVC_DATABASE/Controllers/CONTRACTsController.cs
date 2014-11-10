@@ -14,7 +14,7 @@ namespace MVC_DATABASE.Controllers
     public class CONTRACTsController : Controller
     {
         private EVICEntities db = new EVICEntities();
-
+        
         // GET: CONTRACTs
         public async Task<ActionResult> Index()
         {

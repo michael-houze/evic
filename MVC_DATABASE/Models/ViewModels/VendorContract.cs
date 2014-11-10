@@ -9,6 +9,8 @@ namespace MVC_DATABASE.Models.ViewModels
     {
 
         public VENDOR vendor { get; set; }
+        public TEMPLATE template { get; set; }
+        public RFP rfp { get; set; }
         public CONTRACT contract { get; set; }
         public ICollection<CONTRACT> contractlist { get; set; }
         public ICollection<VENDOR> vendorlist { get; set; }
