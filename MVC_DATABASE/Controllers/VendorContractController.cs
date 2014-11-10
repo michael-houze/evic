@@ -119,14 +119,16 @@ namespace MVC_DATABASE.Controllers
 
             var vendorContractsQuery = from c in db.CONTRACTs
                                        join v in db.VENDORs on c.Id equals v.Id
+                                       join t in db.TEMPLATEs on c.TEMPLATEID equals t.TEMPLATEID
                                        where c.Id == user
+                                       where t.TYPE == "CONTRACT"
                                        orderby c.CONTRACTID
                                        select c;
 
             vendorContract.contractlist = vendorContractsQuery.ToList();
 
             return View(vendorContract);
-        }
+        } 
 
         public string Details()
         {

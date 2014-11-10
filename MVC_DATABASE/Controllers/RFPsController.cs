@@ -1,16 +1,23 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System;
+using System.Globalization;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
 
 namespace MVC_DATABASE.Controllers
@@ -233,11 +240,9 @@ namespace MVC_DATABASE.Controllers
                     responsemodel.vendorlist.Add(vendor);
                 }
             }
-
-
-
             return View(responsemodel);
         }
+
 
         [Authorize(Roles = "Administrator,Employee")]
         public FileResult DownloadOffer(string path)
@@ -260,6 +265,7 @@ namespace MVC_DATABASE.Controllers
 
 
         }
+
         //// GET: RFPs/Delete/5
         //public async Task<ActionResult> Delete(int? id)
         //{
@@ -295,62 +301,86 @@ namespace MVC_DATABASE.Controllers
         //    base.Dispose(disposing);
         //}
 
+
+
         //Vendor RFPs
 
         RFPVendorRespond.RFPList respondmodel = new RFPVendorRespond.RFPList();
 
+        RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
+
+        //Collects list of Vendor's RFPs and displays
         [Authorize(Roles = "Vendor")]
-        public async Task<ActionResult> Respond(int? id)
+        public ActionResult VendorIndex()
+        {
+            //Establish DB connection.
+            EVICEntities dbo = new EVICEntities();
+            //Establish List of vendor's RFPs to transfer to View
+            RFPVendorIndex vendorRfp = new RFPVendorIndex();
+            //Gets user information
+            var user_id = User.Identity.GetUserId();
+            //List containing VendorRFPs
+            vendorRfp.RfpList = new List<RFP>();
+
+            //Query for Vendor's specifi RFPs
+            var vendorInvitedRFPs = from i in dbo.RFPINVITEs
+                                    join v in dbo.VENDORs on i.Id equals v.Id
+                                    join r in dbo.RFPs on i.RFPID equals r.RFPID
+                                    where i.Id == user_id
+                                    orderby i.RFPID
+                                    select r; //new VendorRFP { rfp = r, rfpInvite = i, vendor = v };
+
+            //Adds queried to list
+            vendorRfp.RfpList = vendorInvitedRFPs.ToList();
+
+            return View(vendorRfp);
+        }
+
+        RFPVendorRespond.RFPList respondModel = new RFPVendorRespond.RFPList();
+
+        [Authorize(Roles = "Vendor")]
+        public ActionResult Respond(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            respondmodel.rfp = await db.RFPs.FindAsync(id);
+            respondModel.rfp = new RFP();
+            respondModel.rfp = db.RFPs.Find(id);
 
-            if (respondmodel.rfp == null)
+            if (respondModel.rfp == null)
             {
                 return HttpNotFound();
             }
 
-            respondmodel.inviteList = new List<RFPINVITE>();
+            respondModel.rfpInviteList = new List<RFPINVITE>();
 
             foreach (var x in db.RFPINVITEs.ToList())
             {
-
                 if (x.RFPID == id)
                 {
-
-                    respondmodel.inviteList.Add(x);
-
+                    respondModel.rfpInviteList.Add(x);
                 }
             }
-            return View(respondmodel);
+
+            return View(respondModel);
         }
 
-        RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
-
         [Authorize(Roles = "Vendor")]
-        public ActionResult VendorIndex()
+        public string VendorDetails()
         {
+            return "Check what they submitted.";
+        }
 
-            EVICEntities dbo = new EVICEntities();
+        public string Download()
+        {
+            return "Download";
+        }
 
-            var user_ids = User.Identity.GetUserId();
-
-            rfpvendorindex.rfplist = new List<RFP>();
-
-            var VendorRFPQuery = from r in dbo.RFPs
-                                   join i in dbo.RFPINVITEs
-                                   on r.RFPID equals i.RFPID
-                                   where i.Id == user_ids
-                                   orderby r.RFPID
-                                   select r;
-
-            rfpvendorindex.rfplist = VendorRFPQuery.ToList();
-
-            return View(rfpvendorindex);
+        public string Upload()
+        {
+            return "Upload.";
         }
 
         public JsonResult GetAcceptedVendors(string RFIID)

@@ -3,10 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Data.Entity;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
+using MVC_DATABASE.Models.ViewModels;
+using System.Net;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -21,8 +29,9 @@ namespace MVC_DATABASE.Controllers
         {
             UserManager = userManager;
         }
-
+        
         private ApplicationUserManager _userManager;
+        private EVICEntities db = new EVICEntities();
         public ApplicationUserManager UserManager
         {
             get
@@ -42,7 +51,7 @@ namespace MVC_DATABASE.Controllers
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message ==ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
@@ -205,12 +214,59 @@ namespace MVC_DATABASE.Controllers
 
         //GET: /Manage/FirstName
         //Doesn't have a view yet.
-        public ActionResult ChangeFirstName()
+        public ActionResult ChangeName()
         {
             return View();
         }
 
+        //POST: /Manage/FirstName
+        //Doesn't have a view yet.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task <ActionResult> ChangeName(ChangeNameViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            
+            if(user != null)
+            {
+                AccountManagement profilemanagement = new AccountManagement();
+                profilemanagement.Vendor = await db.VENDORs.FindAsync(user);
+                profilemanagement.Employee = await db.EMPLOYEEs.FindAsync(user);
+                if(profilemanagement.Employee == null)
+                {
+                    if(profilemanagement.Vendor != null)
+                    {
+                        profilemanagement.Vendor = new VENDOR
+                        {
+                            Id = user.Id,
+                            FIRSTNAME = model.NewLastName,
+                            LASTNAME = model.NewLastName,
+                            ORGANIZATION = profilemanagement.Vendor.ORGANIZATION,
+                            VENDSTATUS = profilemanagement.Vendor.VENDSTATUS,
+                            SANCTIONED = profilemanagement.Vendor.SANCTIONED
+                        };
+                    }
+                }
+                else
+                {
+                    profilemanagement.Employee = new EMPLOYEE
+                    {
+                        Id = user.Id,
+                        FIRSTNAME = model.NewFirstName,
+                        LASTNAME = model.NewLastName,
+                        EMPSTATUS = profilemanagement.Employee.EMPSTATUS
+                    };
+                }
 
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()

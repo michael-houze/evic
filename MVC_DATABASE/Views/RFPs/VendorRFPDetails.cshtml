@@ -1,56 +1,64 @@
-﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond.RFPList
+﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond
 
 @{
-    ViewBag.Title = "RFP - Respond";
+    ViewBag.Title = "RFP - Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="rfp-respond">
+<div class="rfp-details">
     <center>
-        <h1>RFP - Respond</h1>
+        <h1>RFP - Details</h1>
+        <h2>@Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)</h2>
     </center>
 
     <table class="table">
         <tr>
             <th>
-                <label class="control-label">RFP ID </label>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)
             </th>
             <th>
-                <label class="control-label">RFI ID </label>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.RFIID)
             </th>
             <th>
-                <label class="control-label">Category</label>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.CATEGORY)
             </th>
             <th>
-                <label class="control-label">Created</label>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.CREATED)
             </th>
             <th>
-                <label class="control-label">Expires</label>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.EXPIRES)
             </th>
         </tr>
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RFP.RFPID)
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.RFPID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.RFP.RFIID)
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.RFIID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.CATEGORY)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RFP.CREATED)
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.CREATED)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RFP.EXPIRES)
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.EXPIRES)
             </td>
         </tr>
     </table>
 
-    <hr />
+    <br />
+
+    <p>@Html.ActionLink("Click Here", "Download") to view the blank <b>GHX Template</b>.</p>
+
+    <br />
+
+    <p>@Html.ActionLink("Click Here", "DownloadOffer", new { path = item.OFFER_PATH }) to view your Offer.</p>
+
+    <br />
 
     <center>
-        @Html.ActionLink("Back to RFP Home", "VendorIndex")
+        @Html.ActionLink("Return to RFP Home", "VendorIndex")
     </center>
-
 </div>

@@ -1,77 +1,71 @@
 ﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond
 
-    @{
-        ViewBag.Title = "RFP - Respond";
-        Layout = "~/Views/Shared/_Layout.cshtml";
+@{
+    ViewBag.Title = "RFP - Respond";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="rfp-respond">
+    <center>
+        <h1>RFP - Respond</h1>
+        <h2>@Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)</h2>
+    </center>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.CATEGORY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.CREATED)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RFPList.rfp.EXPIRES)
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.RFPID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.CATEGORY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.CREATED)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFPList.rfp.EXPIRES)
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <p>Download the @Html.ActionLink("RFP Template", "Download") and complete to respond.</p>
+
+    <br />
+
+    @using (Html.BeginForm("Upload", "RFPs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <fieldset>
+            <legend>Upload completed RFP Template</legend>
+            <div class="editor-field">
+                @Html.TextBox("file", "", new { type = "file" })
+            </div>
+            <div class="editor-field">
+                <input type="submit" value="Upload" />
+            </div>
+        </fieldset>
     }
 
-    <div class="rfp-respond">
-        <center>
-            <h1>RFP - Respond</h1>
-        </center>
+    <br />
 
-        <table class="table">
-            <tr>
-                <th>
-                    <label class="control-label">RFP ID </label>
-                </th>
-                <th>
-                    <label class="control-label">RFI ID </label>
-                </th>
-                <th>
-                    <label class="control-label">Category</label>
-                </th>
-                <th>
-                    <label class="control-label">Created</label>
-                </th>
-                <th>
-                    <label class="control-label">Expires</label>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RFP.RFPID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => model.RFP.RFIID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RFP.CREATED)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RFP.EXPIRES)
-                </td>
-            </tr>
-        </table>
-
-        <hr />
-
-        <p>Please </p> @Html.ActionLink("Download", "Download", new { ImageName = @Model[i].ToString() }) <p> this Template first in order to fill it out before responding.</p>
-
-        <br />
-
-        @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            { 
-            @Html.AntiForgeryToken() 
-            
-            <fieldset> 
-                <legend>Upload the completed template</legend>
-                <div class="editor-field">
-                    @Html.TextBox("file", "", new { type = "file" }) 
-                </div> 
-                <div class="editor-field"> 
-                    <input type="submit" value="Upload" /> 
-                </div> 
-            </fieldset> 
-            }
-
-        <hr />
-
-        <center>
-                @Html.ActionLink("Back to RFP Home", "VendorIndex")
-        </center>
+    <center>
+        @Html.ActionLink("Return to RFP Home", "VendorIndex")
+    </center>
 </div>
-

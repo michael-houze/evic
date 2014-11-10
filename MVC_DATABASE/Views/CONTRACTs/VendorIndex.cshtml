@@ -1,8 +1,67 @@
-﻿@using MVC_DATABASE.Models.ViewModels.VendorContract
+﻿@model MVC_DATABASE.Models.ViewModels.VendorContract
+
+@using Microsoft.AspNet.Identity;
+
 @{
-    ViewBag.Title = "VendorIndex";
+    ViewBag.Title = "CONTRACTs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    
+    <h2>Vendor Contracts</h2>
 
-<h2>VendorIndex</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RFPID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CONTRACT_PATH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EXPIRES)
+            </th>
+            <th></th>
+        </tr>
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFPID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONTRACT_PATH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => model.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EXPIRES)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CONTRACTID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CONTRACTID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CONTRACTID })
+                </td>
+            </tr>
+        }
+
+    </table>
