@@ -19,24 +19,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.CONTRACTID, htmlAttributes: new { @readonly = "readonly", @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TEMPLATEID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TEMPLATEID, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.TEMPLATEID, htmlAttributes: new { @readonly = "readonly", @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.RFPID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RFPID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RFPID, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.RFPID, htmlAttributes: new { @readonly = "readonly", @class = "form-control" })
             </div>
         </div>
 

@@ -281,7 +281,7 @@ namespace MVC_DATABASE.Controllers
             return View(indexview.ToList<VendorContractIndex>());
         } 
 
-        public string Details()
+        public string VendorDetails()
         {
             return "Details...";
         }
