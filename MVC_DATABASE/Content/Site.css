@@ -259,7 +259,6 @@ body {
 
 h1 {
     font-weight: bold;
-    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
     font-size-adjust: .8;
 }
 
@@ -317,7 +316,6 @@ img {
 		/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#77787b', endColorstr='#77787b',GradientType=1 ); /* IE6-9 */
 	color: #585858;
 	font-family: 'myriad-pro semibold';
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	font-size: 12px;
 }
 
@@ -339,7 +337,6 @@ img {
 #footer nav a {
 	color: #585858;
 	font-family: 'myriad-pro semibold';
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	text-decoration: none;
 	font-size: 12px;
 }
@@ -356,9 +353,6 @@ img {
 	float: left;
 	margin-left: auto;
 	margin-right: auto;
-	-webkit-box-shadow: -10px 7px 27px 0px rgba(0,0,0,0.75);
-	   -moz-box-shadow: -10px 7px 27px 0px rgba(0,0,0,0.75);
-		    box-shadow: -10px 7px 27px 0px rgba(0,0,0,0.75);
 }
 
 .subnav {
@@ -372,7 +366,6 @@ img {
 	float: left;
 	text-decoration: none;
 	font-weight: bold;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #002349 #002349 #000000;
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);	
 }
@@ -387,7 +380,6 @@ img {
 	   -moz-transition: color .25s ease-in;
 		 -o-transition: color .25s ease-in;
 		    transition: color .25s ease-in;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 .subnav li a .caret {
@@ -397,12 +389,10 @@ img {
 	   -moz-transition: border-color .25s ease-in;
 		 -o-transition: border-color .25s ease-in;
 		    transition: border-color .25s ease-in;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 .subnav li a:hover {
     color: #FFFFFF;
-    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 .subnav li .open {
@@ -412,7 +402,6 @@ img {
 .subnav li a:hover .caret {
     border-top-color: #FFFFFF;
     border-bottom-color: #FFFFFF;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 .btn-oldstyle2 li {
@@ -503,19 +492,16 @@ img {
 		-moz-transition: color .25s ease-in;
 		  -o-transition: color .25s ease-in;
 			 transition: color .25s ease-in;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 #tabs li a:hover {
 	color: #FFFFFF; 
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 #tabs .btn-oldstyle li {
 	background-color: #009dbd;
     border-color: #009dbd;
     color: #fff;
-    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
     background-color: #008ca9;
         background-image: -moz-linear-gradient(top,#009dbd,#00738a);
         background-image: -webkit-gradient(linear,0 0,0 100%,from(#009dbd),to(#00738a));
