@@ -404,6 +404,7 @@
     <Content Include="Content\RFIs\18\GHX Template V2.xlsx" />
     <Content Include="Content\Templates\Financial Analysis.xlsx" />
     <Content Include="Content\Templates\Contract\UserManual.pdf" />
+    <Content Include="Content\ContractStore\5\ToolbarEmailTemplate.pdf" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />

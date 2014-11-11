@@ -20,19 +20,13 @@ namespace MVC_DATABASE.Controllers
         // GET: CONTRACTs
         public ActionResult Index()
         {
-
-
             var indexview = from x in db.CONTRACTs
                             join y in db.RFPs
                             on x.RFPID equals y.RFPID
                             join z in db.VENDORs
                             on x.Id equals z.Id
                             select new ContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH, organization = z.ORGANIZATION };
-
-
-
-            
-            
+                        
             return View(indexview.ToList<ContractIndex>());
         }
 
@@ -48,6 +42,9 @@ namespace MVC_DATABASE.Controllers
             {
                 return HttpNotFound();
             }
+            RFP rfp = await db.RFPs.FindAsync(cONTRACT.RFPID);
+            ViewBag.Category = rfp.CATEGORY;
+
             return View(cONTRACT);
         }
 
@@ -115,6 +112,41 @@ namespace MVC_DATABASE.Controllers
             ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", cONTRACT.Id);
             ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", cONTRACT.TEMPLATEID);
             return View(cONTRACT);
+        }
+
+        [Authorize(Roles = "Administrator,Employee,Vendor")]
+        public FileResult DownloadTemplate(string path)
+        {
+
+            //select contract id
+            var templateId = from y in db.TEMPLATEs
+                             where y.PATH == path
+                             select y.TEMPLATEID;
+
+            string fileName = ("Contract Template - " + templateId.FirstOrDefault().ToString());
+
+            return File(path, "application/pdf", fileName);
+        }
+
+        [Authorize(Roles = "Administrator,Employee,Vendor")]
+        public FileResult DownloadContract(string path)
+        {
+
+            //select vendors Id from contract
+            var InviteId = from x in db.CONTRACTs
+                           where x.CONTRACT_PATH == path
+                           select x.Id;
+            //Get vendor items from Id
+            VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
+            //select contract id
+            var contractId = from y in db.CONTRACTs
+                        where y.CONTRACT_PATH == path
+                        where y.Id == vendor.Id
+                        select y.CONTRACTID;
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + contractId.FirstOrDefault());
+
+            return File(path, "application/pdf", fileName);
         }
 
         // GET: CONTRACTs/Edit/5

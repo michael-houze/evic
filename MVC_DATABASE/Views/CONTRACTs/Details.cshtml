@@ -10,6 +10,15 @@
     <h4>CONTRACT</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRACTID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRACTID)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.RFPID)
         </dt>
@@ -19,28 +28,47 @@
         </dd>
 
         <dt>
+            @Html.DisplayName("Category")
+        </dt>
+
+        <dd>
+            @ViewBag.Category
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEMPLATE.TEMPLATEID)
+        </dt>
+
+        @if (Model.TEMPLATE.PATH != string.Empty)
+        {       
+            <dd>
+            @Html.ActionLink("Contract - " + Model.TEMPLATE.TEMPLATEID.ToString(), "DownloadTemplate", new { path = Model.TEMPLATE.PATH })  
+            </dd>      
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.VENDOR.ORGANIZATION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.VENDOR.ORGANIZATION)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.CONTRACT_PATH)
         </dt>
-
+        
+    @if(!string.IsNullOrEmpty(Model.CONTRACT_PATH))
+    { 
         <dd>
-            @Html.DisplayFor(model => model.CONTRACT_PATH)
+            @Html.ActionLink(Model.AspNetUser.VENDOR.ORGANIZATION, "DownloadContract", new { path = Model.CONTRACT_PATH })
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
-        </dt>
-
+    }
+    else
+    {
         <dd>
-            @Html.DisplayFor(model => model.AspNetUser.Email)
+            No Response
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TEMPLATE.TYPE)
-        </dd>
+    }
 
     </dl>
 </div>
