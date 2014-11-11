@@ -17,12 +17,31 @@ namespace MVC_DATABASE.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                AdminDashboard model = new AdminDashboard();
+                if (User.IsInRole("Administrator"))
+                {
+                    AdminDashboard adminModel = new AdminDashboard();
 
-                model.pendingVendors = getPendingVendorCount();
-                model.calendarEvents = getCalendarEvents();
+                    adminModel.pendingVendors = getPendingVendorCount();
+                    adminModel.calendarEvents = getCalendarEvents();
 
-                return View(model);
+                    return RedirectToAction("Admin", "Dashboard", adminModel);
+                }
+                else if (User.IsInRole("Employee"))
+                {
+                    EmployeeDashboard employeeModel = new EmployeeDashboard();
+
+                    return RedirectToAction("Employee", "Dashboard", employeeModel);
+                }
+                else if (User.IsInRole("Vendor"))
+                {
+                    VendorDashboard vendorModel = new VendorDashboard();
+
+                    return RedirectToAction("Vendor", "Dashboard", vendorModel);
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
