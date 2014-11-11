@@ -1,9 +1,9 @@
-﻿@model MVC_DATABASE.Models.ViewModels.VendorContract
+﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.VendorContract>
 
-@using Microsoft.AspNet.Identity;
+@using MVC_DATABASE.Models;
 
 @{
-    ViewBag.Title = "CONTRACTs";
+    ViewBag.Title = "VendorIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
     
@@ -15,53 +15,53 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RFPID)
+                @Html.DisplayNameFor(model => model.rfpID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CONTRACT_PATH)
+                @Html.DisplayNameFor(model => model.organization)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.id)
+                @Html.DisplayNameFor(model => model.contractPath)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+                @Html.DisplayNameFor(model => model.contractID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TEMPLATE.TYPE)
+                @Html.DisplayNameFor(model => model.category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EXPIRES)
+                @Html.DisplayNameFor(model => model.expires)
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
-        {
+        @{foreach (var item in Model) { 
+        
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RFPID)
+                    @Html.DisplayFor(modelItem => item.rfpID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CONTRACT_PATH)
+                    @Html.DisplayFor(modelItem => item.organization)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => model.id)
+                    @Html.DisplayFor(modelItem => item.contractPath)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                    @Html.DisplayFor(modelItem => item.contractID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TEMPLATE.TYPE)
+                    @Html.DisplayFor(modelItem => item.category)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EXPIRES)
+                    @Html.DisplayFor(modelItem => item.expires)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CONTRACTID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.CONTRACTID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CONTRACTID })
+                    @Html.ActionLink("Respond", "Respond", new { id = item.contractID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.contractID})
                 </td>
             </tr>
+        }
         }
 
     </table>

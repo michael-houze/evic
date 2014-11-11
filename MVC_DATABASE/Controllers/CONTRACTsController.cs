@@ -1,13 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System;
+using System.Globalization;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
 
 namespace MVC_DATABASE.Controllers
@@ -218,5 +228,67 @@ namespace MVC_DATABASE.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Beginning of vendor
+        VendorContract responsemodel = new VendorContract();
+
+        public async Task<ActionResult> VendorResponse(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            responsemodel.contract = await db.CONTRACTs.FindAsync(id);
+
+            if (responsemodel.contract == null)
+            {
+                return HttpNotFound();
+            }
+
+            responsemodel.contractlist = new List<CONTRACT>();
+            responsemodel.vendorlist = new List<VENDOR>();
+
+            foreach (var x in db.CONTRACTs.ToList())
+            {
+
+                if (x.CONTRACTID == id)
+                {
+                    VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
+                    responsemodel.contractlist.Add(x);
+                    responsemodel.vendorlist.Add(vendor);
+                }
+            }
+
+            return View(responsemodel);
+        }
+
+        VendorContract vendorContract = new VendorContract();
+
+        public ActionResult VendorIndex()
+        {
+            EVICEntities db = new EVICEntities();
+            var user = User.Identity.GetUserId();
+            
+            vendorContract.contractlist = new List<CONTRACT>();
+
+            var vendorContractsQuery = from c in db.CONTRACTs
+                                       join v in db.VENDORs on c.Id equals v.Id
+                                       join t in db.TEMPLATEs on c.TEMPLATEID equals t.TEMPLATEID
+                                       where c.Id == user
+                                       where t.TYPE == "CONTRACT"
+                                       orderby c.CONTRACTID
+                                       select c;
+
+            vendorContract.contractlist = vendorContractsQuery.ToList();
+
+            return View(vendorContract);
+        } 
+
+        public string Details()
+        {
+            return "Details...";
+        }
+	
     }
 }

@@ -207,7 +207,6 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="Controllers\VendorContractController.cs" />
     <Compile Include="Controllers\VendorRFIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
