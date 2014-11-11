@@ -3,6 +3,7 @@ using MVC_DATABASE.Models.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,7 +30,6 @@ namespace MVC_DATABASE.Controllers
 
             model.rfiSummaries = getExpiredRFIs();
             model.rfpSummaries = getExpiredRFPs();
-            model.contractSummaries = getExpiredContracts();
             model.calendarEvents = getCalendarEvents();
 
             return View( model );
@@ -57,8 +57,17 @@ namespace MVC_DATABASE.Controllers
         {
             // This method will return the number of RFIs with pending status from given vendor
             // This is just test data
+            int pendingRFICount = 0;
 
-            return 58;
+            // var pendingRFIs = db.RFIs.
+            foreach( var rfi in db.RFIs.Where(model => model.EXPIRES <= DateTime.Now))
+            {
+                if(rfi.RFPs == null)
+                {
+                    pendingRFICount++;
+                }
+            }
+            return 99;
         }
 
         private int getPendingVendorRFPCount()
@@ -69,73 +78,50 @@ namespace MVC_DATABASE.Controllers
             return 35;
         }
 
+        // This method will returns a list of RFISummary objects built from expired RFIs
         private List<RFISummary> getExpiredRFIs()
         {
-            // This method will returne a list of RFISummary objects built from expired RFIs
-            // This is just test data
 
             List<RFISummary> summaries = new List<RFISummary>();
-            
-            RFISummary sum1 = new RFISummary();
-            RFISummary sum2 = new RFISummary();
-            RFISummary sum3 = new RFISummary();
+            int responseCount = 0;
 
-            sum1.RFINumber = 4276;
-            sum1.ResponseCount = 3;
+            foreach (var rfi in db.RFIs.Where(model => model.EXPIRES <= DateTime.Now))
+            {
+                responseCount = 0;
 
-            sum2.RFINumber = 8311;
-            sum2.ResponseCount = 5;
+                foreach (var response in rfi.RFIINVITEs)
+                {
+                    if(!string.IsNullOrWhiteSpace(response.GHX_PATH))
+                    {
+                        responseCount++;
+                    }
+                }
 
-            sum3.RFINumber = 1661;
-            sum3.ResponseCount = 1;
-
-            summaries.Add(sum1);
-            summaries.Add(sum2);
-            summaries.Add(sum3);
+                summaries.Add(new RFISummary(rfi.RFIID, responseCount));
+            }
 
             return summaries;
         }
 
+        // This method will return a list of RFPSummary objects built from expired RFPs
         private List<RFPSummary> getExpiredRFPs()
         {
-            // This method will returne a list of RFPSummary objects built from expired RFPs
-            // This is just test data
 
             List<RFPSummary> summaries = new List<RFPSummary>();
+            int responseCount = 0;
 
-            RFPSummary sum1 = new RFPSummary();
-            RFPSummary sum2 = new RFPSummary();
+            foreach (var rfp in db.RFPs.Where(model => model.EXPIRES <= DateTime.Now))
+            {
+                foreach (var response in rfp.RFPINVITEs)
+                {
+                    if (!string.IsNullOrWhiteSpace(response.OFFER_PATH))
+                    {
+                        responseCount++;
+                    }
+                }
 
-            sum1.RFPNumber = 862;
-            sum1.ResponseCount = 9;
-
-            sum2.RFPNumber = 611;
-            sum2.ResponseCount = 4;
-
-            summaries.Add(sum1);
-            summaries.Add(sum2);
-
-            return summaries;
-        }
-
-        private List<ContractSummary> getExpiredContracts()
-        {
-            // This method will returne a list of ContractSummary objects built from expired contracts
-            // This is just test data
-
-            List<ContractSummary> summaries = new List<ContractSummary>();
-
-            ContractSummary sum1 = new ContractSummary();
-            ContractSummary sum2 = new ContractSummary();
-
-            sum1.ContractNumber = 126;
-            sum1.ResponseCount = 1;
-
-            sum2.ContractNumber = 210;
-            sum2.ResponseCount = 0;
-
-            summaries.Add(sum1);
-            summaries.Add(sum2);
+                summaries.Add(new RFPSummary(rfp.RFPID, responseCount));
+            }
 
             return summaries;
         }

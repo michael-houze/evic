@@ -9,5 +9,11 @@ namespace MVC_DATABASE.Models
     {
         public int RFPNumber;
         public int ResponseCount;
+
+        public RFPSummary( int id, int responseCount)
+        {
+            RFPNumber = id;
+            ResponseCount = responseCount;
+        }
     }
 }
