@@ -33,31 +33,33 @@
         </tr>
     </thead>
     @if (Model.OpenRFPList != null)
-{
-    <tbody>
+    {
+    
         foreach (var item in Model.OpenRFPList)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RFPID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CATEGORY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CREATED)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EXPIRES)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RFPID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.RFPID }) |
-                    @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
-                </td>
-            </tr>
-       }
-    </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RFPID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CATEGORY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CREATED)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXPIRES)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.RFPID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.RFPID }) |
+                        @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
+                    </td>
+                </tr>
+            </tbody>
+        }
+
 }
 </table>
 
@@ -89,29 +91,31 @@
         </tr>
     </thead>
     @if (Model.ExpiredRFPList != null)
-{
-    <tbody>
-    foreach (var item in Model.ExpiredRFPList)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CATEGORY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CREATED)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EXPIRES)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.RFPID }) |
-                @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
-            </td>
-        </tr>
+
+        foreach (var item in Model.ExpiredRFPList)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RFPID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CATEGORY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CREATED)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXPIRES)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.RFPID }) |
+                        @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
+                    </td>
+                </tr>
+            </tbody>
+        }
+
     }
-    </tbody>
-}
 </table>
