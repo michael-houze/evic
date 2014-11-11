@@ -20,7 +20,7 @@ namespace MVC_DATABASE.Controllers
             AdminDashboard model = new AdminDashboard();
 
             model.pendingVendors = getPendingVendorCount();
-            model.calendarEvents = getCalendarEvents();
+            model.calendarEvents = getEmployeeCalendarEvents();
 
             return View( model );
         }
@@ -31,7 +31,7 @@ namespace MVC_DATABASE.Controllers
 
             model.rfiSummaries = getExpiredRFIs();
             model.rfpSummaries = getExpiredRFPs();
-            model.calendarEvents = getCalendarEvents();
+            model.calendarEvents = getEmployeeCalendarEvents();
 
             return View( model );
         }
@@ -152,7 +152,6 @@ namespace MVC_DATABASE.Controllers
         {
             string serializedEvents;
             List<CalendarEvent> events = new List<CalendarEvent>();
-            CalendarEvent tempEvent = new CalendarEvent();
 
             foreach( var rfi in db.RFIs)
             {
@@ -162,6 +161,28 @@ namespace MVC_DATABASE.Controllers
             foreach (var rfp in db.RFPs)
             {
                 events.Add(new CalendarEvent("RFP #" + rfp.CATEGORY.ToString().Substring(4) + " Expires", true, rfp.EXPIRES, "#613E82"));
+            }
+
+            serializedEvents = JsonConvert.SerializeObject(events);
+
+            return serializedEvents;
+        }
+
+        private string getEmployeeCalendarEvents()
+        {
+            string serializedEvents;
+            List<CalendarEvent> events = new List<CalendarEvent>();
+
+            foreach( var rfi in db.RFIs)
+            {
+                string url = Url.Action("Details", "RFIs", new { id = rfi.RFIID.ToString() });
+                events.Add(new CalendarEvent("RFI " + rfi.CATEGORY.ToString().Substring(4) + " Expires", true, rfi.EXPIRES, "#4DB3D0", url));
+            }
+
+            foreach (var rfp in db.RFPs)
+            {
+                string url = Url.Action("Details", "RFPs", new { id = rfp.RFPID.ToString() });
+                events.Add(new CalendarEvent("RFP " + rfp.CATEGORY.ToString().Substring(4) + " Expires", true, rfp.EXPIRES, "#613E82", url));
             }
 
             serializedEvents = JsonConvert.SerializeObject(events);

@@ -11,6 +11,16 @@ namespace MVC_DATABASE.Models
         public bool allDay;
         public DateTime start;
         public string color;
+        public string url;
+
+        public CalendarEvent(string newTitle, bool newAllDay, DateTime newStart, string newColor, string newUrl)
+        {
+            title = newTitle;
+            allDay = newAllDay;
+            start = newStart;
+            color = newColor;
+            url = newUrl;
+        }
 
         public CalendarEvent(string newTitle, bool newAllDay, DateTime newStart, string newColor)
         {
