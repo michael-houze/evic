@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>RFP</h2>
+<h2>RFP - Index</h2>
 
 <table class="table tablesorter">
     <thead>
@@ -27,9 +27,9 @@
             <th></th>
         </tr>
     </thead>
-@if (Model.rfplist != null)
+@if (Model.RFPList != null)
 {
-    foreach (var item in Model.rfplist)
+    foreach (var item in Model.RFPList)
     {
 
         var invite = item.RFPINVITEs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();

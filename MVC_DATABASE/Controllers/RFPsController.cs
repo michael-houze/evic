@@ -320,7 +320,7 @@ namespace MVC_DATABASE.Controllers
             //Gets user information
             var user_id = User.Identity.GetUserId();
             //List containing VendorRFPs
-            vendorRfp.RfpList = new List<RFP>();
+            vendorRfp.RFPList = new List<RFP>();
 
             //Query for Vendor's specifi RFPs
             var vendorInvitedRFPs = from i in dbo.RFPINVITEs
@@ -331,7 +331,7 @@ namespace MVC_DATABASE.Controllers
                                     select r; //new VendorRFP { rfp = r, rfpInvite = i, vendor = v };
 
             //Adds queried to list
-            vendorRfp.RfpList = vendorInvitedRFPs.ToList();
+            vendorRfp.RFPList = vendorInvitedRFPs.ToList();
 
             return View(vendorRfp);
         }

@@ -7,8 +7,8 @@ namespace MVC_DATABASE.Models.ViewModels
 {
     public class RFPVendorIndex
     {
-        public RFP Rfp { get; set; }
-        public ICollection<RFP> RfpList { get; set; }
+        public RFP RFP { get; set; }
+        public ICollection<RFP> RFPList { get; set; }
 
     }
 }
