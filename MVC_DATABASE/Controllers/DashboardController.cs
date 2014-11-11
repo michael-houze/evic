@@ -161,7 +161,7 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var rfp in db.RFPs)
             {
-                events.Add(new CalendarEvent("RFP #" + rfp.RFPID.ToString().Substring(4) + " Expires", true, rfp.EXPIRES, "#613E82"));
+                events.Add(new CalendarEvent("RFP #" + rfp.CATEGORY.ToString().Substring(4) + " Expires", true, rfp.EXPIRES, "#613E82"));
             }
 
             serializedEvents = JsonConvert.SerializeObject(events);
