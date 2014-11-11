@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -53,29 +54,50 @@ namespace MVC_DATABASE.Controllers
             return pendingVendors;
         }
 
+        // This method will return the number of RFIs with pending status from given vendor
         private int getPendingVendorRFICount()
         {
-            // This method will return the number of RFIs with pending status from given vendor
-            // This is just test data
-            int pendingRFICount = 0;
+            int responseCount = 0;
 
-            // var pendingRFIs = db.RFIs.
-            foreach( var rfi in db.RFIs.Where(model => model.EXPIRES <= DateTime.Now))
+            var currentUser = User.Identity.Name;       
+            string currentUserName = currentUser;
+
+            foreach(var rfi in db.RFIs)
             {
-                if(rfi.RFPs == null)
+                foreach(var response in rfi.RFIINVITEs)
                 {
-                    pendingRFICount++;
+                    if ((currentUserName == response.AspNetUser.UserName) &&
+                        (string.IsNullOrWhiteSpace(response.GHX_PATH)))
+                    {
+                        responseCount++;
+                    }
                 }
             }
-            return 99;
+
+            return responseCount;
         }
 
+        // This method will return the number of RFPs with pending status from given vendor
         private int getPendingVendorRFPCount()
         {
-            // This method will return the number of RFPs with pending status from given vendor
-            // This is just test data
+            int responseCount = 0;
 
-            return 35;
+            var currentUser = User.Identity.Name;
+            string currentUserName = currentUser;
+
+            foreach (var rfp in db.RFPs)
+            {
+                foreach (var response in rfp.RFPINVITEs)
+                {
+                    if ((currentUserName == response.AspNetUser.UserName) &&
+                        (string.IsNullOrWhiteSpace(response.OFFER_PATH)))
+                    {
+                        responseCount++;
+                    }
+                }
+            }
+
+            return responseCount;
         }
 
         // This method will returns a list of RFISummary objects built from expired RFIs
