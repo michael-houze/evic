@@ -305,6 +305,7 @@
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
     <Compile Include="Models\ViewModels\RFIEmployeeIndex.cs" />
     <Compile Include="Models\ViewModels\VendorContract.cs" />
+    <Compile Include="Models\ViewModels\VendorContractIndex.cs" />
     <Compile Include="Models\ViewModels\VendorDashboard.cs" />
     <Compile Include="Models\ViewModels\VendorRegister.cs" />
     <Compile Include="Models\ViewModels\RFPVendorIndex.cs" />

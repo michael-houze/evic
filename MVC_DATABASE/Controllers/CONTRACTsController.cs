@@ -263,26 +263,22 @@ namespace MVC_DATABASE.Controllers
             return View(responsemodel);
         }
 
-        VendorContract vendorContract = new VendorContract();
+        VendorContractIndex vendorIndex = new VendorContractIndex();
 
         public ActionResult VendorIndex()
         {
             EVICEntities db = new EVICEntities();
             var user = User.Identity.GetUserId();
-            
-            vendorContract.contractlist = new List<CONTRACT>();
 
-            var vendorContractsQuery = from c in db.CONTRACTs
-                                       join v in db.VENDORs on c.Id equals v.Id
-                                       join t in db.TEMPLATEs on c.TEMPLATEID equals t.TEMPLATEID
-                                       where c.Id == user
-                                       where t.TYPE == "CONTRACT"
-                                       orderby c.CONTRACTID
-                                       select c;
+            var indexview = from x in db.CONTRACTs
+                            join y in db.RFPs
+                            on x.RFPID equals y.RFPID
+                            join z in db.VENDORs
+                            on x.Id equals z.Id
+                            where z.Id == user
+                            select new VendorContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH};
 
-            vendorContract.contractlist = vendorContractsQuery.ToList();
-
-            return View(vendorContract);
+            return View(indexview.ToList<VendorContractIndex>());
         } 
 
         public string Details()

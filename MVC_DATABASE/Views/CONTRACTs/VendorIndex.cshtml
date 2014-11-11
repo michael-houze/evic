@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.VendorContract>
+﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.VendorContractIndex>
 
 @using MVC_DATABASE.Models;
 
@@ -15,23 +15,18 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.rfpID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.organization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.contractPath)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.contractID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rfpID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.expires)
+                @Html.DisplayNameFor(model => model.contractPath)
             </th>
+
             <th></th>
         </tr>
 
@@ -39,23 +34,19 @@
         
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.rfpID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.organization)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.contractPath)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.contractID)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rfpID)
+                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.category)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.expires)
+                    @Html.DisplayFor(modelItem => item.contractPath)
                 </td>
+
                 <td>
                     @Html.ActionLink("Respond", "Respond", new { id = item.contractID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.contractID})
