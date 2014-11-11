@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
+﻿    @model MVC_DATABASE.Models.ViewModels.RFIEmployeeIndex
 
 @{
     ViewBag.Title = "RFI";
@@ -14,54 +14,50 @@
     </div>
 </div>
 <br />
-<table class="table table-striped table-hover tablesorter">
-    <thead>
-        <tr>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.RFI.RFIID)
-            </th>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.RFI.CATEGORY)
-            </th>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.RFI.EXPIRES)
-            </th>
-            <th class="text-center">RFI Actions</th>
-        </tr>
-    </thead>
-    @if (Model.OpenRFIList != null)
-{
-    foreach (var item in Model.OpenRFIList)
-    {
-        /* foreach (var x in Model.RFIInviteList)
-         {
-             if (item.RFIID == x.RFIID)
-             {
-                 if (x.GHX_PATH != null)
-                 {
-                     Model.VendorResponseCount++;
-                 }
-             }
-         }*/
-        <tbody>
-            <tr>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.RFIID)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.CATEGORY)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.EXPIRES)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RFIID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.RFIID }) |
-                    @Html.ActionLink("Vendor Responses", "VendorResponse", new { id = item.RFIID })
-                </td>
-            </tr>
-        </tbody>
-    }
+<table class="table table-striped table-hover">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.RFI.RFIID)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.RFI.EXPIRES)
+        </th>
+        <th class="text-center">RFI Actions</th>
+    </tr>
+    @if(Model.OpenRFIList != null)
+    { 
+        foreach (var item in Model.OpenRFIList)
+        {
+           /* foreach (var x in Model.RFIInviteList)
+            {
+                if (item.RFIID == x.RFIID)
+                {
+                    if (x.GHX_PATH != null)
+                    {
+                        Model.VendorResponseCount++;
+                    }
+                }
+            }*/        
+    <tr>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.RFIID)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.CATEGORY)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.EXPIRES)
+        </td>
+        <td class="text-center">
+            @Html.ActionLink("Edit", "Edit", new { id = item.RFIID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.RFIID }) |
+            @Html.ActionLink("Vendor Responses", "VendorResponse", new { id = item.RFIID })
+        </td>
+    </tr>
+}
 }
 
 </table>
@@ -74,36 +70,33 @@
     </div>
 </div>
 <br />
-<table class="table table-striped table-hover tablesorter">
-    <thead>
-        <tr>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.RFI.RFIID)
-            </th>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.RFI.CATEGORY)
-            </th>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.RFI.EXPIRES)
-            </th>
-            <th class="text-center">RFI Actions</th>
-        </tr>
-    </thead>
+<table class="table table-striped table-hover">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.RFI.RFIID)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.RFI.EXPIRES)
+        </th>
+        <th class="text-center">RFI Actions</th>
+    </tr>
     @if (Model.ExpiredRFIList != null)
-{
-    foreach (var item in Model.ExpiredRFIList)
     {
-        /* foreach (var x in Model.RFIInviteList)
-         {
-             if (item.RFIID == x.RFIID)
+        foreach (var item in Model.ExpiredRFIList)
+        {
+            /* foreach (var x in Model.RFIInviteList)
              {
-                 if (x.GHX_PATH != null)
+                 if (item.RFIID == x.RFIID)
                  {
-                     Model.VendorResponseCount++;
+                     if (x.GHX_PATH != null)
+                     {
+                         Model.VendorResponseCount++;
+                     }
                  }
-             }
-         }*/
-        <tbody>
+             }*/
             <tr>
                 <td class="text-center">
                     @Html.DisplayFor(modelItem => item.RFIID)
@@ -119,8 +112,7 @@
                     @Html.ActionLink("Vendor Responses", "VendorResponse", new { id = item.RFIID })
                 </td>
             </tr>
-        </tbody>
+        }
     }
-}
 
 </table>
