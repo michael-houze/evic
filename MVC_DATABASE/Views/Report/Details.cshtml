@@ -36,11 +36,17 @@
                 <td>
                     @if (string.IsNullOrWhiteSpace(filePath))
                     {
-                        <!-- Response not available or received. -->
+                        @ViewBag.NoResponse
                     }
                     else
                     {
-                        <!-- USE L TO E -->
+                        <input type="button" id="btnpopu" value="View Report" onclick="RFPResponseReport(@Model.RfpInvite.OFFER_PATH);"/>
+                        <script type="text/javascript">
+                            RFPResponseReport = function ()
+                            {
+                                window.open('/Report/RFPResponseReport', "PopupWindow", 'width=400px,height=400px,top=150,left=250');
+                            }
+                        </script>
                     }
                 </td>
             </tr>

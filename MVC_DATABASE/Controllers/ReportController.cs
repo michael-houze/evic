@@ -37,6 +37,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public ReportDetails rfpDetails = new ReportDetails();
+        
         //
         //Displays vendor responses for selected RFP on Index page.
         [Authorize(Roles = "Administrator, Employee")]
@@ -62,16 +63,23 @@ namespace MVC_DATABASE.Controllers
                 }
             }
 
+            //Provides message if response not provided.
+            ViewBag.NoResponse = "Response not received.";
+
             return View(rfpDetails);
         }
 
-        public ActionResult RFPReport()
+        //
+        //
+        public string  RFPReport(string path)
         {
-            return View();
+            return "";
         }
 
-        public ActionResult RFPResponseReport(string path)
-        {
+        //
+        //
+        public string RFPResponseReport(string path)
+        {           
             string filePath = path;
 
             var excelFile = new ExcelQueryFactory(filePath);
@@ -103,7 +111,9 @@ namespace MVC_DATABASE.Controllers
                     TotalVariance += r.Variance;
             }
 
-            return View();
+                // ! ! !
+            //With test data, need to change the actual return information.
+            return "Description";
         }
 
 
