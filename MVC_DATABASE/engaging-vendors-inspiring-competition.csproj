@@ -323,6 +323,7 @@
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\fullcalendar.print.css" />
+    <Content Include="Content\index_style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -407,9 +408,13 @@
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Scripts\jquery-latest.js" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.metadata.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
