@@ -7,33 +7,9 @@
 
 <h2>Respond</h2>
 
-@using (Html.BeginForm("Respond", "VendorContract", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Respond", "CONTRACTs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="file" />
     <input type="submit" value="OK" />
 }
 
-
-
-@*<div class="display-label">Uploaded Documents</div>
-
-<div class="display-field">
-    <tr>
-        <th>FileName</th>
-        <th>Download Files</th>
-    </tr>
-
-
-    @foreach (var file in ((IEnumerable<MVC_DATABASE.Models.CONTRACT>)ViewBag.Files))
-    {<tr>
-        <td>
-            @Html.ActionLink("Download", "Download", new { id = Model.PatientsId, name = file.FileName })
-        </td>
-        <td>
-            @file.FileName
-        </td>
-    </tr>
-
-    }
-    </mycombinedquerymodel>
-</div>*@

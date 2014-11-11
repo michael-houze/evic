@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System;
+using System.IO;
 using System.Globalization;
 using System.Security.Claims;
 using System.Web;
@@ -262,6 +263,33 @@ namespace MVC_DATABASE.Controllers
 
             return View(responsemodel);
         }
+
+        public ActionResult Respond(string Id)
+        {
+            var response = new RFPINVITE { Id = Id };
+
+            return View();
+        }
+
+        //
+        //Stores the uploaded form from View VendorRFI/Respond
+        [HttpPost]
+        public ActionResult Respond(HttpPostedFileBase file)
+        {
+            //Verify a file is selected.
+            if (file != null)
+            {
+                //Extract the file name.
+                var fileName = Path.GetFileName(file.FileName);
+                //Establishes where to save the path using the extracted name.
+                var path = Path.Combine(Server.MapPath(@"~/Content/ContractStore/TestContracts"), fileName);
+                //Saves file.
+                file.SaveAs(path);
+            }
+            //Sends the user back to their respective RFI Index page.
+            return RedirectToAction("VendorIndex");
+        }
+
 
         VendorContractIndex vendorIndex = new VendorContractIndex();
 
