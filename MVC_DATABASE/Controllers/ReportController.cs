@@ -79,7 +79,7 @@ namespace MVC_DATABASE.Controllers
         //
         //
         public string RFPResponseReport(string path)
-        {           
+        {
             string filePath = path;
 
             var excelFile = new ExcelQueryFactory(filePath);
@@ -113,7 +113,7 @@ namespace MVC_DATABASE.Controllers
 
                 // ! ! !
             //With test data, need to change the actual return information.
-            return "Description";
+            return "Total Variance: " + TotalVariance;
         }
 
 
