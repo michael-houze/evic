@@ -1,4 +1,7 @@
-﻿@model MVC_DATABASE.Models.ViewModels.ContractIndex
+﻿@model IEnumerable<MVC_DATABASE.Models.ViewModels.ContractIndex>
+
+@using MVC_DATABASE.Models;
+
 
 @{
     ViewBag.Title = "Index";
@@ -12,45 +15,47 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.contract.CONTRACTID)
+            @Html.DisplayNameFor(model => model.contractID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.rfp.RFPID)
+            @Html.DisplayNameFor(model => model.rfpID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.rfp.CATEGORY)
+            @Html.DisplayNameFor(model => model.category)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
+            @Html.DisplayNameFor(model => model.organization)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.contract.CONTRACT_PATH)
+            @Html.DisplayNameFor(model => model.contractPath)
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in indexview) {
+@{
+ foreach (var item in Model) {
+   
+     
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CONTRACTID)
+            @Html.DisplayFor(modelItem => item.contractID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RFPID)
+            @Html.DisplayFor(modelItem => item.rfpID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CATEGORY)
+            @Html.DisplayFor(modelItem => item.category)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ORGANIZATION)
+            @Html.DisplayFor(modelItem => item.organization)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CONTRACT_PATH)
+            @Html.DisplayFor(modelItem => item.contractPath)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CONTRACTID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CONTRACTID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.contractID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.contractID })
         </td>
     </tr>
 }
-
+}
 </table>

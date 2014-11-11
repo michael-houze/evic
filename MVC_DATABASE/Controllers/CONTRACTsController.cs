@@ -16,20 +16,24 @@ namespace MVC_DATABASE.Controllers
     {
         private EVICEntities db = new EVICEntities();
         private ContractIndex contractindex = new ContractIndex();
-        private ContractIndex.IndexType indextype = new ContractIndex.IndexType();
+
         // GET: CONTRACTs
         public ActionResult Index()
         {
-            
+
+
             var indexview = from x in db.CONTRACTs
                             join y in db.RFPs
                             on x.RFPID equals y.RFPID
                             join z in db.VENDORs
                             on x.Id equals z.Id
-                            select new { x.CONTRACTID, y.RFPID, y.CATEGORY, z.ORGANIZATION, x.CONTRACT_PATH };
+                            select new ContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH, organization = z.ORGANIZATION };
+
+
+
             
             
-            return View(indexview);
+            return View(indexview.ToList<ContractIndex>());
         }
 
         // GET: CONTRACTs/Details/5
@@ -47,11 +51,50 @@ namespace MVC_DATABASE.Controllers
             return View(cONTRACT);
         }
 
+        public JsonResult GetAcceptedVendors(int RFPID)
+        {
+            EVICEntities dbo = new EVICEntities();
+
+            var vendorProductsQuery = from v in dbo.VENDORs
+                                      join c in dbo.RFPINVITEs
+                                      on v.Id equals c.Id
+                                      join r in dbo.RFPs
+                                      on c.RFPID equals r.RFPID
+                                      where c.OFFER_PATH != string.Empty
+                                      where r.RFPID == RFPID
+                                      select new {v.Id, v.ORGANIZATION };
+
+            ViewBag.AcceptedVendors = vendorProductsQuery;
+
+            return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
+        } 
+
         // GET: CONTRACTs/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE");
+            var rfpidquery = from x in db.RFPs
+                             where x.EXPIRES <= DateTime.Now
+                             select x.RFPID;
+
+            ViewBag.rfpid = rfpidquery;
+
+            var templates = from x in db.TEMPLATEs
+                            where x.TYPE == "CONTRACT"
+                            select x;
+
+            ViewBag.templates = new SelectList(templates, "TEMPLATEID", "TEMPLATEID");
+
+            var vendorProductsQuery = from v in db.VENDORs
+                                      join c in db.RFPINVITEs
+                                      on v.Id equals c.Id
+                                      join r in db.RFPs
+                                      on c.RFPID equals r.RFPID
+                                      where c.OFFER_PATH != string.Empty
+                                      where r.RFPID == rfpidquery.FirstOrDefault()
+                                      select new { v.Id, v.ORGANIZATION };
+
+            ViewBag.AcceptedVendors = vendorProductsQuery;
+
             return View();
         }
 
