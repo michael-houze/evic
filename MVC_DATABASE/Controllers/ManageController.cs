@@ -212,15 +212,13 @@ namespace MVC_DATABASE.Controllers
         }
 
 
-        //GET: /Manage/FirstName
-        //Doesn't have a view yet.
+        //GET: /Manage/ChangeName
         public ActionResult ChangeName()
         {
             return View();
         }
 
-        //POST: /Manage/FirstName
-        //Doesn't have a view yet.
+        //POST: /Manage/ChangeName
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task <ActionResult> ChangeName(ChangeNameViewModel model)
@@ -234,27 +232,27 @@ namespace MVC_DATABASE.Controllers
             
             if(user != null)
             {
+               
                 AccountManagement profilemanagement = new AccountManagement();
-                profilemanagement.Vendor = await db.VENDORs.FindAsync(user);
-                profilemanagement.Employee = await db.EMPLOYEEs.FindAsync(user);
-                if(profilemanagement.Employee == null)
+             
+                if(db.VENDORs.FindAsync(user) != null)
                 {
-                    if(profilemanagement.Vendor != null)
-                    {
-                        profilemanagement.Vendor = new VENDOR
+
+                    var vendor = new VENDOR
+                    
                         {
                             Id = user.Id,
-                            FIRSTNAME = model.NewLastName,
+                            FIRSTNAME = model.NewFirstName,
                             LASTNAME = model.NewLastName,
                             ORGANIZATION = profilemanagement.Vendor.ORGANIZATION,
                             VENDSTATUS = profilemanagement.Vendor.VENDSTATUS,
                             SANCTIONED = profilemanagement.Vendor.SANCTIONED
                         };
-                    }
+                    
                 }
                 else
                 {
-                    profilemanagement.Employee = new EMPLOYEE
+                  var  employee = new EMPLOYEE
                     {
                         Id = user.Id,
                         FIRSTNAME = model.NewFirstName,
