@@ -9,7 +9,7 @@
 
 <h2>Vendor RFIs</h2>
 
-<table class="table tablesorter">
+<table id="vendorrfiindextable" class="table tablesorter">
     <thead>
         <tr>
             <th>
@@ -62,3 +62,9 @@
     }
 }
 </table>
+
+<script>
+    $(document).ready(function () {
+        $("#vendorrfiindextable").tablesorter();
+    });
+</script>

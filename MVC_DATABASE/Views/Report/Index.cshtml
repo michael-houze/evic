@@ -5,47 +5,59 @@
 }
 
 <div class="col-lg-8">
-    <h2 class="text-center">RFP Response Reports</h2>
+    <h2 class="text-center">RFP Reports</h2>
 </div>
 
+@Html.ActionLink("Generate Item Report", "ItemReport")
+
 <br />
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Rfp.RFPID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rfp.CATEGORY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rfp.CREATED)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rfp.EXPIRES)
-        </th>
-        <th></th>
-    </tr>
-    @if(Model.RfpList != null)
-    { 
-        foreach (var r in Model.RfpList)
+<table id="reportsindextable" class="table tablesorter">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rfp.RFPID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rfp.CATEGORY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rfp.CREATED)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rfp.EXPIRES)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.RfpList != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => r.RFPID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => r.CATEGORY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => r.CREATED)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => r.EXPIRES)
-                </td>
-                <td>
-                    @Html.ActionLink("Vendor Response Report", "Details", new { id = r.RFPID })
-                </td>
-            </tr>            
+            foreach (var r in Model.RfpList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => r.RFPID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => r.CATEGORY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => r.CREATED)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => r.EXPIRES)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View RFP Report", "Details", new { id = r.RFPID })
+                    </td>
+                </tr>
+            }
         }
-    }        
+    </tbody>
 </table>
+
+<script>
+    $(document).ready(function () {
+        $("#reportsindextable").tablesorter();      
+    });
+</script>

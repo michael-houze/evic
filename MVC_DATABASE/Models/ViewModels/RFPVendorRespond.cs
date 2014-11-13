@@ -29,6 +29,7 @@ namespace MVC_DATABASE.Models.ViewModels
         {
             public RFP rfp { get; set; }
             public RFPINVITE rfpInvite { get; set; }
+            public VENDOR vendor { get; set; }
             public ICollection<RFPINVITE> rfpInviteList { get; set; }
         }
 

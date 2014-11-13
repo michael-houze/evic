@@ -263,6 +263,7 @@
     <Compile Include="Models\PRODUCTCATEGORY.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportAnalytics.cs" />
     <Compile Include="Models\RFI.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
