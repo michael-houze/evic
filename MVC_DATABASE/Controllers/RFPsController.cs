@@ -85,6 +85,7 @@ namespace MVC_DATABASE.Controllers
                          join c in db.RFIINVITEs
                          on z.Id equals c.Id
                          where c.RFIID == expired.FirstOrDefault().RFIID
+                         where !string.IsNullOrEmpty(c.GHX_PATH)
                          select z;
 
             ViewBag.RFIID = new SelectList(expired, "RFIID", "RFIID");
@@ -105,7 +106,7 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.rfp.RFI = await db.RFIs.FindAsync(model.rfiid);
+                model.rfp.RFI = await db.RFIs.FindAsync(model.rfp.RFIID);
                 var rFP = new RFP { RFIID = model.rfp.RFIID, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = DateTime.Now, EXPIRES = model.rfp.EXPIRES};
                 db.RFPs.Add(rFP);
                 if (model.RFPInviteList != null)
@@ -152,6 +153,7 @@ namespace MVC_DATABASE.Controllers
                                  join c in db.RFIINVITEs
                                  on v.Id equals c.Id
                                  where c.RFIID == (int)rfpcreate.rfp.RFIID
+                                 where !string.IsNullOrEmpty(c.GHX_PATH)
                                  select v;
 
             var result = from r in db.VENDORs
@@ -392,7 +394,7 @@ namespace MVC_DATABASE.Controllers
                                       join c in dbo.RFIINVITEs
                                       on v.Id equals c.Id
                                       where c.RFIID.ToString() == RFIID
-                                      where c.GHX_PATH != string.Empty
+                                      where !string.IsNullOrEmpty(c.GHX_PATH)
                                       select new { v.Id, v.ORGANIZATION };
 
             var template = from x in db.TEMPLATEs
