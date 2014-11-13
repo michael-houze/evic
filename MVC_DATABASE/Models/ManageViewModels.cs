@@ -7,8 +7,7 @@ namespace MVC_DATABASE.Models
 {
     public class IndexViewModel
     {
-        public bool HasFirstName { get; set; }
-        public bool HasLastName { get; set; }
+        public bool HasName { get; set; }
         public bool HasContactName { get; set; }
         public bool HasContactPhone { get; set; }
         public bool HasContactEmail { get; set; }
