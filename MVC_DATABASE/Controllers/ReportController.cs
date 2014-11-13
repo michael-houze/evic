@@ -80,7 +80,7 @@ namespace MVC_DATABASE.Controllers
 
 
 
-        //POP-UP WITH BEST RFP CHOICE FROM ALL: NEED TO ADD CONTENT AND POP-UP VIEW
+        //POP-UP WITH BEST RFP CHOICE FROM ALL: GOOD
         //
         //Return report of best RFP.
         [Authorize(Roles = "Administrator, Employee")]
@@ -130,12 +130,13 @@ namespace MVC_DATABASE.Controllers
 
 
 
-        //POP-UP WITH ANALYTICS FOR A SINGLE RESPONSE: NEED TO ADD DATA IN POPUP
+        //POP-UP WITH ANALYTICS FOR A SINGLE RESPONSE
         //
         //Returns detailed report of single vendor response.
-        public string RFPResponseReport(string path)
+        public string RFPResponseReport(RFPINVITE invite)
         {
-            string filePath = path;
+            string detailString = String.Empty;
+            string filePath = invite.OFFER_PATH;
 
             var excelFile = new ExcelQueryFactory(filePath);
             decimal TotalVariance = 0M;
@@ -157,6 +158,12 @@ namespace MVC_DATABASE.Controllers
                 rfp.Variance = l.Variance;
 
                 RFP.Add(rfp);
+
+                detailString += "Product Information: " + l.Description + System.Environment.NewLine + 
+                    "Annual Usage: " + l.AnnualUsage + System.Environment.NewLine +
+                    "Current Each Price: " + l.CurrentEachPrice + System.Environment.NewLine +
+                    "New Each Price: " + l.NewEachPrice + System.Environment.NewLine +
+                    "Total Variance for Item: " + l.Variance + System.Environment.NewLine + System.Environment.NewLine;
             }
 
             //Used to get Total Variance for an RFP (includes all items).
@@ -166,15 +173,15 @@ namespace MVC_DATABASE.Controllers
                     TotalVariance += r.Variance;
             }
 
-                // ! ! !
-            //With test data, need to change the actual return information.
-            return "Total Variance: " + TotalVariance;
+            return "RFP ID: " + invite.RFPID + System.Environment.NewLine +
+                detailString + "Total RFP Variance: " + TotalVariance +
+                System.Environment.NewLine + System.Environment.NewLine;
         }
 
 
 
 
-        //CREATES EXCEL ANALYTICS REPORT: NEED TO ADD CONTENT TO RETURN SHEET
+        //CREATES EXCEL ANALYTICS REPORT: NEED TO ADD CONTENT TO RETURNING EXCEL SHEET
         //
         //Returns Analytics Report.
         [Authorize(Roles = "Administrator, Employee")]

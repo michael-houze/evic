@@ -6,6 +6,17 @@
 
 <h2>RFP Report</h2>
 
+@Html.ActionLink("Generate RFP Report", "RFPReport", Model)
+
+<input type="button" id="btnpopy" value="View Full RFP Report" onclick="RFPReport(@Model);" />
+<script type="text/javascript">
+    RFPResponseReport = function () {
+        window.open('/Report/RFPReport', "PopupWindow", 'width=400px,height=400px,top=150,left=250');
+    }
+</script>
+
+
+
 <table class="table">
     <tr>
         <th>
@@ -40,7 +51,7 @@
                     }
                     else
                     {
-                        <input type="button" id="btnpopu" value="View Report" onclick="RFPResponseReport(@Model.RfpInvite.OFFER_PATH);"/>
+                        <input type="button" id="btnpopu" value="View Report" onclick="RFPResponseReport(@Model.RfpInvite);"/>
                         <script type="text/javascript">
                             RFPResponseReport = function ()
                             {
