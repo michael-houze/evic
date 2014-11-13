@@ -7,43 +7,52 @@
 
 <h2>@ViewBag.Title</h2>
 @Html.ActionLink("Back to RFP Home", "Index")
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.rfpinvite.OFFER_PATH)
-        </th>
-        <th></th>
-    </tr>
-    @if (Model.inviteList != null)
-    {
-        foreach (var item in Model.inviteList)
+<table id="rfpresponsetable" class="table tablesorter">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rfpinvite.OFFER_PATH)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.inviteList != null)
         {
-            var path = item.OFFER_PATH;
-            var vendorOrg = from x in Model.vendorlist
-                            where x.Id == item.Id
-                            select x.ORGANIZATION;
-            string organization = vendorOrg.FirstOrDefault().ToString();
-            <tr>
-                <td>
-                    @organization
-                </td>
-                <td>
-                    @if (string.IsNullOrWhiteSpace(path))
-                    {
-                        @ViewBag.NoResponse
-                    }
-                    else
-                    {
-                        @Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, "DownloadOffer", new { path = item.OFFER_PATH })
-                    }
+            foreach (var item in Model.inviteList)
+            {
+                var path = item.OFFER_PATH;
+                var vendorOrg = from x in Model.vendorlist
+                                where x.Id == item.Id
+                                select x.ORGANIZATION;
+                string organization = vendorOrg.FirstOrDefault().ToString();
+                <tr>
+                    <td>
+                        @organization
+                    </td>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(path))
+                        {
+                            @ViewBag.NoResponse
+                        }
+                        else
+                        {
+                            @Html.ActionLink(item.AspNetUser.VENDOR.ORGANIZATION, "DownloadOffer", new { path = item.OFFER_PATH })
+                        }
 
-                </td>
-            </tr>
-       
+                    </td>
+                </tr>
+
+            }
         }
-    }
+    </tbody>
 
 </table>
+
+<script>
+    $(document).ready(function () {
+        $("#rfpresponsetable").tablesorter();
+    });
+</script>

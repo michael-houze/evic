@@ -4,32 +4,35 @@
 }
 
 <h2>Vendors</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Vendor.ORGANIZATION)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vendor.VENDSTATUS)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.VendorList)
-    {
+<table id="vendorindextable" class="table tablesorter">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ORGANIZATION)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VENDSTATUS)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditVendor", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) 
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.ORGANIZATION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.VENDSTATUS)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.VendorList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ORGANIZATION)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VENDSTATUS)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditVendor", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 
@@ -37,42 +40,49 @@
 <p>
     @Html.ActionLink("Create New Employee", "Create")
 </p>
-<table class="table">
+<table id="employeeindextable" class="table tablesorter">
     @if (Model.EmployeeList.ElementAtOrDefault(0) != null)
     {
-
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee.FIRSTNAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee.LASTNAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee.EMPSTATUS)
-            </th>
-            <th></th>
-        </tr>
-
-        foreach (var item in Model.EmployeeList)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FIRSTNAME)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LASTNAME)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EMPSTATUS)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditEmployee", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "DetailsEmployee", new { id = item.Id })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee.FIRSTNAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee.LASTNAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee.EMPSTATUS)
+                </th>
+                <th></th>
             </tr>
-        }
-
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model.EmployeeList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FIRSTNAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LASTNAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMPSTATUS)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditEmployee", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "DetailsEmployee", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
     }
-        </table>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#vendorindextable").tablesorter();
+        $("#employeeindextable").tablesorter();
+    });
+</script>
