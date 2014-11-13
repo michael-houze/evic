@@ -18,11 +18,15 @@ namespace MVC_DATABASE.Models
         [ExcelColumn("Commodity Code #")]
         public int CommodityCode { get; set; }
 
+        public string Vendor { get; set; }
+
         [ExcelColumn("New Vendor")]
         public string ItemVendor { get; set; }
         
         [ExcelColumn("Commodity Name")]
         public string CommodityName { get; set; }
+
+        public string Category { get; set; }
 
         [ExcelColumn("Current Description")]
         public string Description { get; set; }

@@ -116,6 +116,9 @@ namespace MVC_DATABASE.Controllers
             return "Total Variance: " + TotalVariance;
         }
 
-
+        public string ItemReport()
+        {
+            return "ItemReport";
+        }
     }
 }

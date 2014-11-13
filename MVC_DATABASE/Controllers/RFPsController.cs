@@ -425,12 +425,15 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var l in rfpLines)
             {
+
                 ReportAnalytics AnalyticsLine = new ReportAnalytics();
 
                 AnalyticsLine.RFPID = response.rfpInvite.RFPID;
                 AnalyticsLine.CommodityCode = l.CommodityCode;
+                AnalyticsLine.Vendor = response.vendor.ORGANIZATION;
                 AnalyticsLine.ItemVendor = l.ItemVendor;
                 AnalyticsLine.CommodityName = l.CommodityName;
+                AnalyticsLine.Category = response.rfp.CATEGORY;
                 AnalyticsLine.Description = l.Description;
                 AnalyticsLine.PreviousPriceEach = l.PreviousPriceEach;
                 AnalyticsLine.NewPriceEach = l.NewPriceEach;
@@ -441,7 +444,10 @@ namespace MVC_DATABASE.Controllers
             //foreach line in analytics, make an object / row in the db.
             foreach (ReportAnalytics r in Analytics)
             {
-                
+                if (r.Description != null)
+                {
+                    //! ! !add to db
+                }
             }
 
 

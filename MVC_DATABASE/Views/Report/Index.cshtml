@@ -5,7 +5,7 @@
 }
 
 <div class="col-lg-8">
-    <h2 class="text-center">RFP Response Reports</h2>
+    <h2 class="text-center">RFP Reports</h2>
 </div>
 
 <br />
@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => r.EXPIRES)
                 </td>
                 <td>
-                    @Html.ActionLink("Vendor Response Report", "Details", new { id = r.RFPID })
+                    @Html.ActionLink("View RFP Report", "Details", new { id = r.RFPID })
                 </td>
             </tr>            
         }
