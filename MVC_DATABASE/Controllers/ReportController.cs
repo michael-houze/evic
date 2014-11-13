@@ -22,6 +22,7 @@ namespace MVC_DATABASE.Controllers
         private EVICEntities db = new EVICEntities();
         public ReportRecord rfpRecord = new ReportRecord();
 
+        //INDEX: GOOD
         //
         //Return a list of all RFPs. Following the link will display the results.
         [Authorize(Roles = "Administrator, Employee")]
@@ -38,6 +39,7 @@ namespace MVC_DATABASE.Controllers
 
         public ReportDetails rfpDetails = new ReportDetails();
         
+        //RFP FULL DETAILS: GOOD
         //
         //Displays vendor responses for selected RFP on Index page.
         [Authorize(Roles = "Administrator, Employee")]
@@ -69,15 +71,17 @@ namespace MVC_DATABASE.Controllers
             return View(rfpDetails);
         }
 
+        //POP-UP WITH BEST RFP CHOICE FROM ALL: NEED TO ADD CONTENT AND POP-UP VIEW
         //
-        //
+        //Return report of best RFP.
         public string  RFPReport(string path)
         {
             return "";
         }
 
+        //POP-UP WITH ANALYTICS FOR A SINGLE RESPONSE: NEED TO ADD DATA IN POPUP
         //
-        //
+        //Returns detailed report of single vendor response.
         public string RFPResponseReport(string path)
         {
             string filePath = path;
@@ -116,9 +120,14 @@ namespace MVC_DATABASE.Controllers
             return "Total Variance: " + TotalVariance;
         }
 
-        public string ItemReport()
+        //CREATES EXCEL ANALYTICS REPORT: NEED TO ADD CONTENT TO RETURN SHEET
+        //
+        //Returns Analytics Report.
+        public ActionResult ItemReport()
         {
-            return "ItemReport";
+            //! ! ! Return Database results in excel format
+
+            return View();
         }
     }
 }
