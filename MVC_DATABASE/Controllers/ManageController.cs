@@ -237,28 +237,23 @@ namespace MVC_DATABASE.Controllers
              
                 if(db.VENDORs.FindAsync(user) != null)
                 {
+                    var editUser = (from v in db.VENDORs
+                                    where v.Id == user.Id
+                                    select v).FirstOrDefault();
 
-                    var vendor = new VENDOR
-                    
-                        {
-                            Id = user.Id,
-                            FIRSTNAME = model.NewFirstName,
-                            LASTNAME = model.NewLastName,
-                            ORGANIZATION = profilemanagement.Vendor.ORGANIZATION,
-                            VENDSTATUS = profilemanagement.Vendor.VENDSTATUS,
-                            SANCTIONED = profilemanagement.Vendor.SANCTIONED
-                        };
-                    
+                    editUser.FIRSTNAME = model.NewFirstName;
+                    editUser.LASTNAME = model.NewLastName;
+
                 }
                 else
                 {
-                  var  employee = new EMPLOYEE
-                    {
-                        Id = user.Id,
-                        FIRSTNAME = model.NewFirstName,
-                        LASTNAME = model.NewLastName,
-                        EMPSTATUS = profilemanagement.Employee.EMPSTATUS
-                    };
+                    var editUser = (from v in db.EMPLOYEEs
+                                    where v.Id == user.Id
+                                    select v).FirstOrDefault();
+
+                    editUser.FIRSTNAME = model.NewFirstName;
+                    editUser.LASTNAME = model.NewLastName;
+
                 }
 
                 await db.SaveChangesAsync();
