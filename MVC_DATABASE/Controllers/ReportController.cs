@@ -74,6 +74,7 @@ namespace MVC_DATABASE.Controllers
         //POP-UP WITH BEST RFP CHOICE FROM ALL: NEED TO ADD CONTENT AND POP-UP VIEW
         //
         //Return report of best RFP.
+        [Authorize(Roles = "Administrator, Employee")]
         public string  RFPReport(string path)
         {
             return "";
@@ -123,6 +124,7 @@ namespace MVC_DATABASE.Controllers
         //CREATES EXCEL ANALYTICS REPORT: NEED TO ADD CONTENT TO RETURN SHEET
         //
         //Returns Analytics Report.
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ItemReport()
         {
             //! ! ! Return Database results in excel format
