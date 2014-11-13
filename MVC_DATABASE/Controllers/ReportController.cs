@@ -22,6 +22,9 @@ namespace MVC_DATABASE.Controllers
         private EVICEntities db = new EVICEntities();
         public ReportRecord rfpRecord = new ReportRecord();
 
+
+
+
         //INDEX: GOOD
         //
         //Return a list of all RFPs. Following the link will display the results.
@@ -39,6 +42,9 @@ namespace MVC_DATABASE.Controllers
 
         public ReportDetails rfpDetails = new ReportDetails();
         
+
+
+
         //RFP FULL DETAILS: GOOD
         //
         //Displays vendor responses for selected RFP on Index page.
@@ -65,20 +71,64 @@ namespace MVC_DATABASE.Controllers
                 }
             }
 
-            //Provides message if response not provided.
+                //Provides message if response not provided.
             ViewBag.NoResponse = "Response not received.";
 
             return View(rfpDetails);
         }
 
+
+
+
         //POP-UP WITH BEST RFP CHOICE FROM ALL: NEED TO ADD CONTENT AND POP-UP VIEW
         //
         //Return report of best RFP.
         [Authorize(Roles = "Administrator, Employee")]
-        public string  RFPReport(string path)
+        //public string RFPReport(ICollection<RFPINVITE> InviteList)
+        public string RFPReport(ReportDetails report)
         {
-            return "";
+            string reportResult = String.Empty;
+
+            foreach (var i in report.InviteList)
+            {
+                string filePath = i.OFFER_PATH;
+
+                var excelFile = new ExcelQueryFactory(filePath);
+                decimal TotalVariance = 0M;
+
+                List<ReportLine> reportLineList = new List<ReportLine>();
+                var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "AA24", "Financial Analysis")
+                            select l;
+
+                foreach (var l in lines)
+                {
+                    ReportLine rfp = new ReportLine();
+                    rfp.Description = l.Description;
+                    rfp.AnnualUsage = l.AnnualUsage;
+                    rfp.CurrentEachPrice = l.CurrentEachPrice;
+                    rfp.NewEachPrice = l.NewEachPrice;
+                    rfp.CurrentAnnualSpend = l.CurrentAnnualSpend;
+                    rfp.NewAnnualSpend = l.NewAnnualSpend;
+                    rfp.Variance = l.Variance;
+
+                    reportLineList.Add(rfp);
+                }
+
+                foreach (var reportLine in reportLineList)
+                {
+                    TotalVariance += reportLine.Variance;
+                }
+
+                reportResult += "Vendor: " + report.Vendor.ORGANIZATION + System.Environment.NewLine + 
+                    "Total Variance: " + TotalVariance +
+                    System.Environment.NewLine + System.Environment.NewLine;                                
+            }
+
+            return reportResult;
         }
+
+
+
 
         //POP-UP WITH ANALYTICS FOR A SINGLE RESPONSE: NEED TO ADD DATA IN POPUP
         //
@@ -120,6 +170,9 @@ namespace MVC_DATABASE.Controllers
             //With test data, need to change the actual return information.
             return "Total Variance: " + TotalVariance;
         }
+
+
+
 
         //CREATES EXCEL ANALYTICS REPORT: NEED TO ADD CONTENT TO RETURN SHEET
         //
