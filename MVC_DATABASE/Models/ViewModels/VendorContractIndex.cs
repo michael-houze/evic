@@ -11,5 +11,7 @@ namespace MVC_DATABASE.Models.ViewModels
         public int rfpID { get; set; }
         public string category { get; set; }
         public string contractPath { get; set; }
+        public string templateID { get; set;}
+        public CONTRACT contract { get; set; }
     }
 }

@@ -266,6 +266,7 @@ namespace MVC_DATABASE.Controllers
 
         public ActionResult Respond(string Id)
         {
+           
             var response = new RFPINVITE { Id = Id };
 
             return View();
@@ -273,6 +274,7 @@ namespace MVC_DATABASE.Controllers
 
         //
         //Stores the uploaded form from View VendorRFI/Respond
+        
         [HttpPost]
         public ActionResult Respond(HttpPostedFileBase file)
         {

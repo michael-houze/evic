@@ -12,6 +12,7 @@ namespace MVC_DATABASE.Models.ViewModels
             public string category { get; set; }
             public string organization { get; set; }
             public string contractPath { get; set; }
+            public string templateID { get; set; }
         
     }
 }
