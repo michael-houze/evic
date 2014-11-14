@@ -568,7 +568,6 @@
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
     <Content Include="Views\RFIs\VendorResponse.cshtml" />
     <Content Include="Views\VendorRFI\Respond.cshtml" />
-    <Content Include="Views\VendorContract\Response.cshtml" />
     <Content Include="Views\RFPs\VendorIndex.cshtml" />
     <Content Include="Views\CONTRACTs\Respond.cshtml" />
     <Content Include="Views\RFPs\Respond.cshtml" />
