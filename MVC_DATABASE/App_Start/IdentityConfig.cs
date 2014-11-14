@@ -123,6 +123,11 @@ namespace MVC_DATABASE
         {
             throw new NotImplementedException();
         }
+
+        internal Task<System.Web.Security.MembershipUser> FindByIdAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly

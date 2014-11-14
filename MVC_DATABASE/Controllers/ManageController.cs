@@ -260,7 +260,32 @@ namespace MVC_DATABASE.Controllers
             }
             return RedirectToAction("Index");
         }
+        
         //
+        //GET: /Manage/ChangeEmail
+        public ActionResult ChangeEmail()
+        {
+            return View();
+        }
+
+        //
+        //POST: /Manage/ChangeEmail
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeEmail (ChangeEmailViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            MembershipUser u = await UserManager.FindByIdAsync();
+            u.Email = model.NewEmailAddress;
+            Membership.UpdateUser(u);
+
+            return RedirectToAction("Index");
+        }
+        
+         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
