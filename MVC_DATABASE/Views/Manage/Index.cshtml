@@ -26,12 +26,15 @@
         </dd>
     </dl>
     <dl class="dl-horizontal">
-        <dt>Contact Info:</dt>
-        <dd>
-            [
-            @Html.ActionLink("Change your contact's information", "ChangeContactInfo")
-            ]
-        </dd>
+        @if (User.IsInRole("Vendor"))
+        {
+            <dt>Contact Info:</dt>
+            <dd>
+                [
+                     @Html.ActionLink("Change your contact's information", "ChangeContactInfo")
+                ]
+            </dd>
+        }
     </dl>
     <dl class="dl-horizontal">
         <dt>Password:</dt>
@@ -39,7 +42,7 @@
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+               @Html.ActionLink("Change your password", "ChangePassword")
             }
             else
             {
