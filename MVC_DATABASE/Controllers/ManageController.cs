@@ -233,7 +233,6 @@ namespace MVC_DATABASE.Controllers
             if(user != null)
             {
                
-                AccountManagement profilemanagement = new AccountManagement();
              
                 if(db.VENDORs.FindAsync(user) != null)
                 {
@@ -274,13 +273,19 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeEmail (ChangeEmailViewModel model)
         {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if(!ModelState.IsValid)
             {
                 return View(model);
             }
-            MembershipUser u = await UserManager.FindByIdAsync();
-            u.Email = model.NewEmailAddress;
-            Membership.UpdateUser(u);
+            var editUser = (from v in db.AspNetUsers
+                            where v.Id == user.Id
+                            select v).FirstOrDefault();
+            editUser.Email = model.NewEmailAddress;
+
+            editUser.UserName = model.NewEmailAddress;
+
+            await db.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
