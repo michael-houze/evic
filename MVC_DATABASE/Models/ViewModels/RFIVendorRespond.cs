@@ -20,15 +20,20 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Web.Hosting;
+using System.ComponentModel.DataAnnotations;
 namespace MVC_DATABASE.Models.ViewModels
 {
     public class RFIVendorRespond
     {
         public class RFIList
         {
-            public RFI rfi { get; set; }
+            public RFI RFI { get; set; }
             public RFIINVITE rfiInvite { get; set; }
             public ICollection<RFIINVITE> rfiInviteList { get; set; }
+
+            [Required]
+            [FileExtensions(Extensions = "xlsx,xls")]
+            public HttpPostedFileBase File { get; set; }
         }
 
         public class FileNames_RFIResponse

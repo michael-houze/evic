@@ -309,12 +309,6 @@ namespace MVC_DATABASE.Controllers
                             select new VendorContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH};
 
             return View(indexview.ToList<VendorContractIndex>());
-        } 
-
-        public string VendorDetails()
-        {
-            return "Details...";
-        }
-	
+        } 	
     }
 }

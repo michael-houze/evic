@@ -1,71 +1,85 @@
-﻿@Model MVC_DATABASE.Models.ViewModels.RFIVendorRespond
+﻿@model MVC_DATABASE.Models.ViewModels.RFIResponse
 
 @{
     ViewBag.Title = "Respond";
+    ViewBag.instruction = "*Please download, fill out, and then upload this template";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="rfi-respond">
     <center>
         <h1>RFI - Response</h1>
+        <div>
+            @Html.ActionLink("Back to RFI Home", "VendorIndex")
+        </div>
     </center>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RFIList.rfi.RFIID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFIList.rfi.CATEGORY)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFIList.rfi.CREATED)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFIList.rfi.EXPIRES)
-            </th>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFIList.rfi.RFIID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFIList.rfi.CATEGORY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFIList.rfi.CREATED)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFIList.rfi.EXPIRES)
-            </td>
-        </tr>
-    </table>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.RFIID)
+    </dt>
 
-    <br />
-
-    <p>Download the @Html.ActionLink("GHX Template", "Download") and complete to respond.</p>
-
-    <br />
-
-    @using (Html.BeginForm("Upload", "RFIs", FormMethod.Post, new {enctype= "multipart/form-data"}))
-    {
-        @Html.AntiForgeryToken()
-        
-        <fieldset>
-            <legend>Upload completed GHX Template</legend>
-            <div class="editor-field">
-                @Html.TextBox("file", "", new {type = "file"})
-            </div>
-            <div class="editor-field">
-                <input type="submit" value="Upload" />
-            </div>
-        </fieldset>
-    }
+    <dd>
+        @Html.DisplayFor(model => model.rfi.RFIID)
+    </dd>
     
-    <br />
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.CATEGORY)
+    </dt>
 
-    <center>
-        @Html.ActionLink("Return to RFI Home", "VendorIndex")
-    </center>
-</div>
+    <dd>
+        @Html.DisplayFor(model => model.rfi.CATEGORY)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.CREATED)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.rfi.CREATED)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.EXPIRES)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.rfi.EXPIRES)
+    </dd>
+
+    <dt>
+        @Html.DisplayName("RFI Template")
+        <br/>
+       @ViewBag.instruction
+    </dt>
+
+    <dd>
+            @Html.ActionLink("RFI Template - "+Model.rfi.TEMPLATEID, "DownloadTemplate", new { path = Model.rfi.TEMPLATE.PATH })
+    </dd>
+</dl>
+
+
+@using (Html.BeginForm("Respond", "RFIs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    @Html.HiddenFor(m => m.rfiinvite.PRIMARYKEY)
+    @Html.HiddenFor(m => m.rfiinvite.RFIID)
+    @Html.HiddenFor(m => m.rfiinvite.Id)
+    
+    @Html.LabelFor(m => m.rfiinvite.GHX_PATH, "GHX Path") 
+    @Html.TextBoxFor(m => m.File, null, new { type = "file" , @class="input-file"})
+    @*<input type="file" name="file" />*@
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">           
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+}
+        <br />
+
+        <center>
+            @Html.ActionLink("Return to RFI Home", "VendorIndex")
+        </center>
+
+
 

@@ -19,6 +19,7 @@ using System.Data.SqlTypes;
 using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
+using System.IO;
 
 
 namespace MVC_DATABASE.Controllers
@@ -323,12 +324,10 @@ namespace MVC_DATABASE.Controllers
                 }
             }
 
-
-
             return View(responsemodel);
         }
 
-        [Authorize(Roles = "Administrator,Employee")]
+        
         public FileResult DownloadGHX(string path)
         {
          
@@ -365,11 +364,14 @@ namespace MVC_DATABASE.Controllers
             //List containing VendorRFIs
             vendorRfi.rfiList = new List<RFI>();
 
+            
+
             //Query for Vendor's specifi RFIs
             var vendorInvitedRFIs = from i in dbo.RFIINVITEs
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFIs on i.RFIID equals r.RFIID
                                     where i.Id == user_id
+                                    where i.RFI.EXPIRES > DateTime.Now
                                     orderby i.RFIID
                                     select r; //new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
 
@@ -382,51 +384,110 @@ namespace MVC_DATABASE.Controllers
         RFIVendorRespond.RFIList respondModel = new RFIVendorRespond.RFIList();
 
         [Authorize(Roles = "Vendor")]
-        public ActionResult Respond(int? id)
+        [HttpGet]
+        public async Task<ActionResult> Respond(int Id)
         {
-            if (id == null)
+
+            responsemodel.rfi = await db.RFIs.FindAsync(Id);
+            var userID = User.Identity.GetUserId();
+
+            var rfiinvite = from x in db.RFIINVITEs
+                            where x.RFIID == Id
+                            where x.Id == userID
+                            select x;
+
+            responsemodel.rfiinvite = (RFIINVITE)rfiinvite.FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(rfiinvite.FirstOrDefault().GHX_PATH))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("VendorIndex", "RFIs");
             }
 
-            respondModel.rfi = new RFI();
-            respondModel.rfi = db.RFIs.Find(id);
+            return View(responsemodel);
+        }
 
-            if (respondModel.rfi == null)
+        //
+        //Stores the uploaded form from View VendorRFI/Respond
+        [Authorize(Roles = "Vendor")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Respond(RFIResponse model)
+        {
+            //Verify a file is selected.
+            if (model.File != null)
             {
-                return HttpNotFound();
-            }
+                VENDOR vendor = await db.VENDORs.FindAsync(model.rfiinvite.Id);
+                RFIINVITE rfiinvite = await db.RFIINVITEs.FindAsync(model.rfiinvite.PRIMARYKEY);
+                string organization = vendor.ORGANIZATION + ".xlsx";
+                string rfiid = rfiinvite.RFIID.ToString();
+                string ghxpath = "~/Content/RFIs/" + rfiid + "/" + organization;
+                
+                //Extract the file name.
+                var fileName = Path.GetFileName(model.File.FileName);
+                //Establishes where to save the path using the extracted name.
+                var path = Path.Combine(Server.MapPath("~/Content/RFIs/"+rfiid+"/"), organization);
+                rfiinvite.GHX_PATH = ghxpath;
 
-            respondModel.rfiInviteList = new List<RFIINVITE>();
+                //checks to see if file path exists, if it doesn't it creates
+                var mappath = Server.MapPath("~/Content/RFIs/" + rfiid + "/");
+                if (!System.IO.Directory.Exists(mappath))
+                    System.IO.Directory.CreateDirectory(mappath);
 
-            foreach (var x in db.RFIINVITEs.ToList())
-            {
-                if (x.RFIID == id)
-                {
-                    respondModel.rfiInviteList.Add(x);
-                }
+                //Saves file.
+                model.File.SaveAs(path);
+                
+
+                await db.SaveChangesAsync();
+                return RedirectToAction("VendorIndex", "RFIs");
+
             }
+            //Sends the user back to their respective RFI Index page.
+            return RedirectToAction("VendorIndex","RFIs");
+        }
+
+        public async Task<ActionResult> ViewDetails(int Id)
+        {
+            responsemodel.rfi = await db.RFIs.FindAsync(Id);
+            var userID = User.Identity.GetUserId();
+
+            var rfiinvite = from x in db.RFIINVITEs
+                            where x.RFIID == Id
+                            where x.Id == userID
+                            select x;
+
+            responsemodel.rfiinvite = (RFIINVITE)rfiinvite.FirstOrDefault();
+
+            return View(responsemodel);
+        }
+
+        public FileResult DownloadResponse(string path)
+        {
+
+            //select vendors Id from RFIINVITE
+            var InviteId = from x in db.RFIINVITEs
+                           where x.GHX_PATH == path
+                           select x.Id;
+            //Get vendor items from Id
+            VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
+            //select RFIID
+            var rfiId = from y in db.RFIINVITEs
+                        where y.GHX_PATH == path
+                        select y.RFIID;
+
             
-            return View(respondModel);
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
         }
 
-        [Authorize(Roles ="Vendor")]
-        public string VendorDetails()
+        public FileResult DownloadTemplate(string path)
         {
-            return "Check what they submitted.";
+            string fileName = "Baptist RFI Template";
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
-
-        public string Download()
-        {
-            return "Download";
-        }
-
-        public string Upload()
-        {
-            return "Upload.";
-        }
-
-
-
     }
 }

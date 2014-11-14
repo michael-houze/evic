@@ -584,6 +584,7 @@
     <Content Include="Views\Manage\ChangeName.cshtml" />
     <Content Include="Views\Manage\ChangeEmail.cshtml" />
     <Content Include="Views\Manage\ChangeContactInfo.cshtml" />
+    <Content Include="Views\RFIs\ViewDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

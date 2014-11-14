@@ -1,0 +1,65 @@
+﻿@model MVC_DATABASE.Models.ViewModels.RFIResponse
+
+@{
+    ViewBag.Title = "View Details";
+    ViewBag.noResponse = "No response";
+}
+
+<center>
+    <h1>RFI - Details</h1>
+    <div>
+        @Html.ActionLink("Back to RFP Home", "VendorIndex")
+    </div>
+</center>
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.RFIID)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.rfi.RFIID)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.CATEGORY)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.rfi.CATEGORY)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.CREATED)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.rfi.CREATED)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.rfi.EXPIRES)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.rfi.EXPIRES)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.rfiinvite.GHX_PATH)
+    </dt>
+
+    <dd>
+        @if (!string.IsNullOrEmpty(Model.rfiinvite.GHX_PATH))
+        {
+           @Html.ActionLink(Model.rfiinvite.AspNetUser.VENDOR.ORGANIZATION, "DownloadResponse", new { path = Model.rfiinvite.GHX_PATH}) 
+        }
+        else
+        {
+            @ViewBag.noResponse;
+        }
+        
+    </dd>
+
+
+</dl>
