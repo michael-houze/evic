@@ -55,27 +55,16 @@ namespace MVC_DATABASE.Models
         public string NewEmailAddress { get; set; }
     }
 
-    public class ChangeContactNameViewModel
+    public class ChangeContactInfoViewModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         [DataType(DataType.Text)]
         [Display(Name = "New Contact Name")]
         public string NewContactName { get; set; }
-    }
-
-    public class ChangeContactEmailViewModel
-    {
-        [Required]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "New email address")]
+        [Display(Name = "New contact email address")]
         public string NewContactEmailAddress { get; set; }
-    }
 
-    public class ChangeContactPhoneNumberViewModel
-    {
-        [Required]
         [Phone]
         [Display(Name = "New Contact Phone Number")]
         public string NewContactNumber { get; set; }

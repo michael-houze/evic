@@ -290,6 +290,46 @@ namespace MVC_DATABASE.Controllers
             return RedirectToAction("Index");
         }
         
+        //
+        //GET: /Manage/ChangeContactName
+        public ActionResult ChangeContactInfo()
+        {
+            return View();
+        }
+
+        //
+        //POST: /Manage/ChangeContactName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles="Vendor")]
+        public async Task<ActionResult>ChangeContactInfo(ChangeContactInfoViewModel model)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            
+            var editUser = (from v in db.VENDORCONTACTs
+                            where v.Id == user.Id
+                            select v).FirstOrDefault();
+          
+            if(model.NewContactEmailAddress != null)
+           {
+               editUser.CONTACTEMAIL = model.NewContactEmailAddress;
+           }
+
+           if(model.NewContactName != null)
+           {
+               editUser.CONTACTNAME = model.NewContactName;
+           }
+
+           if(model.NewContactNumber != null)
+           {
+               editUser.CONTACTPHONE = model.NewContactNumber;
+           }
+
+           await db.SaveChangesAsync();
+
+           return RedirectToAction("Index");
+        }
+
          //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
