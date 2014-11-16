@@ -20,6 +20,7 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Web.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC_DATABASE.Models.ViewModels
 {
@@ -27,10 +28,10 @@ namespace MVC_DATABASE.Models.ViewModels
     {
         public class RFPList
         {
-            public RFP rfp { get; set; }
-            public RFPINVITE rfpInvite { get; set; }
+            public RFP RFP { get; set; }
+            public RFPINVITE RFPInvite { get; set; }
             public VENDOR vendor { get; set; }
-            public ICollection<RFPINVITE> rfpInviteList { get; set; }
+            public ICollection<RFPINVITE> RFPInviteList { get; set; }
         }
 
         public class FileNames_RFPRespond

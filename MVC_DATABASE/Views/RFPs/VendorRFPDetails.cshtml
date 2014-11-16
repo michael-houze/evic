@@ -1,64 +1,62 @@
-﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond
+﻿@Model MVC_DATABASE.Models.ViewModels.RFPResponse
 
 @{
-    ViewBag.Title = "RFP - Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "View Details";
+    ViewBag.noResponse = "No response";
 }
 
-<div class="rfp-details">
-    <center>
-        <h1>RFP - Details</h1>
-        <h2>@Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)</h2>
-    </center>
+<center>
+    <h1>RFI - Details</h1>
+    <div>
+        @Html.ActionLink("Back to RFP Home", "VendorIndex")
+    </div>
+</center>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.RFIID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.CATEGORY)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.CREATED)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.EXPIRES)
-            </th>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.RFPID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.RFIID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.CATEGORY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.CREATED)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.EXPIRES)
-            </td>
-        </tr>
-    </table>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.RFPID)
+    </dt>
 
-    <br />
+    <dd>
+        @Html.DisplayFor(model => model.RFP.RFIID)
+    </dd>
 
-    <p>@Html.ActionLink("Click Here", "Download") to view the blank <b>GHX Template</b>.</p>
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.CATEGORY)
+    </dt>
 
-    <br />
+    <dd>
+        @Html.DisplayFor(model => model.RFP.CATEGORY)
+    </dd>
 
-    <p>@Html.ActionLink("Click Here", "DownloadOffer", new { path = item.OFFER_PATH }) to view your Offer.</p>
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.CREATED)
+    </dt>
 
-    <br />
+    <dd>
+        @Html.DisplayFor(model => model.RFP.CREATED)
+    </dd>
 
-    <center>
-        @Html.ActionLink("Return to RFP Home", "VendorIndex")
-    </center>
-</div>
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.EXPIRES)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.RFP.EXPIRES)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.RFPinvite.OFFER_PATH)
+    </dt>
+
+    <dd>
+        @if (!string.IsNullOrEmpty(Model.RFPInvite.OFFER_PATH))
+            {
+                @Html.ActionLink(Model.RFPInvite.AspNetUser.VENDOR.ORGANIZATION, "DownloadResponse", new { path = Model.RFPInvite.OFFER_PATH })
+            }
+        else
+            {
+                @ViewBag.noResponse;
+            }
+    </dd>
+</dl>

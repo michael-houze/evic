@@ -24,21 +24,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVC_DATABASE.Models.ViewModels
 {
-
     public class RFIResponse
     {
+        public RFI rfi { get; set; }            
+        public RFIINVITE rfiinvite { get; set; }
+        public VENDOR vendor { get; set; }
+        public ICollection<RFIINVITE> inviteList { get; set; }
+        public ICollection<VENDOR> vendorlist { get; set; }
 
-            public RFI rfi { get; set; }            
-            public RFIINVITE rfiinvite { get; set; }
-            public VENDOR vendor { get; set; }
-            public ICollection<RFIINVITE> inviteList { get; set; }
-            public ICollection<VENDOR> vendorlist { get; set; }
-
-            [Required]
-            [FileExtensions(Extensions = "xlsx,xls")]
-            public HttpPostedFileBase File { get; set; }
-        
-
+        [Required]
+        [FileExtensions(Extensions = "xlsx,xls")]
+        public HttpPostedFileBase File { get; set; }
     }
 }
  

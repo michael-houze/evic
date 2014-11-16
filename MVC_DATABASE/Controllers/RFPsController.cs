@@ -21,6 +21,7 @@ using LinqToExcel;
 using Remotion.Data.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
+using System.IO;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -225,9 +226,9 @@ namespace MVC_DATABASE.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            responsemodel.rfp = await db.RFPs.FindAsync(id);
+            responsemodel.RFP = await db.RFPs.FindAsync(id);
 
-            if (responsemodel.rfp == null)
+            if (responsemodel.RFP == null)
             {
                 return HttpNotFound();
             }
@@ -308,7 +309,7 @@ namespace MVC_DATABASE.Controllers
 
 
         //Vendor RFPs
-
+/*
         RFPVendorRespond.RFPList respondmodel = new RFPVendorRespond.RFPList();
 
         RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
@@ -386,7 +387,138 @@ namespace MVC_DATABASE.Controllers
         {
             return "Upload.";
         }
+    */
 
+        [Authorize(Roles = "Vendor")]
+        public ActionResult VendorIndex()
+        {
+            EVICEntities dbo = new EVICEntities();
+
+            RFPVendorIndex vendorRFP = new RFPVendorIndex();
+
+            var user_id = User.Identity.GetUserId();
+
+            vendorRFP.RFPList = new List<RFP>();
+
+            var vendorInvitedRFPs = from i in dbo.RFPINVITEs
+                                    join v in dbo.VENDORs on i.Id equals v.Id
+                                    join r in dbo.RFPs on i.RFPID equals r.RFPID
+                                    where i.Id == user_id
+                                    where i.RFP.EXPIRES > DateTime.Now
+                                    orderby i.RFPID
+                                    select r; 
+
+            vendorRFP.RFPList = vendorInvitedRFPs.ToList();
+
+            return View(vendorRFP);
+        }
+
+        RFPVendorRespond.RFPList respondModel = new RFPVendorRespond.RFPList();
+
+        [Authorize(Roles = "Vendor")]
+        [HttpGet]
+        public async Task<ActionResult> Respond(int Id)
+        {
+
+            responsemodel.RFP = await db.RFPs.FindAsync(Id);
+            var userID = User.Identity.GetUserId();
+
+            var RFPInvite = from x in db.RFPINVITEs
+                            where x.RFPID == Id
+                            where x.Id == userID
+                            select x;
+
+            responsemodel.RFPInvite = (RFPINVITE)RFPInvite.FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(RFPInvite.FirstOrDefault().OFFER_PATH))
+            {
+                return RedirectToAction("VendorIndex", "RFPs");
+            }
+
+            return View(responsemodel);
+        }
+
+        //
+        //Stores the uploaded form from View VendorRFP/Respond
+        [Authorize(Roles = "Vendor")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Respond(RFPResponse model)
+        {
+            //Verify a file is selected.
+            if (model.File != null)
+            {
+                VENDOR vendor = await db.VENDORs.FindAsync(model.RFPInvite.Id);
+                RFPINVITE RFPInvite = await db.RFPINVITEs.FindAsync(model.RFPInvite.PRIMARYKEY);
+                string organization = vendor.ORGANIZATION + ".xlsx";
+                string RFPID = RFPInvite.RFPID.ToString();
+                string offerpath = "~/Content/RFPs/" + RFPID + "/" + organization;
+
+                //Extract the file name.
+                var fileName = Path.GetFileName(model.File.FileName);
+                //Establishes where to save the path using the extracted name.
+                var path = Path.Combine(Server.MapPath("~/Content/RFPs/" + RFPID + "/"), organization);
+                RFPInvite.OFFER_PATH = offerpath;
+
+                //checks to see if file path exists, if it doesn't it creates
+                var mappath = Server.MapPath("~/Content/RFPs/" + RFPID + "/");
+                if (!System.IO.Directory.Exists(mappath))
+                    System.IO.Directory.CreateDirectory(mappath);
+
+                //Saves file.
+                model.File.SaveAs(path);
+
+
+                await db.SaveChangesAsync();
+                return RedirectToAction("VendorIndex", "RFPs");
+
+            }
+            //Sends the user back to their respective RFP Index page.
+            return RedirectToAction("VendorIndex", "RFPs");
+        }
+
+        public async Task<ActionResult> ViewDetails(int Id)
+        {
+            responsemodel.RFP = await db.RFPs.FindAsync(Id);
+            var userID = User.Identity.GetUserId();
+
+            var RFPInvite = from x in db.RFPINVITEs
+                            where x.RFPID == Id
+                            where x.Id == userID
+                            select x;
+
+            responsemodel.RFPInvite = (RFPINVITE)RFPInvite.FirstOrDefault();
+
+            return View(responsemodel);
+        }
+
+        public FileResult DownloadResponse(string path)
+        {
+
+          
+            var InviteId = from x in db.RFPINVITEs
+                           where x.OFFER_PATH == path
+                           select x.Id;
+          
+            VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
+       
+            var RFPID = from y in db.RFPINVITEs
+                        where y.OFFER_PATH == path
+                        select y.RFPID;
+
+
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + RFPID.FirstOrDefault().ToString());
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
+
+        public FileResult DownloadTemplate(string path)
+        {
+            string fileName = "Baptist RFP Template";
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
         public JsonResult GetAcceptedVendors(string RFIID)
         {
             EVICEntities dbo = new EVICEntities();
@@ -430,12 +562,12 @@ namespace MVC_DATABASE.Controllers
 
                 ReportAnalytics AnalyticsLine = new ReportAnalytics();
 
-                AnalyticsLine.RFPID = response.rfpInvite.RFPID;
+                AnalyticsLine.RFPID = response.RFPInvite.RFPID;
                 AnalyticsLine.CommodityCode = l.CommodityCode;
                 AnalyticsLine.Vendor = response.vendor.ORGANIZATION;
                 AnalyticsLine.ItemVendor = l.ItemVendor;
                 AnalyticsLine.CommodityName = l.CommodityName;
-                AnalyticsLine.Category = response.rfp.CATEGORY;
+                AnalyticsLine.Category = response.RFP.CATEGORY;
                 AnalyticsLine.Description = l.Description;
                 AnalyticsLine.PreviousPriceEach = l.PreviousPriceEach;
                 AnalyticsLine.NewPriceEach = l.NewPriceEach;

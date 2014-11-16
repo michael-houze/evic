@@ -27,41 +27,40 @@
             <th></th>
         </tr>
     </thead>
-@if (Model.RFPList != null)
-{
-    foreach (var item in Model.RFPList)
-    {
 
-        var invite = item.RFPINVITEs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();
-        
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RFPID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CATEGORY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CREATED)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EXPIRES)
-                </td>
-                <td>
-                    @if (string.IsNullOrEmpty(invite.OFFER_PATH))
-                    {
-                        @Html.ActionLink("Respond", "Respond", new { id = item.RFPID })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Details", "VendorRFPDetails", new { id = item.RFPID })
-                    }
-                </td>
-            </tr>
-        </tbody>
-    }
-}
+    @if (Model.RFPList != null)
+        {
+            foreach (var item in Model.RFPList)
+                {
+                    var invite = item.RFPINVITEs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RFPID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CATEGORY)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CREATED)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EXPIRES)
+                            </td>
+                            <td>
+                                @if (string.IsNullOrEmpty(invite.OFFER_PATH))
+                                    {
+                                        @Html.ActionLink("Respond", "Respond", new { id = item.RFPID })
+                                    }
+                                else
+                                    {
+                                        @Html.ActionLink("Details", "VendorRFPDetails", new { id = item.RFPID })
+                                    }
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+        }
 
 </table>
 

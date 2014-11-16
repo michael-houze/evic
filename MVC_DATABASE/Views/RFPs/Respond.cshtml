@@ -1,71 +1,85 @@
-﻿@Model MVC_DATABASE.Models.ViewModels.RFPVendorRespond
+﻿@model MVC_DATABASE.Models.ViewModels.RFPResponse
 
 @{
-    ViewBag.Title = "RFP - Respond";
+    ViewBag.Title = "Respond";
+    ViewBag.instruction = "*Please download, fill out, and then upload this template";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="rfp-respond">
-    <center>
-        <h1>RFP - Respond</h1>
-        <h2>@Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)</h2>
-    </center>
+<center>
+    <h1>RFP - Respond</h1>
+    <div>
+        @Html.ActionLink("Back to RFP Home", "VendorIndex")
+    </div>
+</center>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.RFPID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.CATEGORY)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.CREATED)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RFPList.rfp.EXPIRES)
-            </th>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.RFPID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.CATEGORY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.CREATED)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RFPList.rfp.EXPIRES)
-            </td>
-        </tr>
-    </table>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.RFPID)
+    </dt>
 
-    <br />
+    <dd>
+        @Html.DisplayFor(model => model.RFP.RFPID)
+    </dd>
 
-    <p>Download the @Html.ActionLink("RFP Template", "Download") and complete to respond.</p>
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.CATEGORY)
+    </dt>
 
-    <br />
+    <dd>
+        @Html.DisplayFor(model => model.RFP.CATEGORY)
+    </dd>
 
-    @using (Html.BeginForm("Upload", "RFPs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.CREATED)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.RFP.CREATED)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.RFP.EXPIRES)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.RFP.EXPIRES)
+    </dd>
+
+    <dt>
+        @Html.DisplayName("RFP Template")
+        <br />
+        @ViewBag.instruction
+    </dt>
+
+    <dd>
+        @Html.ActionLink("RFP Template - " + Model.RFP.TEMPLATEID, "DownloadTemplate", new { path = Model.RFP.TEMPLATE.PATH })
+    </dd>
+</dl>
+
+
+@using (Html.BeginForm("Respond", "RFPs", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
-        <fieldset>
-            <legend>Upload completed RFP Template</legend>
-            <div class="editor-field">
-                @Html.TextBox("file", "", new { type = "file" })
+        @Html.HiddenFor(m => m.RFPInvite.PRIMARYKEY)
+        @Html.HiddenFor(m => m.RFPInvite.RFPID)
+        @Html.HiddenFor(m => m.RFPInvite.Id)
+
+        @Html.LabelFor(m => m.RFPInvite.OFFER_PATH, "Offer Path")
+        @Html.TextBoxFor(m => m.File, null, new { type = "file", @class = "input-file" })
+        @*<input type="file" name="file" />*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
-            <div class="editor-field">
-                <input type="submit" value="Upload" />
-            </div>
-        </fieldset>
+        </div>
     }
+<br />
 
-    <br />
+<center>
+    @Html.ActionLink("Return to RFP Home", "VendorIndex")
+</center>
 
-    <center>
-        @Html.ActionLink("Return to RFP Home", "VendorIndex")
-    </center>
-</div>
+
+
