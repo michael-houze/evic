@@ -18,6 +18,7 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
 using System.Net;
+using System.IO;
 
 
 
@@ -216,9 +217,17 @@ namespace MVC_DATABASE.Controllers
                 if (result.Succeeded)
                 {
 
-                    UserManager.AddToRole(user.Id, "Vendor");
+                    UserManager.AddToRole(user.Id, "Vendor");             
 
-                    var vendor = new VENDOR { Id = user.Id, FIRSTNAME = model.VENDOR.FIRSTNAME, LASTNAME = model.VENDOR.LASTNAME, ORGANIZATION = model.VENDOR.ORGANIZATION };
+                    var fileName = Path.GetFileName(model.w9File.FileName);
+
+                    var path = Path.Combine(Server.MapPath("~/Content/W9/"), user.Id.ToString() + "W9");
+                    model.w9File.SaveAs(path);
+
+                    string w9Path = "~/Content/W9/" + user.Id.ToString() + "W9";
+
+                    var vendor = new VENDOR { Id = user.Id, FIRSTNAME = model.VENDOR.FIRSTNAME, LASTNAME = model.VENDOR.LASTNAME, ORGANIZATION = model.VENDOR.ORGANIZATION, W9 = w9Path };
+
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
                     vendor.VENDSTATUS = "PENDING";
                     vendor.SANCTIONED = false;
@@ -230,6 +239,7 @@ namespace MVC_DATABASE.Controllers
                     
                     db.VENDORs.Add(vendor);
                     db.VENDORCONTACTs.Add(vendorcontact);
+
 
                     await db.SaveChangesAsync();
                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false); <<---- Not originally commented out. Commented out to prevent log in until the user is confirmed.

@@ -596,6 +596,7 @@
     <Folder Include="Content\RFIs\TestFolder\" />
     <Folder Include="Content\RFPs\" />
     <Folder Include="Content\Videos\Vendor\" />
+    <Folder Include="Content\W9\" />
     <Folder Include="Views\Query\" />
     <Folder Include="Views\UserAdmin\" />
   </ItemGroup>

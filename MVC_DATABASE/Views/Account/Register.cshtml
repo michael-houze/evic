@@ -9,9 +9,7 @@
 <div id="reg-form">
 <h2>@ViewBag.Title</h2>
 
-
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -67,6 +65,11 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.VENDORCONTACT.CONTACTPHONE, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.VENDORCONTACT.CONTACTPHONE, new { @class = "form-control", @placeholder = "Please enter a secondary contact phone number." })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.w9File, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.w9File, new { @class = "form-control", @type = "file" })
             </div>
         </div>
 

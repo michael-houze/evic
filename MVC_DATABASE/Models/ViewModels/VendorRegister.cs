@@ -16,11 +16,15 @@ namespace MVC_DATABASE.Models
 {
     public class VendorRegister
     {
-       public RegisterViewModel RegisterViewModel{get; set;}
-       public VENDOR VENDOR { get; set; }
-       public VENDORCONTACT VENDORCONTACT { get; set; }
-       [Display(Name = "Select Your Companies Product Categories")]
-       public ICollection<string> CategoryList { get; set; }
+        public RegisterViewModel RegisterViewModel{get; set;}
+        public VENDOR VENDOR { get; set; }
+        public VENDORCONTACT VENDORCONTACT { get; set; }
+
+        [Display(Name = "Select Your Companies Product Categories")]
+        public ICollection<string> CategoryList { get; set; }
+
+        [Display(Name = "Select Your W-9 PDF")]
+        public HttpPostedFileBase w9File { get; set; }
     }
 
 
