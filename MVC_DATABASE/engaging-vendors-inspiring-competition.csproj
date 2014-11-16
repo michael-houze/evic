@@ -226,9 +226,6 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AspNetUserRole.cs">
-      <DependentUpon>EVICEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\CONTRACT.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
@@ -254,6 +251,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EVICEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FAQ.cs">
+      <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -382,6 +382,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\daypilot-all.min.js" />
+    <Content Include="Scripts\fullcalendar.js" />
+    <Content Include="Scripts\fullcalendar.min.js" />
+    <Content Include="Scripts\gcal.js" />
+    <Content Include="Scripts\GetAcceptedCategoryVendors.js" />
+    <Content Include="Content\RFIs\18\GHX Template V2.xlsx" />
+    <Content Include="Content\Templates\Financial Analysis.xlsx" />
+    <Content Include="Content\Templates\Contract\UserManual.pdf" />
+    <Content Include="Content\ContractStore\5\ToolbarEmailTemplate.pdf" />
     <EntityDeploy Include="Models\EVICEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EVICEntities.Designer.cs</LastGenOutput>
@@ -399,17 +410,6 @@
       <DependentUpon>EVICEntities.edmx</DependentUpon>
       <LastGenOutput>EVICEntities.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\chosen.jquery.js" />
-    <Content Include="Scripts\chosen.jquery.min.js" />
-    <Content Include="Scripts\daypilot-all.min.js" />
-    <Content Include="Scripts\fullcalendar.js" />
-    <Content Include="Scripts\fullcalendar.min.js" />
-    <Content Include="Scripts\gcal.js" />
-    <Content Include="Scripts\GetAcceptedCategoryVendors.js" />
-    <Content Include="Content\RFIs\18\GHX Template V2.xlsx" />
-    <Content Include="Content\Templates\Financial Analysis.xlsx" />
-    <Content Include="Content\Templates\Contract\UserManual.pdf" />
-    <Content Include="Content\ContractStore\5\ToolbarEmailTemplate.pdf" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />

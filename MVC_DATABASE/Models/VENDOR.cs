@@ -12,14 +12,14 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class VENDOR
     {
         public string Id { get; set; }
 
 
         [Required]
-        [Display(Name="First Name",Prompt="Enter First Name",Description="Vendor First Name")]
+        [Display(Name = "First Name", Prompt = "Enter First Name", Description = "Vendor First Name")]
         public string FIRSTNAME { get; set; }
 
         [Required]
@@ -37,6 +37,10 @@ namespace MVC_DATABASE.Models
         public string VENDSTATUS { get; set; }
 
         public string LOG { get; set; }
+
+        [Required]
+        [Display(Name = "Please Upload your W9 in PDF format", Prompt = "Select W9", Description = "Vendor's W9 form")]
+        public string W9 { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

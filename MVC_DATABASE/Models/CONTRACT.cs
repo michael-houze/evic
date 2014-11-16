@@ -19,6 +19,9 @@ namespace MVC_DATABASE.Models
         public int TEMPLATEID { get; set; }
         public int RFPID { get; set; }
         public string CONTRACT_PATH { get; set; }
+        public Nullable<System.DateTime> CREATED { get; set; }
+        public Nullable<System.DateTime> EXPIRES { get; set; }
+        public string DOCUMENTPATH { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }

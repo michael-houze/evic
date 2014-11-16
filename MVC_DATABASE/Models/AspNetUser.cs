@@ -16,11 +16,14 @@ namespace MVC_DATABASE.Models
     {
         public AspNetUser()
         {
+            this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
+            this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.CONTRACTs = new HashSet<CONTRACT>();
             this.OFFEREDCATEGORies = new HashSet<OFFEREDCATEGORY>();
             this.RFIINVITEs = new HashSet<RFIINVITE>();
             this.RFPINVITEs = new HashSet<RFPINVITE>();
             this.VENDORCONTACTs = new HashSet<VENDORCONTACT>();
+            this.AspNetRoles = new HashSet<AspNetRole>();
         }
     
         public string Id { get; set; }
@@ -36,6 +39,8 @@ namespace MVC_DATABASE.Models
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
     
+        public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<CONTRACT> CONTRACTs { get; set; }
         public virtual EMPLOYEE EMPLOYEE { get; set; }
         public virtual ICollection<OFFEREDCATEGORY> OFFEREDCATEGORies { get; set; }
@@ -43,5 +48,6 @@ namespace MVC_DATABASE.Models
         public virtual ICollection<RFPINVITE> RFPINVITEs { get; set; }
         public virtual VENDOR VENDOR { get; set; }
         public virtual ICollection<VENDORCONTACT> VENDORCONTACTs { get; set; }
+        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }

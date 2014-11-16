@@ -696,3 +696,25 @@ a.dashboard {
     color: black;
     font-weight: bold;
 }
+
+.circle {
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+
+}
+
+.cir1{    
+    background:#ea6a2a
+}
+.cir2{
+    background:#009dbd
+}
+.cir3{    
+    background:#71378a
+}
+.cir4{   
+    background:#c4c423
+}

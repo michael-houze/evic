@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class EMPLOYEE
     {
         public string Id { get; set; }
@@ -25,7 +25,7 @@ namespace MVC_DATABASE.Models
         [Display(Name = "Status")]
         public string EMPSTATUS { get; set; }
         public string LOG { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

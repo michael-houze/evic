@@ -12,15 +12,15 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class RFP
     {
         public RFP()
         {
             this.RFPINVITEs = new HashSet<RFPINVITE>();
         }
-        
-        [Display(Name="RFP ID")]
+
+        [Display(Name = "RFP ID")]
         public int RFPID { get; set; }
 
         [Required]
@@ -42,9 +42,10 @@ namespace MVC_DATABASE.Models
         [Display(Name = "Expiration Date", Prompt = "Select Expiration Date", Description = "Expiration Date for RFP")]
         [DataType(DataType.Date)]
         public System.DateTime EXPIRES { get; set; }
-    
+
         public virtual RFI RFI { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual ICollection<RFPINVITE> RFPINVITEs { get; set; }
     }
+
 }

@@ -12,15 +12,10 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RFIINVITE
+    public partial class FAQ
     {
-        public int PRIMARYKEY { get; set; }
-        public int RFIID { get; set; }
-        public string Id { get; set; }
-        public string GHX_PATH { get; set; }
-        public string CATALOGPATH { get; set; }
-    
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual RFI RFI { get; set; }
+        public int Id { get; set; }
+        public string QUESTION { get; set; }
+        public string ANSWER { get; set; }
     }
 }

@@ -9,7 +9,6 @@
 
 namespace MVC_DATABASE.Models
 {
-    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -30,10 +29,10 @@ namespace MVC_DATABASE.Models
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CONTRACT> CONTRACTs { get; set; }
         public virtual DbSet<EMPLOYEE> EMPLOYEEs { get; set; }
+        public virtual DbSet<FAQ> FAQs { get; set; }
         public virtual DbSet<OFFEREDCATEGORY> OFFEREDCATEGORies { get; set; }
         public virtual DbSet<PRODUCTCATEGORY> PRODUCTCATEGORies { get; set; }
         public virtual DbSet<RFI> RFIs { get; set; }

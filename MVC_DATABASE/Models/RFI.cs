@@ -12,8 +12,8 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
-    
+
+
     public partial class RFI
     {
         public RFI()
@@ -39,7 +39,7 @@ namespace MVC_DATABASE.Models
         [Display(Name = "Expiration Date", Prompt = "Enter Expiration Date", Description = "RFI Expiration Date")]
         [DataType(DataType.Date)]
         public System.DateTime EXPIRES { get; set; }
-    
+
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }
         public virtual ICollection<RFP> RFPs { get; set; }

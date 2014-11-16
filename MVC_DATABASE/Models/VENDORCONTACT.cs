@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class VENDORCONTACT
     {
         public int PRIMARYKEY { get; set; }
@@ -30,7 +30,8 @@ namespace MVC_DATABASE.Models
         [Required]
         [Display(Name = "Secondary Contact's Email", Prompt = "Enter Secondary Contact's Email", Description = "Vendor Contact's Email")]
         public string CONTACTEMAIL { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
     }
+
 }
