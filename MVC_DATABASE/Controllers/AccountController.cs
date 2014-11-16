@@ -695,7 +695,6 @@ namespace MVC_DATABASE.Controllers
                         UserManager.AddToRole(user.Id, "Employee");
                     }
 
-                    UserManager.AddToRole(user.Id, "Employee");
                     var employee = new EMPLOYEE { Id = user.Id, FIRSTNAME = model.Employee.FIRSTNAME, LASTNAME = model.Employee.LASTNAME};
                     employee.EMPSTATUS = "ACTIVE";
 
