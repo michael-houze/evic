@@ -38,8 +38,8 @@ namespace MVC_DATABASE.Models
 
         public string LOG { get; set; }
 
-        [Required]
-        [Display(Name = "Please Upload your W9 in PDF format", Prompt = "Select W9", Description = "Vendor's W9 form")]
+        //[Required]
+        [Display(Name = "W9", Prompt = "Please upload your W9 in PDF format", Description = "Vendor's W9 form")]
         public string W9 { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
