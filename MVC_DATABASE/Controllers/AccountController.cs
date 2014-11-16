@@ -673,10 +673,18 @@ namespace MVC_DATABASE.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email, PhoneNumber = model.RegisterViewModel.Phone };
-
                 var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
                 if (result.Succeeded)
                 {
+                    if (model.RegisterViewModel.IsAdmin)
+                    {
+                        UserManager.AddToRole(user.Id, "Administrator");
+                    }
+                    else
+                    {
+                        UserManager.AddToRole(user.Id, "Employee");
+                    }
+
                     UserManager.AddToRole(user.Id, "Employee");
                     var employee = new EMPLOYEE { Id = user.Id, FIRSTNAME = model.Employee.FIRSTNAME, LASTNAME = model.Employee.LASTNAME};
                     employee.EMPSTATUS = "ACTIVE";

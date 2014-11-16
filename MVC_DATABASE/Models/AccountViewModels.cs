@@ -85,6 +85,11 @@ namespace MVC_DATABASE.Models
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        [Display(Name = "Admin?")]
+        public bool IsAdmin { get; set; }
+        
     }
 
     public class ResetPasswordViewModel
