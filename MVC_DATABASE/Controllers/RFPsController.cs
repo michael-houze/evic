@@ -421,6 +421,12 @@ namespace MVC_DATABASE.Controllers
         {
 
             responsemodel.RFP = await db.RFPs.FindAsync(Id);
+
+            if (responsemodel.RFP.CREATED <= DateTime.Now)
+            {
+                return RedirectToAction("VendorIndex", "RFPs");
+            }
+
             var userID = User.Identity.GetUserId();
 
             var RFPInvite = from x in db.RFPINVITEs

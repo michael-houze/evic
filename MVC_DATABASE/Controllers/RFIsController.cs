@@ -52,6 +52,7 @@ namespace MVC_DATABASE.Controllers
        
 
         // GET: RFIs/Details/5
+
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Details(int? id)
         {
@@ -77,9 +78,15 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: RFIs/Create
+        [HttpGet]
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
         {
+            DateTime date = DateTime.Now;
+            TimeSpan time = new TimeSpan(365, 0, 0, 0);
+            DateTime combined = date.Add(time);
+            ViewBag.combined = combined;
+
             var template = from x in db.TEMPLATEs
                            where x.TYPE == "GHX"
                            select x;
@@ -112,10 +119,13 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(RFIEmployeeIndex model)
         {
+            DateTime date = DateTime.Now;
+            TimeSpan time = new TimeSpan(365, 0, 0, 0);
+            DateTime combined = date.Add(time);
 
             if (ModelState.IsValid)
             {
-                var rfi = new RFI { TEMPLATEID = model.templateId, CATEGORY = model.RFI.CATEGORY, CREATED = DateTime.Now, EXPIRES = model.RFI.EXPIRES };
+                var rfi = new RFI { TEMPLATEID = model.templateId, CATEGORY = model.RFI.CATEGORY, CREATED = model.RFI.CREATED, EXPIRES = model.RFI.EXPIRES };
                 db.RFIs.Add(rfi);
                 if (model.RFIInviteList != null)
                 {
@@ -371,6 +381,7 @@ namespace MVC_DATABASE.Controllers
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFIs on i.RFIID equals r.RFIID
                                     where i.Id == user_id
+                                    where i.RFI.CREATED <= DateTime.Now
                                     where i.RFI.EXPIRES > DateTime.Now
                                     orderby i.RFIID
                                     select r; //new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
@@ -389,6 +400,12 @@ namespace MVC_DATABASE.Controllers
         {
 
             responsemodel.rfi = await db.RFIs.FindAsync(Id);
+
+            if(responsemodel.rfi.CREATED >= DateTime.Now)
+            {
+                return RedirectToAction("VendorIndex", "RFIs");
+            }
+
             var userID = User.Identity.GetUserId();
 
             var rfiinvite = from x in db.RFIINVITEs
