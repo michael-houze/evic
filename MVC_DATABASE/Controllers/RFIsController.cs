@@ -21,7 +21,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using MVC_DATABASE.Models.ViewModels;
 using System.IO;
 
-
 namespace MVC_DATABASE.Controllers
 {
     public class RFIsController : Controller
@@ -33,23 +32,28 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
-            var expired = from x in db.RFIs
-                          where x.EXPIRES <= DateTime.Now
-                          select x;
             var open = from x in db.RFIs
                        where x.EXPIRES > DateTime.Now
                        select x;
 
-            rFIEmployeeIndex.ExpiredRFIList = new List<RFI>();
-            rFIEmployeeIndex.ExpiredRFIList = expired.ToList<RFI>();
             rFIEmployeeIndex.OpenRFIList = new List<RFI>();
             rFIEmployeeIndex.OpenRFIList = open.ToList<RFI>();
-
 
             return View(rFIEmployeeIndex);
         }
 
-       
+        [Authorize(Roles = "Administrator,Employee")]
+        public ActionResult ExpiredIndex()
+        {
+            var expired = from x in db.RFIs
+                          where x.EXPIRES <= DateTime.Now
+                          select x;
+
+            rFIEmployeeIndex.ExpiredRFIList = new List<RFI>();
+            rFIEmployeeIndex.ExpiredRFIList = expired.ToList<RFI>();
+
+            return View(rFIEmployeeIndex);
+        }
 
         // GET: RFIs/Details/5
 

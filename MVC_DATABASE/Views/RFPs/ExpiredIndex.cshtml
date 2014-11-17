@@ -1,74 +1,79 @@
 ﻿@model MVC_DATABASE.Models.ViewModels.RFPCreate
 
 @{
-    ViewBag.Title = "RFP";
+    ViewBag.Title = "RFP - Expired";
 }
 
 <br />
 
 <div class="row">
     <div class="col-lg-2">
-        @Html.ActionLink("Create New RFP", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        @Html.ActionLink("Back to RFP Home", "Index", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
     </div>
     <div class="col-lg-8">
-        <h2 class="text-center">Current/Open Requests for Proposals</h2>
-    </div>
-    <div class="col-lg-2">
-        @Html.ActionLink("Expired RFPs", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        <h2 class="text-center">Expired Requests for Proposals</h2>
     </div>
 </div>
+
 <br />
-<table id="rfpindextable" class="table tablesorter">
+
+<table id="rfpexpiredtable" class="table table-striped table-hover tablesorter">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.rfp.RFPID)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.rfp.CATEGORY)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.rfp.CREATED)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.rfp.EXPIRES)
             </th>
             <th></th>
         </tr>
     </thead>
-    @if (Model.OpenRFPList != null)
+    @if (Model.ExpiredRFPList != null)
     {
         <tbody>
-            @foreach (var item in Model.OpenRFPList)
+            @foreach (var item in Model.ExpiredRFPList)
             {
-
                 <tr>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.RFPID)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.CATEGORY)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.CREATED)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.EXPIRES)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.RFPID }) |
+                    <td class="text-center">
                         @Html.ActionLink("Details", "Details", new { id = item.RFPID }) |
                         @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFPID })
                     </td>
                 </tr>
-
             }
         </tbody>
     }
 </table>
 
+<br />
+
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Back to RFI Home", "Index", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
-        $("#rfpindextable").tablesorter();
+        $("#rfpexpiredtable").tablesorter();
     });
 </script>
+

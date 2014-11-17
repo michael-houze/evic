@@ -34,18 +34,25 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
-            var expired = from x in db.RFPs
-                          where x.EXPIRES <= DateTime.Now
-                          select x;
             var open = from x in db.RFPs
                        where x.EXPIRES > DateTime.Now
                        select x;
 
-            rfpcreate.ExpiredRFPList = new List<RFP>();
-            rfpcreate.ExpiredRFPList = expired.ToList<RFP>();
             rfpcreate.OpenRFPList = new List<RFP>();
             rfpcreate.OpenRFPList = open.ToList<RFP>();
 
+            return View(rfpcreate);
+        }
+
+        [Authorize(Roles = "Administrator,Employee")]
+        public ActionResult ExpiredIndex()
+        {
+            var expired = from x in db.RFPs
+                          where x.EXPIRES <= DateTime.Now
+                          select x;
+
+            rfpcreate.ExpiredRFPList = new List<RFP>();
+            rfpcreate.ExpiredRFPList = expired.ToList<RFP>();
 
             return View(rfpcreate);
         }
