@@ -405,7 +405,7 @@ namespace MVC_DATABASE.Controllers
 
             responsemodel.rfi = await db.RFIs.FindAsync(Id);
 
-            if(responsemodel.rfi.CREATED >= DateTime.Now)
+            if(responsemodel.rfi.CREATED > DateTime.Now)
             {
                 return RedirectToAction("VendorIndex", "RFIs");
             }
@@ -469,6 +469,10 @@ namespace MVC_DATABASE.Controllers
         public async Task<ActionResult> ViewDetails(int Id)
         {
             responsemodel.rfi = await db.RFIs.FindAsync(Id);
+            if (responsemodel.rfi.CREATED > DateTime.Now)
+            {
+                return RedirectToAction("VendorIndex", "RFIs");
+            }
             var userID = User.Identity.GetUserId();
 
             var rfiinvite = from x in db.RFIINVITEs

@@ -429,7 +429,7 @@ namespace MVC_DATABASE.Controllers
 
             responsemodel.RFP = await db.RFPs.FindAsync(Id);
 
-            if (responsemodel.RFP.CREATED <= DateTime.Now)
+            if (responsemodel.RFP.CREATED > DateTime.Now)
             {
                 return RedirectToAction("VendorIndex", "RFPs");
             }
@@ -493,6 +493,10 @@ namespace MVC_DATABASE.Controllers
         public async Task<ActionResult> ViewDetails(int Id)
         {
             responsemodel.RFP = await db.RFPs.FindAsync(Id);
+            if (responsemodel.RFP.CREATED > DateTime.Now)
+            {
+                return RedirectToAction("VendorIndex", "RFPs");
+            }
             var userID = User.Identity.GetUserId();
 
             var RFPInvite = from x in db.RFPINVITEs
@@ -532,6 +536,7 @@ namespace MVC_DATABASE.Controllers
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
+
         public JsonResult GetAcceptedVendors(string RFIID)
         {
             EVICEntities dbo = new EVICEntities();
