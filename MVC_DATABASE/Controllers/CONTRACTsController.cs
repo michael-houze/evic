@@ -36,7 +36,7 @@ namespace MVC_DATABASE.Controllers
                             on x.RFPID equals y.RFPID
                             join z in db.VENDORs
                             on x.Id equals z.Id
-                            select new ContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH, organization = z.ORGANIZATION };
+                            select new ContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH, organization = z.ORGANIZATION, CREATED = y.CREATED, EXPIRES = y.EXPIRES};
                         
             return View(indexview.ToList<ContractIndex>());
         }

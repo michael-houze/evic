@@ -24,8 +24,14 @@
                 @Html.DisplayNameFor(model => model.category)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.contractPath)
-            </th>*@
+        @Html.DisplayNameFor(model => model.contractPath)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.CREATED)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EXPIRES)
+    </th>*@
 
             <th></th>
         </tr>
@@ -45,8 +51,15 @@
                     @Html.DisplayFor(modelItem => item.category)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.contractPath)
-                </td>*@
+        @Html.DisplayFor(modelItem => item.contractPath)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CREATED)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.EXPRIRES)
+    </td>*@
 
                 <td>
                     @Html.ActionLink("Respond", "Respond", new { id = item.contractID }) |

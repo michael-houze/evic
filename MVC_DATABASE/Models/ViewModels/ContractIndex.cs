@@ -13,6 +13,8 @@ namespace MVC_DATABASE.Models.ViewModels
             public string organization { get; set; }
             public string contractPath { get; set; }
             public string templateID { get; set; }
+            public DateTime CREATED { get; set; }
+            public DateTime EXPIRES { get; set; }
         
     }
 }
