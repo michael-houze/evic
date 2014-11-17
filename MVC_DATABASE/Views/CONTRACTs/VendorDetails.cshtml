@@ -1,0 +1,84 @@
+﻿@model MVC_DATABASE.Models.CONTRACT
+
+@{
+    ViewBag.Title = "VendorDetails";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CONTRACT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRACTID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRACTID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RFPID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFPID)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Category")
+        </dt>
+
+        <dd>
+            @ViewBag.Category
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEMPLATE.TEMPLATEID)
+        </dt>
+
+        @if (Model.TEMPLATE.PATH != string.Empty)
+        {
+            <dd>
+                @Html.ActionLink("Contract - " + Model.TEMPLATE.TEMPLATEID.ToString(), "DownloadTemplate", new { path = Model.TEMPLATE.PATH })
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRACT_PATH)
+        </dt>
+
+        @if (!string.IsNullOrEmpty(Model.CONTRACT_PATH))
+        {
+            <dd>
+                @Html.ActionLink(Model.AspNetUser.VENDOR.ORGANIZATION, "DownloadContract", new { path = Model.CONTRACT_PATH })
+            </dd>
+        }
+        else
+        {
+            <dd>
+                No Response
+            </dd>
+        }
+
+        <dt>Vendor Documents</dt>
+        <dd>
+            @*@{
+                string link = item.Title;
+                string path = Url.Content("~/Content/File_Uploads/VendorDocUploads");
+                string tag = "<a href=" + path + ">" + link + "</a>";
+            }
+
+            @Html.Raw(tag)*@
+
+            <a href="~/Content/File_Uploads/VendorDocUploads/imagesHV1G2IG3.jpg" download>Sample File</a>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "VendorIndex")
+</p>
+

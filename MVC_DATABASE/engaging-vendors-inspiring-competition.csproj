@@ -587,11 +587,12 @@
     <Content Include="Views\RFIs\ViewDetails.cshtml" />
     <Content Include="Views\RFIs\ExpiredIndex.cshtml" />
     <Content Include="Views\RFPs\ExpiredIndex.cshtml" />
+    <Content Include="Views\CONTRACTs\VendorDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ContractStore\TestContracts\" />
-    <Folder Include="Content\File_Uploads\" />
+    <Folder Include="Content\File_Uploads\VendorDocUploads\" />
     <Folder Include="Content\Fonts\MyriadPro\" />
     <Folder Include="Content\RFIs\5\" />
     <Folder Include="Content\RFIs\6\" />

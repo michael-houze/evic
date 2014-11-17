@@ -267,7 +267,7 @@ namespace MVC_DATABASE.Controllers
         public ActionResult Respond(string Id)
         {
            
-            var response = new RFPINVITE { Id = Id };
+            var response = new CONTRACT { Id = Id };
 
             return View();
         }
@@ -290,6 +290,50 @@ namespace MVC_DATABASE.Controllers
             }
             //Sends the user back to their respective RFI Index page.
             return RedirectToAction("VendorIndex");
+        }
+
+        //Vendor Document uploads
+        public ActionResult VendorDocUpload(string Id)
+        {
+
+            var response = new CONTRACT { Id = Id };
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult VendorDocUpload(HttpPostedFileBase file)
+        {
+            //Verify a file is selected.
+            if (file != null)
+            {
+                //Extract the file name.
+                var fileName = Path.GetFileName(file.FileName);
+                //Establishes where to save the path using the extracted name.
+                var path = Path.Combine(Server.MapPath(@"~/Content/File_Uploads/VendorDocUploads"), fileName);
+                //Saves file.
+                file.SaveAs(path);
+            }
+            
+            return RedirectToAction("Details");
+        }
+
+        public async Task<ActionResult> VendorDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            CONTRACT cONTRACT = await db.CONTRACTs.FindAsync(id);
+            if (cONTRACT == null)
+            {
+                return HttpNotFound();
+            }
+            RFP rfp = await db.RFPs.FindAsync(cONTRACT.RFPID);
+            ViewBag.Category = rfp.CATEGORY;
+
+            return View(cONTRACT);
         }
 
 

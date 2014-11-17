@@ -23,12 +23,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.category)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.contractPath)
-            </th>
-
             @*<th>
-                @Html.DisplayNameFor(model => model.templateID)
+                @Html.DisplayNameFor(model => model.contractPath)
             </th>*@
 
             <th></th>
@@ -48,32 +44,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.category)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.contractPath)
-                </td>
-                @*@if (item.TEMPLATE.PATH != string.Empty)
-                {
-                 <td>
-                        @Html.ActionLink("Contract - " + item.TEMPLATE.TEMPLATEID.ToString(), "DownloadTemplate", new { path = item.TEMPLATE.PATH })
-                 </td>
-                }*@
-
-
-
-
                 @*<td>
-                    @if (string.IsNullOrEmpty(invite.CONTRACT_PATH))
-                    {
-                        @Html.ActionLink("Respond", "Respond", new { id = item.contractID })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Details", "Details", new { id = item.contractID})
-                    }
+                    @Html.DisplayFor(modelItem => item.contractPath)
                 </td>*@
+
                 <td>
-                    @Html.ActionLink("Respond", "Respond", new { id = item.contractID })
-                    @Html.ActionLink("Details", "Details", new { id = item.contractID })
+                    @Html.ActionLink("Respond", "Respond", new { id = item.contractID }) |
+                    @Html.ActionLink("Details", "VendorDetails", new { id = item.contractID })
                 </td>
             </tr>
         }
