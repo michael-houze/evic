@@ -67,6 +67,18 @@
     }
 </table>
 
+<br />
+
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Create New RFI", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8"></div> <!--Blank wrapepr so that the buttons have equal alignment with those at the top.-->
+    <div class="col-lg-2">
+        @Html.ActionLink("Expired RFIs", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $("#rfpindextable").tablesorter();
