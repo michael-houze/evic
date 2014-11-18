@@ -16,6 +16,7 @@ namespace MVC_DATABASE.Models
     {
         public AspNetUser()
         {
+            this.ANALYTICS = new HashSet<ANALYTIC>();
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.CONTRACTs = new HashSet<CONTRACT>();
@@ -41,6 +42,7 @@ namespace MVC_DATABASE.Models
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
     
+        public virtual ICollection<ANALYTIC> ANALYTICS { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<CONTRACT> CONTRACTs { get; set; }

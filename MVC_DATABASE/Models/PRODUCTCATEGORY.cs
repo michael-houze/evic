@@ -14,6 +14,13 @@ namespace MVC_DATABASE.Models
     
     public partial class PRODUCTCATEGORY
     {
+        public PRODUCTCATEGORY()
+        {
+            this.ANALYTICS = new HashSet<ANALYTIC>();
+        }
+    
         public string CATEGORY { get; set; }
+    
+        public virtual ICollection<ANALYTIC> ANALYTICS { get; set; }
     }
 }

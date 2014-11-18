@@ -15,6 +15,19 @@
           <Property Name="Model" Type="varbinary(max)" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
+        <EntityType Name="ANALYTICS">
+          <Key>
+            <PropertyRef Name="PK" />
+          </Key>
+          <Property Name="PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RFPID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="MMIS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NEWPRICE" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="QUANTITY" Type="int" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -104,7 +117,7 @@
           <Property Name="NEGID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RFPID" Type="int" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CLOSED" Type="bit" />
+          <Property Name="CLOSED" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFEREDCATEGORY">
           <Key>
@@ -203,6 +216,42 @@
           <Property Name="CONTACTPHONE" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CONTACTEMAIL" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ANALYTICS_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ANALYTICS" Type="Self.ANALYTICS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ANALYTICS">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALYTICS_CATEGORY">
+          <End Role="PRODUCTCATEGORY" Type="Self.PRODUCTCATEGORY" Multiplicity="1" />
+          <End Role="ANALYTICS" Type="Self.ANALYTICS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTCATEGORY">
+              <PropertyRef Name="CATEGORY" />
+            </Principal>
+            <Dependent Role="ANALYTICS">
+              <PropertyRef Name="CATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALYTICS_RFP">
+          <End Role="RFP" Type="Self.RFP" Multiplicity="1" />
+          <End Role="ANALYTICS" Type="Self.ANALYTICS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFP">
+              <PropertyRef Name="RFPID" />
+            </Principal>
+            <Dependent Role="ANALYTICS">
+              <PropertyRef Name="RFPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONTRACT_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="CONTRACT" Type="Self.CONTRACT" Multiplicity="*" />
@@ -477,6 +526,7 @@
         </Association>
         <EntityContainer Name="EVICModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ANALYTICS" EntityType="Self.ANALYTICS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -496,6 +546,18 @@
           <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VENDOR" EntityType="Self.VENDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VENDORCONTACT" EntityType="Self.VENDORCONTACT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ANALYTICS_AspNetUsers" Association="Self.FK_ANALYTICS_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ANALYTICS" EntitySet="ANALYTICS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALYTICS_CATEGORY" Association="Self.FK_ANALYTICS_CATEGORY">
+            <End Role="PRODUCTCATEGORY" EntitySet="PRODUCTCATEGORY" />
+            <End Role="ANALYTICS" EntitySet="ANALYTICS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALYTICS_RFP" Association="Self.FK_ANALYTICS_RFP">
+            <End Role="RFP" EntitySet="RFP" />
+            <End Role="ANALYTICS" EntitySet="ANALYTICS" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONTRACT_AspNetUsers" Association="Self.FK_CONTRACT_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="CONTRACT" EntitySet="CONTRACT" />
@@ -600,6 +662,22 @@
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="ANALYTIC">
+          <Key>
+            <PropertyRef Name="PK" />
+          </Key>
+          <Property Name="PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RFPID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MMIS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NEWPRICE" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="QUANTITY" Type="Int32" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_ANALYTICS_AspNetUsers" FromRole="ANALYTICS" ToRole="AspNetUsers" />
+          <NavigationProperty Name="PRODUCTCATEGORY" Relationship="Self.FK_ANALYTICS_CATEGORY" FromRole="ANALYTICS" ToRole="PRODUCTCATEGORY" />
+          <NavigationProperty Name="RFP" Relationship="Self.FK_ANALYTICS_RFP" FromRole="ANALYTICS" ToRole="RFP" />
+        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -645,6 +723,7 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ANALYTICS" Relationship="Self.FK_ANALYTICS_AspNetUsers" FromRole="AspNetUsers" ToRole="ANALYTICS" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="AspNetUsers" ToRole="CONTRACT" />
@@ -699,7 +778,7 @@
           <Property Name="NEGID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RFPID" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CLOSED" Type="Boolean" />
+          <Property Name="CLOSED" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_NEGOTIATION_AspNetUsers" FromRole="NEGOTIATION" ToRole="AspNetUsers" />
           <NavigationProperty Name="RFP" Relationship="Self.FK_NEGOTIATION_RFP" FromRole="NEGOTIATION" ToRole="RFP" />
           <NavigationProperty Name="RESPONSEs" Relationship="Self.FK_RESPONSE_NEGOTIATION" FromRole="NEGOTIATION" ToRole="RESPONSE" />
@@ -720,6 +799,7 @@
             <PropertyRef Name="CATEGORY" />
           </Key>
           <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ANALYTICS" Relationship="Self.FK_ANALYTICS_CATEGORY" FromRole="PRODUCTCATEGORY" ToRole="ANALYTICS" />
         </EntityType>
         <EntityType Name="RESPONSE">
           <Key>
@@ -768,6 +848,7 @@
           <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
           <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ANALYTICS" Relationship="Self.FK_ANALYTICS_RFP" FromRole="RFP" ToRole="ANALYTICS" />
           <NavigationProperty Name="NEGOTIATIONs" Relationship="Self.FK_NEGOTIATION_RFP" FromRole="RFP" ToRole="NEGOTIATION" />
           <NavigationProperty Name="RFI" Relationship="Self.FK_RFP_RFI" FromRole="RFP" ToRole="RFI" />
           <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_RFP_TEMPLATE" FromRole="RFP" ToRole="TEMPLATE" />
@@ -822,6 +903,42 @@
           <Property Name="CONTACTEMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_VENDORCONTACT_AspNetUsers" FromRole="VENDORCONTACT" ToRole="AspNetUsers" />
         </EntityType>
+        <Association Name="FK_ANALYTICS_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="ANALYTICS" Type="Self.ANALYTIC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ANALYTICS">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALYTICS_CATEGORY">
+          <End Role="PRODUCTCATEGORY" Type="Self.PRODUCTCATEGORY" Multiplicity="1" />
+          <End Role="ANALYTICS" Type="Self.ANALYTIC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTCATEGORY">
+              <PropertyRef Name="CATEGORY" />
+            </Principal>
+            <Dependent Role="ANALYTICS">
+              <PropertyRef Name="CATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALYTICS_RFP">
+          <End Role="RFP" Type="Self.RFP" Multiplicity="1" />
+          <End Role="ANALYTICS" Type="Self.ANALYTIC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFP">
+              <PropertyRef Name="RFPID" />
+            </Principal>
+            <Dependent Role="ANALYTICS">
+              <PropertyRef Name="RFPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1072,6 +1189,7 @@
         </Association>
         <EntityContainer Name="EVICEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="ANALYTICS" EntityType="Self.ANALYTIC" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -1090,6 +1208,18 @@
           <EntitySet Name="TEMPLATEs" EntityType="Self.TEMPLATE" />
           <EntitySet Name="VENDORs" EntityType="Self.VENDOR" />
           <EntitySet Name="VENDORCONTACTs" EntityType="Self.VENDORCONTACT" />
+          <AssociationSet Name="FK_ANALYTICS_AspNetUsers" Association="Self.FK_ANALYTICS_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ANALYTICS" EntitySet="ANALYTICS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALYTICS_CATEGORY" Association="Self.FK_ANALYTICS_CATEGORY">
+            <End Role="PRODUCTCATEGORY" EntitySet="PRODUCTCATEGORies" />
+            <End Role="ANALYTICS" EntitySet="ANALYTICS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALYTICS_RFP" Association="Self.FK_ANALYTICS_RFP">
+            <End Role="RFP" EntitySet="RFPs" />
+            <End Role="ANALYTICS" EntitySet="ANALYTICS" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1188,6 +1318,20 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ANALYTICS">
+            <EntityTypeMapping TypeName="EVICModel.ANALYTIC">
+              <MappingFragment StoreEntitySet="ANALYTICS">
+                <ScalarProperty Name="PK" ColumnName="PK" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="RFPID" ColumnName="RFPID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MMIS" ColumnName="MMIS" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="NEWPRICE" ColumnName="NEWPRICE" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

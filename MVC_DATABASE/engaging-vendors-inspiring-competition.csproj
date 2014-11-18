@@ -216,6 +216,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\ANALYTIC.cs">
+      <DependentUpon>EVICEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>

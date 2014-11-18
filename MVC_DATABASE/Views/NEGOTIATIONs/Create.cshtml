@@ -1,10 +1,46 @@
 ﻿@model MVC_DATABASE.Models.NEGOTIATION
 
-@{
-    ViewBag.Title = "Create";
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/jscript">
+        $(function(){
+            $("#RFPID").on("change", function (e) {
+                var dropValue = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetAcceptedVendors", "NEGOTIATIONs")",
+                    data: {
+                        RFPID: dropValue
+                    },
+                    datatype: 'JSON',
+                    contentType: "application/json"
+                })
+                    .done(OnSuccessPopulateListBox)
+                    .fail(function (data) { showError(data); });
+            });
+
+            function OnSuccessPopulateListBox(data) {
+                $("#Id").empty()
+                data.forEach(function (vendor) {
+                    $("#Id").append('<option value =' + vendor.Id + '>' + vendor.ORGANIZATION + '</option>')
+                });
+                $("#Id").show()
+                //debugger;
+            }
+            function showError(data) {
+                debugger;
+            }
+        });
+    </script>
 }
 
-<h2>Create</h2>
+
+@{
+    ViewBag.Title = "Start Negotiation";
+}
+
+<h2>Start Negotiation</h2>
 
 
 @using (Html.BeginForm()) 
@@ -18,7 +54,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RFPID, "RFPID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("RFPID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RFPID, new SelectList(ViewBag.RFPID, "RFPID", "RFPID"))
                 @Html.ValidationMessageFor(model => model.RFPID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,20 +62,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Id, (SelectList)ViewBag.Id)
                 @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CLOSED, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.CLOSED)
-                    @Html.ValidationMessageFor(model => model.CLOSED, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.CLOSED, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -53,6 +83,4 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

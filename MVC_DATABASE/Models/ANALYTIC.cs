@@ -12,22 +12,19 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class NEGOTIATION
+    public partial class ANALYTIC
     {
-        public NEGOTIATION()
-        {
-            this.RESPONSEs = new HashSet<RESPONSE>();
-            this.TEMPLATEs = new HashSet<TEMPLATE>();
-        }
-    
-        public int NEGID { get; set; }
+        public int PK { get; set; }
+        public string CATEGORY { get; set; }
         public int RFPID { get; set; }
         public string Id { get; set; }
-        public bool CLOSED { get; set; }
+        public string MMIS { get; set; }
+        public string DESCRIPTION { get; set; }
+        public decimal NEWPRICE { get; set; }
+        public Nullable<int> QUANTITY { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual PRODUCTCATEGORY PRODUCTCATEGORY { get; set; }
         public virtual RFP RFP { get; set; }
-        public virtual ICollection<RESPONSE> RESPONSEs { get; set; }
-        public virtual ICollection<TEMPLATE> TEMPLATEs { get; set; }
     }
 }

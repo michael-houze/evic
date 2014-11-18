@@ -16,6 +16,7 @@ namespace MVC_DATABASE.Models
     {
         public RFP()
         {
+            this.ANALYTICS = new HashSet<ANALYTIC>();
             this.NEGOTIATIONs = new HashSet<NEGOTIATION>();
             this.RFPINVITEs = new HashSet<RFPINVITE>();
         }
@@ -27,6 +28,7 @@ namespace MVC_DATABASE.Models
         public System.DateTime CREATED { get; set; }
         public System.DateTime EXPIRES { get; set; }
     
+        public virtual ICollection<ANALYTIC> ANALYTICS { get; set; }
         public virtual ICollection<NEGOTIATION> NEGOTIATIONs { get; set; }
         public virtual RFI RFI { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }

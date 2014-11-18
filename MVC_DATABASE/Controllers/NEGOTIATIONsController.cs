@@ -42,14 +42,31 @@ namespace MVC_DATABASE.Controllers
             {
                 return HttpNotFound();
             }
+            else if (nEGOTIATION.CLOSED == false)
+            {
+                return RedirectToAction("Edit", new { id = id });
+            }
             return View(nEGOTIATION);
         }
 
         // GET: NEGOTIATIONs/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.RFPID = new SelectList(db.RFPs, "RFPID", "CATEGORY");
+            var rfps = from x in db.RFPs
+                       where x.EXPIRES <= DateTime.Now
+                       select x;
+
+            RFP rfp = rfps.FirstOrDefault();
+
+            var vendors = from x in db.VENDORs
+                          join y in db.RFPINVITEs
+                          on x.Id equals y.Id
+                          where y.RFPID == rfp.RFPID
+                          where !string.IsNullOrEmpty(y.OFFER_PATH)
+                          select x;
+
+            ViewBag.Id = new SelectList(vendors,"Id", "ORGANIZATION");
+            ViewBag.RFPID = rfps;
             return View();
         }
 
@@ -62,31 +79,73 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.NEGOTIATIONs.Add(nEGOTIATION);
+                NEGOTIATION neg = new NEGOTIATION { RFPID = nEGOTIATION.RFPID, Id = nEGOTIATION.Id, CLOSED = false };
+
+                db.NEGOTIATIONs.Add(neg);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", nEGOTIATION.Id);
-            ViewBag.RFPID = new SelectList(db.RFPs, "RFPID", "CATEGORY", nEGOTIATION.RFPID);
+            var rfps = from x in db.RFPs
+                       where x.EXPIRES <= DateTime.Now
+                       select x;
+
+            RFP rfp = rfps.FirstOrDefault();
+
+            var vendors = from x in db.VENDORs
+                          join y in db.RFPINVITEs
+                          on x.Id equals y.Id
+                          where y.RFPID == rfp.RFPID
+                          where !string.IsNullOrEmpty(y.OFFER_PATH)
+                          select x;
+
+            ViewBag.Id = new SelectList(vendors, "Id", "ORGANIZATION");
+            ViewBag.RFPID = rfps;
+
             return View(nEGOTIATION);
         }
+
+        public JsonResult GetAcceptedVendors(int RFPID)
+        {
+            var vendorQuery = from v in db.VENDORs
+                                      join y in db.RFPINVITEs
+                                      on v.Id equals y.Id
+                                      where y.RFPID == RFPID
+                                      where !string.IsNullOrEmpty(y.OFFER_PATH)
+                                      select new { v.Id, v.ORGANIZATION };
+
+            ViewBag.Id = vendorQuery;
+
+            return Json(vendorQuery, JsonRequestBehavior.AllowGet);
+        } 
+
 
         // GET: NEGOTIATIONs/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NEGOTIATION nEGOTIATION = db.NEGOTIATIONs.Find(id);
-            if (nEGOTIATION == null)
+            negindex.negotiation = db.NEGOTIATIONs.Find(id);
+            if (negindex.negotiation == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", nEGOTIATION.Id);
-            ViewBag.RFPID = new SelectList(db.RFPs, "RFPID", "CATEGORY", nEGOTIATION.RFPID);
-            return View(nEGOTIATION);
+            else if (negindex.negotiation.CLOSED == true)
+            {
+                return RedirectToAction("Details", new { id = id });
+            }
+
+            var responses = from x in db.RESPONSEs
+                            where x.NEGID == negindex.negotiation.NEGID
+                            orderby x.CREATED ascending
+                            select x;
+
+            negindex.responselist = responses.ToList<RESPONSE>();
+
+            return View(negindex);
         }
 
         // POST: NEGOTIATIONs/Edit/5
@@ -94,17 +153,21 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NEGID,RFPID,Id,CLOSED")] NEGOTIATION nEGOTIATION)
+        public ActionResult Edit(NegIndex model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(nEGOTIATION).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(model.negotiation.CLOSED == true)
+                {
+                    NEGOTIATION neg = db.NEGOTIATIONs.Find(model.negotiation.NEGID);
+                    neg.CLOSED = true;
+                }
+                if (model.file != null)
+                { }
             }
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", nEGOTIATION.Id);
-            ViewBag.RFPID = new SelectList(db.RFPs, "RFPID", "CATEGORY", nEGOTIATION.RFPID);
-            return View(nEGOTIATION);
+            //ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", nEGOTIATION.Id);
+            //ViewBag.RFPID = new SelectList(db.RFPs, "RFPID", "CATEGORY", nEGOTIATION.RFPID);
+            return View();
         }
 
         // GET: NEGOTIATIONs/Delete/5
