@@ -1,0 +1,42 @@
+﻿@model MVC_DATABASE.Models.ViewModels.FAQCreate
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Frequently Asked Questions</h2>
+<table id="faqindextable" class="table tablesorter">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FAQ.QUESTION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAQ.ANSWER)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FAQList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QUESTION)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ANSWER)
+                </td>
+               @if (User.IsInRole("Administrator"))
+               {
+                   <td>
+                    @Html.ActionLink("Edit", "EditFAQ", new { id = item.Id }) 
+                   </td>
+                   <td>
+                       @Html.ActionLink("Delete", "DeleteFAQ", new { id = item.Id})
+                   </td>
+               }
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CONTRACTsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NEGOTIATIONsController.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
     <Compile Include="Models\ViewModels\ContractIndex.cs" />
     <Compile Include="Models\ViewModels\NegIndex.cs" />
+    <Compile Include="Models\ViewModels\FAQCreate.cs" />
     <Compile Include="Models\ViewModels\ReportDetails.cs" />
     <Compile Include="Models\ViewModels\ReportLine.cs" />
     <Compile Include="Models\ViewModels\ReportRecord.cs" />
@@ -601,6 +603,12 @@
     <Content Include="Views\NEGOTIATIONs\Details.cshtml" />
     <Content Include="Views\NEGOTIATIONs\Edit.cshtml" />
     <Content Include="Views\NEGOTIATIONs\Index.cshtml" />
+    <Content Include="Views\FAQ\AddFAQ.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\FAQ\Index.cshtml" />
+    <Content Include="Views\FAQ\EditFAQ.cshtml" />
+    <Content Include="Views\FAQ\DeleteFAQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
