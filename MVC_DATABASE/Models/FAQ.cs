@@ -20,10 +20,14 @@ namespace MVC_DATABASE.Models
         [Required]
         [Display(Name="Question")]
         [DataType(DataType.Text)]
+        [RegularExpression(@"^[0-9a-zA-Z''-'\s]{1,40}$",
+         ErrorMessage = "special characters are not allowed.")]
         public string QUESTION { get; set; }
         [Required]
         [Display(Name = "Answer")]
         [DataType(DataType.Text)]
+        [RegularExpression(@"^[0-9a-zA-Z''-'\s]{1,40}$",
+        ErrorMessage = "special characters are not allowed.")]
         public string ANSWER { get; set; }
     }
 }
