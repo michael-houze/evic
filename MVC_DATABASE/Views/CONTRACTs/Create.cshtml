@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.CONTRACT
+﻿@model MVC_DATABASE.Models.ViewModels.CreateContract
 
 @section Scripts {
 
@@ -53,33 +53,33 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RFPID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.contract.RFPID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RFPID, new SelectList(ViewBag.rfpid), new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RFPID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.contract.RFPID, new SelectList(ViewBag.rfpid), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contract.RFPID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TEMPLATEID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.contract.TEMPLATEID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TEMPLATEID, (SelectList)ViewBag.templates, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TEMPLATEID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.contract.TEMPLATEID, (SelectList)ViewBag.templates, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.contract.TEMPLATEID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.contract.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
             @if(ViewBag.AcceptedVendors != null)
             {
-                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.AcceptedVendors))
-                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.contract.Id, new SelectList(ViewBag.AcceptedVendors))
+                @Html.ValidationMessageFor(model => model.contract.Id, "", new { @class = "text-danger" })
             }
             </div>
         </div>
 
-        @Html.HiddenFor(model => model.CONTRACT_PATH, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        @Html.HiddenFor(model => model.contract.CONTRACT_PATH, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
        
         <div>
             <b>Additional Documents for Vendors</b>
@@ -87,17 +87,16 @@
             @using (Html.BeginForm("VendorDocUpload", "CONTRACTs", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="file" name="file" />
-                @*<input type="submit" value="OK" />*@
-            }
-        </div>
-        </div>
-
-
-        <div class="form-group">
+                <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+            }
+        </div>
+           
+        </div>
+     
     </div>
 }
 
