@@ -3,12 +3,19 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Frequently Asked Questions</h2>
+
 @if (User.IsInRole("Administrator"))
 {
-    <p>
-    @Html.ActionLink("Create New FAQ", "AddFAQ")
-    </p>
+    <div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Create New FAQ", "AddFAQ", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Frequently Asked Questions</h2>
+    </div>
+    </div>
+   
+    
 }
 
 <table id="faqindextable" class="table tablesorter">
