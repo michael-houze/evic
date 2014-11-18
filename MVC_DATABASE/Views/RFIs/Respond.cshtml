@@ -69,11 +69,19 @@
     @Html.LabelFor(m => m.rfiinvite.GHX_PATH, "GHX Path") 
     @Html.TextBoxFor(m => m.File, null, new { type = "file" , @class="input-file"})
     @*<input type="file" name="file" />*@
+<br /><br />
+    @Html.LabelFor(m => m.rfiinvite.CATALOGPATH, "Catalog Path")
+    @Html.TextBoxFor(m => m.Catalog, null, new { type = "file" , @class="input-file"})
+    @*<input type="file" name="file" />*@
+
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">           
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
+<br />
+<br />
 }
         <br />
 

@@ -34,7 +34,11 @@ namespace MVC_DATABASE.Models.ViewModels
 
         [Required]
         [FileExtensions(Extensions = "xlsx,xls")]
-        public HttpPostedFileBase File { get; set; }
+        public HttpPostedFileBase File { get; set; } 
+
+
+        [FileExtensions(Extensions = "xlsx,xls,pdf")]
+        public HttpPostedFileBase Catalog { get; set; }
     }
 }
  

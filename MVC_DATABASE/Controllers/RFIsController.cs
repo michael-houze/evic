@@ -442,7 +442,9 @@ namespace MVC_DATABASE.Controllers
                 string organization = vendor.ORGANIZATION + ".xlsx";
                 string rfiid = rfiinvite.RFIID.ToString();
                 string ghxpath = "~/Content/RFIs/" + rfiid + "/" + organization;
-                
+                string catalogPath = "~/Content/RFIs/Catalogs/" + rfiid + "/" + organization;
+
+
                 //Extract the file name.
                 var fileName = Path.GetFileName(model.File.FileName);
                 //Establishes where to save the path using the extracted name.
@@ -457,7 +459,26 @@ namespace MVC_DATABASE.Controllers
                 //Saves file.
                 model.File.SaveAs(path);
                 
+                //If Catalog is uploaded 
+                if (model.Catalog !=null)
+                {
+                    //Extract file name
+                    var catalogName = Path.GetFileName(model.Catalog.FileName);
 
+                    //Establishes where to save the path using the extracted name.
+                      var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs"+rfiid+"/"), organization);
+                       rfiinvite.CATALOGPATH = catalogPath;
+
+                 //checks to see if file path exists, if it doesn't it creates
+                var catmappath = Server.MapPath("~/Content/RFIs/Catalogs" + rfiid + "/");
+                if (!System.IO.Directory.Exists(catmappath))
+                    System.IO.Directory.CreateDirectory(catmappath);
+
+
+                //Saves file
+                 model.Catalog.SaveAs(thecatalogPath);
+                    await db.SaveChangesAsync();
+                }
                 await db.SaveChangesAsync();
                 return RedirectToAction("VendorIndex", "RFIs");
 
@@ -504,6 +525,29 @@ namespace MVC_DATABASE.Controllers
             string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
+        }
+
+        public FileResult DownloadCatalog(string catalogpath)
+        {
+
+            //select vendors Id from RFIINVITE
+            var InviteId = from x in db.RFIINVITEs
+                           where x.CATALOGPATH == catalogpath
+                           select x.Id;
+            //Get vendor items from Id
+            VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
+            //select RFIID
+            var rfiId = from y in db.RFIINVITEs
+                        where y.CATALOGPATH == catalogpath
+                        select y.RFIID;
+
+
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
+
+            return File(catalogpath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 
 
         }

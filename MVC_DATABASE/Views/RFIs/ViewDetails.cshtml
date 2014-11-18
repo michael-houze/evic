@@ -61,5 +61,21 @@
         
     </dd>
 
+    <dt>
+        @Html.DisplayNameFor(model => model.rfiinvite.CATALOGPATH)
+    </dt>
+
+    <dd>
+        @if (!string.IsNullOrEmpty(Model.rfiinvite.CATALOGPATH))
+        {
+        @Html.ActionLink(String.Format(Model.rfiinvite.AspNetUser.VENDOR.ORGANIZATION + " Catalog"), "DownloadCatalog", new { catalogpath = Model.rfiinvite.CATALOGPATH})
+        }
+        else
+        {
+        @ViewBag.noResponse;
+        }
+
+    </dd>
+
 
 </dl>

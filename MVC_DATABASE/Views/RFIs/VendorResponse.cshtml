@@ -16,6 +16,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.rfiinvite.GHX_PATH)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rfiinvite.CATALOGPATH)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +27,7 @@
             foreach (var item in Model.inviteList)
             {
                 var path = item.GHX_PATH;
+                var catalogpath = item.CATALOGPATH;
 
                 var vendorOrg = from x in Model.vendorlist
                                 where x.Id == item.Id
@@ -44,7 +48,19 @@
                         }
 
                     </td>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(catalogpath))
+                        {
+                        @ViewBag.NoResponse
+                        }
+                        else
+                        {
+                        @Html.ActionLink(String.Format(item.AspNetUser.VENDOR.ORGANIZATION+ " Catalog"), "DownloadCatalog", new { catalogpath = item.CATALOGPATH })
+                        }
+
+                    </td>
                 </tr>
+
 
             }
         }

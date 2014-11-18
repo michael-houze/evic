@@ -602,6 +602,7 @@
     <Folder Include="Content\Fonts\MyriadPro\" />
     <Folder Include="Content\RFIs\5\" />
     <Folder Include="Content\RFIs\6\" />
+    <Folder Include="Content\RFIs\Catalogs\" />
     <Folder Include="Content\RFIs\TestFolder\" />
     <Folder Include="Content\RFPs\" />
     <Folder Include="Content\Videos\Vendor\" />
