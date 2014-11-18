@@ -6,16 +6,7 @@
 
 <h2>RFP Report</h2>
 
-@Html.ActionLink("Generate RFP Report", "RFPReport", Model)
-
-<input type="button" id="btnpopy" value="View Full RFP Report" onclick="RFPReport(@Model);" />
-<script type="text/javascript">
-    RFPResponseReport = function () {
-        window.open('/Report/RFPReport', "PopupWindow", 'width=400px,height=400px,top=150,left=250');
-    }
-</script>
-
-
+@Html.ActionLink("Generate RFP Report", "RFPReport", Model, new { @class = "btn btn-primary btn-sm btn-rfi" })
 
 <table class="table">
     <tr>
