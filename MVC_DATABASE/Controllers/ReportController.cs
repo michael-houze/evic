@@ -94,33 +94,31 @@ namespace MVC_DATABASE.Controllers
                 string filePath = i.OFFER_PATH;
 
                 var excelFile = new ExcelQueryFactory(filePath);
-                decimal TotalVariance = 0M;
+                decimal TotalCost = 0M;
 
                 List<ReportLine> reportLineList = new List<ReportLine>();
-                var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "AA24", "Financial Analysis")
+                var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
                             select l;
 
                 foreach (var l in lines)
                 {
                     ReportLine rfp = new ReportLine();
+
                     rfp.Description = l.Description;
                     rfp.AnnualUsage = l.AnnualUsage;
-                    rfp.CurrentEachPrice = l.CurrentEachPrice;
                     rfp.NewEachPrice = l.NewEachPrice;
-                    rfp.CurrentAnnualSpend = l.CurrentAnnualSpend;
-                    rfp.NewAnnualSpend = l.NewAnnualSpend;
-                    rfp.Variance = l.Variance;
+                    rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
 
                     reportLineList.Add(rfp);
                 }
 
                 foreach (var reportLine in reportLineList)
                 {
-                    TotalVariance += reportLine.Variance;
+                    TotalCost += reportLine.LineCost;
                 }
 
                 reportResult += "Vendor: " + report.Vendor.ORGANIZATION + System.Environment.NewLine + 
-                    "Total Variance: " + TotalVariance +
+                    "Total Cost: " + TotalCost +
                     System.Environment.NewLine + System.Environment.NewLine;                                
             }
 
@@ -139,11 +137,11 @@ namespace MVC_DATABASE.Controllers
             string filePath = invite.OFFER_PATH;
 
             var excelFile = new ExcelQueryFactory(filePath);
-            decimal TotalVariance = 0M;
+            decimal TotalCost = 0M;
 
             List<ReportLine> RFP = new List<ReportLine>();
 
-            var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "AA24", "Financial Analysis")
+            var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
                         select l;
 
             foreach (var l in lines)
@@ -151,30 +149,26 @@ namespace MVC_DATABASE.Controllers
                 ReportLine rfp = new ReportLine();
                 rfp.Description = l.Description;
                 rfp.AnnualUsage = l.AnnualUsage;
-                rfp.CurrentEachPrice = l.CurrentEachPrice;
                 rfp.NewEachPrice = l.NewEachPrice;
-                rfp.CurrentAnnualSpend = l.CurrentAnnualSpend;
-                rfp.NewAnnualSpend = l.NewAnnualSpend;
-                rfp.Variance = l.Variance;
+                rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
 
                 RFP.Add(rfp);
 
-                detailString += "Product Information: " + l.Description + System.Environment.NewLine + 
-                    "Annual Usage: " + l.AnnualUsage + System.Environment.NewLine +
-                    "Current Each Price: " + l.CurrentEachPrice + System.Environment.NewLine +
-                    "New Each Price: " + l.NewEachPrice + System.Environment.NewLine +
-                    "Total Variance for Item: " + l.Variance + System.Environment.NewLine + System.Environment.NewLine;
+                detailString += "Product Information: " + rfp.Description + System.Environment.NewLine + 
+                    "Annual Usage: " + rfp.AnnualUsage + System.Environment.NewLine +
+                    "New Each Price: " + rfp.NewEachPrice + System.Environment.NewLine +
+                    "Total Cost of Item: " + rfp.LineCost + System.Environment.NewLine + System.Environment.NewLine;
             }
 
             //Used to get Total Variance for an RFP (includes all items).
             foreach (ReportLine r in RFP)
             {
                 if (r.Description != null)
-                    TotalVariance += r.Variance;
+                    TotalCost += r.LineCost;
             }
 
             return "RFP ID: " + invite.RFPID + System.Environment.NewLine +
-                detailString + "Total RFP Variance: " + TotalVariance +
+                detailString + "Total RFP Cost: " + TotalCost +
                 System.Environment.NewLine + System.Environment.NewLine;
         }
 
