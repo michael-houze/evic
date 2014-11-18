@@ -526,7 +526,6 @@ namespace MVC_DATABASE.Controllers
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 
-
         }
 
         public FileResult DownloadCatalog(string catalogpath)
@@ -543,12 +542,9 @@ namespace MVC_DATABASE.Controllers
                         where y.CATALOGPATH == catalogpath
                         select y.RFIID;
 
-
-
             string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
 
             return File(catalogpath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
 
         }
 

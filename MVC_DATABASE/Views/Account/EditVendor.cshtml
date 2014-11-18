@@ -72,6 +72,19 @@
             </div>
 
             <div class="form-group">
+                <div class="col-md-10">
+                    @if (String.IsNullOrWhiteSpace(Model.Vendor.W9))
+                    {
+                        <p>This vendor does not have a W-9 on file</p>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Download W-9", "DownloadW9", new { path = Model.Vendor.W9 })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
                 @Html.LabelFor(model => model.Vendor.VENDSTATUS, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-lg-10">                 
                     <div class="editor-field">

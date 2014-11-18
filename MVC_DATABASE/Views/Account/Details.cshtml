@@ -84,6 +84,17 @@
         <dd>
             @Html.DisplayFor(model => model.Vendor.VENDSTATUS)
         </dd>
+        <dd class="col-md-10">
+            @if (String.IsNullOrWhiteSpace(Model.Vendor.W9))
+            {
+                <p>This vendor does not have a W-9 on file</p>
+            }
+            else
+            {
+                @Html.ActionLink("Download W-9", "DownloadW9", new { path = Model.Vendor.W9 })
+            }
+        </dd>
+
     </dl>
     <table class="table">
         <tr>

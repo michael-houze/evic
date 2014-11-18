@@ -217,14 +217,26 @@ namespace MVC_DATABASE.Controllers
                 if (result.Succeeded)
                 {
 
-                    UserManager.AddToRole(user.Id, "Vendor");             
+                    UserManager.AddToRole(user.Id, "Vendor");
 
-                    var fileName = Path.GetFileName(model.w9File.FileName);
+                    // var fileName = Path.GetFileName(model.w9File.FileName);
+                    string fileName = "";
+                    for( int i = 0; i < model.VENDOR.ORGANIZATION.Length; i++)
+                    {
+                        if(model.VENDOR.ORGANIZATION[i] == ' ')
+                        {
+                            fileName = fileName + '_';
+                        }
+                        else
+                        {
+                            fileName = fileName + model.VENDOR.ORGANIZATION[i];
+                        }
+                    }
 
-                    var path = Path.Combine(Server.MapPath("~/Content/W9/"), user.Id.ToString() + "W9");
+                    var path = Path.Combine(Server.MapPath("~/Content/W9/"), model.VENDOR.ORGANIZATION + "_W9");
                     model.w9File.SaveAs(path);
-
-                    string w9Path = "~/Content/W9/" + user.Id.ToString() + "W9";
+                    
+                    string w9Path = "~/Content/W9/" + fileName + "_W9";
 
                     var vendor = new VENDOR { Id = user.Id, FIRSTNAME = model.VENDOR.FIRSTNAME, LASTNAME = model.VENDOR.LASTNAME, ORGANIZATION = model.VENDOR.ORGANIZATION, W9 = w9Path };
 
@@ -852,6 +864,13 @@ namespace MVC_DATABASE.Controllers
                "Please confirm your account by clicking this link: " + callbackUrl);
 
             return callbackUrl;
+        }
+
+        public FileResult DownloadW9(string path)
+        {
+            // VENDOR vendor = (VENDOR) db.VENDORs.Where(model => model.W9 == path);
+
+            return File(path, "application/pdf", "Vendor_W9");
         }
     }
 }
