@@ -12,14 +12,22 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VENDORCONTACT
+    public partial class NEGOTIATION
     {
-        public int PRIMARYKEY { get; set; }
+        public NEGOTIATION()
+        {
+            this.RESPONSEs = new HashSet<RESPONSE>();
+            this.TEMPLATEs = new HashSet<TEMPLATE>();
+        }
+    
+        public int NEGID { get; set; }
+        public int RFPID { get; set; }
         public string Id { get; set; }
-        public string CONTACTNAME { get; set; }
-        public string CONTACTPHONE { get; set; }
-        public string CONTACTEMAIL { get; set; }
+        public Nullable<bool> CLOSED { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual RFP RFP { get; set; }
+        public virtual ICollection<RESPONSE> RESPONSEs { get; set; }
+        public virtual ICollection<TEMPLATE> TEMPLATEs { get; set; }
     }
 }

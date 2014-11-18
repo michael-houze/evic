@@ -93,9 +93,18 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QUESTION" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ANSWER" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NEGOTIATION">
+          <Key>
+            <PropertyRef Name="NEGID" />
+          </Key>
+          <Property Name="NEGID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFPID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CLOSED" Type="bit" />
         </EntityType>
         <EntityType Name="OFFEREDCATEGORY">
           <Key>
@@ -111,6 +120,16 @@
             <PropertyRef Name="CATEGORY" />
           </Key>
           <Property Name="CATEGORY" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESPONSE">
+          <Key>
+            <PropertyRef Name="PK" />
+          </Key>
+          <Property Name="PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NEGID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CREATED" Type="datetime" Nullable="false" />
+          <Property Name="PATH" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="RFI">
           <Key>
@@ -159,7 +178,7 @@
           <Property Name="TEMPLATEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TYPE" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="PATH" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="REPORTVAR" Type="nvarchar(max)" />
+          <Property Name="NEGID" Type="int" />
         </EntityType>
         <EntityType Name="VENDOR">
           <Key>
@@ -276,6 +295,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NEGOTIATION_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NEGOTIATION">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NEGOTIATION_RFP">
+          <End Role="RFP" Type="Self.RFP" Multiplicity="1" />
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFP">
+              <PropertyRef Name="RFPID" />
+            </Principal>
+            <Dependent Role="NEGOTIATION">
+              <PropertyRef Name="RFPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OFFEREDCATEGORY_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="OFFEREDCATEGORY" Type="Self.OFFEREDCATEGORY" Multiplicity="*" />
@@ -285,6 +328,30 @@
             </Principal>
             <Dependent Role="OFFEREDCATEGORY">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="RESPONSE" Type="Self.RESPONSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RESPONSE">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSE_NEGOTIATION">
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="1" />
+          <End Role="RESPONSE" Type="Self.RESPONSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NEGOTIATION">
+              <PropertyRef Name="NEGID" />
+            </Principal>
+            <Dependent Role="RESPONSE">
+              <PropertyRef Name="NEGID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -372,6 +439,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TEMPLATE_NEGOTIATION">
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="0..1" />
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NEGOTIATION">
+              <PropertyRef Name="NEGID" />
+            </Principal>
+            <Dependent Role="TEMPLATE">
+              <PropertyRef Name="NEGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VENDOR_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="VENDOR" Type="Self.VENDOR" Multiplicity="0..1" />
@@ -406,8 +485,10 @@
           <EntitySet Name="CONTRACT" EntityType="Self.CONTRACT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FAQ" EntityType="Self.FAQ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NEGOTIATION" EntityType="Self.NEGOTIATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OFFEREDCATEGORY" EntityType="Self.OFFEREDCATEGORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTCATEGORY" EntityType="Self.PRODUCTCATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESPONSE" EntityType="Self.RESPONSE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFI" EntityType="Self.RFI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFIINVITE" EntityType="Self.RFIINVITE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFP" EntityType="Self.RFP" Schema="dbo" store:Type="Tables" />
@@ -443,9 +524,25 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
           </AssociationSet>
+          <AssociationSet Name="FK_NEGOTIATION_AspNetUsers" Association="Self.FK_NEGOTIATION_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NEGOTIATION_RFP" Association="Self.FK_NEGOTIATION_RFP">
+            <End Role="RFP" EntitySet="RFP" />
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATION" />
+          </AssociationSet>
           <AssociationSet Name="FK_OFFEREDCATEGORY_AspNetUsers" Association="Self.FK_OFFEREDCATEGORY_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="OFFEREDCATEGORY" EntitySet="OFFEREDCATEGORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSE_AspNetUsers" Association="Self.FK_RESPONSE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RESPONSE" EntitySet="RESPONSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSE_NEGOTIATION" Association="Self.FK_RESPONSE_NEGOTIATION">
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATION" />
+            <End Role="RESPONSE" EntitySet="RESPONSE" />
           </AssociationSet>
           <AssociationSet Name="FK_RFI_TEMPLATE" Association="Self.FK_RFI_TEMPLATE">
             <End Role="TEMPLATE" EntitySet="TEMPLATE" />
@@ -474,6 +571,10 @@
           <AssociationSet Name="FK_RFPINVITE_RFP" Association="Self.FK_RFPINVITE_RFP">
             <End Role="RFP" EntitySet="RFP" />
             <End Role="RFPINVITE" EntitySet="RFPINVITE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEMPLATE_NEGOTIATION" Association="Self.FK_TEMPLATE_NEGOTIATION">
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATION" />
+            <End Role="TEMPLATE" EntitySet="TEMPLATE" />
           </AssociationSet>
           <AssociationSet Name="FK_VENDOR_AspNetUsers" Association="Self.FK_VENDOR_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -548,7 +649,9 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="AspNetUsers" ToRole="CONTRACT" />
           <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_AspNetUsers" FromRole="AspNetUsers" ToRole="EMPLOYEE" />
+          <NavigationProperty Name="NEGOTIATIONs" Relationship="Self.FK_NEGOTIATION_AspNetUsers" FromRole="AspNetUsers" ToRole="NEGOTIATION" />
           <NavigationProperty Name="OFFEREDCATEGORies" Relationship="Self.FK_OFFEREDCATEGORY_AspNetUsers" FromRole="AspNetUsers" ToRole="OFFEREDCATEGORY" />
+          <NavigationProperty Name="RESPONSEs" Relationship="Self.FK_RESPONSE_AspNetUsers" FromRole="AspNetUsers" ToRole="RESPONSE" />
           <NavigationProperty Name="RFIINVITEs" Relationship="Self.FK_RFIINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFIINVITE" />
           <NavigationProperty Name="RFPINVITEs" Relationship="Self.FK_RFPINVITE_AspNetUsers" FromRole="AspNetUsers" ToRole="RFPINVITE" />
           <NavigationProperty Name="VENDOR" Relationship="Self.FK_VENDOR_AspNetUsers" FromRole="AspNetUsers" ToRole="VENDOR" />
@@ -585,9 +688,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QUESTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ANSWER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NEGOTIATION">
+          <Key>
+            <PropertyRef Name="NEGID" />
+          </Key>
+          <Property Name="NEGID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFPID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CLOSED" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_NEGOTIATION_AspNetUsers" FromRole="NEGOTIATION" ToRole="AspNetUsers" />
+          <NavigationProperty Name="RFP" Relationship="Self.FK_NEGOTIATION_RFP" FromRole="NEGOTIATION" ToRole="RFP" />
+          <NavigationProperty Name="RESPONSEs" Relationship="Self.FK_RESPONSE_NEGOTIATION" FromRole="NEGOTIATION" ToRole="RESPONSE" />
+          <NavigationProperty Name="TEMPLATEs" Relationship="Self.FK_TEMPLATE_NEGOTIATION" FromRole="NEGOTIATION" ToRole="TEMPLATE" />
         </EntityType>
         <EntityType Name="OFFEREDCATEGORY">
           <Key>
@@ -604,6 +720,18 @@
             <PropertyRef Name="CATEGORY" />
           </Key>
           <Property Name="CATEGORY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESPONSE">
+          <Key>
+            <PropertyRef Name="PK" />
+          </Key>
+          <Property Name="PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NEGID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PATH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RESPONSE_AspNetUsers" FromRole="RESPONSE" ToRole="AspNetUsers" />
+          <NavigationProperty Name="NEGOTIATION" Relationship="Self.FK_RESPONSE_NEGOTIATION" FromRole="RESPONSE" ToRole="NEGOTIATION" />
         </EntityType>
         <EntityType Name="RFI">
           <Key>
@@ -640,6 +768,7 @@
           <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
           <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NEGOTIATIONs" Relationship="Self.FK_NEGOTIATION_RFP" FromRole="RFP" ToRole="NEGOTIATION" />
           <NavigationProperty Name="RFI" Relationship="Self.FK_RFP_RFI" FromRole="RFP" ToRole="RFI" />
           <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_RFP_TEMPLATE" FromRole="RFP" ToRole="TEMPLATE" />
           <NavigationProperty Name="RFPINVITEs" Relationship="Self.FK_RFPINVITE_RFP" FromRole="RFP" ToRole="RFPINVITE" />
@@ -662,8 +791,9 @@
           <Property Name="TEMPLATEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TYPE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="REPORTVAR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NEGID" Type="Int32" />
           <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_TEMPLATE" FromRole="TEMPLATE" ToRole="CONTRACT" />
+          <NavigationProperty Name="NEGOTIATION" Relationship="Self.FK_TEMPLATE_NEGOTIATION" FromRole="TEMPLATE" ToRole="NEGOTIATION" />
           <NavigationProperty Name="RFIs" Relationship="Self.FK_RFI_TEMPLATE" FromRole="TEMPLATE" ToRole="RFI" />
           <NavigationProperty Name="RFPs" Relationship="Self.FK_RFP_TEMPLATE" FromRole="TEMPLATE" ToRole="RFP" />
         </EntityType>
@@ -744,6 +874,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NEGOTIATION_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NEGOTIATION">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OFFEREDCATEGORY_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
           <End Role="OFFEREDCATEGORY" Type="Self.OFFEREDCATEGORY" Multiplicity="*" />
@@ -752,6 +894,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OFFEREDCATEGORY">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="RESPONSE" Type="Self.RESPONSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RESPONSE">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -813,6 +967,42 @@
             </Principal>
             <Dependent Role="CONTRACT">
               <PropertyRef Name="TEMPLATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NEGOTIATION_RFP">
+          <End Role="RFP" Type="Self.RFP" Multiplicity="1" />
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFP">
+              <PropertyRef Name="RFPID" />
+            </Principal>
+            <Dependent Role="NEGOTIATION">
+              <PropertyRef Name="RFPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSE_NEGOTIATION">
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="1" />
+          <End Role="RESPONSE" Type="Self.RESPONSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NEGOTIATION">
+              <PropertyRef Name="NEGID" />
+            </Principal>
+            <Dependent Role="RESPONSE">
+              <PropertyRef Name="NEGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TEMPLATE_NEGOTIATION">
+          <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="0..1" />
+          <End Role="TEMPLATE" Type="Self.TEMPLATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NEGOTIATION">
+              <PropertyRef Name="NEGID" />
+            </Principal>
+            <Dependent Role="TEMPLATE">
+              <PropertyRef Name="NEGID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -889,8 +1079,10 @@
           <EntitySet Name="CONTRACTs" EntityType="Self.CONTRACT" />
           <EntitySet Name="EMPLOYEEs" EntityType="Self.EMPLOYEE" />
           <EntitySet Name="FAQs" EntityType="Self.FAQ" />
+          <EntitySet Name="NEGOTIATIONs" EntityType="Self.NEGOTIATION" />
           <EntitySet Name="OFFEREDCATEGORies" EntityType="Self.OFFEREDCATEGORY" />
           <EntitySet Name="PRODUCTCATEGORies" EntityType="Self.PRODUCTCATEGORY" />
+          <EntitySet Name="RESPONSEs" EntityType="Self.RESPONSE" />
           <EntitySet Name="RFIs" EntityType="Self.RFI" />
           <EntitySet Name="RFIINVITEs" EntityType="Self.RFIINVITE" />
           <EntitySet Name="RFPs" EntityType="Self.RFP" />
@@ -914,9 +1106,17 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
           </AssociationSet>
+          <AssociationSet Name="FK_NEGOTIATION_AspNetUsers" Association="Self.FK_NEGOTIATION_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATIONs" />
+          </AssociationSet>
           <AssociationSet Name="FK_OFFEREDCATEGORY_AspNetUsers" Association="Self.FK_OFFEREDCATEGORY_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="OFFEREDCATEGORY" EntitySet="OFFEREDCATEGORies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSE_AspNetUsers" Association="Self.FK_RESPONSE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RESPONSE" EntitySet="RESPONSEs" />
           </AssociationSet>
           <AssociationSet Name="FK_RFIINVITE_AspNetUsers" Association="Self.FK_RFIINVITE_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -937,6 +1137,18 @@
           <AssociationSet Name="FK_CONTRACT_TEMPLATE" Association="Self.FK_CONTRACT_TEMPLATE">
             <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
             <End Role="CONTRACT" EntitySet="CONTRACTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NEGOTIATION_RFP" Association="Self.FK_NEGOTIATION_RFP">
+            <End Role="RFP" EntitySet="RFPs" />
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSE_NEGOTIATION" Association="Self.FK_RESPONSE_NEGOTIATION">
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATIONs" />
+            <End Role="RESPONSE" EntitySet="RESPONSEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEMPLATE_NEGOTIATION" Association="Self.FK_TEMPLATE_NEGOTIATION">
+            <End Role="NEGOTIATION" EntitySet="NEGOTIATIONs" />
+            <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
           </AssociationSet>
           <AssociationSet Name="FK_RFI_TEMPLATE" Association="Self.FK_RFI_TEMPLATE">
             <End Role="TEMPLATE" EntitySet="TEMPLATEs" />
@@ -1058,6 +1270,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NEGOTIATIONs">
+            <EntityTypeMapping TypeName="EVICModel.NEGOTIATION">
+              <MappingFragment StoreEntitySet="NEGOTIATION">
+                <ScalarProperty Name="NEGID" ColumnName="NEGID" />
+                <ScalarProperty Name="RFPID" ColumnName="RFPID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CLOSED" ColumnName="CLOSED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="OFFEREDCATEGORies">
             <EntityTypeMapping TypeName="EVICModel.OFFEREDCATEGORY">
               <MappingFragment StoreEntitySet="OFFEREDCATEGORY">
@@ -1072,6 +1294,17 @@
             <EntityTypeMapping TypeName="EVICModel.PRODUCTCATEGORY">
               <MappingFragment StoreEntitySet="PRODUCTCATEGORY">
                 <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESPONSEs">
+            <EntityTypeMapping TypeName="EVICModel.RESPONSE">
+              <MappingFragment StoreEntitySet="RESPONSE">
+                <ScalarProperty Name="PK" ColumnName="PK" />
+                <ScalarProperty Name="NEGID" ColumnName="NEGID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="PATH" ColumnName="PATH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1125,7 +1358,7 @@
                 <ScalarProperty Name="TEMPLATEID" ColumnName="TEMPLATEID" />
                 <ScalarProperty Name="TYPE" ColumnName="TYPE" />
                 <ScalarProperty Name="PATH" ColumnName="PATH" />
-                <ScalarProperty Name="REPORTVAR" ColumnName="REPORTVAR" />
+                <ScalarProperty Name="NEGID" ColumnName="NEGID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

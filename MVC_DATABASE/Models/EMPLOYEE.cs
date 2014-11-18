@@ -11,21 +11,15 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class EMPLOYEE
     {
         public string Id { get; set; }
-        [Required]
-        [Display(Name = "First Name", Prompt = "Enter Employee's First Name", Description = "Emp First Name")]
         public string FIRSTNAME { get; set; }
-        [Required]
-        [Display(Name = "Last Name", Prompt = "Enter Employee's Last Name", Description = "Emp Last Name")]
         public string LASTNAME { get; set; }
-        [Display(Name = "Status")]
         public string EMPSTATUS { get; set; }
         public string LOG { get; set; }
-
+    
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

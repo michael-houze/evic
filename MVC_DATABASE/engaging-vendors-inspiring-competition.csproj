@@ -257,6 +257,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NEGOTIATION.cs">
+      <DependentUpon>EVICEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OFFEREDCATEGORY.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
@@ -264,6 +267,9 @@
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReportAnalytics.cs" />
+    <Compile Include="Models\RESPONSE.cs">
+      <DependentUpon>EVICEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RFI.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>

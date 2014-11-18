@@ -19,7 +19,9 @@ namespace MVC_DATABASE.Models
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.CONTRACTs = new HashSet<CONTRACT>();
+            this.NEGOTIATIONs = new HashSet<NEGOTIATION>();
             this.OFFEREDCATEGORies = new HashSet<OFFEREDCATEGORY>();
+            this.RESPONSEs = new HashSet<RESPONSE>();
             this.RFIINVITEs = new HashSet<RFIINVITE>();
             this.RFPINVITEs = new HashSet<RFPINVITE>();
             this.VENDORCONTACTs = new HashSet<VENDORCONTACT>();
@@ -43,7 +45,9 @@ namespace MVC_DATABASE.Models
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<CONTRACT> CONTRACTs { get; set; }
         public virtual EMPLOYEE EMPLOYEE { get; set; }
+        public virtual ICollection<NEGOTIATION> NEGOTIATIONs { get; set; }
         public virtual ICollection<OFFEREDCATEGORY> OFFEREDCATEGORies { get; set; }
+        public virtual ICollection<RESPONSE> RESPONSEs { get; set; }
         public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }
         public virtual ICollection<RFPINVITE> RFPINVITEs { get; set; }
         public virtual VENDOR VENDOR { get; set; }

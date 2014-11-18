@@ -12,23 +12,15 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TEMPLATE
+    public partial class RESPONSE
     {
-        public TEMPLATE()
-        {
-            this.CONTRACTs = new HashSet<CONTRACT>();
-            this.RFIs = new HashSet<RFI>();
-            this.RFPs = new HashSet<RFP>();
-        }
-    
-        public int TEMPLATEID { get; set; }
-        public string TYPE { get; set; }
+        public int PK { get; set; }
+        public int NEGID { get; set; }
+        public string Id { get; set; }
+        public System.DateTime CREATED { get; set; }
         public string PATH { get; set; }
-        public Nullable<int> NEGID { get; set; }
     
-        public virtual ICollection<CONTRACT> CONTRACTs { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual NEGOTIATION NEGOTIATION { get; set; }
-        public virtual ICollection<RFI> RFIs { get; set; }
-        public virtual ICollection<RFP> RFPs { get; set; }
     }
 }
