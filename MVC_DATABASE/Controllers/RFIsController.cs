@@ -442,7 +442,7 @@ namespace MVC_DATABASE.Controllers
                 string organization = vendor.ORGANIZATION + ".xlsx";
                 string rfiid = rfiinvite.RFIID.ToString();
                 string ghxpath = "~/Content/RFIs/" + rfiid + "/" + organization;
-                string catalogPath = "~/Content/RFIs/Catalogs/" + rfiid + "/" + organization;
+                string catalogPath = "~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION;
 
 
                 //Extract the file name.
@@ -466,13 +466,13 @@ namespace MVC_DATABASE.Controllers
                     var catalogName = Path.GetFileName(model.Catalog.FileName);
 
                     //Establishes where to save the path using the extracted name.
-                      var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs"+rfiid+"/"), organization);
+                    var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/"), vendor.ORGANIZATION);
                        rfiinvite.CATALOGPATH = catalogPath;
 
                  //checks to see if file path exists, if it doesn't it creates
-                var catmappath = Server.MapPath("~/Content/RFIs/Catalogs" + rfiid + "/");
-                if (!System.IO.Directory.Exists(catmappath))
-                    System.IO.Directory.CreateDirectory(catmappath);
+                var catalogmappath = Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/");
+                if (!System.IO.Directory.Exists(catalogmappath))
+                    System.IO.Directory.CreateDirectory(catalogmappath);
 
 
                 //Saves file
