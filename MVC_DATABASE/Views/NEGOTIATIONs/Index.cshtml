@@ -1,0 +1,51 @@
+﻿@model MVC_DATABASE.Models.ViewModels.NegIndex
+
+@{
+    ViewBag.Title = "Negotiations";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Start Negotiations", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.negotiation.NEGID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.negotiation.RFPID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.negotiation.RFP.CATEGORY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.negotiation.AspNetUser.VENDOR.ORGANIZATION)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.opennegs) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NEGID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RFPID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.VENDOR.ORGANIZATION)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.NEGID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.NEGID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.NEGID })
+        </td>
+    </tr>
+}
+
+</table>

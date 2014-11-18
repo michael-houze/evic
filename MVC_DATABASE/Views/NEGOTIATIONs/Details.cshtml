@@ -1,0 +1,42 @@
+﻿@model MVC_DATABASE.Models.NEGOTIATION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NEGOTIATION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CLOSED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CLOSED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RFP.CATEGORY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFP.CATEGORY)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.NEGID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

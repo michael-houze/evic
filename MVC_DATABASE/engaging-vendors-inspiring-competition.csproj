@@ -200,6 +200,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NEGOTIATIONsController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RFIsController.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Models\ViewModels\AccountManagement.cs" />
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
     <Compile Include="Models\ViewModels\ContractIndex.cs" />
+    <Compile Include="Models\ViewModels\NegIndex.cs" />
     <Compile Include="Models\ViewModels\ReportDetails.cs" />
     <Compile Include="Models\ViewModels\ReportLine.cs" />
     <Compile Include="Models\ViewModels\ReportRecord.cs" />
@@ -594,6 +596,11 @@
     <Content Include="Views\RFIs\ExpiredIndex.cshtml" />
     <Content Include="Views\RFPs\ExpiredIndex.cshtml" />
     <Content Include="Views\CONTRACTs\VendorDetails.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\Create.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\Delete.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\Details.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\Edit.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
