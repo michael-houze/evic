@@ -4,6 +4,13 @@
 }
 
 <h2>Frequently Asked Questions</h2>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+    @Html.ActionLink("Create New FAQ", "AddFAQ")
+    </p>
+}
+
 <table id="faqindextable" class="table tablesorter">
     <thead>
         <tr>

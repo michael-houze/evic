@@ -156,7 +156,7 @@ namespace MVC_DATABASE.Controllers
             
             await db.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("Index");
         }
 	}
 }
