@@ -111,18 +111,50 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CONTRACTID,Id,TEMPLATEID,RFPID,CONTRACT_PATH")] CONTRACT cONTRACT)
+        public async Task<ActionResult> Create(CreateContract model)
         {
             if (ModelState.IsValid)
             {
-                db.CONTRACTs.Add(cONTRACT);
+                CONTRACT con = new CONTRACT { Id = model.contract.Id, TEMPLATEID = model.contract.TEMPLATEID, RFPID = model.contract.RFPID, CREATED = DateTime.Now, EXPIRES = model.contract.EXPIRES };
+                if (model.contract.DOCUMENTPATH != null)
+                {
+                    //Extract the file name.
+                    var fileName = Path.GetFileName(model.file.FileName);
+                    //Establishes where to save the path using the extracted name.
+                    var path = Path.Combine(Server.MapPath(@"~/Content/File_Uploads/VendorDocUploads"), fileName);
+                    //Saves file.
+                    model.file.SaveAs(path);
+                    con.DOCUMENTPATH = path;
+                }
+
+                db.CONTRACTs.Add(con);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", cONTRACT.Id);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", cONTRACT.TEMPLATEID);
-            return View(cONTRACT);
+            var rfpidquery = from x in db.RFPs
+                             where x.EXPIRES <= DateTime.Now
+                             select x.RFPID;
+
+            ViewBag.rfpid = rfpidquery;
+
+            var templates = from x in db.TEMPLATEs
+                            where x.TYPE == "CONTRACT"
+                            select x;
+
+            ViewBag.templates = new SelectList(templates, "TEMPLATEID", "TEMPLATEID");
+
+            var vendorProductsQuery = from v in db.VENDORs
+                                      join c in db.RFPINVITEs
+                                      on v.Id equals c.Id
+                                      join r in db.RFPs
+                                      on c.RFPID equals r.RFPID
+                                      where c.OFFER_PATH != string.Empty
+                                      where r.RFPID == rfpidquery.FirstOrDefault()
+                                      select new { v.Id, v.ORGANIZATION };
+
+            ViewBag.AcceptedVendors = vendorProductsQuery;
+            return View(model);
         }
 
         [Authorize(Roles = "Administrator,Employee,Vendor")]
@@ -317,6 +349,20 @@ namespace MVC_DATABASE.Controllers
             }
             
             return RedirectToAction("Details");
+        }
+
+        public ActionResult VendorDocDownload(string fileName)
+        {
+            var dir = new System.IO.DirectoryInfo(Server.MapPath("~/Content/File_Uploads/VendorDocUploads"));
+            System.IO.FileInfo[] fileNames = dir.GetFiles("*.*");
+            List<string> items = new List<string>();
+
+            foreach (var file in fileNames)
+            {
+                items.Add(file.Name);
+            }
+
+            return View(items);
         }
 
         public async Task<ActionResult> VendorDetails(int? id)

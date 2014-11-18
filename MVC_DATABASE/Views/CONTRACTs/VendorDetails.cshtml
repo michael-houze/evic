@@ -66,14 +66,19 @@
         <dt>Vendor Documents</dt>
         <dd>
             @*@{
-                string link = item.Title;
-                string path = Url.Content("~/Content/File_Uploads/VendorDocUploads");
-                string tag = "<a href=" + path + ">" + link + "</a>";
+                //string link = Model.Title;
+                //string path = @Url.Content("~/Content/File_Uploads/VendorDocUploads");
+                //string tag = "<a href=" + path + ">" + "File" + "</a>";
             }
 
             @Html.Raw(tag)*@
 
-            <a href="~/Content/File_Uploads/VendorDocUploads/imagesHV1G2IG3.jpg" download>Sample File</a>
+            @*<a href="~/Content/File_Uploads/VendorDocUploads/imagesHV1G2IG3.jpg" download>Sample File</a>*@
+
+            @if (!string.IsNullOrWhiteSpace(Model.DOCUMENTPATH))
+            { 
+            @Html.ActionLink("Additional Documents", "VendorDocDownload", new { fileName = Model.DOCUMENTPATH})
+            }
         </dd>
 
     </dl>
