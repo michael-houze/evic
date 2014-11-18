@@ -11,11 +11,19 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     
     public partial class FAQ
     {
         public int Id { get; set; }
+        [Required]
+        [Display(Name="Question")]
+        [DataType(DataType.Text)]
         public string QUESTION { get; set; }
+        [Required]
+        [Display(Name = "Answer")]
+        [DataType(DataType.Text)]
         public string ANSWER { get; set; }
     }
 }

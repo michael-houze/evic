@@ -3,11 +3,15 @@
     ViewBag.Title = "Add FAQ";
 }
 
-<h2>AddFAQ</h2>
+<center>
+<h2>Add a Frequently Asked Question</h2>
+    <div>
+        @Html.ActionLink("Back to FAQ Home", "Index")
+    </div>
+</center>
 @using (Html.BeginForm("AddFAQ", "FAQ", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Add a Frequently Asked Question</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
