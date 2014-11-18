@@ -11,6 +11,7 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class RFI
     {
@@ -21,9 +22,21 @@ namespace MVC_DATABASE.Models
         }
     
         public int RFIID { get; set; }
+
+        [Required]
+        [Display(Name = "Template Format")]
         public int TEMPLATEID { get; set; }
+
+        [Required]
+        [Display(Name = "RFI Category")]
         public string CATEGORY { get; set; }
+
+        [Required(ErrorMessage="Please enter date to start the RFI process")]
+        [Display(Name = "RFI Start Date")]
         public System.DateTime CREATED { get; set; }
+
+        [Required(ErrorMessage="Please enter the RFI expiration date")]
+        [Display(Name = "RFI Expiration Date")]
         public System.DateTime EXPIRES { get; set; }
     
         public virtual TEMPLATE TEMPLATE { get; set; }

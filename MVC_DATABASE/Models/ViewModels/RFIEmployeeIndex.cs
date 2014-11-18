@@ -22,11 +22,14 @@ namespace MVC_DATABASE.Models.ViewModels
 
         public ICollection<RFI> ExpiredRFIList { get; set; }
 
+        [Required(ErrorMessage = "Please select at least one item")]
         [Display(Name= "Available Vendors")]
         public ICollection<string> RFIInviteList { get; set; }
 
+        [Required(ErrorMessage = "Please select at least one item")]
         [Display(Name= "Invited Vendors")]
         public ICollection<string> RFIInviteVendorList { get; set; }
+
 
         public ICollection<RFIINVITE> EditRFIInviteList { get; set; }
 

@@ -34,6 +34,15 @@
                     .fail(function (data) { showError(data); });
             });
 
+            $("RFI_InviteList").validate({
+                rules: {
+                    selectName: {
+                        required: true,
+                        minLength: 1
+                    }
+                }
+            });
+
             //$("#RFIInviteList").trigger("chosen:updated");
 
             function OnSuccessPopulateListBox(data) {
@@ -44,6 +53,7 @@
                 $("#RFIInviteList").show()
                 //debugger;
             }
+
             function showError(data) {
                 debugger;
             }
@@ -103,7 +113,8 @@
             <div class="col-md-10">
             @if(ViewBag.AcceptedVendors != null)
             {
-                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors)
+                @Html.ListBoxFor(m => m.RFIInviteList, (MultiSelectList)ViewBag.AcceptedVendors)<br />
+                @Html.ValidationMessageFor(m => m.RFIInviteList)
             }
             </div>
 
