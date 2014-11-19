@@ -59,8 +59,13 @@
     </td>*@
 
                 <td>
-                    @Html.ActionLink("Respond", "Respond", new { id = item.contractID }) |
+                    @if (string.IsNullOrEmpty(item.contractPath))
+                    { 
+                    @Html.ActionLink("Respond", "Respond", new { Id = item.contractID })
+                    }
+                    else { 
                     @Html.ActionLink("Details", "VendorDetails", new { id = item.contractID })
+                    }
                 </td>
             </tr>
         }

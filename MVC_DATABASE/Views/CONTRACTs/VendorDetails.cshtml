@@ -75,7 +75,7 @@
 
             @*<a href="~/Content/File_Uploads/VendorDocUploads/imagesHV1G2IG3.jpg" download>Sample File</a>*@
 
-            @if (!string.IsNullOrWhiteSpace(Model.DOCUMENTPATH))
+            @if (!string.IsNullOrEmpty(Model.DOCUMENTPATH))
             { 
             @Html.ActionLink("Additional Documents", "VendorDocDownload", new { fileName = Model.DOCUMENTPATH})
             }

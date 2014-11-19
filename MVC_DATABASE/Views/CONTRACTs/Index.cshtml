@@ -57,7 +57,10 @@
                     @Html.DisplayFor(modelItem => item.organization)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.contractPath)
+                    @if(!string.IsNullOrEmpty(item.contractPath))
+                        {
+                             @Html.ActionLink(item.organization, "DownloadContract", new { path = item.contractPath })
+                        } 
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CREATED)
@@ -66,7 +69,6 @@
                     @Html.DisplayFor(modelItem => item.EXPIRES)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.contractID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.contractID })
                 </td>
             </tr>

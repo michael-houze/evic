@@ -434,57 +434,61 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Respond(RFIResponse model)
         {
-            //Verify a file is selected.
-            if (model.File != null)
+            if (ModelState.IsValid)
             {
-                VENDOR vendor = await db.VENDORs.FindAsync(model.rfiinvite.Id);
-                RFIINVITE rfiinvite = await db.RFIINVITEs.FindAsync(model.rfiinvite.PRIMARYKEY);
-                string organization = vendor.ORGANIZATION + ".xlsx";
-                string rfiid = rfiinvite.RFIID.ToString();
-                string ghxpath = "~/Content/RFIs/" + rfiid + "/" + organization;
-                string catalogPath = "~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION;
-
-
-                //Extract the file name.
-                var fileName = Path.GetFileName(model.File.FileName);
-                //Establishes where to save the path using the extracted name.
-                var path = Path.Combine(Server.MapPath("~/Content/RFIs/"+rfiid+"/"), organization);
-                rfiinvite.GHX_PATH = ghxpath;
-
-                //checks to see if file path exists, if it doesn't it creates
-                var mappath = Server.MapPath("~/Content/RFIs/" + rfiid + "/");
-                if (!System.IO.Directory.Exists(mappath))
-                    System.IO.Directory.CreateDirectory(mappath);
-
-                //Saves file.
-                model.File.SaveAs(path);
-                
-                //If Catalog is uploaded 
-                if (model.Catalog !=null)
+                //Verify a file is selected.
+                if (model.File != null)
                 {
-                    //Extract file name
-                    var catalogName = Path.GetFileName(model.Catalog.FileName);
+                    VENDOR vendor = await db.VENDORs.FindAsync(model.rfiinvite.Id);
+                    RFIINVITE rfiinvite = await db.RFIINVITEs.FindAsync(model.rfiinvite.PRIMARYKEY);
+                    string organization = vendor.ORGANIZATION + ".xlsx";
+                    string rfiid = rfiinvite.RFIID.ToString();
+                    string ghxpath = "~/Content/RFIs/" + rfiid + "/" + organization;
+                    string catalogPath = "~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION;
 
+
+                    //Extract the file name.
+                    var fileName = Path.GetFileName(model.File.FileName);
                     //Establishes where to save the path using the extracted name.
-                    var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/"), vendor.ORGANIZATION);
-                       rfiinvite.CATALOGPATH = catalogPath;
+                    var path = Path.Combine(Server.MapPath("~/Content/RFIs/" + rfiid + "/"), organization);
+                    rfiinvite.GHX_PATH = ghxpath;
 
-                 //checks to see if file path exists, if it doesn't it creates
-                var catalogmappath = Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/");
-                if (!System.IO.Directory.Exists(catalogmappath))
-                    System.IO.Directory.CreateDirectory(catalogmappath);
+                    //checks to see if file path exists, if it doesn't it creates
+                    var mappath = Server.MapPath("~/Content/RFIs/" + rfiid + "/");
+                    if (!System.IO.Directory.Exists(mappath))
+                        System.IO.Directory.CreateDirectory(mappath);
+
+                    //Saves file.
+                    model.File.SaveAs(path);
+
+                    //If Catalog is uploaded 
+                    if (model.Catalog != null)
+                    {
+                        //Extract file name
+                        var catalogName = Path.GetFileName(model.Catalog.FileName);
+
+                        //Establishes where to save the path using the extracted name.
+                        var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/"), vendor.ORGANIZATION);
+                        rfiinvite.CATALOGPATH = catalogPath;
+
+                        //checks to see if file path exists, if it doesn't it creates
+                        var catalogmappath = Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/");
+                        if (!System.IO.Directory.Exists(catalogmappath))
+                            System.IO.Directory.CreateDirectory(catalogmappath);
 
 
-                //Saves file
-                 model.Catalog.SaveAs(thecatalogPath);
+                        //Saves file
+                        model.Catalog.SaveAs(thecatalogPath);
+                        await db.SaveChangesAsync();
+                    }
                     await db.SaveChangesAsync();
-                }
-                await db.SaveChangesAsync();
-                return RedirectToAction("VendorIndex", "RFIs");
+                    return RedirectToAction("VendorIndex", "RFIs");
 
+                }
             }
             //Sends the user back to their respective RFI Index page.
             return RedirectToAction("VendorIndex","RFIs");
+
         }
 
         public async Task<ActionResult> ViewDetails(int Id)

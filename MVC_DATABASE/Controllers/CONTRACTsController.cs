@@ -29,6 +29,7 @@ namespace MVC_DATABASE.Controllers
         private ContractIndex contractindex = new ContractIndex();
 
         // GET: CONTRACTs
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
             var indexview = from x in db.CONTRACTs
@@ -36,12 +37,13 @@ namespace MVC_DATABASE.Controllers
                             on x.RFPID equals y.RFPID
                             join z in db.VENDORs
                             on x.Id equals z.Id
-                            select new ContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH, organization = z.ORGANIZATION, CREATED = y.CREATED, EXPIRES = y.EXPIRES};
+                            select new ContractIndex { contractID = x.CONTRACTID, rfpID = y.RFPID, category = y.CATEGORY, contractPath = x.CONTRACT_PATH, organization = z.ORGANIZATION, CREATED = x.CREATED, EXPIRES = x.EXPIRES};
                         
             return View(indexview.ToList<ContractIndex>());
         }
 
         // GET: CONTRACTs/Details/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -78,6 +80,7 @@ namespace MVC_DATABASE.Controllers
         } 
 
         // GET: CONTRACTs/Create
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
         {
             var rfpidquery = from x in db.RFPs
@@ -111,24 +114,31 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(CreateContract model)
         {
             if (ModelState.IsValid)
             {
-                CONTRACT con = new CONTRACT { Id = model.contract.Id, TEMPLATEID = model.contract.TEMPLATEID, RFPID = model.contract.RFPID, CREATED = DateTime.Now, EXPIRES = model.contract.EXPIRES };
                 
-                //if (model.file != null)
-                //{
+                if (model.file != null)
+                {
+                
                     //Extract the file name.
-                    var fileName = Path.GetFileName(model.file.FileName);
+                    var fileName =  Path.GetFileName(model.file.FileName);
+                    string documentpath = "~/Content/File_Uploads/" + fileName;
                     //Establishes where to save the path using the extracted name.
-                    var path = Path.Combine(Server.MapPath(@"~/Content/File_Uploads/"), fileName);
+                    var path =  Path.Combine(Server.MapPath("~/Content/File_Uploads/"), fileName);
                     //Saves file.
                     model.file.SaveAs(path);
-                    con.DOCUMENTPATH = path;
-                //}
-
-                db.CONTRACTs.Add(con);
+                    CONTRACT con = new CONTRACT { Id = model.contract.Id, TEMPLATEID = model.contract.TEMPLATEID, RFPID = model.contract.RFPID, CREATED = DateTime.Now, EXPIRES = model.contract.EXPIRES, DOCUMENTPATH = documentpath, CONTRACT_PATH = "" };
+                    db.CONTRACTs.Add(con);
+                }
+                else
+                {
+                    CONTRACT con = new CONTRACT { Id = model.contract.Id, TEMPLATEID = model.contract.TEMPLATEID, RFPID = model.contract.RFPID, CREATED = DateTime.Now, EXPIRES = model.contract.EXPIRES, CONTRACT_PATH = "" };
+                    db.CONTRACTs.Add(con);
+                }
+               
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -173,7 +183,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         [Authorize(Roles = "Administrator,Employee,Vendor")]
-        public FileResult DownloadContract(string path)
+        public FileResult DownloadContract(string path) 
         {
 
             //select vendors Id from contract
@@ -193,179 +203,148 @@ namespace MVC_DATABASE.Controllers
             return File(path, "application/pdf", fileName);
         }
 
-        // GET: CONTRACTs/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CONTRACT cONTRACT = await db.CONTRACTs.FindAsync(id);
-            if (cONTRACT == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", cONTRACT.Id);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", cONTRACT.TEMPLATEID);
-            return View(cONTRACT);
-        }
+        //// GET: CONTRACTs/Edit/5
+        //public async Task<ActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CONTRACT cONTRACT = await db.CONTRACTs.FindAsync(id);
+        //    if (cONTRACT == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", cONTRACT.Id);
+        //    ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", cONTRACT.TEMPLATEID);
+        //    return View(cONTRACT);
+        //}
 
-        // POST: CONTRACTs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CONTRACTID,Id,TEMPLATEID,RFPID,CONTRACT_PATH")] CONTRACT cONTRACT)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(cONTRACT).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", cONTRACT.Id);
-            ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", cONTRACT.TEMPLATEID);
-            return View(cONTRACT);
-        }
+        //// POST: CONTRACTs/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "CONTRACTID,Id,TEMPLATEID,RFPID,CONTRACT_PATH")] CONTRACT cONTRACT)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(cONTRACT).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.Id = new SelectList(db.AspNetUsers, "Id", "Email", cONTRACT.Id);
+        //    ViewBag.TEMPLATEID = new SelectList(db.TEMPLATEs, "TEMPLATEID", "TYPE", cONTRACT.TEMPLATEID);
+        //    return View(cONTRACT);
+        //}
 
-        // GET: CONTRACTs/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CONTRACT cONTRACT = await db.CONTRACTs.FindAsync(id);
-            if (cONTRACT == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cONTRACT);
-        }
-
-        // POST: CONTRACTs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            CONTRACT cONTRACT = await db.CONTRACTs.FindAsync(id);
-            db.CONTRACTs.Remove(cONTRACT);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         //Beginning of vendor
         VendorContract responsemodel = new VendorContract();
 
-        public async Task<ActionResult> VendorResponse(int? id)
+        //public async Task<ActionResult> VendorResponse(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    responsemodel.contract = await db.CONTRACTs.FindAsync(id);
+
+        //    if (responsemodel.contract == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    responsemodel.contractlist = new List<CONTRACT>();
+        //    responsemodel.vendorlist = new List<VENDOR>();
+
+        //    foreach (var x in db.CONTRACTs.ToList())
+        //    {
+
+        //        if (x.CONTRACTID == id)
+        //        {
+        //            VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
+        //            responsemodel.contractlist.Add(x);
+        //            responsemodel.vendorlist.Add(vendor);
+        //        }
+        //    }
+
+        //    return View(responsemodel);
+        //}
+
+        CreateContract vendorrespond = new CreateContract();
+
+        [Authorize(Roles = "Vendor")]
+        public ActionResult Respond(int Id)
         {
-            if (id == null)
+            
+            vendorrespond.contract = db.CONTRACTs.Find(Id);
+            if (!string.IsNullOrWhiteSpace(vendorrespond.contract.CONTRACT_PATH))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("VendorIndex");
             }
-
-            responsemodel.contract = await db.CONTRACTs.FindAsync(id);
-
-            if (responsemodel.contract == null)
-            {
-                return HttpNotFound();
-            }
-
-            responsemodel.contractlist = new List<CONTRACT>();
-            responsemodel.vendorlist = new List<VENDOR>();
-
-            foreach (var x in db.CONTRACTs.ToList())
-            {
-
-                if (x.CONTRACTID == id)
-                {
-                    VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
-                    responsemodel.contractlist.Add(x);
-                    responsemodel.vendorlist.Add(vendor);
-                }
-            }
-
-            return View(responsemodel);
-        }
-
-        public ActionResult Respond(string Id)
-        {
-           
-            var response = new CONTRACT { Id = Id };
-
-            return View();
+            
+            return View(vendorrespond);
         }
 
         //
         //Stores the uploaded form from View VendorRFI/Respond
+
+        [HttpPost]
+        [Authorize(Roles = "Vendor")]
+        public ActionResult Respond(CreateContract model)
+        {
+            if (ModelState.IsValid)
+            {
+                //Verify a file is selected.
+                if (model.file != null)
+                {
+                    CONTRACT con = new CONTRACT();
+                    con = db.CONTRACTs.Find(model.contract.CONTRACTID);
+                    //Extract the file name.
+                    var fileName = Path.GetFileName(model.file.FileName);
+                    //Establishes where to save the path using the extracted name.
+                    var path = Path.Combine(Server.MapPath("~/Content/ContractStore/"+model.contract.CONTRACTID+"/"), fileName);
+                    //Saves file.
+                    string contractpath = "~/Content/ContractStore/" + model.contract.CONTRACTID + "/" + fileName;
+
+                    //checks to see if file path exists, if it doesn't it creates
+                    var folderpath = Server.MapPath("~/Content/ContractStore/" + model.contract.CONTRACTID + "/");
+                    if (!System.IO.Directory.Exists(folderpath))
+                        System.IO.Directory.CreateDirectory(folderpath);
+
+                    model.file.SaveAs(path);
+                    
+                    con.CONTRACT_PATH = contractpath;
+                    db.Entry(con).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }
+
+                //Sends the user back to their respective RFI Index page.
+                return RedirectToAction("VendorIndex");
+            }
+            return View(model);
+        }
+
         
-        [HttpPost]
-        public ActionResult Respond(HttpPostedFileBase file)
+        private string GetMimeType(string fileName)
         {
-            //Verify a file is selected.
-            if (file != null)
-            {
-                //Extract the file name.
-                var fileName = Path.GetFileName(file.FileName);
-                //Establishes where to save the path using the extracted name.
-                var path = Path.Combine(Server.MapPath(@"~/Content/ContractStore/TestContracts"), fileName);
-                //Saves file.
-                file.SaveAs(path);
-            }
-            //Sends the user back to their respective RFI Index page.
-            return RedirectToAction("VendorIndex");
+            string mimeType = "application/unknown";
+            string ext = System.IO.Path.GetExtension(fileName).ToLower();
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+                mimeType = regKey.GetValue("Content Type").ToString();
+            return mimeType;
         }
 
-        //Vendor Document uploads
-        public ActionResult VendorDocUpload(string Id)
+        public FileResult VendorDocDownload(string fileName)
         {
-
-            var response = new CONTRACT { Id = Id };
-
-            return View();
+            return File(fileName, GetMimeType(fileName), "Additional Document");
         }
 
-
-        [HttpPost]
-        public ActionResult VendorDocUpload(HttpPostedFileBase file)
-        {
-            //Verify a file is selected.
-            if (file != null)
-            {
-                //Extract the file name.
-                var fileName = Path.GetFileName(file.FileName);
-                //Establishes where to save the path using the extracted name.
-                var path = Path.Combine(Server.MapPath(@"~/Content/File_Uploads/VendorDocUploads"), fileName);
-                //Saves file.
-                file.SaveAs(path);
-            }
-            
-            return RedirectToAction("Details");
-        }
-
-        public ActionResult VendorDocDownload(string fileName)
-        {
-            var dir = new System.IO.DirectoryInfo(Server.MapPath("~/Content/File_Uploads/VendorDocUploads"));
-            System.IO.FileInfo[] fileNames = dir.GetFiles("*.*");
-            List<string> items = new List<string>();
-
-            foreach (var file in fileNames)
-            {
-                items.Add(file.Name);
-            }
-
-            return View(items);
-        }
-
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> VendorDetails(int? id)
         {
             if (id == null)
@@ -386,6 +365,7 @@ namespace MVC_DATABASE.Controllers
 
         VendorContractIndex vendorIndex = new VendorContractIndex();
 
+        [Authorize(Roles="Vendor")]
         public ActionResult VendorIndex()
         {
             EVICEntities db = new EVICEntities();

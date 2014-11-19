@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.CONTRACT
+﻿@model MVC_DATABASE.Models.ViewModels.CreateContract
 
 @{
     ViewBag.Title = "Respond";
@@ -7,9 +7,28 @@
 
 <h2>Respond</h2>
 
+
 @using (Html.BeginForm("Respond", "CONTRACTs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="file" name="file" />
-    <input type="submit" value="OK" />
+    @Html.HiddenFor(m => m.contract.CONTRACTID, new { @readonly = "readonly", @class = "form-control" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.file, "Document Path", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.file, null, new { type = "file", @class = "input-file" })
+            @Html.ValidationMessageFor(model => model.file, "", new { @class = "text-danger" })
+
+
+            @*<input type="file" name="file" />*@
+        </div>
+    </div>
+
+
+    <div class="form-group">
+
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
 }
 

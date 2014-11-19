@@ -28,7 +28,6 @@ namespace MVC_DATABASE.Models.ViewModels
     {
         public CONTRACT contract { get; set; }
 
-        [FileExtensions(Extensions = "xlsx,xls,pdf,txt,jpg")]
         public HttpPostedFileBase file { get; set; }
     }
 }
