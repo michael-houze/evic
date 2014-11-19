@@ -4,10 +4,7 @@
 
     <script type="text/jscript">
         $(function(){
-           // $("#Id").hide()
-
-
-            $("#RFPID").on("change", function (e) {
+            $("#contract_RFPID").on("change", function (e) {
                 var dropValue = $(this).val();
                 $.ajax({
                     type: "GET",
@@ -23,11 +20,11 @@
             });
 
             function OnSuccessPopulateListBox(data) {
-                $("#Id").empty()
+                $("#contract_Id").empty()
                 data.forEach(function (vendor) {
-                    $("#Id").append('<option value =' + vendor.Id + '>' + vendor.ORGANIZATION + '</option>')
+                    $("#contract_Id").append('<option value =' + vendor.Id + '>' + vendor.ORGANIZATION + '</option>')
                 });
-                $("#Id").show()
+                $("#contract_Id").show()
                 //debugger;
             }
             function showError(data) {
@@ -43,7 +40,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "CONTRACTs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -71,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.contract.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-            @if(ViewBag.AcceptedVendors != null)
+            @if (ViewBag.AcceptedVendors != null)
             {
                 @Html.DropDownListFor(model => model.contract.Id, new SelectList(ViewBag.AcceptedVendors))
                 @Html.ValidationMessageFor(model => model.contract.Id, "", new { @class = "text-danger" })

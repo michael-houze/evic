@@ -116,16 +116,17 @@ namespace MVC_DATABASE.Controllers
             if (ModelState.IsValid)
             {
                 CONTRACT con = new CONTRACT { Id = model.contract.Id, TEMPLATEID = model.contract.TEMPLATEID, RFPID = model.contract.RFPID, CREATED = DateTime.Now, EXPIRES = model.contract.EXPIRES };
-                if (model.contract.DOCUMENTPATH != null)
-                {
+                
+                //if (model.file != null)
+                //{
                     //Extract the file name.
                     var fileName = Path.GetFileName(model.file.FileName);
                     //Establishes where to save the path using the extracted name.
-                    var path = Path.Combine(Server.MapPath(@"~/Content/File_Uploads/VendorDocUploads"), fileName);
+                    var path = Path.Combine(Server.MapPath(@"~/Content/File_Uploads/"), fileName);
                     //Saves file.
                     model.file.SaveAs(path);
                     con.DOCUMENTPATH = path;
-                }
+                //}
 
                 db.CONTRACTs.Add(con);
                 await db.SaveChangesAsync();
