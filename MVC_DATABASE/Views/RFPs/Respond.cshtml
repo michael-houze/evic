@@ -6,59 +6,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<center>
-    <h1>RFP - Respond</h1>
-    <div>
-        @Html.ActionLink("Back to RFP Home", "VendorIndex")
-    </div>
-</center>
+<div id="rfprespond">
+    <center>
+        <h1>RFP - Respond</h1>
+        <div>
+            @Html.ActionLink("Back to RFP Home", "VendorIndex")
+        </div>
+    </center>
 
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.RFP.RFPID)
-    </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RFP.RFPID)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.RFP.RFPID)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.RFP.RFPID)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.RFP.CATEGORY)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.RFP.CATEGORY)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.RFP.CATEGORY)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.RFP.CATEGORY)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.RFP.CREATED)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.RFP.CREATED)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.RFP.CREATED)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.RFP.CREATED)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.RFP.EXPIRES)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.RFP.EXPIRES)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.RFP.EXPIRES)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.RFP.EXPIRES)
+        </dd>
 
-    <dt>
-        @Html.DisplayName("RFP Template")
-        <br />
-        @ViewBag.instruction
-    </dt>
+        <dt>
+            @Html.DisplayName("RFP Template")
+            <br />
+            @ViewBag.instruction
+        </dt>
 
-    <dd>
-        @Html.ActionLink("RFP Template - " + Model.RFP.TEMPLATEID, "DownloadTemplate", new { path = Model.RFP.TEMPLATE.PATH })
-    </dd>
-</dl>
+        <dd>
+            @Html.ActionLink("RFP Template - " + Model.RFP.TEMPLATEID, "DownloadTemplate", new { path = Model.RFP.TEMPLATE.PATH })
+        </dd>
+    </dl>
 
-
-@using (Html.BeginForm("Respond", "RFPs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Respond", "RFPs", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -66,20 +66,20 @@
         @Html.HiddenFor(m => m.RFPInvite.RFPID)
         @Html.HiddenFor(m => m.RFPInvite.Id)
 
-        @Html.LabelFor(m => m.RFPInvite.OFFER_PATH, "Offer Path")
+        @Html.LabelFor(m => m.RFPInvite.OFFER_PATH, "RFP Offer")
         @Html.TextBoxFor(m => m.File, null, new { type = "file", @class = "input-file" })
         @*<input type="file" name="file" />*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <br />
+                <br />
+                <input type="submit" value="Respond" class="btn btn-default" />
             </div>
         </div>
     }
-<br />
 
-<center>
-    @Html.ActionLink("Return to RFP Home", "VendorIndex")
-</center>
+    <br />
+    <br />
 
-
+</div>
 

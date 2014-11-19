@@ -95,6 +95,14 @@
         margin-left: 10px;
     }
 
+    .checkbox input {
+        width: 25px
+    }
+
+    .checkbox input[type="checkbox"] {
+        margin-left: 0px;
+    }
+
     .subnav .form-horizontal .col-md-2 .control-label label {
         margin-left: 20px;
         width: auto;
@@ -228,7 +236,7 @@
     }
 
     .loggedin:first-child a:hover {
-        border-bottom-left-radius: 30px;
+        border-bottom-left-radius: 10px;
         border-bottom-right-radius: 0px;
     }
 
@@ -717,4 +725,8 @@ a.dashboard {
 }
 .cir4{   
     background:#c4c423
+}
+
+#rfprespond .col-md-offset-2{
+    margin-left: 0px;
 }

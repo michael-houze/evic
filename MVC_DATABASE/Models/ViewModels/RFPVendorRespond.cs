@@ -32,24 +32,31 @@ namespace MVC_DATABASE.Models.ViewModels
             public RFPINVITE RFPInvite { get; set; }
             public VENDOR vendor { get; set; }
             public ICollection<RFPINVITE> RFPInviteList { get; set; }
+
+            [Required]
+            [FileExtensions(Extensions = "xlsx,xls")]
+            public HttpPostedFileBase File { get; set; }
+
+            [FileExtensions(Extensions = "xlsx,xls,pdf")]
+            public HttpPostedFileBase Catalog { get; set; }
         }
 
-        public class FileNames_RFPRespond
+        public class FileNames_RFPResponse
         {
             public int FileId { get; set; }
             public string FileName { get; set; }
             public string FilePath { get; set; }
         }
 
-        public List<FileNames_RFPRespond> GetFiles()
+        public List<FileNames_RFPResponse> GetFiles()
         {
-            List<FileNames_RFPRespond> fileList = new List<FileNames_RFPRespond>();
+            List<FileNames_RFPResponse> fileList = new List<FileNames_RFPResponse>();
             DirectoryInfo dirInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/RFPs"));
 
             int i = 0;
             foreach (var file in dirInfo.GetFiles())
             {
-                fileList.Add(new FileNames_RFPRespond()
+                fileList.Add(new FileNames_RFPResponse()
                 {
                     FileId = i + 1,
                     FileName = file.Name,

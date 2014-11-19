@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.ViewModels.RFPVendorIndex
+﻿@model MVC_DATABASE.Models.ViewModels.VendorRFP
 
 @using Microsoft.AspNet.Identity;
 
@@ -54,14 +54,13 @@
                                     }
                                 else
                                     {
-                                        @Html.ActionLink("Details", "VendorRFPDetails", new { id = item.RFPID })
+                                        @Html.ActionLink("Details", "ViewDetails", new { id = item.RFPID })
                                     }
                             </td>
                         </tr>
                     </tbody>
                 }
         }
-
 </table>
 
 <script>

@@ -1,27 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System;
-using System.Globalization;
-using System.Security.Claims;
-using System.Web;
-using System.Web.Mvc;
+﻿using LinqToExcel;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC_DATABASE.Models;
+using MVC_DATABASE.Models.ViewModels;
+using Remotion.Data.Linq;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
-using System.Web.Security;
-using LinqToExcel;
-using Remotion.Data.Linq;
-using Microsoft.AspNet.Identity.EntityFramework;
-using MVC_DATABASE.Models.ViewModels;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -278,146 +278,36 @@ namespace MVC_DATABASE.Controllers
 
         }
 
-        //// GET: RFPs/Delete/5
-        //public async Task<ActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    RFP rFP = await db.RFPs.FindAsync(id);
-        //    if (rFP == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(rFP);
-        //}
-
-        //// POST: RFPs/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> DeleteConfirmed(int id)
-        //{
-        //    RFP rFP = await db.RFPs.FindAsync(id);
-        //    db.RFPs.Remove(rFP);
-        //    await db.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
-
-
         //Vendor RFPs
-/*
-        RFPVendorRespond.RFPList respondmodel = new RFPVendorRespond.RFPList();
 
-        RFPVendorIndex rfpvendorindex = new RFPVendorIndex();
-
-        //Collects list of Vendor's RFPs and displays
         [Authorize(Roles = "Vendor")]
         public ActionResult VendorIndex()
         {
             //Establish DB connection.
             EVICEntities dbo = new EVICEntities();
             //Establish List of vendor's RFPs to transfer to View
-            RFPVendorIndex vendorRfp = new RFPVendorIndex();
+            VendorRFP VendorRFP = new VendorRFP();
             //Gets user information
             var user_id = User.Identity.GetUserId();
             //List containing VendorRFPs
-            vendorRfp.RFPList = new List<RFP>();
+            VendorRFP.RFPList = new List<RFP>();
+
+
 
             //Query for Vendor's specifi RFPs
             var vendorInvitedRFPs = from i in dbo.RFPINVITEs
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFPs on i.RFPID equals r.RFPID
                                     where i.Id == user_id
+                                    where i.RFP.CREATED <= DateTime.Now
+                                    where i.RFP.EXPIRES > DateTime.Now
                                     orderby i.RFPID
                                     select r; //new VendorRFP { rfp = r, rfpInvite = i, vendor = v };
 
             //Adds queried to list
-            vendorRfp.RFPList = vendorInvitedRFPs.ToList();
+            VendorRFP.RFPList = vendorInvitedRFPs.ToList();
 
-            return View(vendorRfp);
-        }
-
-        RFPVendorRespond.RFPList respondModel = new RFPVendorRespond.RFPList();
-
-        [Authorize(Roles = "Vendor")]
-        public ActionResult Respond(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            respondModel.rfp = new RFP();
-            respondModel.rfp = db.RFPs.Find(id);
-
-            if (respondModel.rfp == null)
-            {
-                return HttpNotFound();
-            }
-
-            respondModel.rfpInviteList = new List<RFPINVITE>();
-
-            foreach (var x in db.RFPINVITEs.ToList())
-            {
-                if (x.RFPID == id)
-                {
-                    respondModel.rfpInviteList.Add(x);
-                }
-            }
-
-            return View(respondModel);
-        }
-
-        [Authorize(Roles = "Vendor")]
-        public string VendorDetails()
-        {
-            return "Check what they submitted.";
-        }
-
-        public string Download()
-        {
-            return "Download";
-        }
-
-        public string Upload()
-        {
-            return "Upload.";
-        }
-    */
-
-        [Authorize(Roles = "Vendor")]
-        public ActionResult VendorIndex()
-        {
-            EVICEntities dbo = new EVICEntities();
-
-            RFPVendorIndex vendorRFP = new RFPVendorIndex();
-
-            var user_id = User.Identity.GetUserId();
-
-            vendorRFP.RFPList = new List<RFP>();
-
-            var vendorInvitedRFPs = from i in dbo.RFPINVITEs
-                                    join v in dbo.VENDORs on i.Id equals v.Id
-                                    join r in dbo.RFPs on i.RFPID equals r.RFPID
-                                    where i.Id == user_id
-                                    where i.RFP.EXPIRES > DateTime.Now
-                                    orderby i.RFPID
-                                    select r; 
-
-            vendorRFP.RFPList = vendorInvitedRFPs.ToList();
-
-            return View(vendorRFP);
+            return View(VendorRFP);
         }
 
         RFPVendorRespond.RFPList respondModel = new RFPVendorRespond.RFPList();
@@ -452,7 +342,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         //
-        //Stores the uploaded form from View VendorRFP/Respond
+        //Stores the uploaded form from View VendorRFI/Respond
         [Authorize(Roles = "Vendor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -467,6 +357,7 @@ namespace MVC_DATABASE.Controllers
                 string RFPID = RFPInvite.RFPID.ToString();
                 string offerpath = "~/Content/RFPs/" + RFPID + "/" + organization;
 
+
                 //Extract the file name.
                 var fileName = Path.GetFileName(model.File.FileName);
                 //Establishes where to save the path using the extracted name.
@@ -480,7 +371,6 @@ namespace MVC_DATABASE.Controllers
 
                 //Saves file.
                 model.File.SaveAs(path);
-
 
                 await db.SaveChangesAsync();
                 return RedirectToAction("VendorIndex", "RFPs");
@@ -512,13 +402,13 @@ namespace MVC_DATABASE.Controllers
         public FileResult DownloadResponse(string path)
         {
 
-          
+            //select vendors Id from RFIINVITE
             var InviteId = from x in db.RFPINVITEs
                            where x.OFFER_PATH == path
                            select x.Id;
-          
+            //Get vendor items from Id
             VENDOR vendor = db.VENDORs.Find(InviteId.FirstOrDefault());
-       
+            //select RFIID
             var RFPID = from y in db.RFPINVITEs
                         where y.OFFER_PATH == path
                         select y.RFPID;
@@ -528,13 +418,7 @@ namespace MVC_DATABASE.Controllers
             string fileName = (vendor.ORGANIZATION.ToString() + " - " + RFPID.FirstOrDefault().ToString());
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-        }
 
-        public FileResult DownloadTemplate(string path)
-        {
-            string fileName = "Baptist RFP Template";
-
-            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
         public JsonResult GetAcceptedVendors(string RFIID)
@@ -601,8 +485,6 @@ namespace MVC_DATABASE.Controllers
                     //! ! !add to db
                 }
             }
-
-
         }
     }
 }
