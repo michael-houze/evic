@@ -448,43 +448,43 @@ namespace MVC_DATABASE.Controllers
             return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
         } 
 
-        public void RFPAnalytics(string path, RFPVendorRespond.RFPList response)
-        {
-            string filePath = path;
+        //public void RFPAnalytics(string path, RFPVendorRespond.RFPList response)
+        //{
+        //    string filePath = path;
 
-            var excelFile = new ExcelQueryFactory(filePath);
+        //    var excelFile = new ExcelQueryFactory(filePath);
 
-            List<ReportAnalytics> Analytics = new List<ReportAnalytics>();
+        //    List<ReportAnalytics> Analytics = new List<ReportAnalytics>();
 
-            var rfpLines = from l in excelFile.WorksheetRange<ReportAnalytics>("A12", "AA24", "Financial Analysis")
-                           select l;
+        //    var rfpLines = from l in excelFile.WorksheetRange<ReportAnalytics>("A12", "AA24", "Financial Analysis")
+        //                   select l;
 
-            foreach (var l in rfpLines)
-            {
+        //    foreach (var l in rfpLines)
+        //    {
 
-                ReportAnalytics AnalyticsLine = new ReportAnalytics();
+        //        ReportAnalytics AnalyticsLine = new ReportAnalytics();
 
-                AnalyticsLine.RFPID = response.RFPInvite.RFPID;
-                AnalyticsLine.CommodityCode = l.CommodityCode;
-                AnalyticsLine.Vendor = response.vendor.ORGANIZATION;
-                AnalyticsLine.ItemVendor = l.ItemVendor;
-                AnalyticsLine.CommodityName = l.CommodityName;
-                AnalyticsLine.Category = response.RFP.CATEGORY;
-                AnalyticsLine.Description = l.Description;
-                AnalyticsLine.PreviousPriceEach = l.PreviousPriceEach;
-                AnalyticsLine.NewPriceEach = l.NewPriceEach;
+        //        AnalyticsLine.RFPID = response.RFPInvite.RFPID;
+        //        AnalyticsLine.CommodityCode = l.CommodityCode;
+        //        AnalyticsLine.Vendor = response.vendor.ORGANIZATION;
+        //        AnalyticsLine.ItemVendor = l.ItemVendor;
+        //        AnalyticsLine.CommodityName = l.CommodityName;
+        //        AnalyticsLine.Category = response.RFP.CATEGORY;
+        //        AnalyticsLine.Description = l.Description;
+        //        AnalyticsLine.PreviousPriceEach = l.PreviousPriceEach;
+        //        AnalyticsLine.NewPriceEach = l.NewPriceEach;
 
-                Analytics.Add(AnalyticsLine);
-            }
+        //        Analytics.Add(AnalyticsLine);
+        //    }
 
-            //foreach line in analytics, make an object / row in the db.
-            foreach (ReportAnalytics r in Analytics)
-            {
-                if (r.Description != null)
-                {
-                    //! ! !add to db
-                }
-            }
-        }
+        //    //foreach line in analytics, make an object / row in the db.
+        //    foreach (ReportAnalytics r in Analytics)
+        //    {
+        //        if (r.Description != null)
+        //        {
+        //            //! ! !add to db
+        //        }
+        //    }
+        //}
     }
 }

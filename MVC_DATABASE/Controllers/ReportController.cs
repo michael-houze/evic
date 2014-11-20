@@ -100,50 +100,50 @@ namespace MVC_DATABASE.Controllers
 
 
 
-        //POP-UP WITH BEST RFP CHOICE FROM ALL: GOOD
-        //
-        //Return report of best RFP.
-        [Authorize(Roles = "Administrator, Employee")]
-        //public string RFPReport(ICollection<RFPINVITE> InviteList)
-        public string RFPReport(ReportDetails report)
-        {
-            string reportResult = String.Empty;
+        ////POP-UP WITH BEST RFP CHOICE FROM ALL: GOOD
+        ////
+        ////Return report of best RFP.
+        //[Authorize(Roles = "Administrator, Employee")]
+        ////public string RFPReport(ICollection<RFPINVITE> InviteList)
+        //public string RFPReport(ReportDetails report)
+        //{
+        //    string reportResult = String.Empty;
 
-            foreach (var i in report.InviteList)
-            {
-                string filePath = i.OFFER_PATH;
+        //    foreach (var i in report.InviteList)
+        //    {
+        //        string filePath = i.OFFER_PATH;
 
-                var excelFile = new ExcelQueryFactory(filePath);
-                decimal TotalCost = 0M;
+        //        var excelFile = new ExcelQueryFactory(filePath);
+        //        decimal TotalCost = 0M;
 
-                List<ReportLine> reportLineList = new List<ReportLine>();
-                var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
-                            select l;
+        //        List<ReportLine> reportLineList = new List<ReportLine>();
+        //        var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
+        //                    select l;
 
-                foreach (var l in lines)
-                {
-                    ReportLine rfp = new ReportLine();
+        //        foreach (var l in lines)
+        //        {
+        //            ReportLine rfp = new ReportLine();
 
-                    rfp.Description = l.Description;
-                    rfp.AnnualUsage = l.AnnualUsage;
-                    rfp.NewEachPrice = l.NewEachPrice;
-                    rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
+        //            rfp.Description = l.Description;
+        //            rfp.AnnualUsage = l.AnnualUsage;
+        //            rfp.NewEachPrice = l.NewEachPrice;
+        //            rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
 
-                    reportLineList.Add(rfp);
-                }
+        //            reportLineList.Add(rfp);
+        //        }
 
-                foreach (var reportLine in reportLineList)
-                {
-                    TotalCost += reportLine.LineCost;
-                }
+        //        foreach (var reportLine in reportLineList)
+        //        {
+        //            TotalCost += reportLine.LineCost;
+        //        }
 
-                reportResult += "Vendor: " + report.Vendor.ORGANIZATION + System.Environment.NewLine + 
-                    "Total Cost: " + TotalCost +
-                    System.Environment.NewLine + System.Environment.NewLine;                                
-            }
+        //        reportResult += "Vendor: " + report.Vendor.ORGANIZATION + System.Environment.NewLine + 
+        //            "Total Cost: " + TotalCost +
+        //            System.Environment.NewLine + System.Environment.NewLine;                                
+        //    }
 
-            return reportResult;
-        }
+        //    return reportResult;
+        //}
 
 
 
@@ -151,46 +151,46 @@ namespace MVC_DATABASE.Controllers
         //POP-UP WITH ANALYTICS FOR A SINGLE RESPONSE
         //
         //Returns detailed report of single vendor response.
-        public string RFPResponseReport(RFPINVITE invite)
-        {
-            string detailString = String.Empty;
-            string filePath = invite.OFFER_PATH;
+        //public string RFPResponseReport(RFPINVITE invite)
+        //{
+        //    string detailString = String.Empty;
+        //    string filePath = invite.OFFER_PATH;
 
-            var excelFile = new ExcelQueryFactory(filePath);
-            decimal TotalCost = 0M;
+        //    var excelFile = new ExcelQueryFactory(filePath);
+        //    decimal TotalCost = 0M;
 
-            List<ReportLine> RFP = new List<ReportLine>();
+        //    List<ReportLine> RFP = new List<ReportLine>();
 
-            var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
-                        select l;
+        //    var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
+        //                select l;
 
-            foreach (var l in lines)
-            {
-                ReportLine rfp = new ReportLine();
-                rfp.Description = l.Description;
-                rfp.AnnualUsage = l.AnnualUsage;
-                rfp.NewEachPrice = l.NewEachPrice;
-                rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
+        //    foreach (var l in lines)
+        //    {
+        //        ReportLine rfp = new ReportLine();
+        //        rfp.Description = l.Description;
+        //        rfp.AnnualUsage = l.AnnualUsage;
+        //        rfp.NewEachPrice = l.NewEachPrice;
+        //        rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
 
-                RFP.Add(rfp);
+        //        RFP.Add(rfp);
 
-                detailString += "Product Information: " + rfp.Description + System.Environment.NewLine + 
-                    "Annual Usage: " + rfp.AnnualUsage + System.Environment.NewLine +
-                    "New Each Price: " + rfp.NewEachPrice + System.Environment.NewLine +
-                    "Total Cost of Item: " + rfp.LineCost + System.Environment.NewLine + System.Environment.NewLine;
-            }
+        //        detailString += "Product Information: " + rfp.Description + System.Environment.NewLine + 
+        //            "Annual Usage: " + rfp.AnnualUsage + System.Environment.NewLine +
+        //            "New Each Price: " + rfp.NewEachPrice + System.Environment.NewLine +
+        //            "Total Cost of Item: " + rfp.LineCost + System.Environment.NewLine + System.Environment.NewLine;
+        //    }
 
-            //Used to get Total Variance for an RFP (includes all items).
-            foreach (ReportLine r in RFP)
-            {
-                if (r.Description != null)
-                    TotalCost += r.LineCost;
-            }
+        //    //Used to get Total Variance for an RFP (includes all items).
+        //    foreach (ReportLine r in RFP)
+        //    {
+        //        if (r.Description != null)
+        //            TotalCost += r.LineCost;
+        //    }
 
-            return "RFP ID: " + invite.RFPID + System.Environment.NewLine +
-                detailString + "Total RFP Cost: " + TotalCost +
-                System.Environment.NewLine + System.Environment.NewLine;
-        }
+        //    return "RFP ID: " + invite.RFPID + System.Environment.NewLine +
+        //        detailString + "Total RFP Cost: " + TotalCost +
+        //        System.Environment.NewLine + System.Environment.NewLine;
+        //}
 
 
 
