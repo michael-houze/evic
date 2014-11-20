@@ -4,11 +4,21 @@
     ViewBag.Title = "Negotiations";
 }
 
-<h2>@ViewBag.Title</h2>
+<br />
 
-<p>
-    @Html.ActionLink("Start Negotiations", "Create")
-</p>
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Start Negotiations", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Open Negotiations</h2>
+    </div>
+    <div class="col-lg-2" style="right: 50px">
+        @Html.ActionLink("Closed Negotiations", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+</div>
+
+<br />
 <table class="table">
     <tr>
         <th>
@@ -41,11 +51,30 @@
             @Html.DisplayFor(modelItem => item.AspNetUser.VENDOR.ORGANIZATION)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.NEGID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.NEGID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.NEGID })
+            @if(item.CLOSED == true)
+            {
+                @Html.ActionLink("Details", "Details", new { id=item.NEGID })
+
+            }
+            else
+            {
+                @Html.ActionLink("Negotiate", "Edit", new { id=item.NEGID }) 
+            }
         </td>
     </tr>
 }
 
 </table>
+
+<br />
+
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Start Negotiations", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8"></div> <!--Blank wrapepr so that the buttons have equal alignment with those at the top.-->
+    <div class="col-lg-2" style="right: 50px">
+        @Html.ActionLink("Closed Negotiations", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+</div>
+

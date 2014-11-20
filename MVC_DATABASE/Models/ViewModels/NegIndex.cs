@@ -16,8 +16,7 @@ namespace MVC_DATABASE.Models.ViewModels
         public VENDOR vendor { get; set; }
         public EMPLOYEE employee { get; set; }
 
-        [FileExtensions(Extensions = "doc,docx")]
-        public HttpFileCollectionBase file { get; set; }
+        public HttpPostedFileBase file { get; set; }
 
     }
 }

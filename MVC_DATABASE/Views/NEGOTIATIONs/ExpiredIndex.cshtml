@@ -1,0 +1,66 @@
+﻿@model MVC_DATABASE.Models.ViewModels.NegIndex
+
+
+@{
+    ViewBag.Title = "Closed Negotiations";
+}
+
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Start Negotiations", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Open Negotiations</h2>
+    </div>
+</div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.NEGID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.RFPID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.RFP.CATEGORY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.AspNetUser.VENDOR.ORGANIZATION)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.opennegs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NEGID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFPID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.VENDOR.ORGANIZATION)
+                </td>
+                <td>
+                    @if (item.CLOSED == true)
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.NEGID })
+
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Negotiate", "Edit", new { id = item.NEGID })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+<div>
+    @Html.ActionLink("Back to Negotiations", "Index")
+</div>

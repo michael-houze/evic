@@ -52,9 +52,9 @@
                     @Html.DisplayFor(modelItem => item.EXPIRES)
                 </td>
                 <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RFIID }) |
+                    @Html.ActionLink("Invite Vendors", "Edit", new { id = item.RFIID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.RFIID }) |
-                    @Html.ActionLink("Vendor Responses", "VendorResponse", new { id = item.RFIID })
+                    @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFIID })
                 </td>
             </tr>
             }

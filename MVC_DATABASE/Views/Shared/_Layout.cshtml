@@ -45,20 +45,23 @@
             </div>
 
             <div id="nav">
-                <div id="tabs">
-                    <div class="btn-oldstyle">
-                        
+                <div id="tabs" class="col-lg-12">
+                    <div class="btn-oldstyle col-lg-12" style="width: 120%">
+
                         @if (User.IsInRole("Employee") || User.IsInRole("Administrator"))
                         {
-                            
-                            <li> 
-                            @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink", @class = "home" })
+
+                            <li>
+                                @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink", @class = "home" })
                             </li>
-                            <li> 
+                            <li>
                                 @Html.ActionLink("RFI", "Index", "RFIs", routeValues: null, htmlAttributes: new { id = "RFILink" })
                             </li>
                             <li>
                                 @Html.ActionLink("RFP", "Index", "RFPs", routeValues: null, htmlAttributes: new { id = "RFPLink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Negotiation", "Index", "NEGOTIATIONs", routeValues: null, htmlAttributes: new { id = "NegotiationLink" })
                             </li>
                             <li>
                                 @Html.ActionLink("Contracts", "Index", "Contracts", routeValues: null, htmlAttributes: new { id = "contractsLink" })
@@ -66,11 +69,11 @@
                             <li>
                                 @Html.ActionLink("Reports", "Index", "Report", routeValues: null, htmlAttributes: new { id = "reportsLink" })
                             </li>
-                            if(User.IsInRole("Administrator"))
-                            { 
-                            <li>
-                                @Html.ActionLink("Account Management", "Index", "Account", routeValues: null, htmlAttributes: new { id = "MGMTLink" })
-                            </li>
+                            if (User.IsInRole("Administrator"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Account Management", "Index", "Account", routeValues: null, htmlAttributes: new { id = "MGMTLink" })
+                                </li>
                             }
                             <li>  @Html.ActionLink("Help", "Index", "FAQ", routeValues: null, htmlAttributes: new { id = "helpLink" })</li>
                         }
@@ -86,6 +89,9 @@
                                 @Html.ActionLink("RFP", "VendorIndex", "RFPs", routeValues: null, htmlAttributes: new { id = "RFPLink" })
                             </li>
                             <li>
+                                @Html.ActionLink("Negotiation", "VendorIndex", "NEGOTIATIONs", routeValues: null, htmlAttributes: new { id = "NegotiationLink" })
+                            </li>
+                            <li>
                                 @Html.ActionLink("Contracts", "VendorIndex", "Contracts", routeValues: null, htmlAttributes: new { id = "contractsLink" })
                             </li>
                             <li>  @Html.ActionLink("Help", "Index", "FAQ", routeValues: null, htmlAttributes: new { id = "helpLink" })</li>
@@ -95,7 +101,7 @@
                             <li> @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
                             <li> @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                         }
-                    
+
                     </div> <!--btn-oldstyle-->
                 </div> <!--tabs-->
             </div> <!--nav-->

@@ -15,7 +15,7 @@
 </script>
     <script type="text/jscript">
         $(function(){
-           // $("#RFIInviteList").hide()
+            $("#RFIInviteList").hide()
 
 
             $("#RFI_CATEGORY").on("change", function (e) {
@@ -62,22 +62,24 @@
     }
     
     
-
-<h2>@ViewBag.Title</h2>
+<center>
+    <h1>@ViewBag.Title</h1>
+    @Html.ActionLink("Back to RFI Home", "Index")
+</center>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>RFI</h4>
+    
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.RFI.CATEGORY, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.RFI.CATEGORY, new SelectList (ViewBag.Category))
+                @Html.DropDownListFor(m => m.RFI.CATEGORY, new SelectList (ViewBag.Category),"--- Select a Category ---", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RFI.CATEGORY, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -130,7 +132,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Cancel", "Index")
 </div>
 
 

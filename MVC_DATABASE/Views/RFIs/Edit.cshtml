@@ -3,28 +3,30 @@
 @{
     ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
+<center>
+    <h1>Invite Vendors</h1>
+    @Html.ActionLink("Back to RFI Home", "Index")
+</center>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>RFI</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
    
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RFI.RFIID, "RFIID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RFI.RFIID, "RFI Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.RFI.RFIID, new { @readonly = "readonly", @class = "form-control" })
             </div>
         </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.RFI.TEMPLATEID, "TEMPLATEID", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.RFI.TEMPLATEID, "TEMPLATE Id", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.RFI.TEMPLATEID, new { @readonly = "readonly", @class = "form-control" })
                 </div>
@@ -83,5 +85,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to RFI Home", "Index")
 </div>

@@ -33,11 +33,10 @@ namespace MVC_DATABASE.Models.ViewModels
         public ICollection<VENDOR> vendorlist { get; set; }
 
         [Required]
-        [FileExtensions(Extensions = "xlsx,xls")]
         public HttpPostedFileBase File { get; set; } 
 
 
-        [FileExtensions(Extensions = "xlsx,xls,pdf")]
+
         public HttpPostedFileBase Catalog { get; set; }
     }
 }

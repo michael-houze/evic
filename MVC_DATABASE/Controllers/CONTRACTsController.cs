@@ -77,7 +77,7 @@ namespace MVC_DATABASE.Controllers
             ViewBag.AcceptedVendors = vendorProductsQuery;
 
             return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
-        } 
+        }         
 
         // GET: CONTRACTs/Create
         [Authorize(Roles = "Administrator,Employee")]
@@ -108,6 +108,31 @@ namespace MVC_DATABASE.Controllers
 
             return View();
         }
+
+        private CreateContract negmodel = new CreateContract();
+
+        public ActionResult NegCreate(string Id, int negid, int rfpid)
+        {
+            negmodel.contract = new CONTRACT();
+
+            negmodel.contract.Id = Id;
+
+            negmodel.vendor = db.VENDORs.Find(negmodel.contract.Id);
+
+            var templateQuery = from x in db.TEMPLATEs
+                           where x.NEGID == negid
+                           select x;        
+
+            negmodel.contract.TEMPLATEID = templateQuery.FirstOrDefault().TEMPLATEID;
+            
+            negmodel.template = db.TEMPLATEs.Find(negmodel.contract.TEMPLATEID);
+
+            negmodel.contract.RFPID = rfpid;
+
+            return View(negmodel);
+
+        }
+
 
         // POST: CONTRACTs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -179,7 +204,7 @@ namespace MVC_DATABASE.Controllers
 
             string fileName = ("Contract Template - " + templateId.FirstOrDefault().ToString());
 
-            return File(path, "application/pdf", fileName);
+            return File(path, GetMimeType(path), fileName);
         }
 
         [Authorize(Roles = "Administrator,Employee,Vendor")]
@@ -200,7 +225,7 @@ namespace MVC_DATABASE.Controllers
 
             string fileName = (vendor.ORGANIZATION.ToString() + " - " + contractId.FirstOrDefault());
 
-            return File(path, "application/pdf", fileName);
+            return File(path, GetMimeType(path), fileName);
         }
 
         //// GET: CONTRACTs/Edit/5

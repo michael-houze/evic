@@ -11,13 +11,17 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class RESPONSE
     {
         public int PK { get; set; }
         public int NEGID { get; set; }
+
+        [Display(Name="Offerer")]
         public string Id { get; set; }
         public System.DateTime CREATED { get; set; }
+        [Display(Name = "Offer")]
         public string PATH { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

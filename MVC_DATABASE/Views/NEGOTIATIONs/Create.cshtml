@@ -52,7 +52,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.RFPID, "RFPID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RFPID, "RFP Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.RFPID, new SelectList(ViewBag.RFPID, "RFPID", "RFPID"))
                 @Html.ValidationMessageFor(model => model.RFPID, "", new { @class = "text-danger" })
@@ -60,7 +60,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Id, "Organization", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.Id, (SelectList)ViewBag.Id)
                 @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
@@ -69,7 +69,8 @@
 
                 <div class="checkbox">
                     @Html.HiddenFor(model => model.CLOSED, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                </div>
+                    @Html.ValidationMessageFor(model => model.CLOSED, "", new { @class = "text-danger" })
+                 </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -80,7 +81,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Negotiations", "Index")
 </div>
 
 

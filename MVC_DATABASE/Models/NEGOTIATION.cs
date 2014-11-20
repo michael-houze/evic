@@ -11,6 +11,7 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class NEGOTIATION
     {
@@ -19,10 +20,14 @@ namespace MVC_DATABASE.Models
             this.RESPONSEs = new HashSet<RESPONSE>();
             this.TEMPLATEs = new HashSet<TEMPLATE>();
         }
-    
+        [Display(Name = "Negotiation Id")]
         public int NEGID { get; set; }
+        [Display(Name = "RFP Id")]
         public int RFPID { get; set; }
+
         public string Id { get; set; }
+
+        [Display(Name = "Close Negotiations")]
         public bool CLOSED { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

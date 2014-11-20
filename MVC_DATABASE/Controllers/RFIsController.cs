@@ -123,9 +123,6 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(RFIEmployeeIndex model)
         {
-            DateTime date = DateTime.Now;
-            TimeSpan time = new TimeSpan(365, 0, 0, 0);
-            DateTime combined = date.Add(time);
 
             if (ModelState.IsValid)
             {
@@ -356,7 +353,7 @@ namespace MVC_DATABASE.Controllers
                             where y.GHX_PATH == path
                             select y.RFIID;
 
-                string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
+                string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString() + ".xlsx");
 
                 return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
             
@@ -444,7 +441,6 @@ namespace MVC_DATABASE.Controllers
                     string organization = vendor.ORGANIZATION + ".xlsx";
                     string rfiid = rfiinvite.RFIID.ToString();
                     string ghxpath = "~/Content/RFIs/" + rfiid + "/" + organization;
-                    string catalogPath = "~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION;
 
 
                     //Extract the file name.
@@ -464,15 +460,16 @@ namespace MVC_DATABASE.Controllers
                     //If Catalog is uploaded 
                     if (model.Catalog != null)
                     {
+
                         //Extract file name
                         var catalogName = Path.GetFileName(model.Catalog.FileName);
 
                         //Establishes where to save the path using the extracted name.
-                        var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/"), vendor.ORGANIZATION);
-                        rfiinvite.CATALOGPATH = catalogPath;
+                        var thecatalogPath = Path.Combine(Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION+"/"), catalogName);
+                        rfiinvite.CATALOGPATH = "~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION + "/" + catalogName;
 
                         //checks to see if file path exists, if it doesn't it creates
-                        var catalogmappath = Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/");
+                        var catalogmappath = Server.MapPath("~/Content/RFIs/Catalogs/" + rfiid + "/" + vendor.ORGANIZATION + "/");
                         if (!System.IO.Directory.Exists(catalogmappath))
                             System.IO.Directory.CreateDirectory(catalogmappath);
 
@@ -487,7 +484,7 @@ namespace MVC_DATABASE.Controllers
                 }
             }
             //Sends the user back to their respective RFI Index page.
-            return RedirectToAction("VendorIndex","RFIs");
+            return View(model);
 
         }
 
@@ -532,6 +529,16 @@ namespace MVC_DATABASE.Controllers
 
         }
 
+        private string GetMimeType(string fileName)
+        {
+            string mimeType = "application/unknown";
+            string ext = System.IO.Path.GetExtension(fileName).ToLower();
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+                mimeType = regKey.GetValue("Content Type").ToString();
+            return mimeType;
+        }
+
         public FileResult DownloadCatalog(string catalogpath)
         {
 
@@ -548,7 +555,7 @@ namespace MVC_DATABASE.Controllers
 
             string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
 
-            return File(catalogpath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            return File(catalogpath, GetMimeType(catalogpath), fileName);
 
         }
 

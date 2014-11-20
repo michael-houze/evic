@@ -7,79 +7,83 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Create New Contract", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-center">Contracts</h2>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>    
-<table id="contractindextable" class="table tablesorter">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.contractID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rfpID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.organization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.contractPath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CREATED)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EXPIRES)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @{
-        foreach (var item in Model)
-        {
+    <table id="contractindextable" class="table tablesorter">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.contractID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.rfpID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.organization)
-                </td>
-                <td>
-                    @if(!string.IsNullOrEmpty(item.contractPath))
-                        {
-                             @Html.ActionLink(item.organization, "DownloadContract", new { path = item.contractPath })
-                        } 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CREATED)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EXPIRES)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.contractID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.contractID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.rfpID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.organization)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.contractPath)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CREATED)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EXPIRES)
+                </th>
+                <th></th>
             </tr>
-        }
-    }
-    </tbody>
-    
-</table>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.contractID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.rfpID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.organization)
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.contractPath))
+                            {
+                                @Html.ActionLink(item.organization, "DownloadContract", new { path = item.contractPath })
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CREATED)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EXPIRES)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.contractID })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
 
-<script>
-    $(document).ready(function () {
-        $("#contractindextable").tablesorter();
-    });
-</script>
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $("#contractindextable").tablesorter();
+        });
+    </script>

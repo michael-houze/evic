@@ -3,15 +3,16 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
+<center>
+    <h1>RFI Details</h1>
+    @Html.ActionLink("Back to RFI Home", "Index")
+</center>
 
 <div>
-    <h4>RFI</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.RFI.RFIID)
+            @Html.LabelFor(model => model.RFI.RFIID, "RFI Id", htmlAttributes: new { @class = "control-label col-md-2" })
         </dt>
 
         <dd>
@@ -19,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RFI.TEMPLATEID)
+            @Html.LabelFor(model => model.RFI.TEMPLATEID, "Template Id", htmlAttributes: new { @class = "control-label col-md-2" })
         </dt>
 
         <dd>
@@ -27,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RFI.CATEGORY)
+            @Html.LabelFor(model => model.RFI.CATEGORY, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
         </dt>
 
         <dd>
@@ -35,7 +36,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RFI.CREATED)
+            @Html.LabelFor(model => model.RFI.CREATED, "Start Date", htmlAttributes: new { @class = "control-label col-md-2" })
         </dt>
 
         <dd>
@@ -43,7 +44,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RFI.EXPIRES)
+            @Html.LabelFor(model => model.RFI.EXPIRES, "End Date", htmlAttributes: new { @class = "control-label col-md-2" })
         </dt>
 
         <dd>
@@ -59,6 +60,6 @@
     </div>
 <br/>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RFI.RFIID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Invite Vendors", "Edit", new { id = Model.RFI.RFIID }) |
+    @Html.ActionLink("Back to RFI Home", "Index")
 </p>

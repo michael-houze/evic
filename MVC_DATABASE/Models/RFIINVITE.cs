@@ -11,13 +11,17 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class RFIINVITE
     {
         public int PRIMARYKEY { get; set; }
+        [Display(Name = "RFI Id")]
         public int RFIID { get; set; }
         public string Id { get; set; }
+        [Display(Name = "GHX")]
         public string GHX_PATH { get; set; }
+        [Display(Name = "Catalog")]
         public string CATALOGPATH { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

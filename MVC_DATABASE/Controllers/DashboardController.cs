@@ -67,7 +67,9 @@ namespace MVC_DATABASE.Controllers
                 foreach(var response in rfi.RFIINVITEs)
                 {
                     if ((currentUserName == response.AspNetUser.UserName) &&
-                        (string.IsNullOrWhiteSpace(response.GHX_PATH)))
+                        (string.IsNullOrWhiteSpace(response.GHX_PATH)) && 
+                        rfi.CREATED <= DateTime.Now &&
+                        rfi.EXPIRES > DateTime.Now)
                     {
                         responseCount++;
                     }
@@ -90,7 +92,9 @@ namespace MVC_DATABASE.Controllers
                 foreach (var response in rfp.RFPINVITEs)
                 {
                     if ((currentUserName == response.AspNetUser.UserName) &&
-                        (string.IsNullOrWhiteSpace(response.OFFER_PATH)))
+                        (string.IsNullOrWhiteSpace(response.OFFER_PATH)) &&
+                        rfp.CREATED <= DateTime.Now &&
+                        rfp.EXPIRES > DateTime.Now)
                     {
                         responseCount++;
                     }
@@ -134,6 +138,7 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var rfp in db.RFPs.Where(model => model.EXPIRES <= DateTime.Now))
             {
+                responseCount = 0;
                 foreach (var response in rfp.RFPINVITEs)
                 {
                     if (!string.IsNullOrWhiteSpace(response.OFFER_PATH))
@@ -160,7 +165,7 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var rfp in db.RFPs)
             {
-                events.Add(new CalendarEvent("RFP #" + rfp.CATEGORY.ToString().Substring(4) + " Expires", true, rfp.EXPIRES, "#613E82"));
+                events.Add(new CalendarEvent("RFP " + rfp.CATEGORY.ToString().Substring(4) + " Expires", true, rfp.EXPIRES, "#613E82"));
             }
 
             serializedEvents = JsonConvert.SerializeObject(events);

@@ -184,7 +184,7 @@
 	#tabs {
 		padding-top: 1.5px;
 		padding-bottom: 1.5px;
-		margin-left: 80px;
+		margin-left: -20px;
 		margin-right: auto;
 	}
 		
@@ -507,6 +507,7 @@ img {
 }
 
 #tabs .btn-oldstyle li {
+    
 	background-color: #009dbd;
     border-color: #009dbd;
     color: #fff;

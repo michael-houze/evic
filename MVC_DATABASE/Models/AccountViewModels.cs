@@ -87,7 +87,7 @@ namespace MVC_DATABASE.Models
         public string ConfirmPassword { get; set; }
 
 
-        [Display(Name = "Admin?")]
+        [Display(Name = "Make Administrator?")]
         public bool IsAdmin { get; set; }
         
     }

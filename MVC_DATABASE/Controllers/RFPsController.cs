@@ -380,6 +380,7 @@ namespace MVC_DATABASE.Controllers
             return RedirectToAction("VendorIndex", "RFPs");
         }
 
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> ViewDetails(int Id)
         {
             responsemodel.RFP = await db.RFPs.FindAsync(Id);

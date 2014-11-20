@@ -11,13 +11,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.vendor.ORGANIZATION)
+                @Html.LabelFor(model => model.vendor.ORGANIZATION, "Organization", htmlAttributes: new { @class = "control-label col-md-3" })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.rfiinvite.GHX_PATH)
+                @Html.LabelFor(model => model.rfiinvite.GHX_PATH, "GHX", htmlAttributes: new { @class = "control-label col-md-3" })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.rfiinvite.CATALOGPATH)
+                @Html.LabelFor(model => model.rfiinvite.CATALOGPATH, "Catalog", htmlAttributes: new { @class = "control-label col-md-3" })
             </th>
         </tr>
     </thead>

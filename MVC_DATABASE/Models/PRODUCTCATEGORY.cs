@@ -11,6 +11,7 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class PRODUCTCATEGORY
     {
@@ -18,7 +19,7 @@ namespace MVC_DATABASE.Models
         {
             this.ANALYTICS = new HashSet<ANALYTIC>();
         }
-    
+    [Display(Name = "Category")]
         public string CATEGORY { get; set; }
     
         public virtual ICollection<ANALYTIC> ANALYTICS { get; set; }

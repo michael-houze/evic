@@ -11,14 +11,21 @@ namespace MVC_DATABASE.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class VENDOR
     {
+
         public string Id { get; set; }
+        [Display(Name = "First Name")]
         public string FIRSTNAME { get; set; }
+        [Display(Name = "Last Name")]
         public string LASTNAME { get; set; }
+        [Display(Name = "Organization")]
         public string ORGANIZATION { get; set; }
+        [Display(Name = "Sanctioned")]
         public bool SANCTIONED { get; set; }
+        [Display(Name = "Account Status")]
         public string VENDSTATUS { get; set; }
         public string LOG { get; set; }
         public string W9 { get; set; }

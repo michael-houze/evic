@@ -613,12 +613,16 @@
     <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\FAQ\EditFAQ.cshtml" />
     <Content Include="Views\FAQ\DeleteFAQ.cshtml" />
+    <Content Include="Views\CONTRACTs\NegCreate.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\VendorIndex.cshtml" />
+    <Content Include="Views\NEGOTIATIONs\ExpiredIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ContractStore\TestContracts\" />
     <Folder Include="Content\File_Uploads\VendorDocUploads\" />
     <Folder Include="Content\Fonts\MyriadPro\" />
+    <Folder Include="Content\Negotiation\" />
     <Folder Include="Content\RFIs\5\" />
     <Folder Include="Content\RFIs\6\" />
     <Folder Include="Content\RFIs\Catalogs\" />

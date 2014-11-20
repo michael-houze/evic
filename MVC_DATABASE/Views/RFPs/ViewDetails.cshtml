@@ -1,4 +1,4 @@
-﻿@Model MVC_DATABASE.Models.ViewModels.RFPResponse
+﻿@model MVC_DATABASE.Models.ViewModels.RFPResponse
 
 @{
     ViewBag.Title = "View Details";
@@ -48,15 +48,19 @@
     <dt>
         @Html.DisplayNameFor(model => model.RFPInvite.OFFER_PATH)
     </dt>
-
-    <dd>
+    
+    
         @if (!string.IsNullOrEmpty(Model.RFPInvite.OFFER_PATH))
             {
-                @Html.ActionLink(Model.RFPInvite.AspNetUser.VENDOR.ORGANIZATION, "DownloadResponse", new { path = Model.RFPInvite.OFFER_PATH })
+            <dd>            
+               @Html.ActionLink(Model.RFPInvite.AspNetUser.VENDOR.ORGANIZATION, "DownloadResponse", new { path = Model.RFPInvite.OFFER_PATH}) 
+            </dd>   
             }
         else
             {
-                @ViewBag.noResponse;
+            <dd>
+                @ViewBag.noResponse
+             </dd>
             }
-    </dd>
+    
 </dl>

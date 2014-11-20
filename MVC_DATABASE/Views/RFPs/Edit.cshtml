@@ -4,14 +4,14 @@
     ViewBag.Title = "Edit RFP";
 }
 <center>
-<h1>Edit RFP</h1>
+<h1>Invite Vendors</h1>
 @Html.ActionLink("Back to RFP Home", "Index")
 </center>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-   <center>
+   
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-</center>
+
 }
 <center>
     <div>

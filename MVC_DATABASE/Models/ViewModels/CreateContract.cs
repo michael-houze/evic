@@ -26,8 +26,13 @@ namespace MVC_DATABASE.Models.ViewModels
 {
     public class CreateContract
     {
+        
         public CONTRACT contract { get; set; }
 
         public HttpPostedFileBase file { get; set; }
+
+        //negcreate
+        public VENDOR vendor { get; set; }
+        public TEMPLATE template { get; set; }
     }
 }

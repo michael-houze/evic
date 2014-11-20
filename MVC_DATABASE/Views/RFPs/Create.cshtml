@@ -10,7 +10,7 @@
     </script>
     <script type="text/jscript">
         $(function(){
-            //$("#RFPInviteList").hide()
+            $("#RFPInviteList").hide()
             $("#rfp_RFIID").on("change", function (e) {
                 //$("#RFI_CATEGORY").chosen().change("#RFIInviteList");
                 var dropValue = $(this).val();
@@ -64,7 +64,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.rfp.RFIID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.rfp.RFIID, (SelectList)ViewBag.RFIID)
+                @Html.DropDownListFor(m => m.rfp.RFIID, (SelectList)ViewBag.RFIID, "--- Select an RFI Id ---", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.rfp.RFIID, "", new { @class = "text-danger" })
             </div>
         </div>
