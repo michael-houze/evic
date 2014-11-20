@@ -45,9 +45,9 @@ namespace MVC_DATABASE.Controllers
 
 
 
+        //DETAILS: GOOD
         //
-        //
-        //
+        //Returns the results of all submitted RFPs, displaying line costs and total costs by vendor.
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult Details(int? id)
         {
