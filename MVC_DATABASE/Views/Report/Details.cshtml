@@ -1,4 +1,10 @@
-﻿@model MVC_DATABASE.Models.ViewModels.ReportDetails
+﻿@using Remotion;
+@using LinqToExcel;
+@using MVC_DATABASE.Models;
+@using MVC_DATABASE.Models.ViewModels;
+
+
+@model MVC_DATABASE.Models.ViewModels.ReportRecord
 
 @{
     ViewBag.Title = "RFP Report";
@@ -6,53 +12,87 @@
 
 <h2>RFP Report</h2>
 
-@Html.ActionLink("Generate RFP Report", "RFPReport", Model, new { @class = "btn btn-primary btn-sm btn-rfi" })
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Vendor.ORGANIZATION)
-        </th>
-        <th>
-            <label class="control-label">Vendor Response Report</label>
-        </th>
-    </tr>
-    @if (Model.InviteList != null)
+@if (Model.RfpInviteList != null)
+{
+    EVICEntities db = new EVICEntities();
+    
+    foreach (var r in Model.RfpInviteList)
     {
-        foreach(var r in Model.InviteList)
+        //Organization Name
+        var organization = from i in db.RFPINVITEs
+                           join v in db.VENDORs on i.Id equals v.Id 
+                           where v.Id == r.Id
+                           select v.ORGANIZATION;
+
+        string responseOrg = organization.FirstOrDefault().ToString();
+        
+        
+        //RFPLine Information - From Excel Sheet
+        string filePath = r.OFFER_PATH;
+
+        var excelFile = new ExcelQueryFactory(filePath);
+        decimal TotalCost = 0M;
+
+        List<ReportLine> reportLineList = new List<ReportLine>();
+            
+        var lines = from l in excelFile.WorksheetRange<ReportLine>("A12", "V138", "Financial Analysis")
+                    select l;
+        
+        foreach (var l in lines)
         {
-            //Gets file path to response.
-            var filePath = r.OFFER_PATH;
+            ReportLine rfp = new ReportLine();
+
+            rfp.Description = l.Description;
+            rfp.AnnualUsage = l.AnnualUsage;
+            rfp.NewEachPrice = l.NewEachPrice;
+            rfp.LineCost = l.AnnualUsage * l.NewEachPrice;
+
+            reportLineList.Add(rfp);
+        }
+
+        foreach (var reportLine in reportLineList)
+        {
+            TotalCost += reportLine.LineCost;
+        }      
+
             
-            //LINQ to extract organization who provided offer.
-            var organization = from v in Model.VendorList
-                               where v.Id == r.Id
-                               select v.ORGANIZATION;
-            //String to contain organization.
-            string responseOrg = organization.FirstOrDefault().ToString();
-            
+    //<h3>@responseOrg</h3>
+    <h3>$@TotalCost</h3>
+    
+    <table class="table">
+        <tr>
+            <th>
+                Description
+            </th>
+            <th>
+                New Each Price
+            </th>
+            <th>
+                Annual Usage
+            </th>
+            <th>
+                Estimated Cost
+            </th>
+        </tr>
+        @foreach(var l in reportLineList)
+        {
             <tr>
                 <td>
-                    @responseOrg
+                    @l.Description
                 </td>
                 <td>
-                    @if (string.IsNullOrWhiteSpace(filePath))
-                    {
-                        @ViewBag.NoResponse
-                    }
-                    else
-                    {
-                        <input type="button" id="btnpopu" value="View Report" onclick="RFPResponseReport(@Model.RfpInvite);"/>
-                        <script type="text/javascript">
-                            RFPResponseReport = function ()
-                            {
-                                window.open('/Report/RFPResponseReport', "PopupWindow", 'width=400px,height=400px,top=150,left=250');
-                            }
-                        </script>
-                    }
+                    @l.NewEachPrice
+                </td>
+                <td>
+                    @l.AnnualUsage
+                </td>
+                <td>
+                    @l.LineCost
                 </td>
             </tr>
+            
         }
+    </table>
     }
-</table>
+}
 

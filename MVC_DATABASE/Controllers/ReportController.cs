@@ -40,42 +40,62 @@ namespace MVC_DATABASE.Controllers
             return View(rfpRecord);
         }
 
-        public ReportDetails rfpDetails = new ReportDetails();
+        //public ReportDetails rfpDetails = new ReportDetails();
         
 
+
+
+        //
+        //
+        //
+        [Authorize(Roles = "Administrator, Employee")]
+        public ActionResult Details(int? id)
+        {
+            ReportDetails details = new ReportDetails();
+            //List<RFPINVITE> rfpInvitesList = new List<RFPINVITE>();
+
+            var rfpInvites = from i in db.RFPINVITEs
+                             where i.RFPID == id
+                             select i;
+
+            rfpRecord.RfpInviteList = rfpInvites.ToList();
+            //rfpInvitesList = rfpInvites.ToList();
+
+            return View(rfpRecord);
+        }
 
 
         //RFP FULL DETAILS: GOOD
         //
         //Displays vendor responses for selected RFP on Index page.
-        [Authorize(Roles = "Administrator, Employee")]
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+        //[Authorize(Roles = "Administrator, Employee")]
+        //public async Task<ActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
 
-            //Get associated RFPInvites
-            rfpDetails.InviteList = new List<RFPINVITE>();
-            rfpDetails.VendorList = new List<VENDOR>();
+        //    //Get associated RFPInvites
+        //    rfpDetails.InviteList = new List<RFPINVITE>();
+        //    rfpDetails.VendorList = new List<VENDOR>();
 
-            foreach (var r in db.RFPINVITEs.ToList())
-            {
-                if (r.RFPID == id)
-                {
-                    VENDOR vendor = await db.VENDORs.FindAsync(r.Id);
+        //    foreach (var r in db.RFPINVITEs.ToList())
+        //    {
+        //        if (r.RFPID == id)
+        //        {
+        //            VENDOR vendor = await db.VENDORs.FindAsync(r.Id);
                     
-                    rfpDetails.InviteList.Add(r);
-                    rfpDetails.VendorList.Add(vendor);
-                }
-            }
+        //            rfpDetails.InviteList.Add(r);
+        //            rfpDetails.VendorList.Add(vendor);
+        //        }
+        //    }
 
-                //Provides message if response not provided.
-            ViewBag.NoResponse = "Response not received.";
+        //        //Provides message if response not provided.
+        //    ViewBag.NoResponse = "Response not received.";
 
-            return View(rfpDetails);
-        }
+        //    return View(rfpDetails);
+        //}
 
 
 
