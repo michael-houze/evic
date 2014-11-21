@@ -55,7 +55,7 @@
 	}
 
     .subnav li:first-child {
-        margin-left: 72px;
+        margin-left: 32px;
     }
 
     .subnav li:last-child {
@@ -184,7 +184,7 @@
 	#tabs {
 		padding-top: 1.5px;
 		padding-bottom: 1.5px;
-		margin-left: 80px;
+		margin-left: 10px;
 		margin-right: auto;
 	}
 		
@@ -711,7 +711,14 @@ a.dashboard {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+    text-align: center;
+    line-height: 6.7;
+}
 
+.circle p strong {
+    margin-top: 10px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 .cir1{    
@@ -743,4 +750,17 @@ table#expired-tabs tr td:nth-child(2) {
 
 .tablesorter thead tr th {
     text-align: center;
+}
+
+#default-home tr:first-child {
+    padding-top: 15px;
+}
+
+#default-home tr td {
+    padding: 10px;
+}
+
+video {
+    padding-top: 35px;
+    padding-bottom: 45px;
 }
