@@ -6,30 +6,32 @@
 
 <br />
 
-<div class="row">
-    <div class="col-lg-2">
-        @Html.ActionLink("Create New RFI", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
-    </div>
-    <div class="col-lg-8">
-        <h2 class="text-center">Current/Open Requests for Information</h2>
-    </div>
-    <div class="col-lg-2">
-        @Html.ActionLink("Expired RFIs", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
-    </div>
-</div>
+<table id="expired-tabs">
+    <tr>
+        <td>
+            @Html.ActionLink("Create New RFI", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+        <td>
+            <h2>Current/Open Requests for Informations</h2>
+        </td>
+        <td>
+            @Html.ActionLink("Expired RFIs", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+    </tr>
+</table>
 
 <br />
 
 <table id="rfiindextable" class="table tablesorter">
     <thead>
         <tr>
-            <th class="text-center">
+            <th>
                 @Html.DisplayNameFor(model => model.RFI.RFIID)
             </th>
-            <th class="text-center">
+            <th>
                 @Html.DisplayNameFor(model => model.RFI.CATEGORY)
             </th>
-            <th class="text-center">
+            <th>
                 @Html.DisplayNameFor(model => model.RFI.EXPIRES)
             </th>
             <th class="text-center">RFI Actions</th>
@@ -41,39 +43,41 @@
             @foreach (var item in Model.OpenRFIList)
             {
 
-            <tr>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.RFIID)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.CATEGORY)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.EXPIRES)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("Invite Vendors", "Edit", new { id = item.RFIID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.RFIID }) |
-                    @Html.ActionLink("Responses", "VendorResponse", new { id = item.RFIID })
-                </td>
-            </tr>
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.RFIID)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.CATEGORY)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.EXPIRES)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.RFIID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.RFIID }) |
+                        @Html.ActionLink("Vendor Responses", "VendorResponse", new { id = item.RFIID })
+                    </td>
+                </tr>
             }
         </tbody>
-}
+    }
 
 </table>
 
 <br />
 
-<div class="row">
-    <div class="col-lg-2">
-        @Html.ActionLink("Create New RFI", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
-    </div>
-    <div class="col-lg-8"></div> <!--Blank wrapepr so that the buttons have equal alignment with those at the top.-->
-    <div class="col-lg-2">
-        @Html.ActionLink("Expired RFIs", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
-    </div>
-</div>
+<table id="expired-tabs">
+    <tr>
+        <td>
+            @Html.ActionLink("Create New RFI", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+        <td></td>
+        <td>
+            @Html.ActionLink("Expired RFIs", "ExpiredIndex", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+    </tr>
+</table>
 
 <script>
     $(document).ready(function () {

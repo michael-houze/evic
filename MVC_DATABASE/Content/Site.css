@@ -184,7 +184,7 @@
 	#tabs {
 		padding-top: 1.5px;
 		padding-bottom: 1.5px;
-		margin-left: -20px;
+		margin-left: 80px;
 		margin-right: auto;
 	}
 		
@@ -507,7 +507,6 @@ img {
 }
 
 #tabs .btn-oldstyle li {
-    
 	background-color: #009dbd;
     border-color: #009dbd;
     color: #fff;
@@ -730,4 +729,18 @@ a.dashboard {
 
 #rfprespond .col-md-offset-2{
     margin-left: 0px;
+}
+
+table#expired-tabs tr td {
+    width: auto;
+    padding: 0px 15px;
+    text-align: center;
+}
+
+table#expired-tabs tr td:nth-child(2) {
+    width: 700px;
+}
+
+.tablesorter thead tr th {
+    text-align: center;
 }
