@@ -117,7 +117,7 @@ namespace MVC_DATABASE.Controllers
             if (ModelState.IsValid)
             {
                 model.rfp.RFI = await db.RFIs.FindAsync(model.rfp.RFIID);
-                var rFP = new RFP { RFIID = model.rfp.RFIID, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = DateTime.Now, EXPIRES = model.rfp.EXPIRES};
+                var rFP = new RFP { RFIID = model.rfp.RFIID, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = model.rfp.CREATED, EXPIRES = model.rfp.EXPIRES};
                 db.RFPs.Add(rFP);
                 if (model.RFPInviteList != null)
                 {
@@ -286,28 +286,30 @@ namespace MVC_DATABASE.Controllers
             //Establish DB connection.
             EVICEntities dbo = new EVICEntities();
             //Establish List of vendor's RFPs to transfer to View
-            VendorRFP VendorRFP = new VendorRFP();
+            VendorRFP vendorRFP = new VendorRFP();
             //Gets user information
             var user_id = User.Identity.GetUserId();
             //List containing VendorRFPs
-            VendorRFP.RFPList = new List<RFP>();
+            vendorRFP.RFPList = new List<RFP>();
 
+            vendorRFP.vendor = new VENDOR();
+            vendorRFP.vendor = dbo.VENDORs.Find(user_id);
 
-
+            DateTime date = DateTime.Now;
             //Query for Vendor's specifi RFPs
             var vendorInvitedRFPs = from i in dbo.RFPINVITEs
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFPs on i.RFPID equals r.RFPID
                                     where i.Id == user_id
-                                    where i.RFP.CREATED <= DateTime.Now
-                                    where i.RFP.EXPIRES > DateTime.Now
+                                    where r.CREATED.CompareTo(date) <= 0
+                                    where r.EXPIRES.CompareTo(date) > 0
                                     orderby i.RFPID
                                     select r; //new VendorRFP { rfp = r, rfpInvite = i, vendor = v };
 
             //Adds queried to list
-            VendorRFP.RFPList = vendorInvitedRFPs.ToList();
+            vendorRFP.RFPList = vendorInvitedRFPs.ToList();
 
-            return View(VendorRFP);
+            return View(vendorRFP);
         }
 
         RFPVendorRespond.RFPList respondModel = new RFPVendorRespond.RFPList();

@@ -1,6 +1,5 @@
 ﻿@model MVC_DATABASE.Models.ViewModels.VendorRFP
 
-@using Microsoft.AspNet.Identity;
 
 @{
     ViewBag.Title = "RFP";
@@ -32,7 +31,7 @@
         {
             foreach (var item in Model.RFPList)
                 {
-                    var invite = item.RFPINVITEs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();
+                    var invite = item.RFPINVITEs.Where(inv => inv.Id == Model.vendor.Id).FirstOrDefault();
                     <tbody>
                         <tr>
                             <td>

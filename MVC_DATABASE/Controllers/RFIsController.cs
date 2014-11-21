@@ -375,15 +375,15 @@ namespace MVC_DATABASE.Controllers
             //List containing VendorRFIs
             vendorRfi.rfiList = new List<RFI>();
 
-            
+            DateTime date = DateTime.Now;
 
             //Query for Vendor's specifi RFIs
             var vendorInvitedRFIs = from i in dbo.RFIINVITEs
                                     join v in dbo.VENDORs on i.Id equals v.Id
                                     join r in dbo.RFIs on i.RFIID equals r.RFIID
                                     where i.Id == user_id
-                                    where i.RFI.CREATED <= DateTime.Now
-                                    where i.RFI.EXPIRES > DateTime.Now
+                                    where r.CREATED.CompareTo(date) <= 0
+                                    where r.EXPIRES.CompareTo(date) > 0
                                     orderby i.RFIID
                                     select r; //new VendorRFI { rfi = r, rfiInvite = i, vendor = v };
 
