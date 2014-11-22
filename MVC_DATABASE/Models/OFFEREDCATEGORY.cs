@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class OFFEREDCATEGORY
     {
         public int PRIMARYKEY { get; set; }
@@ -21,7 +21,7 @@ namespace MVC_DATABASE.Models
         public string CATEGORY { get; set; }
         [Display(Name = "Accepted")]
         public bool ACCEPTED { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

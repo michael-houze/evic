@@ -1,0 +1,62 @@
+﻿@model MVC_DATABASE.Models.ViewModels.MessageIndex
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.From = "Baptist Health SCM";
+    ViewBag.line = " |";
+}
+
+<h2>View</h2>
+
+<div>
+    <h4>MESSAGE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.message.FROM)            
+        </dt>
+
+        <dd>
+            @if (Model.message.FROM == null)
+            {
+                @ViewBag.From
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.message.AspNetUser.VENDOR.ORGANIZATION)
+            }
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.message.SENT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.message.SENT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.message.SUBJECT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.message.SUBJECT)
+        </dd>
+        <dd><br/></dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.message.BODY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.message.BODY)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Reply", "Reply", new { pk = Model.message.PK , id = Model.message.FROM, subject = Model.message.SUBJECT}) |
+@if (Model.message.FROM != null)
+            {
+    @Html.ActionLink("Delete", "Delete", new { id = Model.message.PK }) @ViewBag.line
+            }
+    @Html.ActionLink("Back to Inbox", "Index")
+</p>

@@ -1,0 +1,62 @@
+﻿
+@model MVC_DATABASE.Models.ViewModels.EmployeeCreateMessage
+
+@{
+    ViewBag.Title = "Reply";
+}
+
+<h2>Reply</h2>
+
+
+@using (Html.BeginForm("Create", "MESSAGEs", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>MESSAGE</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div style="padding-left: 3%">
+            <div class="form-group">
+                @Html.LabelFor(model => model.TO, htmlAttributes: new { @class = "control-label", style = "padding-left: 1%" })
+                <div>
+                    @Html.HiddenFor(m => m.TO, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(m => m.vendor.ORGANIZATION, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TO, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SUBJECT, htmlAttributes: new { @class = "control-label", style = "padding-left: 1%" })
+                <div>
+                    @Html.EditorFor(model => model.SUBJECT, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SUBJECT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BODY, htmlAttributes: new { @class = "control-label", style = "padding-left: 1%" })
+                <div>
+
+                    @Html.TextAreaFor(model => model.BODY, new { style = "width: 70%; height: 300px; resize: none;" })
+                    @Html.ValidationMessageFor(model => model.BODY, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Send" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+     </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to Inbox", "Index")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

@@ -20,6 +20,8 @@ namespace MVC_DATABASE.Models
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.CONTRACTs = new HashSet<CONTRACT>();
+            this.MESSAGEs = new HashSet<MESSAGE>();
+            this.MESSAGEs1 = new HashSet<MESSAGE>();
             this.NEGOTIATIONs = new HashSet<NEGOTIATION>();
             this.OFFEREDCATEGORies = new HashSet<OFFEREDCATEGORY>();
             this.RESPONSEs = new HashSet<RESPONSE>();
@@ -47,6 +49,8 @@ namespace MVC_DATABASE.Models
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<CONTRACT> CONTRACTs { get; set; }
         public virtual EMPLOYEE EMPLOYEE { get; set; }
+        public virtual ICollection<MESSAGE> MESSAGEs { get; set; }
+        public virtual ICollection<MESSAGE> MESSAGEs1 { get; set; }
         public virtual ICollection<NEGOTIATION> NEGOTIATIONs { get; set; }
         public virtual ICollection<OFFEREDCATEGORY> OFFEREDCATEGORies { get; set; }
         public virtual ICollection<RESPONSE> RESPONSEs { get; set; }

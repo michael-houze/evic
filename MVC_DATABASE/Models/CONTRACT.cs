@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class CONTRACT
     {
         [Display(Name = "Contract Id")]
@@ -34,7 +34,7 @@ namespace MVC_DATABASE.Models
         public System.DateTime EXPIRES { get; set; }
         [Display(Name = "Additional Documents")]
         public string DOCUMENTPATH { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }
     }

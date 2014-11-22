@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class VENDOR
     {
 
@@ -29,7 +29,7 @@ namespace MVC_DATABASE.Models
         public string VENDSTATUS { get; set; }
         public string LOG { get; set; }
         public string W9 { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

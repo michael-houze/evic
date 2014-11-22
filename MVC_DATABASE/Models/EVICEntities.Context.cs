@@ -34,6 +34,7 @@ namespace MVC_DATABASE.Models
         public virtual DbSet<CONTRACT> CONTRACTs { get; set; }
         public virtual DbSet<EMPLOYEE> EMPLOYEEs { get; set; }
         public virtual DbSet<FAQ> FAQs { get; set; }
+        public virtual DbSet<MESSAGE> MESSAGEs { get; set; }
         public virtual DbSet<NEGOTIATION> NEGOTIATIONs { get; set; }
         public virtual DbSet<OFFEREDCATEGORY> OFFEREDCATEGORies { get; set; }
         public virtual DbSet<PRODUCTCATEGORY> PRODUCTCATEGORies { get; set; }

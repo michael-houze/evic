@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class RFIINVITE
     {
         public int PRIMARYKEY { get; set; }
@@ -23,7 +23,7 @@ namespace MVC_DATABASE.Models
         public string GHX_PATH { get; set; }
         [Display(Name = "Catalog")]
         public string CATALOGPATH { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual RFI RFI { get; set; }
     }

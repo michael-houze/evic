@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class RFP
     {
         public RFP()
@@ -21,8 +21,8 @@ namespace MVC_DATABASE.Models
             this.NEGOTIATIONs = new HashSet<NEGOTIATION>();
             this.RFPINVITEs = new HashSet<RFPINVITE>();
         }
-    
-        [Display(Name="RFP Id")]
+
+        [Display(Name = "RFP Id")]
         public int RFPID { get; set; }
         [Display(Name = "RFI Id")]
         public Nullable<int> RFIID { get; set; }
@@ -34,7 +34,7 @@ namespace MVC_DATABASE.Models
         public System.DateTime CREATED { get; set; }
         [Display(Name = "End Date")]
         public System.DateTime EXPIRES { get; set; }
-    
+
         public virtual ICollection<ANALYTIC> ANALYTICS { get; set; }
         public virtual ICollection<NEGOTIATION> NEGOTIATIONs { get; set; }
         public virtual RFI RFI { get; set; }

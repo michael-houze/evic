@@ -201,6 +201,7 @@
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MESSAGEsController.cs" />
     <Compile Include="Controllers\NEGOTIATIONsController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -262,6 +263,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MESSAGE.cs">
+      <DependentUpon>EVICEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NEGOTIATION.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
@@ -302,6 +306,8 @@
     <Compile Include="Models\ViewModels\AdminDashboard.cs" />
     <Compile Include="Models\ViewModels\ContractIndex.cs" />
     <Compile Include="Models\ViewModels\CreateContract.cs" />
+    <Compile Include="Models\ViewModels\EmployeeCreateMessage.cs" />
+    <Compile Include="Models\ViewModels\MessageIndex.cs" />
     <Compile Include="Models\ViewModels\NegIndex.cs" />
     <Compile Include="Models\ViewModels\FAQCreate.cs" />
     <Compile Include="Models\ViewModels\ReportDetails.cs" />
@@ -321,6 +327,7 @@
     <Compile Include="Models\ViewModels\RFIEmployeeIndex.cs" />
     <Compile Include="Models\ViewModels\VendorContract.cs" />
     <Compile Include="Models\ViewModels\VendorContractIndex.cs" />
+    <Compile Include="Models\ViewModels\VendorCreateMessage.cs" />
     <Compile Include="Models\ViewModels\VendorDashboard.cs" />
     <Compile Include="Models\ViewModels\VendorRegister.cs" />
     <Compile Include="Models\ViewModels\VendorRFP.cs" />
@@ -616,6 +623,17 @@
     <Content Include="Views\CONTRACTs\NegCreate.cshtml" />
     <Content Include="Views\NEGOTIATIONs\VendorIndex.cshtml" />
     <Content Include="Views\NEGOTIATIONs\ExpiredIndex.cshtml" />
+    <Content Include="Views\MESSAGEs\Create.cshtml" />
+    <Content Include="Views\MESSAGEs\Delete.cshtml" />
+    <Content Include="Views\MESSAGEs\Details.cshtml" />
+    <Content Include="Views\MESSAGEs\Reply.cshtml" />
+    <Content Include="Views\MESSAGEs\Index.cshtml" />
+    <Content Include="Views\MESSAGEs\VendorInbox.cshtml" />
+    <Content Include="Views\MESSAGEs\VendorDetails.cshtml" />
+    <Content Include="Views\MESSAGEs\VendorCreate.cshtml" />
+    <Content Include="Views\MESSAGEs\VendorReply.cshtml" />
+    <Content Include="Views\MESSAGEs\VendorDelete.cshtml" />
+    <Content Include="Views\MESSAGEs\Sent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

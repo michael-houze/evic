@@ -1,0 +1,67 @@
+﻿@model MVC_DATABASE.Models.ViewModels.MessageIndex
+
+@{
+    ViewBag.Title = "Message Inbox";
+}
+
+
+
+<table id="expired-tabs">
+    <tr>
+        <td>
+            @Html.ActionLink("Compose Message", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+        <td>
+            <h2>Baptist Health Message Inbox</h2>        
+        </td>
+        <td>
+            @Html.ActionLink("Sent Messages", "Sent", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+    </tr>
+</table>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.message.SENT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.message.FROM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.message.SUBJECT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.messagelist) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SENT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.VENDOR.ORGANIZATION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SUBJECT)
+        </td>
+        <td>
+            @Html.ActionLink("View", "Details", new { id=item.PK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PK })
+        </td>
+    </tr>
+}
+
+</table>
+<table id="expired-tabs">
+    <tr>
+        <td>
+            @Html.ActionLink("Compose Message", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+        <td>
+            
+        </td>
+        <td>
+            @Html.ActionLink("Sent Messages", "Sent", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </td>
+    </tr>
+</table>

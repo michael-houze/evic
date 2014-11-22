@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class RFI
     {
         public RFI()
@@ -20,7 +20,7 @@ namespace MVC_DATABASE.Models
             this.RFIINVITEs = new HashSet<RFIINVITE>();
             this.RFPs = new HashSet<RFP>();
         }
-    
+
         public int RFIID { get; set; }
 
         [Required]
@@ -31,14 +31,14 @@ namespace MVC_DATABASE.Models
         [Display(Name = "RFI Category")]
         public string CATEGORY { get; set; }
 
-        [Required(ErrorMessage="Please enter date to start the RFI process")]
+        [Required(ErrorMessage = "Please enter date to start the RFI process")]
         [Display(Name = "RFI Start Date")]
         public System.DateTime CREATED { get; set; }
 
-        [Required(ErrorMessage="Please enter the RFI expiration date")]
+        [Required(ErrorMessage = "Please enter the RFI expiration date")]
         [Display(Name = "RFI Expiration Date")]
         public System.DateTime EXPIRES { get; set; }
-    
+
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }
         public virtual ICollection<RFP> RFPs { get; set; }

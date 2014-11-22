@@ -1,0 +1,51 @@
+﻿@model MVC_DATABASE.Models.ViewModels.MessageIndex
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.From = "Baptist Health";
+}
+
+<h2>View</h2>
+
+<div>
+    <h4>MESSAGE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.message.FROM)
+        </dt>
+
+        <dd>
+            @ViewBag.From
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.message.SENT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.message.SENT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.message.SUBJECT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.message.SUBJECT)
+        </dd>
+        <dd><br /></dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.message.BODY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.message.BODY)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Reply", "VendorReply", new { pk = Model.message.PK , subject = Model.message.SUBJECT }) |
+    @Html.ActionLink("Delete", "VendorDelete", new { id = Model.message.PK }) |
+    @Html.ActionLink("Back to Inbox", "VendorInbox")
+</p>

@@ -1,0 +1,58 @@
+﻿@model MVC_DATABASE.Models.ViewModels.VendorCreateMessage
+
+@{
+    ViewBag.Title = "Compose Message";
+    ViewBag.TO = "Baptist Health SCM";
+}
+
+<h2>Compose Message to Baptist Health SCM</h2>
+
+
+@using (Html.BeginForm("VendorCreate", "MESSAGEs", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>MESSAGE</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div style="padding-left: 3%">
+            <div class="form-group">
+                @Html.Label("To", htmlAttributes: new { @class = "control-label", style = "padding-left: 1%" })
+                <div>
+                    @ViewBag.TO
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SUBJECT, htmlAttributes: new { @class = "control-label", style = "padding-left: 1%" })
+                <div>
+                    @Html.TextBoxFor(m => m.SUBJECT, new { @readonly = "readonly", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BODY, htmlAttributes: new { @class = "control-label", style = "padding-left: 1%" })
+                <div>
+                    @Html.TextAreaFor(model => model.BODY, new { style = "width: 70%; height: 300px; resize: none;" })
+                    @Html.ValidationMessageFor(model => model.BODY, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Send" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Inbox", "VendorInbox")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

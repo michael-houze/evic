@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class NEGOTIATION
     {
         public NEGOTIATION()
@@ -29,7 +29,7 @@ namespace MVC_DATABASE.Models
 
         [Display(Name = "Close Negotiations")]
         public bool CLOSED { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual RFP RFP { get; set; }
         public virtual ICollection<RESPONSE> RESPONSEs { get; set; }

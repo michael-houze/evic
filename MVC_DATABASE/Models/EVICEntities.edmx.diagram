@@ -4,27 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2c5277fb6ccf4a8f99cca6bde47a5d2f" Name="Diagram1">
+      <Diagram DiagramId="fa99bed6e24241308d7373b07df8c2d8" Name="Diagram1">
         <EntityTypeShape EntityType="EVICModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.ANALYTIC" Width="1.5" PointX="8.25" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.AspNetRole" Width="1.5" PointX="0.75" PointY="18.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.AspNetUser" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.CONTRACT" Width="1.5" PointX="8.25" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.EMPLOYEE" Width="1.5" PointX="5.25" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.ANALYTIC" Width="1.5" PointX="8.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.AspNetRole" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.AspNetUser" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.CONTRACT" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.EMPLOYEE" Width="1.5" PointX="5.25" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EVICModel.FAQ" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.NEGOTIATION" Width="1.5" PointX="8.25" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.OFFEREDCATEGORY" Width="1.5" PointX="5.25" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.PRODUCTCATEGORY" Width="1.5" PointX="6" PointY="21" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.RESPONSE" Width="1.5" PointX="10.5" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.RFI" Width="1.5" PointX="12.75" PointY="25.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.RFIINVITE" Width="1.5" PointX="15" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.RFP" Width="1.5" PointX="15" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.RFPINVITE" Width="1.5" PointX="17.25" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.TEMPLATE" Width="1.5" PointX="10.5" PointY="25.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.VENDOR" Width="1.5" PointX="5.25" PointY="33.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EVICModel.VENDORCONTACT" Width="1.5" PointX="5.25" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.MESSAGE" Width="1.5" PointX="5.25" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.NEGOTIATION" Width="1.5" PointX="8.25" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.OFFEREDCATEGORY" Width="1.5" PointX="5.25" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.PRODUCTCATEGORY" Width="1.5" PointX="6" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.RESPONSE" Width="1.5" PointX="10.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.RFI" Width="1.5" PointX="12.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.RFIINVITE" Width="1.5" PointX="15" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.RFP" Width="1.5" PointX="15" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.RFPINVITE" Width="1.5" PointX="17.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.TEMPLATE" Width="1.5" PointX="10.5" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.VENDOR" Width="1.5" PointX="5.25" PointY="36.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVICModel.VENDORCONTACT" Width="1.5" PointX="5.25" PointY="40.375" IsExpanded="true" />
         <AssociationConnector Association="EVICModel.FK_ANALYTICS_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_ANALYTICS_CATEGORY" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_ANALYTICS_RFP" ManuallyRouted="false" />
@@ -32,6 +33,8 @@
         <AssociationConnector Association="EVICModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_CONTRACT_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_EMPLOYEE_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EVICModel.FK_MESSAGEFROM_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EVICModel.FK_MESSAGETO_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_NEGOTIATION_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_OFFEREDCATEGORY_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EVICModel.FK_RESPONSE_AspNetUsers" ManuallyRouted="false" />

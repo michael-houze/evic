@@ -88,8 +88,8 @@
           <Property Name="TEMPLATEID" Type="int" Nullable="false" />
           <Property Name="RFPID" Type="int" Nullable="false" />
           <Property Name="CONTRACT_PATH" Type="nvarchar" MaxLength="255" />
-          <Property Name="CREATED" Type="datetime" />
-          <Property Name="EXPIRES" Type="datetime" />
+          <Property Name="CREATED" Type="datetime" Nullable="false" />
+          <Property Name="EXPIRES" Type="datetime" Nullable="false" />
           <Property Name="DOCUMENTPATH" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="EMPLOYEE">
@@ -109,6 +109,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QUESTION" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ANSWER" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESSAGE">
+          <Key>
+            <PropertyRef Name="PK" />
+          </Key>
+          <Property Name="PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TO" Type="nvarchar" MaxLength="128" />
+          <Property Name="FROM" Type="nvarchar" MaxLength="128" />
+          <Property Name="SUBJECT" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BODY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="READ" Type="bit" Nullable="false" />
+          <Property Name="SENT" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="NEGOTIATION">
           <Key>
@@ -344,6 +356,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MESSAGEFROM_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="MESSAGE" Type="Self.MESSAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MESSAGE">
+              <PropertyRef Name="FROM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESSAGETO_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="MESSAGE" Type="Self.MESSAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MESSAGE">
+              <PropertyRef Name="TO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NEGOTIATION_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="*" />
@@ -535,6 +571,7 @@
           <EntitySet Name="CONTRACT" EntityType="Self.CONTRACT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FAQ" EntityType="Self.FAQ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESSAGE" EntityType="Self.MESSAGE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NEGOTIATION" EntityType="Self.NEGOTIATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OFFEREDCATEGORY" EntityType="Self.OFFEREDCATEGORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTCATEGORY" EntityType="Self.PRODUCTCATEGORY" Schema="dbo" store:Type="Tables" />
@@ -585,6 +622,14 @@
           <AssociationSet Name="FK_EMPLOYEE_AspNetUsers" Association="Self.FK_EMPLOYEE_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESSAGEFROM_AspNetUsers" Association="Self.FK_MESSAGEFROM_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="MESSAGE" EntitySet="MESSAGE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESSAGETO_AspNetUsers" Association="Self.FK_MESSAGETO_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="MESSAGE" EntitySet="MESSAGE" />
           </AssociationSet>
           <AssociationSet Name="FK_NEGOTIATION_AspNetUsers" Association="Self.FK_NEGOTIATION_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -728,6 +773,8 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="CONTRACTs" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="AspNetUsers" ToRole="CONTRACT" />
           <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_AspNetUsers" FromRole="AspNetUsers" ToRole="EMPLOYEE" />
+          <NavigationProperty Name="MESSAGEs" Relationship="Self.FK_MESSAGEFROM_AspNetUsers" FromRole="AspNetUsers" ToRole="MESSAGE" />
+          <NavigationProperty Name="MESSAGEs1" Relationship="Self.FK_MESSAGETO_AspNetUsers" FromRole="AspNetUsers" ToRole="MESSAGE" />
           <NavigationProperty Name="NEGOTIATIONs" Relationship="Self.FK_NEGOTIATION_AspNetUsers" FromRole="AspNetUsers" ToRole="NEGOTIATION" />
           <NavigationProperty Name="OFFEREDCATEGORies" Relationship="Self.FK_OFFEREDCATEGORY_AspNetUsers" FromRole="AspNetUsers" ToRole="OFFEREDCATEGORY" />
           <NavigationProperty Name="RESPONSEs" Relationship="Self.FK_RESPONSE_AspNetUsers" FromRole="AspNetUsers" ToRole="RESPONSE" />
@@ -746,8 +793,8 @@
           <Property Name="TEMPLATEID" Type="Int32" Nullable="false" />
           <Property Name="RFPID" Type="Int32" Nullable="false" />
           <Property Name="CONTRACT_PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CREATED" Type="DateTime" Precision="3" />
-          <Property Name="EXPIRES" Type="DateTime" Precision="3" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EXPIRES" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DOCUMENTPATH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_CONTRACT_AspNetUsers" FromRole="CONTRACT" ToRole="AspNetUsers" />
           <NavigationProperty Name="TEMPLATE" Relationship="Self.FK_CONTRACT_TEMPLATE" FromRole="CONTRACT" ToRole="TEMPLATE" />
@@ -770,6 +817,20 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QUESTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ANSWER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESSAGE">
+          <Key>
+            <PropertyRef Name="PK" />
+          </Key>
+          <Property Name="PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TO" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FROM" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SUBJECT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BODY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="READ" Type="Boolean" Nullable="false" />
+          <Property Name="SENT" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_MESSAGEFROM_AspNetUsers" FromRole="MESSAGE" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_MESSAGETO_AspNetUsers" FromRole="MESSAGE" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="NEGOTIATION">
           <Key>
@@ -991,6 +1052,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MESSAGEFROM_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="MESSAGE" Type="Self.MESSAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MESSAGE">
+              <PropertyRef Name="FROM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESSAGETO_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="MESSAGE" Type="Self.MESSAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MESSAGE">
+              <PropertyRef Name="TO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NEGOTIATION_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
           <End Role="NEGOTIATION" Type="Self.NEGOTIATION" Multiplicity="*" />
@@ -1197,6 +1282,7 @@
           <EntitySet Name="CONTRACTs" EntityType="Self.CONTRACT" />
           <EntitySet Name="EMPLOYEEs" EntityType="Self.EMPLOYEE" />
           <EntitySet Name="FAQs" EntityType="Self.FAQ" />
+          <EntitySet Name="MESSAGEs" EntityType="Self.MESSAGE" />
           <EntitySet Name="NEGOTIATIONs" EntityType="Self.NEGOTIATION" />
           <EntitySet Name="OFFEREDCATEGORies" EntityType="Self.OFFEREDCATEGORY" />
           <EntitySet Name="PRODUCTCATEGORies" EntityType="Self.PRODUCTCATEGORY" />
@@ -1235,6 +1321,14 @@
           <AssociationSet Name="FK_EMPLOYEE_AspNetUsers" Association="Self.FK_EMPLOYEE_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESSAGEFROM_AspNetUsers" Association="Self.FK_MESSAGEFROM_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="MESSAGE" EntitySet="MESSAGEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESSAGETO_AspNetUsers" Association="Self.FK_MESSAGETO_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="MESSAGE" EntitySet="MESSAGEs" />
           </AssociationSet>
           <AssociationSet Name="FK_NEGOTIATION_AspNetUsers" Association="Self.FK_NEGOTIATION_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1411,6 +1505,19 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QUESTION" ColumnName="QUESTION" />
                 <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESSAGEs">
+            <EntityTypeMapping TypeName="EVICModel.MESSAGE">
+              <MappingFragment StoreEntitySet="MESSAGE">
+                <ScalarProperty Name="PK" ColumnName="PK" />
+                <ScalarProperty Name="TO" ColumnName="TO" />
+                <ScalarProperty Name="FROM" ColumnName="FROM" />
+                <ScalarProperty Name="SUBJECT" ColumnName="SUBJECT" />
+                <ScalarProperty Name="BODY" ColumnName="BODY" />
+                <ScalarProperty Name="READ" ColumnName="READ" />
+                <ScalarProperty Name="SENT" ColumnName="SENT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

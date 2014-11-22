@@ -12,7 +12,7 @@ namespace MVC_DATABASE.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class RFPINVITE
     {
         public int PRIMARYKEY { get; set; }
@@ -20,7 +20,7 @@ namespace MVC_DATABASE.Models
         public string Id { get; set; }
         [Display(Name = "Proposal")]
         public string OFFER_PATH { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual RFP RFP { get; set; }
     }
