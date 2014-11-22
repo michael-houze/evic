@@ -43,10 +43,10 @@
     #nav {
         min-height: 56px;
     }
-	
+
     .navbar-nav.navbar-right:last-child {
         margin-right: 0px;
-    }
+   }
     	
     .subnav {
 		width: auto;
@@ -230,19 +230,22 @@
         margin-bottom: 9px;
 	}
 
-    .loggedin:first-child {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 0px;
-    }
-
+    .loggedin:first-child,
     .loggedin:first-child a:hover {
         border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 0px
+    }
+
+    .loggedin:last-child,
+    .subnav li:nth-child(2),
+    .subnav li:nth-child(2) a:hover {
+        border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
     }
 
-    .loggedin:last-child {
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
+    .loggedin img {
+        width: 25px;
+        padding-right: 5px;
     }
 }
 
@@ -378,6 +381,10 @@ img {
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);	
 }
 
+.mail {
+    width: 80px;
+}
+
 .subnav li a {
 	display: block;
 	text-decoration: none;
@@ -413,6 +420,8 @@ img {
 }
 
 .btn-oldstyle2 li {
+    width: auto;
+    max-height: 40px;
 	background-color: #b2b2b2;
 		background-image: -moz-linear-gradient(top,#BCBCBC,#a3a3a3);
 		background-image: -webkit-gradient(linear,0 0,0 100%,from(#BCBCBC),to(#a3a3a3));
@@ -430,6 +439,11 @@ img {
        -moz-transition: background .25s ease-in;
          -o-transition: background .25s ease-in;
             transition: background .25s ease-in;
+}
+
+.btn-oldstyle2 li,
+.subnav li:nth-child(2) a:hover {
+    max-height: 40px;
 }
 
 .btn-oldstyle2 li a:hover,
@@ -763,4 +777,14 @@ table#expired-tabs tr td:nth-child(2) {
 video {
     padding-top: 35px;
     padding-bottom: 45px;
+}
+
+.badge {
+    background-color: #009dbd;
+    color: #E4FAFF;
+}
+
+ .btn-oldstyle2 li a:active > .badge {
+    background-color: #E4FAFF;
+    color: #009dbd;
 }
