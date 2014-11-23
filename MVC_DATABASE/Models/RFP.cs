@@ -30,9 +30,15 @@ namespace MVC_DATABASE.Models
         public string CATEGORY { get; set; }
         [Display(Name = "Template Id")]
         public int TEMPLATEID { get; set; }
-        [Display(Name = "Start Date")]
+        //[Required(ErrorMessage = "Please enter date to start the RFI process")]
+        [Range(typeof(DateTime), "12/30/2000", "12/30/9999",
+        ErrorMessage = "Value for {0} must be between {1} and {2}")]
+        [Display(Name = "RFP Start Date")]
         public System.DateTime CREATED { get; set; }
-        [Display(Name = "End Date")]
+        //[Required(ErrorMessage = "Please enter the RFI expiration date")]
+        [Range(typeof(DateTime), "12/30/2000", "12/30/9999",
+        ErrorMessage = "Value for {0} must be between {1} and {2}")]
+        [Display(Name = "RFP Expiration Date")]
         public System.DateTime EXPIRES { get; set; }
 
         public virtual ICollection<ANALYTIC> ANALYTICS { get; set; }

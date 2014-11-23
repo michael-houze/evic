@@ -31,11 +31,15 @@ namespace MVC_DATABASE.Models
         [Display(Name = "RFI Category")]
         public string CATEGORY { get; set; }
 
-        [Required(ErrorMessage = "Please enter date to start the RFI process")]
+        //[Required(ErrorMessage = "Please enter date to start the RFI process")]
+        [Range(typeof(DateTime), "12/30/2000", "12/30/9999",
+        ErrorMessage = "Value for {0} must be between {1} and {2}")]
         [Display(Name = "RFI Start Date")]
         public System.DateTime CREATED { get; set; }
 
-        [Required(ErrorMessage = "Please enter the RFI expiration date")]
+        //[Required(ErrorMessage = "Please enter the RFI expiration date")]
+        [Range(typeof(DateTime), "12/30/2000", "12/30/9999",
+        ErrorMessage = "Value for {0} must be between {1} and {2}")]
         [Display(Name = "RFI Expiration Date")]
         public System.DateTime EXPIRES { get; set; }
 
