@@ -33,16 +33,18 @@
                 </a>
             </div>
 
-            <div class="subnav btn-oldstyle2">
                 @if (Request.IsAuthenticated)
-                {
-                    @Html.Partial("_LoggedIn")
+{
+    <div class="subnav loggedin-bar">
+        @Html.Partial("_LoggedIn")
+    </div>
+}
+else
+{
+                    <div class="subnav">
+                        @Html.Partial("_LoginPartial")
+                    </div>
                 }
-                else
-                {
-                    @Html.Partial("_LoginPartial")
-                }
-            </div>
 
             <div id="nav">
                 <div id="tabs">

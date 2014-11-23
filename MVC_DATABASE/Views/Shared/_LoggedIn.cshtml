@@ -6,13 +6,23 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
-        <ul class="nav navbar-nav navbar-right">
-            <li class="loggedin">
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li class="loggedin"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
+        
+        <div class="btn-oldstyle2">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="loggedin">
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li class="loggedin">
+                    <a href=@Url.Action("Index", "MESSAGEs")>
+                        <img alt="mail" src="~/content/images/Mail.png" />
+                        <span class="badge">
+                            
+                        </span>
+                    </a>
+                </li>
+                <li class="loggedin"><a href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
+            </ul>
+        </div>
     }
 
     }

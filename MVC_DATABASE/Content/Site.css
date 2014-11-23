@@ -230,17 +230,16 @@
         margin-bottom: 9px;
 	}
 
-    .loggedin:first-child {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 0px;
-    }
-
+    .loggedin:first-child,
     .loggedin:first-child a:hover {
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 0px;
     }
 
-    .loggedin:last-child {
+    .loggedin:last-child,
+    .loggedin:last-child a:hover,
+    .loggenin:nth-child(2),
+    .loggedin:nth-child(2) a:hover {
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
     }
@@ -763,4 +762,38 @@ table#expired-tabs tr td:nth-child(2) {
 video {
     padding-top: 35px;
     padding-bottom: 45px;
+}
+
+.badge {
+    background-color: #009dbd;
+    color: #E4FAFF;
+}
+
+.btn-oldstyle2 li a:active > .badge {
+    background-color: #E4FAFF;
+    color: #009dbd;
+} 
+
+.loggedin,
+.loggedin:hover {
+     max-height: 40px;
+ }
+
+.loggedin-bar .btn-oldstyle2 li:nth-child(2),
+.loggedin-bar .btn-oldstyle2 li:nth-child(2):hover {
+   border-bottom-left-radius: 0px;
+   border-bottom-right-radius: 0px;
+   max-height: 40px;
+   overflow-y: hidden;
+}
+
+
+.loggedin-bar .btn-oldstyle2 li img {
+    width: 25px;
+    margin-bottom: 10px;
+}
+
+.loggedin-bar .btn-oldstyle2 li .badge {
+    margin-bottom: 5px;
+    margin-left: 3px;
 }
