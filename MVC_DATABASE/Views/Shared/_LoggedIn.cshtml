@@ -11,15 +11,7 @@
             <li class="loggedin">
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
-            <li class="loggedin">
-                <a href=@Url.Action("Index", "MESSAGEs")>
-                    <img alt="mail" src="~/content/images/Mail.png" />
-                    <span class="badge">
-                        <!--Number for Unread Messages Goes Here-->
-                    </span>
-                </a>
-            </li>
-            <li class="loggedin"><a href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
+            <li class="loggedin"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
 
