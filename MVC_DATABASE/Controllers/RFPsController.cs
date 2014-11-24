@@ -449,8 +449,15 @@ namespace MVC_DATABASE.Controllers
             ViewBag.AcceptedVendors = vendorProductsQuery;
 
             return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
-        } 
+        }
 
+        public FileResult DownloadTemplate(string path)
+        {
+            string ext = Path.GetExtension(path);
+            string fileName = "Baptist RFI Template" + ext;
+
+            return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
         //public void RFPAnalytics(string path, RFPVendorRespond.RFPList response)
         //{
         //    string filePath = path;
