@@ -31,6 +31,7 @@ namespace MVC_DATABASE.Controllers
         private NegIndex negindex = new NegIndex();
 
         // GET: NEGOTIATIONs
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
             if (db.VENDORs.Find(User.Identity.GetUserId()) != null)
@@ -47,6 +48,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: Closed NEGOTIATIONs
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult ExpiredIndex()
         {
             if (db.VENDORs.Find(User.Identity.GetUserId()) != null)
@@ -65,6 +67,7 @@ namespace MVC_DATABASE.Controllers
 
 
         // GET: NEGOTIATIONs/Details/5
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -92,6 +95,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: NEGOTIATIONs/Create
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
         {
             var rfps = from x in db.RFPs
@@ -121,6 +125,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create([Bind(Include = "NEGID,RFPID,Id,CLOSED")] NEGOTIATION nEGOTIATION)
         {
             if (ModelState.IsValid)
@@ -168,6 +173,7 @@ namespace MVC_DATABASE.Controllers
 
 
         // GET: NEGOTIATIONs/Edit/5
+        [Authorize(Roles = "Administrator,Employee,Vendor")]
         public ActionResult Edit(int? id)
         {
 
@@ -200,6 +206,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee,Vendor")]
         public ActionResult Edit(NegIndex model)
         {
             if (ModelState.IsValid)

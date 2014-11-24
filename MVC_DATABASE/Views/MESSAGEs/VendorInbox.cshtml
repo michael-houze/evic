@@ -17,39 +17,41 @@
         </td>
     </tr>
 </table>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.message.SENT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.message.FROM)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.message.SUBJECT)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.messagelist)
-    {
+<table class="table tablesorter">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SENT)
-            </td>
-            <td>
-                @ViewBag.From
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SUBJECT)
-            </td>
-            <td>
-                @Html.ActionLink("View", "VendorDetails", new { id = item.PK }) |
-                @Html.ActionLink("Delete", "VendorDelete", new { id = item.PK })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.message.SENT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.message.FROM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.message.SUBJECT)
+            </th>
+            <th></th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model.messagelist)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SENT)
+                </td>
+                <td>
+                    @ViewBag.From
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SUBJECT)
+                </td>
+                <td>
+                    @Html.ActionLink("View", "VendorDetails", new { id = item.PK }) |
+                    @Html.ActionLink("Delete", "VendorDelete", new { id = item.PK })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 <table id="expired-tabs">
     <tr>
@@ -60,3 +62,9 @@
         <td></td>
     </tr>
 </table>
+
+<script>
+    $(document).ready(function () {
+        $(".tablesorter").tablesorter();
+    });
+</script>

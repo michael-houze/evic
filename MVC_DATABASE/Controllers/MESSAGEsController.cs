@@ -20,6 +20,7 @@ namespace MVC_DATABASE.Controllers
         private EmployeeCreateMessage ecm = new EmployeeCreateMessage();
 
         // GET: MESSAGEs
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
         {
             var messages = from x in db.MESSAGEs
@@ -32,6 +33,7 @@ namespace MVC_DATABASE.Controllers
             return View(messageindex);
         }
         // GET: MESSAGEs/sent
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Sent()
         {
             var messages = from x in db.MESSAGEs
@@ -45,6 +47,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: MESSAGEs/Details/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,6 +68,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: MESSAGEs/Create
+        [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
         {
             
@@ -78,6 +82,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create( EmployeeCreateMessage model)
         {
             if (ModelState.IsValid)
@@ -93,6 +98,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: MESSAGEs/Reply/5
+        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Reply(int? pk, string id, string subject)
         {
             if (id == null || pk == null)
@@ -123,6 +129,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: MESSAGEs/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,6 +148,7 @@ namespace MVC_DATABASE.Controllers
         // POST: MESSAGEs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             MESSAGE mESSAGE = await db.MESSAGEs.FindAsync(id);
@@ -165,6 +173,7 @@ namespace MVC_DATABASE.Controllers
         //
 
         // GET: MESSAGEs
+        [Authorize(Roles = "Vendor")]
         public ActionResult VendorInbox()
         {
             string userId = User.Identity.GetUserId();
@@ -180,6 +189,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         // GET: MESSAGEs/VendorDetails/5
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> VendorDetails(int? id)
         {
             if (id == null)
@@ -188,7 +198,7 @@ namespace MVC_DATABASE.Controllers
             }
 
             messageindex.message = await db.MESSAGEs.FindAsync(id);
-            if (messageindex.message == null)
+            if (messageindex.message == null || messageindex.message.READ == true)
             {
                 return HttpNotFound();
             }
@@ -204,6 +214,7 @@ namespace MVC_DATABASE.Controllers
 
 
         // GET: MESSAGEs/Create
+        [Authorize(Roles = "Vendor")]
         public ActionResult VendorCreate()
         {
             return View();
@@ -214,6 +225,7 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> VendorCreate(VendorCreateMessage model)
         {
             if (ModelState.IsValid)
@@ -232,6 +244,7 @@ namespace MVC_DATABASE.Controllers
         VendorCreateMessage vcm = new VendorCreateMessage();
 
         // GET: MESSAGEs/VendorReply/5
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> VendorReply(int? pk, string subject)
         {
             if (subject == null || pk == null)
@@ -261,6 +274,7 @@ namespace MVC_DATABASE.Controllers
 
 
         // GET: MESSAGEs/Delete/5
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> VendorDelete(int? id)
         {
             if (id == null)
@@ -278,6 +292,7 @@ namespace MVC_DATABASE.Controllers
         // POST: MESSAGEs/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> VendorDelete(int id)
         {
             MESSAGE mESSAGE = await db.MESSAGEs.FindAsync(id);

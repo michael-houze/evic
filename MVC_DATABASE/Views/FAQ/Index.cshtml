@@ -1,21 +1,35 @@
 ﻿@model MVC_DATABASE.Models.ViewModels.FAQCreate
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "FAQs";
 }
 
 
 @if (User.IsInRole("Administrator"))
 {
     <div class="row">
-    <div class="col-lg-2">
-        @Html.ActionLink("Create New FAQ", "AddFAQ", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        <div class="col-lg-2">
+            @Html.ActionLink("Create New FAQ", "AddFAQ", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </div>
+        <div class="col-lg-8">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+        </div>
+        <div class="col-lg-2">
+            @Html.ActionLink("Video Tutorials", "BaptistVideos", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </div>
     </div>
-    <div class="col-lg-8">
-        <h2 class="text-center">Frequently Asked Questions</h2>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-2">
+            @Html.ActionLink("Video Tutorials", "DirectToVideos", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+        </div>
+        <div class="col-lg-8">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+        </div>
+        <div class="col-lg-2">
+        </div>
     </div>
-    </div>
-   
-    
 }
 
 <table id="faqindextable" class="table tablesorter">

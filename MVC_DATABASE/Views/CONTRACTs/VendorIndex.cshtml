@@ -9,66 +9,76 @@
     
     <h2>Vendor Contracts</h2>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.contractID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rfpID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.category)
-            </th>
-            @*<th>
-        @Html.DisplayNameFor(model => model.contractPath)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.CREATED)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EXPIRES)
-    </th>*@
-
-            <th></th>
-        </tr>
-
-        @{foreach (var item in Model)
-          {
-              //var invite = item.CONTRACTs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();
+    <table class="table tablesorter">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.contractID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.rfpID)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.contractID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.rfpID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.category)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.contractPath)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CREATED)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EXPIRES)
+                </th>*@
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.category)
-                </td>
-                @*<td>
-        @Html.DisplayFor(modelItem => item.contractPath)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CREATED)
-    </td>
-
-    <td>
-        @Html.DisplayFor(modelItem => item.EXPRIRES)
-    </td>*@
-
-                <td>
-                    @if (string.IsNullOrEmpty(item.contractPath))
-                    { 
-                    @Html.ActionLink("Respond", "Respond", new { Id = item.contractID })
-                    }
-                    else { 
-                    @Html.ActionLink("Details", "VendorDetails", new { id = item.contractID })
-                    }
-                </td>
+                <th></th>
             </tr>
-        }
-        }
+        </thead>
+        <tbody>
+            @{foreach (var item in Model)
+            {
+                //var invite = item.CONTRACTs.Where(inv => inv.Id == User.Identity.GetUserId()).FirstOrDefault();
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.contractID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.rfpID)
+                    </td>
 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.category)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.contractPath)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CREATED)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXPRIRES)
+                    </td>*@
+
+                    <td>
+                        @if (string.IsNullOrEmpty(item.contractPath))
+                        {
+                            @Html.ActionLink("Respond", "Respond", new { Id = item.contractID })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Details", "VendorDetails", new { id = item.contractID })
+                        }
+                    </td>
+                </tr>
+            }
+
+            }
+        </tbody>
     </table>
+
+<script>
+    $(document).ready(function () {
+        $(".tablesorter").tablesorter();
+    });
+</script>

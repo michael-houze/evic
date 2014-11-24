@@ -2,6 +2,21 @@
 
 @using MVC_DATABASE.Models;
 
+@section Scripts {
+         <!-- jQuery UI CSS Reference -->
+<link href="@Url.Content("~/content/themes/base/jquery-ui.css")" rel="stylesheet" />
+<!-- Required jQuery and jQuery UI Javascript references -->
+<script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min-1.11.1.js")"></script>
+
+
+    <script type="text/javascript">
+    $(function () { // will trigger when the document is ready
+        $('.date-picker').datepicker(); //Initialise any date pickers        
+    });
+    </script>
+    }
+
 @{
     ViewBag.Title = "Create";
 }
@@ -43,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.contract.EXPIRES, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.contract.EXPIRES, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.contract.EXPIRES, new { htmlAttributes = new { @class = "form-control date-picker" } })
                 @Html.ValidationMessageFor(model => model.contract.EXPIRES, "", new { @class = "text-danger" })
             </div>
         </div>

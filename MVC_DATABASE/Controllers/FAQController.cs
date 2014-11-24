@@ -42,7 +42,7 @@ namespace MVC_DATABASE.Controllers
         //
         ////GET: /FAQ/EditFaq
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> EditFAQ(int id)
+        public async Task<ActionResult> EditFAQ(int? id)
         {
             if (id == null)
             {
@@ -158,5 +158,36 @@ namespace MVC_DATABASE.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Administrator,Employee,Vendor")]
+        public ActionResult DirectToVideos()
+        {
+            if(User.IsInRole("Administrator") || User.IsInRole("Employee"))
+            {
+                return RedirectToAction("BaptistVideos");
+            }
+            else if(User.IsInRole("Vendor"))
+            {
+                return RedirectToAction("VendorVideos");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home", null);
+            }
+        }
+
+        [Authorize(Roles = "Administrator,Employee")]
+        public ActionResult BaptistVideos()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Administrator,Vendor")]
+        public ActionResult VendorVideos()
+        {
+            return View();
+        }
+
+
 	}
 }

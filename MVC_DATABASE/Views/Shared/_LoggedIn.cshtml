@@ -12,14 +12,25 @@
                 <li class="loggedin">
                     @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                 </li>
-                <li class="loggedin">
-                    <a href=@Url.Action("Index", "MESSAGEs")>
+        @if (User.IsInRole("Employee") || User.IsInRole("Administrator"))
+        { 
+                <li class="loggedin">                 
+                        <a href=@Url.Action("Index", "MESSAGEs")>                                      
                         <img alt="mail" src="~/content/images/Mail.png" />
                         <span class="badge">
                             
                         </span>
                     </a>
                 </li>
+        }
+        else if (User.IsInRole("Vendor"))
+        {
+            <li class="loggedin">
+                <a href=@Url.Action("VendorInbox", "MESSAGEs")>
+                    <img alt="mail" src="~/content/images/Mail.png" />
+                </a>
+            </li>
+        }
                 <li class="loggedin"><a href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
             </ul>
         </div>

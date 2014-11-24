@@ -372,6 +372,7 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
     <Content Include="Content\themes\base\menu.css" />
     <Content Include="Content\themes\base\progressbar.css" />
     <Content Include="Content\themes\base\resizable.css" />
@@ -635,6 +636,8 @@
     <Content Include="Views\MESSAGEs\VendorReply.cshtml" />
     <Content Include="Views\MESSAGEs\VendorDelete.cshtml" />
     <Content Include="Views\MESSAGEs\Sent.cshtml" />
+    <Content Include="Views\FAQ\BaptistVideos.cshtml" />
+    <Content Include="Views\FAQ\VendorVideos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -647,6 +650,9 @@
     <Folder Include="Content\RFIs\Catalogs\" />
     <Folder Include="Content\RFIs\TestFolder\" />
     <Folder Include="Content\RFPs\" />
+    <Folder Include="Content\Videos\Administrator\" />
+    <Folder Include="Content\Videos\All\" />
+    <Folder Include="Content\Videos\Employee\" />
     <Folder Include="Content\Videos\Vendor\" />
     <Folder Include="Content\W9\" />
     <Folder Include="Views\Query\" />

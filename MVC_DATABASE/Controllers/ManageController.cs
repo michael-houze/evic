@@ -233,8 +233,9 @@ namespace MVC_DATABASE.Controllers
             if(user != null)
             {
                
-             
-                if(db.VENDORs.FindAsync(user) != null)
+             VENDOR vendor = new VENDOR();
+                vendor = await db.VENDORs.FindAsync(user.Id);
+                if( vendor != null)
                 {
                     var editUser = (from v in db.VENDORs
                                     where v.Id == user.Id
@@ -332,6 +333,7 @@ namespace MVC_DATABASE.Controllers
 
          //
         // GET: /Manage/ChangePassword
+        [Authorize]
         public ActionResult ChangePassword()
         {
             return View();
@@ -341,6 +343,7 @@ namespace MVC_DATABASE.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -372,6 +375,7 @@ namespace MVC_DATABASE.Controllers
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -395,6 +399,7 @@ namespace MVC_DATABASE.Controllers
 
         //
         // GET: /Manage/ManageLogins
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =

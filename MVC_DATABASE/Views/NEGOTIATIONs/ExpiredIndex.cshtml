@@ -10,11 +10,15 @@
         @Html.ActionLink("Start Negotiations", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
     </div>
     <div class="col-lg-8">
-        <h2 class="text-center">Open Negotiations</h2>
+        <h2 class="text-center">Closed Negotiations</h2>
+    </div>
+    <div class="col-lg-2" style="right: 50px">
+        @Html.ActionLink("Back to Negotiations", "Index", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
     </div>
 </div>
 
-    <table class="table">
+    <table id="expirednegs" class="table tablesorter">
+        <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.negotiation.NEGID)
@@ -30,7 +34,10 @@
             </th>
             <th></th>
         </tr>
-
+        </thead>
+        @if (Model.opennegs != null)
+        { 
+            <tbody>
         @foreach (var item in Model.opennegs)
         {
             <tr>
@@ -59,8 +66,23 @@
                 </td>
             </tr>
         }
-
+            </tbody>
+        }
     </table>
-<div>
-    @Html.ActionLink("Back to Negotiations", "Index")
+
+<div class="row">
+    <div class="col-lg-2">
+        @Html.ActionLink("Start Negotiations", "Create", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
+    <div class="col-lg-8">
+    </div>
+    <div class="col-lg-2" style="right: 50px">
+        @Html.ActionLink("Back to Negotiations", "Index", null, new { @class = "btn btn-primary btn-sm btn-rfi" })
+    </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#expirednegs").tablesorter();
+    });
+</script>

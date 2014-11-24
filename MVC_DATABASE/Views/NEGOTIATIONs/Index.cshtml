@@ -19,51 +19,58 @@
 </div>
 
 <br />
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.negotiation.NEGID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.negotiation.RFPID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.negotiation.RFP.CATEGORY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.negotiation.AspNetUser.VENDOR.ORGANIZATION)
-        </th>
-        <th></th>
-    </tr>
+<table id="negindextable" class="table tablesorter">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.NEGID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.RFPID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.RFP.CATEGORY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.negotiation.AspNetUser.VENDOR.ORGANIZATION)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @if (Model.opennegs != null)
+    {
+    <tbody>
+        @foreach (var item in Model.opennegs)
+        {
 
-@foreach (var item in Model.opennegs) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NEGID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RFPID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUser.VENDOR.ORGANIZATION)
-        </td>
-        <td>
-            @if(item.CLOSED == true)
-            {
-                @Html.ActionLink("Details", "Details", new { id=item.NEGID })
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NEGID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFPID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFP.CATEGORY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.VENDOR.ORGANIZATION)
+                </td>
+                <td>
+                    @if (item.CLOSED == true)
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.NEGID })
 
-            }
-            else
-            {
-                @Html.ActionLink("Negotiate", "Edit", new { id=item.NEGID }) 
-            }
-        </td>
-    </tr>
-}
-
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Negotiate", "Edit", new { id = item.NEGID })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    }
 </table>
 
 <br />
@@ -78,3 +85,8 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $("#negindextable").tablesorter();
+    });
+</script>

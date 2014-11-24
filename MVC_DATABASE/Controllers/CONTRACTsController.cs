@@ -113,6 +113,11 @@ namespace MVC_DATABASE.Controllers
 
         public ActionResult NegCreate(string Id, int negid, int rfpid)
         {
+            if (Id == null || negid == null || rfpid == null )
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             negmodel.contract = new CONTRACT();
 
             negmodel.contract.Id = Id;
@@ -127,7 +132,17 @@ namespace MVC_DATABASE.Controllers
             
             negmodel.template = db.TEMPLATEs.Find(negmodel.contract.TEMPLATEID);
 
+            RFP rfp = new RFP();
+            rfp = db.RFPs.Find(rfpid);
+
+            if (negmodel.vendor == null || negmodel.template == null || rfp == null)
+            {
+                return HttpNotFound();
+            }
+
             negmodel.contract.RFPID = rfpid;
+
+            negmodel.contract.EXPIRES = DateTime.Now;
 
             return View(negmodel);
 
