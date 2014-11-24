@@ -10,6 +10,14 @@
 
     <hr />
 
+    @if (Model.messageCount > 0)
+    {
+        <div class="alert alert-dismissable text-center dashboard" role="alert">
+            There are currently @Html.DisplayFor(model => model.messageCount) messages in your inbox.<br />
+            Go to the @Html.ActionLink("Message Center", "VendorInbox", "MESSAGEs", null, new { @class = "dashboard" }) to view them.<br />
+        </div>
+    }
+
     @if (Model.pendingRFIs > 0)
     {
         <div class="alert alert-info text-center dashboard" role="alert">
@@ -35,6 +43,20 @@
     {
         <div class="alert alert-success text-center" role="alert">
             There are no RFPs awaiting your response
+        </div>
+    }
+
+    @if (Model.pendingContracts > 0)
+    {
+        <div class="alert alert-warning text-center dashboard" role="alert">
+            There are currently @Html.DisplayFor(model => model.pendingContracts) Contracts awaiting your response.<br />
+            Go to the @Html.ActionLink("Contract Management", "VendorIndex", "CONTRACTs", null, new { @class = "dashboard" }) page to respond.<br />
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success text-center" role="alert">
+            There are no Contracts awaiting your response
         </div>
     }
 

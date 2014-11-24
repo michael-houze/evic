@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -23,6 +24,7 @@ namespace MVC_DATABASE.Controllers
             model.pendingVendors = getPendingVendorCount();
             model.calendarEvents = getEmployeeCalendarEvents();
             model.contractSummaries = getExpiredContracts();
+            model.messageCount = getEmployeeMessageCount();
 
             return View( model );
         }
@@ -35,6 +37,7 @@ namespace MVC_DATABASE.Controllers
             model.rfiSummaries = getExpiredRFIs();
             model.rfpSummaries = getExpiredRFPs();
             model.contractSummaries = getExpiredContracts();
+            model.messageCount = getEmployeeMessageCount();
             model.calendarEvents = getEmployeeCalendarEvents();
 
             return View( model );
@@ -47,6 +50,8 @@ namespace MVC_DATABASE.Controllers
 
             model.pendingRFIs = getPendingVendorRFICount();
             model.pendingRFPs = getPendingVendorRFPCount();
+            model.pendingContracts = getPendingVendorContractCount();
+            model.messageCount = getVendorMessageCount();
             model.calendarEvents = getCalendarEvents();
 
             return View( model );
@@ -104,6 +109,63 @@ namespace MVC_DATABASE.Controllers
                         responseCount++;
                     }
                 }
+            }
+
+            return responseCount;
+        }
+        // returns # of pending contracts
+        private int getPendingVendorContractCount()
+        {
+            int responseCount = 0;
+
+            var currentUser = User.Identity.Name;
+            string currentUserName = currentUser;
+
+            foreach (var con in db.CONTRACTs)
+            {               
+                    if ((currentUserName == con.AspNetUser.UserName) &&
+                        (string.IsNullOrWhiteSpace(con.CONTRACT_PATH)) &&
+                        con.CREATED <= DateTime.Now &&
+                        con.EXPIRES > DateTime.Now)
+                    {
+                        responseCount++;
+                    }
+                
+            }
+
+            return responseCount;
+        }
+
+        private int getVendorMessageCount()
+        {
+            int responseCount = 0;
+
+            var userId = User.Identity.GetUserId();
+
+            foreach (var mes in db.MESSAGEs)
+            {
+                if (userId == mes.TO && mes.READ == false)
+                {
+                    responseCount++;
+                }
+
+            }
+
+            return responseCount;
+        }
+
+        //gets message count for employees and admins
+        private int getEmployeeMessageCount()
+        {
+            int responseCount = 0;
+
+            foreach (var mes in db.MESSAGEs)
+            {
+                if (mes.READ == false && mes.TO == null)
+                {
+                    responseCount++;
+                }
+
             }
 
             return responseCount;

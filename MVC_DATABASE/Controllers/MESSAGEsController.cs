@@ -63,6 +63,7 @@ namespace MVC_DATABASE.Controllers
             {
                 messageindex.message.READ = true;
                 db.Entry(messageindex.message).State = EntityState.Modified;
+                await db.SaveChangesAsync();
             }
             return View(messageindex);
         }

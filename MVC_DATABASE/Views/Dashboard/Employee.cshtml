@@ -10,6 +10,14 @@
 
     <hr />
 
+    @if (Model.messageCount > 0)
+    {
+        <div class="alert alert-dismissable text-center dashboard" role="alert">
+            There are currently @Html.DisplayFor(model => model.messageCount) unread messages in Baptist Health's inbox.<br />
+            Go to the @Html.ActionLink("Message Center", "Index", "MESSAGEs", null, new { @class = "dashboard" }) to view them.<br />
+        </div>
+    }
+
     @for (var contract = 0; contract < Model.contractSummaries.Count(); contract++)
     {
         <div class="alert alert-success text-center" role="alert">

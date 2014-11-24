@@ -13,6 +13,12 @@ namespace MVC_DATABASE.Models.ViewModels
         // The number of RFPs awaiting response from vendor
         public int pendingRFPs;
 
+        //the number of Contracts awaiting response from vendor
+        public int pendingContracts { get; set; }
+
+        //the number of messages in the vendors inbox
+        public int messageCount { get; set; }
+
         public string calendarEvents;
     }
 }

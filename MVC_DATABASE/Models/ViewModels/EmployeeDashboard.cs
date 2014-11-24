@@ -16,6 +16,8 @@ namespace MVC_DATABASE.Models.ViewModels
         // An array of CONTRACTs with an expired status
         public List<ContractSummary> contractSummaries;
 
+        public int messageCount {get; set;}
+
         public string calendarEvents;
     }
 }
