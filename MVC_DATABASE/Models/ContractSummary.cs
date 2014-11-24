@@ -9,5 +9,10 @@ namespace MVC_DATABASE.Models
     {
         public int ContractNumber;
         public int ResponseCount;
+
+        public ContractSummary( int id)
+        {
+            ContractNumber = id;
+        }
     }
 }

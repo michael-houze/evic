@@ -15,27 +15,32 @@ namespace MVC_DATABASE.Controllers
     {
         private EVICEntities db = new EVICEntities();
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult Admin()
         {
             AdminDashboard model = new AdminDashboard();
 
             model.pendingVendors = getPendingVendorCount();
             model.calendarEvents = getEmployeeCalendarEvents();
+            model.contractSummaries = getExpiredContracts();
 
             return View( model );
         }
 
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult Employee()
         {
             EmployeeDashboard model = new EmployeeDashboard();
 
             model.rfiSummaries = getExpiredRFIs();
             model.rfpSummaries = getExpiredRFPs();
+            model.contractSummaries = getExpiredContracts();
             model.calendarEvents = getEmployeeCalendarEvents();
 
             return View( model );
         }
 
+        [Authorize(Roles = "Vendor")]
         public ActionResult Vendor()
         {
             VendorDashboard model = new VendorDashboard();
@@ -113,17 +118,20 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var rfi in db.RFIs.Where(model => model.EXPIRES <= DateTime.Now))
             {
-                responseCount = 0;
-
-                foreach (var response in rfi.RFIINVITEs)
+                if (rfi.EXPIRES >= DateTime.Now.AddDays(-8))
                 {
-                    if(!string.IsNullOrWhiteSpace(response.GHX_PATH))
-                    {
-                        responseCount++;
-                    }
-                }
+                    responseCount = 0;
 
-                summaries.Add(new RFISummary(rfi.RFIID, responseCount));
+                    foreach (var response in rfi.RFIINVITEs)
+                    {
+                        if (!string.IsNullOrWhiteSpace(response.GHX_PATH))
+                        {
+                            responseCount++;
+                        }
+                    }
+
+                    summaries.Add(new RFISummary(rfi.RFIID, responseCount));
+                }
             }
 
             return summaries;
@@ -138,18 +146,35 @@ namespace MVC_DATABASE.Controllers
 
             foreach (var rfp in db.RFPs.Where(model => model.EXPIRES <= DateTime.Now))
             {
-                responseCount = 0;
-                foreach (var response in rfp.RFPINVITEs)
+                if (rfp.EXPIRES >= DateTime.Now.AddDays(-8))
                 {
-                    if (!string.IsNullOrWhiteSpace(response.OFFER_PATH))
+                    responseCount = 0;
+                    foreach (var response in rfp.RFPINVITEs)
                     {
-                        responseCount++;
+                        if (!string.IsNullOrWhiteSpace(response.OFFER_PATH))
+                        {
+                            responseCount++;
+                        }
                     }
+
+                    summaries.Add(new RFPSummary(rfp.RFPID, responseCount));
                 }
-
-                summaries.Add(new RFPSummary(rfp.RFPID, responseCount));
             }
+            return summaries;
+        }
 
+        private List<ContractSummary> getExpiredContracts()
+        {
+            List<ContractSummary> summaries = new List<ContractSummary>();
+            
+
+            foreach (var con in db.CONTRACTs.Where(model => model.EXPIRES <= DateTime.Now))
+            {
+                if (con.EXPIRES >= DateTime.Now.AddDays(-8))
+                {
+                    summaries.Add(new ContractSummary(con.RFPID));
+                }
+            }
             return summaries;
         }
 

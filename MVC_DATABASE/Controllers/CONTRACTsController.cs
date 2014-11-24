@@ -111,7 +111,7 @@ namespace MVC_DATABASE.Controllers
 
         private CreateContract negmodel = new CreateContract();
 
-        public ActionResult NegCreate(string Id, int negid, int rfpid)
+        public ActionResult NegCreate(string Id, int? negid, int? rfpid)
         {
             if (Id == null || negid == null || rfpid == null )
             {
@@ -140,7 +140,7 @@ namespace MVC_DATABASE.Controllers
                 return HttpNotFound();
             }
 
-            negmodel.contract.RFPID = rfpid;
+            negmodel.contract.RFPID = (int)rfpid;
 
             negmodel.contract.EXPIRES = DateTime.Now;
 

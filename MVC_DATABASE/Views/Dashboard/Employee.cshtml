@@ -10,6 +10,13 @@
 
     <hr />
 
+    @for (var contract = 0; contract < Model.contractSummaries.Count(); contract++)
+    {
+        <div class="alert alert-success text-center" role="alert">
+            Contract @Html.DisplayFor(model => model.contractSummaries[contract].ContractNumber) has expired.
+        </div>
+    }
+
     @for (var rfi = 0; rfi < Model.rfiSummaries.Count(); rfi++)
     {
         <div class="alert alert-info text-center" role="alert">

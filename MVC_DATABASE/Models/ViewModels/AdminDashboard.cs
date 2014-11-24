@@ -11,5 +11,9 @@ namespace MVC_DATABASE.Models.ViewModels
         public int pendingVendors;
 
         public string calendarEvents;
+
+        // An array of CONTRACTs with an expired status
+        public List<ContractSummary> contractSummaries;
+
     }
 }

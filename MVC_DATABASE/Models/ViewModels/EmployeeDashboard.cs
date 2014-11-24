@@ -13,6 +13,9 @@ namespace MVC_DATABASE.Models.ViewModels
         // An array of RFPs with an expired status
         public List<RFPSummary> rfpSummaries;
 
+        // An array of CONTRACTs with an expired status
+        public List<ContractSummary> contractSummaries;
+
         public string calendarEvents;
     }
 }
