@@ -18,6 +18,8 @@
     
     foreach (var r in Model.RfpInviteList)
     {
+        if (r.OFFER_PATH != null)
+        { 
         //Organization Name
         var organization = from i in db.RFPINVITEs
                            join v in db.VENDORs on i.Id equals v.Id 
@@ -25,7 +27,6 @@
                            select v.ORGANIZATION;
 
         string responseOrg = organization.FirstOrDefault().ToString();
-        
         
         //RFPLine Information - From Excel Sheet
         string filePath = r.OFFER_PATH;
@@ -96,6 +97,7 @@
             }
         }
     </table>
+}
     }
 }
 
