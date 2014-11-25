@@ -234,7 +234,7 @@ namespace MVC_DATABASE.Controllers
             {
                 if (con.EXPIRES >= DateTime.Now.AddDays(-8))
                 {
-                    summaries.Add(new ContractSummary(con.RFPID));
+                    summaries.Add(new ContractSummary(con.CONTRACTID));
                 }
             }
             return summaries;
