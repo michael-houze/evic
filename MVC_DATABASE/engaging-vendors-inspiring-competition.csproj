@@ -220,6 +220,7 @@
     <Compile Include="Models\ANALYTIC.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ANALYTICS.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>EVICEntities.tt</DependentUpon>
     </Compile>

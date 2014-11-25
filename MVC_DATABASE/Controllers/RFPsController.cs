@@ -1,5 +1,4 @@
-﻿using LinqToExcel;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,6 +16,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using Remotion;
+using LinqToExcel;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -375,6 +376,28 @@ namespace MVC_DATABASE.Controllers
 
                 //Saves file.
                 model.File.SaveAs(path);
+
+                //Begin background analytics
+                var excelFile = new ExcelQueryFactory(path);
+
+                var lines = from l in excelFile.WorksheetRange<ReportAnalytics>("A12", "V138", "Financial Analysis")
+                            select l;
+
+                foreach (var l in lines)
+                {
+                    var analytics = new ANALYTIC(); 
+                    //ReportAnalytics analytics = new ReportAnalytics();
+
+                    analytics.CATEGORY = model.RFP.CATEGORY;
+                    analytics.RFPID = model.RFP.RFPID;
+                    analytics.Id = model.RFPInvite.Id;
+                    analytics.MMIS = l.MMIS;
+                    analytics.DESCRIPTION = l.Description;
+                    analytics.NEWPRICE = l.NewPriceEach;
+                    analytics.QUANTITY = l.Quantity;
+
+                    db.ANALYTICS.Add(analytics);                    
+                }   //end analytics
 
                 await db.SaveChangesAsync();
                 return RedirectToAction("VendorIndex", "RFPs");
