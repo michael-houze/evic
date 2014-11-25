@@ -14,6 +14,11 @@ using LinqToExcel;
 using Remotion.Data.Linq;
 using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
+using System.Data.SqlClient;
+using System.Text;
+using System.IO;
+using System.Configuration;
+
 
 namespace MVC_DATABASE.Controllers
 {
@@ -75,7 +80,59 @@ namespace MVC_DATABASE.Controllers
         {
             //! ! ! Return Database results in excel format
 
-            return View();
+            //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM db.ANALYTIC"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        //cmd.Connection = con;
+                        sda.SelectCommand = cmd;
+                        using (DataTable dt = new DataTable())
+                        {
+                            sda.Fill(dt);
+
+                            string csv = string.Empty;
+
+                            foreach (DataColumn column in dt.Columns)
+                            {
+                                csv += column.ColumnName + ',';
+                            }
+
+                            csv += "\r\n";
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                foreach (DataColumn column in dt.Columns)
+                                {
+
+                                    csv += row[column.ColumnName].ToString().Replace(",", ";") + ',';
+                                }
+
+                                csv += "\r\n";
+                            }
+
+                            Response.Clear();
+                            Response.Buffer = true;
+                            Response.AddHeader("content-disposition", "attachment;filename=SqlExport.csv");
+                            Response.Charset = "";
+                            Response.ContentType = "application/text";
+                            Response.Output.Write(csv);
+                            Response.Flush();
+                            Response.End();
+                        }
+
+                    }
+
+              //  }
+
+            }
+
+
+
+
+            return RedirectToAction("Index");
         }
     }
 }
