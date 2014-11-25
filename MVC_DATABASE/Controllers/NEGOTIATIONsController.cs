@@ -302,22 +302,31 @@ namespace MVC_DATABASE.Controllers
                 {
                     if (model.negotiation.CLOSED == true)
                     {
+
                         NEGOTIATION neg = db.NEGOTIATIONs.Find(model.negotiation.NEGID);
                         neg.CLOSED = true;
-
+                        
                         var ResponsePK = from x in db.RESPONSEs
                                       where x.NEGID == model.negotiation.NEGID
                                       where x.AspNetUser.VENDOR == null
                                       orderby x.PK descending
                                       select x;
 
-                        RESPONSE conResponse = (RESPONSE)ResponsePK.FirstOrDefault();                       
+                        RESPONSE conResponse = (RESPONSE)ResponsePK.FirstOrDefault();
+                        if (conResponse != null)
+                        {
+                            TEMPLATE newContract = new TEMPLATE { TYPE = "CONTRACT", PATH = conResponse.PATH, NEGID = model.negotiation.NEGID };
 
-                        TEMPLATE newContract = new TEMPLATE { TYPE = "CONTRACT", PATH = conResponse.PATH, NEGID = model.negotiation.NEGID };
+                            db.TEMPLATEs.Add(newContract);
+
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
                         
-                        db.TEMPLATEs.Add(newContract);
-
-                        db.SaveChanges();
 
                         //INTIALIZE NEG VALUES for passing to create
                         model.negotiation = db.NEGOTIATIONs.Find(model.negotiation.NEGID);
