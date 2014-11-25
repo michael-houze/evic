@@ -271,7 +271,9 @@ namespace MVC_DATABASE.Controllers
                         where y.OFFER_PATH == path
                         select y.RFPID;
 
-            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfpId.FirstOrDefault().ToString());
+            string ext = Path.GetExtension(path);
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfpId.FirstOrDefault().ToString() +  ext);
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 
@@ -416,9 +418,9 @@ namespace MVC_DATABASE.Controllers
                         where y.OFFER_PATH == path
                         select y.RFPID;
 
+            string ext = Path.GetExtension(path);
 
-
-            string fileName = (vendor.ORGANIZATION.ToString() + " - " + RFPID.FirstOrDefault().ToString());
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + RFPID.FirstOrDefault().ToString() + ext);
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 

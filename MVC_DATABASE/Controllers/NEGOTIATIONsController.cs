@@ -305,8 +305,10 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Administrator,Employee,Vendor")]
         public FileResult DownloadResponse(string path, int id)
         {
-            
-            string fileName = "Offer " + id;
+
+            string ext = Path.GetExtension(path);
+
+            string fileName = "Offer " + id + ext;
 
             return File(path, GetMimeType(path) , fileName);
         }

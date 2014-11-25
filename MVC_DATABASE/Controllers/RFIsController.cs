@@ -521,9 +521,10 @@ namespace MVC_DATABASE.Controllers
                         where y.GHX_PATH == path
                         select y.RFIID;
 
-            
 
-            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
+            string ext = Path.GetExtension(path);
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString() + ext);
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 
@@ -553,7 +554,9 @@ namespace MVC_DATABASE.Controllers
                         where y.CATALOGPATH == catalogpath
                         select y.RFIID;
 
-            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString());
+            string ext = Path.GetExtension(catalogpath);
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + rfiId.FirstOrDefault().ToString() + ext);
 
             return File(catalogpath, GetMimeType(catalogpath), fileName);
 
@@ -561,7 +564,10 @@ namespace MVC_DATABASE.Controllers
 
         public FileResult DownloadTemplate(string path)
         {
-            string fileName = "Baptist RFI Template";
+
+            string ext = Path.GetExtension(path);
+
+            string fileName = "Baptist RFI Template" + ext;
 
             return File(path, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }

@@ -217,7 +217,9 @@ namespace MVC_DATABASE.Controllers
                              where y.PATH == path
                              select y.TEMPLATEID;
 
-            string fileName = ("Contract Template - " + templateId.FirstOrDefault().ToString());
+            string ext = Path.GetExtension(path);
+
+            string fileName = ("Contract Template - " + templateId.FirstOrDefault().ToString()+ ext);
 
             return File(path, GetMimeType(path), fileName);
         }
@@ -238,7 +240,9 @@ namespace MVC_DATABASE.Controllers
                         where y.Id == vendor.Id
                         select y.CONTRACTID;
 
-            string fileName = (vendor.ORGANIZATION.ToString() + " - " + contractId.FirstOrDefault());
+            string ext = Path.GetExtension(path);
+
+            string fileName = (vendor.ORGANIZATION.ToString() + " - " + contractId.FirstOrDefault() + ext);
 
             return File(path, GetMimeType(path), fileName);
         }
