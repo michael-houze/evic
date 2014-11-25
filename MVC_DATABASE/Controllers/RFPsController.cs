@@ -418,29 +418,61 @@ namespace MVC_DATABASE.Controllers
                 //Saves file.
                 model.File.SaveAs(path);
 
+
+
                 //Begin background analytics
-                var excelFile = new ExcelQueryFactory(path);
+                    var categoryQuery = from i in db.RFPINVITEs
+                                        join r in db.RFPs on i.RFPID equals r.RFPID
+                                        where r.RFPID == model.RFPInvite.RFPID
+                                        select r.CATEGORY;
+                    string category = categoryQuery.FirstOrDefault().ToString();
+
+                    var rfpIdQuery = from i in db.RFPINVITEs
+                                     where i.RFPID == model.RFPInvite.RFPID
+                                     select i.RFPID;
+                    string rfpId = rfpIdQuery.FirstOrDefault().ToString();
+                    int rfpIdInt = Convert.ToInt32(rfpId);
+
+                    var idQuery = from i in db.RFPINVITEs
+                                  where i.RFPID == model.RFPInvite.RFPID
+                                  select i.Id;
+                    string id = idQuery.FirstOrDefault().ToString();
+
+                    //string filePath = model.RFPInvite.OFFER_PATH;
+                    string hostPath = System.Web.Hosting.HostingEnvironment.MapPath(offerpath);
+
+                var excelFile = new ExcelQueryFactory(hostPath);
 
                 var lines = from l in excelFile.WorksheetRange<ReportAnalytics>("A12", "V138", "Financial Analysis")
                             select l;
 
                 foreach (var l in lines)
                 {
-                    var analytics = new ANALYTIC(); 
-                    //ReportAnalytics analytics = new ReportAnalytics();
+                    if (l.Description != null)
+                    {
+                        var analytics = new ANALYTIC();
 
-                    analytics.CATEGORY = model.RFP.CATEGORY;
-                    analytics.RFPID = model.RFP.RFPID;
-                    analytics.Id = model.RFPInvite.Id;
-                    analytics.MMIS = l.MMIS;
-                    analytics.DESCRIPTION = l.Description;
-                    analytics.NEWPRICE = l.NewPriceEach;
-                    analytics.QUANTITY = l.Quantity;
+                        string mmisConvert = l.MMIS.ToString();
+                        string descriptionConvert = l.Description.ToString();
+                        decimal newPriceConvert = Convert.ToDecimal(l.NewPriceEach);
+                        int quantityConvert = Convert.ToInt32(l.Quantity);
 
-                    db.ANALYTICS.Add(analytics);                    
+
+                        analytics.CATEGORY = category;
+                        analytics.RFPID = rfpIdInt;
+                        analytics.Id = id;
+
+                        analytics.MMIS = mmisConvert;
+                        analytics.DESCRIPTION = descriptionConvert;
+                        analytics.NEWPRICE = newPriceConvert;
+                        analytics.QUANTITY = quantityConvert;
+
+                        db.ANALYTICS.Add(analytics);
+                    }
                 }   //end analytics
 
                 await db.SaveChangesAsync();
+                //db.SaveChanges();
                 return RedirectToAction("VendorIndex", "RFPs");
 
             }
