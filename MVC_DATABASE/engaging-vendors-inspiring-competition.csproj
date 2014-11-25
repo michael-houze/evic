@@ -384,6 +384,10 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\Videos\Administrator\FAQFINAL.mp4" />
+    <Content Include="Content\Videos\Employee\CreateRFIFINAL.mp4" />
+    <Content Include="Content\Videos\Employee\CreateRFPFINAL.mp4" />
+    <Content Include="Content\Videos\Employee\EmployeeMessagingFINAL.mp4" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\BaptistLogo.png" />
     <Content Include="Content\Images\Caldendar.PNG" />
@@ -650,9 +654,7 @@
     <Folder Include="Content\RFIs\Catalogs\" />
     <Folder Include="Content\RFIs\TestFolder\" />
     <Folder Include="Content\RFPs\" />
-    <Folder Include="Content\Videos\Administrator\" />
     <Folder Include="Content\Videos\All\" />
-    <Folder Include="Content\Videos\Employee\" />
     <Folder Include="Content\Videos\Vendor\" />
     <Folder Include="Content\W9\" />
     <Folder Include="Views\Query\" />
