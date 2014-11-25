@@ -11,7 +11,8 @@
     <hr />
     @if (Model.messageCount > 0)
     {
-        <div class="alert alert-dismissable text-center dashboard" role="alert">
+        <div class="alert alert-dismissible text-center dashboard" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             There are currently @Html.DisplayFor(model => model.messageCount) unread messages in Baptist Health's inbox.<br />
             Go to the @Html.ActionLink("Message Center", "Index", "MESSAGEs", null, new { @class = "dashboard" }) to view them.<br />
         </div>
@@ -19,21 +20,24 @@
     
     @if (Model.pendingVendors > 0)
     {
-        <div class="alert alert-warning text-center dashboard" role="alert">
+        <div class="alert alert-warning alert-dismissible text-center dashboard" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             There are currently @Html.DisplayFor(model => model.pendingVendors) vendor applications awaiting approval.<br />
-            Go to the @Html.ActionLink("Account Management", "Index", "Account", null , new { @class = "dashboard" }) page to respond.<br />
+            Go to the @Html.ActionLink("Account Management", "Index", "Account", null, new { @class = "dashboard" }) page to respond.<br />
         </div>
     }
     else
     {
-        <div class="alert alert-success text-center" role="alert">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             There are no unanswered vendor applications
         </div>
     }
 
     @for (var contract = 0; contract < Model.contractSummaries.Count(); contract++)
     {
-        <div class="alert alert-success text-center" role="alert">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             Contract @Html.DisplayFor(model => model.contractSummaries[contract].ContractNumber) has expired.
         </div>
     }

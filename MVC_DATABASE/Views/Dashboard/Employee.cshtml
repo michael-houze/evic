@@ -13,6 +13,7 @@
     @if (Model.messageCount > 0)
     {
         <div class="alert alert-dismissable text-center dashboard" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             There are currently @Html.DisplayFor(model => model.messageCount) unread messages in Baptist Health's inbox.<br />
             Go to the @Html.ActionLink("Message Center", "Index", "MESSAGEs", null, new { @class = "dashboard" }) to view them.<br />
         </div>
@@ -21,6 +22,7 @@
     @for (var contract = 0; contract < Model.contractSummaries.Count(); contract++)
     {
         <div class="alert alert-success text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             Contract @Html.DisplayFor(model => model.contractSummaries[contract].ContractNumber) has expired.
         </div>
     }
@@ -28,6 +30,7 @@
     @for (var rfi = 0; rfi < Model.rfiSummaries.Count(); rfi++)
     {
         <div class="alert alert-info text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             RFI @Html.DisplayFor(model => model.rfiSummaries[rfi].RFINumber) has expired and has @Html.DisplayFor(model => model.rfiSummaries[rfi].ResponseCount) responses.
         </div>
     }
@@ -35,6 +38,7 @@
     @for (var rfp = 0; rfp < Model.rfpSummaries.Count(); rfp++)
     {
         <div class="alert alert-danger text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             RFP @Html.DisplayFor(model => model.rfpSummaries[rfp].RFPNumber) has expired and has @Html.DisplayFor(model => model.rfpSummaries[rfp].ResponseCount) responses.
         </div>
     }
