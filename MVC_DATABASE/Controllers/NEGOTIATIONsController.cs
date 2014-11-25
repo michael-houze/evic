@@ -29,6 +29,40 @@ namespace MVC_DATABASE.Controllers
     {
         private EVICEntities db = new EVICEntities();
         private NegIndex negindex = new NegIndex();
+        private ApplicationUserManager _userManager;
+
+        public NEGOTIATIONsController()
+        {
+        }
+
+        public NEGOTIATIONsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationSignInManager _signInManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set { _signInManager = value; }
+        }
 
         // GET: NEGOTIATIONs
         [Authorize(Roles = "Administrator,Employee")]
@@ -135,10 +169,14 @@ namespace MVC_DATABASE.Controllers
                 
                 RFP rfpmes = db.RFPs.Find(nEGOTIATION.RFPID);
 
-                string body = "You have been invited to negotiate over your proposal for " + rfpmes.CATEGORY + ". Please visit the negotiation portal to review our offer. For instructions on how to use the negotiation portal, refer to the help section and select video tutorials. From there, you can view our short tutorial video on proper utilization of the negotiation portal.";
+                string messageBody = "You have been invited to negotiate over your proposal for " + rfpmes.CATEGORY + ". Please visit the negotiation portal to review our offer. For instructions on how to use the negotiation portal, refer to the help section and select video tutorials. From there, you can view our short tutorial video on proper utilization of the negotiation portal.";
                 
-                MESSAGE vendorMessage = new MESSAGE { TO = nEGOTIATION.Id, FROM = null, SUBJECT = "Invitation to Negotiate", BODY = body, READ = false, SENT = DateTime.Now};
+                MESSAGE vendorMessage = new MESSAGE { TO = nEGOTIATION.Id, FROM = null, SUBJECT = "Invitation to Negotiate", BODY = messageBody, READ = false, SENT = DateTime.Now};
                 
+                string emailBody = "Baptist Health has sent you a message. Please log into the Baptist Health Supply Chain Management system for further details.";
+                string messageSubject = "New Message from Baptist Health";
+
+                UserManager.SendEmail(nEGOTIATION.Id, messageSubject, emailBody);
                 db.MESSAGEs.Add(vendorMessage);
                 db.NEGOTIATIONs.Add(neg);
                 db.SaveChanges();

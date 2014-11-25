@@ -10,6 +10,10 @@ using System.Web.Mvc;
 using MVC_DATABASE.Models;
 using MVC_DATABASE.Models.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Web.Security;
 
 namespace MVC_DATABASE.Controllers
 {
@@ -18,6 +22,41 @@ namespace MVC_DATABASE.Controllers
         private EVICEntities db = new EVICEntities();
         private MessageIndex messageindex = new MessageIndex();
         private EmployeeCreateMessage ecm = new EmployeeCreateMessage();
+        private ApplicationUserManager _userManager;
+
+        public MESSAGEsController()
+        {
+        }
+
+        public MESSAGEsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationSignInManager _signInManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set { _signInManager = value; }
+        }
+
 
         // GET: MESSAGEs
         [Authorize(Roles = "Administrator,Employee")]
@@ -90,6 +129,10 @@ namespace MVC_DATABASE.Controllers
             {
                 MESSAGE newMessage = new MESSAGE { TO = model.TO, SUBJECT = model.SUBJECT, BODY = model.BODY, READ = false, SENT = DateTime.Now };
                 db.MESSAGEs.Add(newMessage);
+                string body = "Baptist Health has sent you a message. Please log into the Baptist Health Supply Chain Management system for further details.";
+                string subject = "New Message from Baptist Health";                
+                
+                await UserManager.SendEmailAsync(model.TO, subject, body);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
