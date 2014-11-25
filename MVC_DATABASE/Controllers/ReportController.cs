@@ -83,8 +83,11 @@ namespace MVC_DATABASE.Controllers
             //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             //using (SqlConnection con = new SqlConnection(constr))
             //{
-                using (SqlCommand cmd = new SqlCommand("SELECT * FROM db.ANALYTIC"))
-                {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["BaptistHealthConnection"].ToString());
+            
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.ANALYTICS", conn);
+                
                     using (SqlDataAdapter sda = new SqlDataAdapter())
                     {
                         //cmd.Connection = con;
@@ -127,8 +130,8 @@ namespace MVC_DATABASE.Controllers
 
               //  }
 
-            }
-
+            
+            
 
 
 
