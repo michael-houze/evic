@@ -132,8 +132,17 @@ namespace MVC_DATABASE.Controllers
             {
                 NEGOTIATION neg = new NEGOTIATION { RFPID = nEGOTIATION.RFPID, Id = nEGOTIATION.Id, CLOSED = false };
 
+                
+                RFP rfpmes = db.RFPs.Find(nEGOTIATION.RFPID);
+
+                string body = "You have been invited to negotiate over your proposal for " + rfpmes.CATEGORY + ". Please visit the negotiation portal to review our offer. For instructions on how to use the negotiation portal, refer to the help section and select video tutorials. From there, you can view our short tutorial video on proper utilization of the negotiation portal.";
+                
+                MESSAGE vendorMessage = new MESSAGE { TO = nEGOTIATION.Id, FROM = null, SUBJECT = "Invitation to Negotiate", BODY = body, READ = false, SENT = DateTime.Now};
+                
+                db.MESSAGEs.Add(vendorMessage);
                 db.NEGOTIATIONs.Add(neg);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             //If we got this far something failed, reload page
