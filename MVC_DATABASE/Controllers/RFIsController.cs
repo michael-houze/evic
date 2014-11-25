@@ -27,6 +27,41 @@ namespace MVC_DATABASE.Controllers
     {
         private EVICEntities db = new EVICEntities();
         private RFIEmployeeIndex rFIEmployeeIndex = new RFIEmployeeIndex();
+        private ApplicationUserManager _userManager;
+
+        public RFIsController()
+        {
+        }
+
+        public RFIsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationSignInManager _signInManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set { _signInManager = value; }
+        }
+
 
         // GET: RFIs
         [Authorize(Roles = "Administrator,Employee")]
@@ -134,6 +169,9 @@ namespace MVC_DATABASE.Controllers
                     {
                         
                         var rfiinvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x };
+                        string subject = "Invitation from Baptist Health Supply Chain Management";
+                        string body = "Baptist Health SCM invites you to participate in an upcoming RFI for " + model.RFI.CATEGORY + ". Open participation for this RFI will begin on " + model.RFI.CREATED +" EST. To participate, please sign into the Baptist Health Supply Chain Management system.";
+                        await UserManager.SendEmailAsync(x, subject, body);
 
                         db.RFIINVITEs.Add(rfiinvite);
                     }
@@ -234,6 +272,9 @@ namespace MVC_DATABASE.Controllers
                     foreach (var x in model.RFIInviteList)
                     {
                         var RFIInvite = new RFIINVITE { RFIID = rfi.RFIID, Id = x, GHX_PATH = string.Empty };
+                        string subject = "Invitation from Baptist Health Supply Chain Management";
+                        string body = "Baptist Health SCM invites you to participate in a RFI for " + model.RFI.CATEGORY + ". Open participation for this RFI begins on " + model.RFI.CREATED + " EST. To participate, please sign into the Baptist Health Supply Chain Management system.";
+                        await UserManager.SendEmailAsync(x, subject, body);
                         db.RFIINVITEs.Add(RFIInvite);
                     }
                 }

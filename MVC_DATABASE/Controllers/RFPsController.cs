@@ -30,6 +30,40 @@ namespace MVC_DATABASE.Controllers
     {
         private EVICEntities db = new EVICEntities();
         public RFPCreate rfpcreate = new RFPCreate();
+        private ApplicationUserManager _userManager;
+
+        public RFPsController()
+        {
+        }
+
+        public RFPsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationSignInManager _signInManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set { _signInManager = value; }
+        }
 
         // GET: RFPs
         [Authorize(Roles = "Administrator,Employee")]
@@ -125,6 +159,9 @@ namespace MVC_DATABASE.Controllers
                     foreach (var x in model.RFPInviteList)
                     {
                         var rfpinvite = new RFPINVITE { RFPID = rFP.RFPID, Id = x };
+                        string subject = "Invitation from Baptist Health Supply Chain Management";
+                        string body = "Baptist Health SCM invites you to participate in an upcoming RFP for " + model.rfp.RFI.CATEGORY + ". Open participation for this RFP will begin on " + model.rfp.CREATED + " EST. To participate, please sign into the Baptist Health Supply Chain Management system.";
+                        await UserManager.SendEmailAsync(x, subject, body); 
 
                         db.RFPINVITEs.Add(rfpinvite);
                     }
@@ -133,6 +170,7 @@ namespace MVC_DATABASE.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
         //if we got this far something failed, reload form
             var template = from x in db.TEMPLATEs
                            where x.TYPE == "RFP"
@@ -197,6 +235,9 @@ namespace MVC_DATABASE.Controllers
                     foreach (var x in model.RFPInviteList)
                     {
                         var RFPInvite = new RFPINVITE { RFPID = rFP.RFPID, Id = x, OFFER_PATH = string.Empty };
+                        string subject = "Invitation from Baptist Health Supply Chain Management";
+                        string body = "Baptist Health SCM invites you to participate in a RFP for " + model.rfp.RFI.CATEGORY + ". Open participation for this RFP begins on " + model.rfp.CREATED + " EST. To participate, please sign into the Baptist Health Supply Chain Management system.";
+                        await UserManager.SendEmailAsync(x, subject, body); 
                         db.RFPINVITEs.Add(RFPInvite);
                     }
                 }
