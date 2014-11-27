@@ -94,6 +94,7 @@ namespace MVC_DATABASE.Controllers
                 VENDOR vendor = await db.VENDORs.FindAsync(user.Id);
                 EMPLOYEE employee = await db.EMPLOYEEs.FindAsync(user.Id);
                 
+                //Checks user role and account status to determine if the user may log into the system
                 if(employee != null)
                 {
                     if (employee.EMPSTATUS == "PENDING")
@@ -198,11 +199,13 @@ namespace MVC_DATABASE.Controllers
         public ActionResult Register()
         {
             vendorRegister.CategoryList = new List<string>();
+
+            //Creates a multiselect list of product categories
             ViewBag.CATEGORY = new MultiSelectList(db.PRODUCTCATEGORies, "CATEGORY", "CATEGORY");
             return View(vendorRegister);          
         }
 
-        //
+        //Post method for vendor registration
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -211,9 +214,11 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
+                //initializes the AspNetUser object with form values
                 var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email, PhoneNumber = model.RegisterViewModel.Phone };
-
+                //creates an AspNetUser object and assigns the identity result
                 var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
+                // if the user was successfully created, create an associated vendor object and offeredcategory objects
                 if (result.Succeeded)
                 {
 
@@ -238,21 +243,26 @@ namespace MVC_DATABASE.Controllers
                     
                     string w9Path = "~/Content/W9/" + fileName + "_W9";
 
+                    //assigns form and file values to a new vendor object
                     var vendor = new VENDOR { Id = user.Id, FIRSTNAME = model.VENDOR.FIRSTNAME, LASTNAME = model.VENDOR.LASTNAME, ORGANIZATION = model.VENDOR.ORGANIZATION, W9 = w9Path };
-
+                    //assignes form values to a new vendor contact
                     var vendorcontact = new VENDORCONTACT { Id = user.Id, CONTACTNAME = model.VENDORCONTACT.CONTACTNAME, CONTACTEMAIL = model.VENDORCONTACT.CONTACTEMAIL, CONTACTPHONE = model.VENDORCONTACT.CONTACTPHONE };
+                    //sets the vendors status to pending and sanctioned to false
                     vendor.VENDSTATUS = "PENDING";
                     vendor.SANCTIONED = false;
+
+                    // for each category a vendor selects from the form, 
+                    // create a offered category object and add it to the db
                     foreach(var x in model.CategoryList)
                     {                        
                         var offeredCategory = new OFFEREDCATEGORY {Id = user.Id, CATEGORY = x, ACCEPTED = false};
                         db.OFFEREDCATEGORies.Add(offeredCategory);
                     }
-                    
+                    //adds objects to the database
                     db.VENDORs.Add(vendor);
                     db.VENDORCONTACTs.Add(vendorcontact);
 
-
+                    // saves objects to database
                     await db.SaveChangesAsync();
                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false); <<---- Not originally commented out. Commented out to prevent log in until the user is confirmed.
 
@@ -261,9 +271,10 @@ namespace MVC_DATABASE.Controllers
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                    
-                    
+                    // generates an account activation code and url for email confirmation
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id); // Originally, this variable was a string, not a var.
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // sends a confirmation message to the vendors email
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: " + callbackUrl);
                     
                   
@@ -514,20 +525,21 @@ namespace MVC_DATABASE.Controllers
             return View();
         }
 
+        // intializes a private instance of the AccountManagement viewmodel
         private AccountManagement accountManagement = new AccountManagement();
 
         // GET: Vendors and employees (if admin)
         [Authorize(Roles="Administrator")]
         public ActionResult Index()
         {
+            // initializes and sets a list of vendors
             accountManagement.VendorList = new List<VENDOR>();
             accountManagement.VendorList = db.VENDORs.ToList<VENDOR>();
-                //change when roles are added
-            if(User.Identity.IsAuthenticated)
-            {
-                accountManagement.EmployeeList = new List<EMPLOYEE>();
-                accountManagement.EmployeeList = db.EMPLOYEEs.ToList<EMPLOYEE>();
-            }
+             
+            // initializes and sets a list of employees
+            accountManagement.EmployeeList = new List<EMPLOYEE>();
+            accountManagement.EmployeeList = db.EMPLOYEEs.ToList<EMPLOYEE>();
+            
             return View(accountManagement);
         }
 
@@ -539,6 +551,8 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // sets Vendor to the requested user
             accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
 
             if (accountManagement.AspNetUser == null)
@@ -548,12 +562,16 @@ namespace MVC_DATABASE.Controllers
             else
             {
                 accountManagement.Vendor = await db.VENDORs.FindAsync(id);
+
+                // searchs for vendor contact info associated with the requested vendor
                 var contactPK = from x in db.VENDORCONTACTs
                               where x.Id == id
                               select x.PRIMARYKEY;
                 
+                // set the viewmodels vendorcontact
                 accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(contactPK.FirstOrDefault());
 
+                // initializes and populates a list of offered categories for the requested vendor
                 List<OFFEREDCATEGORY> offeredlist = new List<OFFEREDCATEGORY>();
                 foreach(var x in db.OFFEREDCATEGORies)
                 {
@@ -576,6 +594,8 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // sets viewmodels AspNetUser to the requested user
             accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
 
             if (accountManagement.AspNetUser == null)
@@ -584,13 +604,16 @@ namespace MVC_DATABASE.Controllers
             }
             else
             {
+                // sets the viewmodels vendor to the requested user
                 accountManagement.Vendor = await db.VENDORs.FindAsync(id);
                 var contactPK = from x in db.VENDORCONTACTs
                                 where x.Id == id
                                 select x.PRIMARYKEY;
 
+                // sets the viewmodels vendor contact to the requested users contact info
                 accountManagement.VendorContact = await db.VENDORCONTACTs.FindAsync(contactPK.FirstOrDefault());
 
+                // initializes and populates a list of all categories offered by the requested user
                 List<OFFEREDCATEGORY> offeredlist = new List<OFFEREDCATEGORY>();
                 foreach (var x in db.OFFEREDCATEGORies)
                 {
@@ -616,12 +639,16 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+               //
                VENDOR vendor = await db.VENDORs.FindAsync(model.Vendor.Id);
+
+                // stores the vendors current status to compare against the new status
                string oldStatus = vendor.VENDSTATUS.ToString();
 
+                // sets the vendors status from the form
                vendor.VENDSTATUS = model.Vendor.VENDSTATUS;               
 
+                // modifies each offered category in the model for the selected vendor
                 foreach(var x in model.OfferedCategoryList)
                     {
                         db.Entry(x).State = EntityState.Modified;
@@ -632,6 +659,7 @@ namespace MVC_DATABASE.Controllers
                 string deactivatedMessage = "Your account has been deactivated. Please contact a BHSCM representative in order to have your account re-activated. ";
                 string activatedMessage = "Your account has been activated. You are now able to access the Baptist Health Supply Chain Management System. Login to see what categories you have been accepted for. ";
 
+                // determines if the vendors status has changed and sends an appropriate email
                 if (vendor.VENDSTATUS.ToString() != oldStatus)
                 {
                     if (vendor.VENDSTATUS.ToString() == "DEACTIVATED")
@@ -650,7 +678,8 @@ namespace MVC_DATABASE.Controllers
                 await db.SaveChangesAsync();
 
                 return RedirectToAction("Details", "Account", new { id = model.Vendor.Id});
-                }                                                                                                                       
+                }  
+            // if we got this far, something failed, reload the page                                                                                                         
             return View(model);
         }
 
@@ -662,6 +691,7 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            // sets the viewmodels AspNetUser to the requested user
             accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
             
             if (accountManagement.AspNetUser == null)
@@ -670,6 +700,7 @@ namespace MVC_DATABASE.Controllers
             }
             else
             {
+                // sets the viewmodels employee to the requested employee
                 accountManagement.Employee = await db.EMPLOYEEs.FindAsync(id);
             }
             return View(accountManagement);
@@ -694,10 +725,12 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
+                // creates a new instance of AspNetUser
                 var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email, PhoneNumber = model.RegisterViewModel.Phone };
                 var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
                 if (result.Succeeded)
                 {
+                    // determines user role
                     if (model.RegisterViewModel.IsAdmin)
                     {
                         UserManager.AddToRole(user.Id, "Administrator");
@@ -707,14 +740,16 @@ namespace MVC_DATABASE.Controllers
                         UserManager.AddToRole(user.Id, "Employee");
                     }
 
+                    // creates a new employee from form entries
                     var employee = new EMPLOYEE { Id = user.Id, FIRSTNAME = model.Employee.FIRSTNAME, LASTNAME = model.Employee.LASTNAME};
+                    // initially sets employee status to active
                     employee.EMPSTATUS = "ACTIVE";
 
                     db.EMPLOYEEs.Add(employee);
 
                     await db.SaveChangesAsync();
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
+
+                    // Send an email with this link to the new employee
                     string message = "Please confirm your account by clicking here:";
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -737,6 +772,8 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            //sets the AspNetUser to the requested user
             accountManagement.AspNetUser = await db.AspNetUsers.FindAsync(id);
 
             if (accountManagement.AspNetUser == null)
@@ -745,6 +782,7 @@ namespace MVC_DATABASE.Controllers
             }
             else
             {
+                //sets the employee to the requested employee
                 accountManagement.Employee = await db.EMPLOYEEs.FindAsync(id);
             }
 
@@ -761,16 +799,20 @@ namespace MVC_DATABASE.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                // finds the requested employee
                 EMPLOYEE employee = await db.EMPLOYEEs.FindAsync(model.Employee.Id);
+
+                // stores the employees previous status to compare against
                 string oldStatus = employee.EMPSTATUS.ToString();
 
+                // stores the employees new status
                 employee.EMPSTATUS = model.Employee.EMPSTATUS;
 
                 string subject = "BHSCM Account Status Update";
                 string deactivatedMessage = "Your account has been deactivated. Please contact management in order to have your account re-activated. ";
                 string activatedMessage = "Your account has been activated. You are now able to access the Baptist Health Supply Chain Management System. ";
 
+                // compares the employees status, if it changed, sends an appropriate email
                 if (employee.EMPSTATUS.ToString() != oldStatus)
                 {
                     if (employee.EMPSTATUS.ToString() == "DEACTIVATED")
@@ -787,12 +829,10 @@ namespace MVC_DATABASE.Controllers
                     }
                 }
 
-                //db.Entry(model.Employee).State = EntityState.Modified;
-
                 await db.SaveChangesAsync();
                 return RedirectToAction("DetailsEmployee", "Account", new { id = model.Employee.Id });
             }
-
+            // if we got this far, something failed, reload the form
             return View(model);
         }
 
@@ -866,6 +906,7 @@ namespace MVC_DATABASE.Controllers
             return callbackUrl;
         }
 
+        // method to download vendors W9
         public FileResult DownloadW9(string path)
         {
             // VENDOR vendor = (VENDOR) db.VENDORs.Where(model => model.W9 == path);
