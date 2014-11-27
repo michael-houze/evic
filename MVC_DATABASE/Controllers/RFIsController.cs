@@ -51,6 +51,7 @@ namespace MVC_DATABASE.Controllers
             }
         }
 
+
         private ApplicationSignInManager _signInManager;
 
         public ApplicationSignInManager SignInManager
@@ -66,7 +67,7 @@ namespace MVC_DATABASE.Controllers
         // GET: RFIs
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
-        {
+        {   //Allows employee or admin to open RFIs
             var open = from x in db.RFIs
                        where x.EXPIRES > DateTime.Now
                        select x;
@@ -79,7 +80,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult ExpiredIndex()
-        {
+        {   //Allows admins and employees to see expired RFIs
             var expired = from x in db.RFIs
                           where x.EXPIRES <= DateTime.Now
                           select x;
@@ -94,7 +95,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Details(int? id)
-        {
+        {   //Tells user if request for details on RFI is valid
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -120,18 +121,18 @@ namespace MVC_DATABASE.Controllers
         [HttpGet]
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
-        {
+        {   //create RFI if user is employee or admin
             DateTime date = DateTime.Now;
             TimeSpan time = new TimeSpan(365, 0, 0, 0);
             DateTime combined = date.Add(time);
             ViewBag.combined = combined;
-
+            //pulls template info from DB
             var template = from x in db.TEMPLATEs
                            where x.TYPE == "GHX"
                            select x;
-
+            
             ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
-
+            
             var result = from r in db.OFFEREDCATEGORies
                          where r.ACCEPTED == true
                          select r.CATEGORY;
@@ -157,7 +158,7 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(RFIEmployeeIndex model)
-        {
+        {   //creates new RFI
 
             if (ModelState.IsValid)
             {
@@ -194,7 +195,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public JsonResult GetAcceptedVendors(string ProductCategory)
-        {
+        {   //pulls info on which vendors are approved to sell which category
             EVICEntities dbo = new EVICEntities();
             
             var vendorProductsQuery = from v in dbo.VENDORs
@@ -216,14 +217,14 @@ namespace MVC_DATABASE.Controllers
             ViewBag.CATEGORY = acceptedCategories;
             
             ViewBag.AcceptedVendors = vendorProductsQuery;
-
+            //sends info to multiselect listbox.
             return Json(vendorProductsQuery, JsonRequestBehavior.AllowGet);
         } 
 
         // GET: RFIs/Edit/5
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(int? id)
-        {
+        {   //allows admin or employee to edit RFI
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -249,7 +250,7 @@ namespace MVC_DATABASE.Controllers
                          where p.RFIID == id
                          select r;
                 vendorProductsQuery = vendorProductsQuery.Where(x => !result.Contains(x));
-
+            //shows which vendors are accepted to sell this product and allow the user to select vendors
             ViewBag.AcceptedVendors = new MultiSelectList(result, "Id", "Organization");
             ViewBag.SelectVendors = new MultiSelectList(vendorProductsQuery, "Id", "Organization");
             return View(rFIEmployeeIndex);
@@ -262,7 +263,7 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(RFIEmployeeIndex model)
-        {
+        {   //Email sent to vendor if they've been invited to participate in an RFI.
             if (ModelState.IsValid)
             {
                 var rfi = new RFI { RFIID = model.RFI.RFIID, TEMPLATEID = model.RFI.TEMPLATEID, CATEGORY = model.RFI.CATEGORY, CREATED = model.RFI.CREATED, EXPIRES = model.RFI.EXPIRES};
@@ -284,7 +285,7 @@ namespace MVC_DATABASE.Controllers
                 return RedirectToAction("Details", "RFIs", new { id = rfi.RFIID});
           
             }
-
+            //pulls vendor list from DB
             var vendorProductsQuery = from v in db.VENDORs
                                       join c in db.OFFEREDCATEGORies
                                       on v.Id equals c.Id
@@ -299,7 +300,7 @@ namespace MVC_DATABASE.Controllers
                      on r.Id equals p.Id
                          where p.RFIID == model.RFI.RFIID
                          select r;
-
+            //makes sure the email only goes to the proper vendors and not all vendors
             List<VENDOR> nonselectedvendors = new List<VENDOR>();
             nonselectedvendors = vendorProductsQuery.ToList();
             nonselectedvendors.RemoveAll(x => result.Contains(x));
@@ -330,7 +331,7 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
-        {
+        {   //allows admins and employees to delete RFIs if necessary.
             RFI rFI = await db.RFIs.FindAsync(id);
             db.RFIs.Remove(rFI);
             await db.SaveChangesAsync();
@@ -350,7 +351,7 @@ namespace MVC_DATABASE.Controllers
 
        [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> VendorResponse(int? id)
-        {
+        {   //Allows vendor to respond to RFI.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -362,7 +363,7 @@ namespace MVC_DATABASE.Controllers
             {
                 return HttpNotFound();
             }
-
+           //Makes list of vendors that were invited and vendors that responded.
             responsemodel.inviteList = new List<RFIINVITE>();
             responsemodel.vendorlist = new List<VENDOR>();
             foreach (var x in db.RFIINVITEs.ToList())
@@ -381,7 +382,7 @@ namespace MVC_DATABASE.Controllers
 
         
         public FileResult DownloadGHX(string path)
-        {
+        {//download GHX
          
                 //select vendors Id from RFIINVITE
                 var InviteId = from x in db.RFIINVITEs
@@ -439,7 +440,7 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Vendor")]
         [HttpGet]
         public async Task<ActionResult> Respond(int Id)
-        {
+        {//Vendor response model allows vendors to respond to RFI's they are invited to
 
             responsemodel.rfi = await db.RFIs.FindAsync(Id);
 
@@ -458,7 +459,7 @@ namespace MVC_DATABASE.Controllers
             responsemodel.rfiinvite = (RFIINVITE)rfiinvite.FirstOrDefault();
 
             if (!string.IsNullOrEmpty(rfiinvite.FirstOrDefault().GHX_PATH))
-            {
+            {//redirects vendor back to RFI page if all categories are not filled in.
                 return RedirectToAction("VendorIndex", "RFIs");
             }
 
@@ -530,7 +531,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public async Task<ActionResult> ViewDetails(int Id)
-        {
+        {//allows vendor to view the details of the RFI
             responsemodel.rfi = await db.RFIs.FindAsync(Id);
             if (responsemodel.rfi.CREATED > DateTime.Now)
             {
@@ -604,7 +605,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public FileResult DownloadTemplate(string path)
-        {
+        {//Allows vendors to download the BH templates for response
 
             string ext = Path.GetExtension(path);
 

@@ -27,7 +27,7 @@ using System.Web.Security;
 namespace MVC_DATABASE.Controllers
 {
     public class RFPsController : Controller
-    {
+    {   //creates DB items for RFPs
         private EVICEntities db = new EVICEntities();
         public RFPCreate rfpcreate = new RFPCreate();
         private ApplicationUserManager _userManager;
@@ -37,7 +37,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public RFPsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
+        {   //determines what kind of user is signed in
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -68,7 +68,7 @@ namespace MVC_DATABASE.Controllers
         // GET: RFPs
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Index()
-        {
+        {//Allows Admin and Employees to get RFPs
             var open = from x in db.RFPs
                        where x.EXPIRES > DateTime.Now
                        select x;
@@ -81,7 +81,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult ExpiredIndex()
-        {
+        {//Shows if the RFP is expired
             var expired = from x in db.RFPs
                           where x.EXPIRES <= DateTime.Now
                           select x;
@@ -118,21 +118,23 @@ namespace MVC_DATABASE.Controllers
         // GET: RFPs/Create
         [Authorize(Roles = "Administrator,Employee")]
         public ActionResult Create()
-        {
+        {   //RFP Create method
+            //pulls template info from database
             var template = from x in db.TEMPLATEs
                            where x.TYPE == "RFP"
                            select x;
+            //pulls RFI info from database, if it's expired
             var expired = from y in db.RFIs
                           where y.EXPIRES <= DateTime.Now
                           select y;
-
+            //pulls vendor info from database
             var vendor = from z in db.VENDORs
                          join c in db.RFIINVITEs
                          on z.Id equals c.Id
                          where c.RFIID == expired.FirstOrDefault().RFIID
                          where !string.IsNullOrEmpty(c.GHX_PATH)
                          select z;
-
+            //shows list of expired RFPs
             ViewBag.RFIID = new SelectList(expired, "RFIID", "RFIID");
             ViewBag.TEMPLATEID = new SelectList(template, "TEMPLATEID", "TYPE");
             ViewBag.AcceptedVendors = new MultiSelectList(vendor, "Id", "ORGANIZATION");
@@ -148,14 +150,14 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Create(RFPCreate model)
-        {
+        {   //allows BH users to create an RFP
             if (ModelState.IsValid)
-            {
+            {//Finds the RFI information that is current
                 model.rfp.RFI = await db.RFIs.FindAsync(model.rfp.RFIID);
                 var rFP = new RFP { RFIID = model.rfp.RFIID, CATEGORY = model.rfp.RFI.CATEGORY, TEMPLATEID = model.templateid, CREATED = model.rfp.CREATED, EXPIRES = model.rfp.EXPIRES};
                 db.RFPs.Add(rFP);
                 if (model.RFPInviteList != null)
-                {
+                {   //finds the vendors who participated in the RFI
                     foreach (var x in model.RFPInviteList)
                     {
                         var rfpinvite = new RFPINVITE { RFPID = rFP.RFPID, Id = x };
@@ -188,7 +190,7 @@ namespace MVC_DATABASE.Controllers
         // GET: RFPs/Edit/5
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(int? id)
-        {
+        {//allows BH users to edit an RFP
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -197,7 +199,7 @@ namespace MVC_DATABASE.Controllers
             if (rfpcreate.rfp == null)
             {
                 return HttpNotFound();
-            }
+            }  //queries the database for vendors who participated in RFI
             var vendorRFIQuery = from v in db.VENDORs
                                  join c in db.RFIINVITEs
                                  on v.Id equals c.Id
@@ -225,7 +227,7 @@ namespace MVC_DATABASE.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> Edit(RFPCreate model)
-        {
+        {//BH employees can edit RFPs that have been created
             if (ModelState.IsValid)
             {
                 var rFP = model.rfp;
@@ -233,7 +235,7 @@ namespace MVC_DATABASE.Controllers
                 if (model.RFPInviteList != null)
                 {
                     foreach (var x in model.RFPInviteList)
-                    {
+                    {//creates RFP invite list
                         var RFPInvite = new RFPINVITE { RFPID = rFP.RFPID, Id = x, OFFER_PATH = string.Empty };
                         string subject = "Invitation from Baptist Health Supply Chain Management";
                         string body = "Baptist Health SCM invites you to participate in a RFP for " + model.rfp.RFI.CATEGORY + ". Open participation for this RFP begins on " + model.rfp.CREATED + " EST. To participate, please sign into the Baptist Health Supply Chain Management system.";
@@ -269,7 +271,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Administrator,Employee")]
         public async Task<ActionResult> VendorResponse(int? id)
-        {
+        {//Shows vendor response
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -281,12 +283,12 @@ namespace MVC_DATABASE.Controllers
             {
                 return HttpNotFound();
             }
-
+            //creates a list for invited vendors and for vendors who have responded
             responsemodel.inviteList = new List<RFPINVITE>();
             responsemodel.vendorlist = new List<VENDOR>();
             foreach (var x in db.RFPINVITEs.ToList())
             {
-
+                //Gets info from database to create list
                 if (x.RFPID == id)
                 {
                     VENDOR vendor = await db.VENDORs.FindAsync(x.Id);
@@ -300,7 +302,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Administrator,Employee")]
         public FileResult DownloadOffer(string path)
-        {
+        {//allows BH employees to download vendor offer
 
             //select vendors Id from RFPINVITE
             var InviteId = from x in db.RFPINVITEs
@@ -326,7 +328,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Vendor")]
         public ActionResult VendorIndex()
-        {
+        {   //
             //Establish DB connection.
             EVICEntities dbo = new EVICEntities();
             //Establish List of vendor's RFPs to transfer to View
@@ -361,7 +363,7 @@ namespace MVC_DATABASE.Controllers
         [Authorize(Roles = "Vendor")]
         [HttpGet]
         public async Task<ActionResult> Respond(int Id)
-        {
+        {//Syncs the responses from vendors to the application
 
             responsemodel.RFP = await db.RFPs.FindAsync(Id);
 
@@ -449,7 +451,7 @@ namespace MVC_DATABASE.Controllers
                 foreach (var l in lines)
                 {
                     if (l.Description != null)
-                    {
+                    {//analytics for responses
                         var analytics = new ANALYTIC();
 
                         string mmisConvert = l.MMIS.ToString();
@@ -482,7 +484,7 @@ namespace MVC_DATABASE.Controllers
 
         [Authorize(Roles = "Vendor")]
         public async Task<ActionResult> ViewDetails(int Id)
-        {
+        {//allows vendors to view RFP details
             responsemodel.RFP = await db.RFPs.FindAsync(Id);
             if (responsemodel.RFP.CREATED > DateTime.Now)
             {
@@ -501,7 +503,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public FileResult DownloadResponse(string path)
-        {
+        {//allows BH employees to download the RFP response
 
             //select vendors Id from RFIINVITE
             var InviteId = from x in db.RFPINVITEs
@@ -523,10 +525,10 @@ namespace MVC_DATABASE.Controllers
         }
 
         public JsonResult GetAcceptedVendors(string RFIID)
-        {
+        {  //populates multiselect box based on what is chosen in dropdown box.
             EVICEntities dbo = new EVICEntities();
 
-
+            //queries the database to bring up the correct vendors
             var vendorProductsQuery = from v in dbo.VENDORs
                                       join c in dbo.RFIINVITEs
                                       on v.Id equals c.Id
@@ -550,7 +552,7 @@ namespace MVC_DATABASE.Controllers
         }
 
         public FileResult DownloadTemplate(string path)
-        {
+        {   //Download template for RFP response
             string ext = Path.GetExtension(path);
             string fileName = "Baptist RFI Template" + ext;
 
