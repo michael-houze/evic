@@ -22,7 +22,8 @@ namespace MVC_DATABASE.Models
 
         [Display(Name = "Select Your Companies Product Categories")]
         public ICollection<string> CategoryList { get; set; }
-
+        
+        [Required]
         [Display(Name = "Select Your W-9 PDF")]
         public HttpPostedFileBase w9File { get; set; }
     }

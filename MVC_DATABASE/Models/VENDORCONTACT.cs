@@ -17,10 +17,13 @@ namespace MVC_DATABASE.Models
     {
         public int PRIMARYKEY { get; set; }
         public string Id { get; set; }
+        [Required]
         [Display(Name = "Secondary Contact's Name")]
         public string CONTACTNAME { get; set; }
+        [Required]
         [Display(Name = "Secondary Contact's Phone")]
         public string CONTACTPHONE { get; set; }
+        [Required]
         [Display(Name = "Secondary Contact's Email")]
         public string CONTACTEMAIL { get; set; }
 

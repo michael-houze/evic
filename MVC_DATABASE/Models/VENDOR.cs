@@ -17,10 +17,13 @@ namespace MVC_DATABASE.Models
     {
 
         public string Id { get; set; }
+        [Required]
         [Display(Name = "First Name")]
         public string FIRSTNAME { get; set; }
+        [Required]
         [Display(Name = "Last Name")]
         public string LASTNAME { get; set; }
+        [Required]
         [Display(Name = "Organization")]
         public string ORGANIZATION { get; set; }
         [Display(Name = "Sanctioned")]
@@ -28,6 +31,7 @@ namespace MVC_DATABASE.Models
         [Display(Name = "Account Status")]
         public string VENDSTATUS { get; set; }
         public string LOG { get; set; }
+        
         public string W9 { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
