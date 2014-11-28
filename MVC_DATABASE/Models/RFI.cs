@@ -13,7 +13,7 @@ namespace MVC_DATABASE.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class RFI
+    public partial class RFI : IValidatableObject
     {
         public RFI()
         {
@@ -46,5 +46,22 @@ namespace MVC_DATABASE.Models
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual ICollection<RFIINVITE> RFIINVITEs { get; set; }
         public virtual ICollection<RFP> RFPs { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List < ValidationResult >  validationList =new List<ValidationResult>();
+
+            if (CREATED < DateTime.Now.Date)
+            {
+                ValidationResult lessThanToday = new ValidationResult("Start date must be greater than or equal todays date");
+                validationList.Add(lessThanToday);                
+            }
+            if (CREATED > EXPIRES)
+            {
+                ValidationResult endLessThanStart = new ValidationResult("The End date must be greater than the start date");
+                validationList.Add(endLessThanStart);
+            }
+            return validationList;
+        }
     }
 }

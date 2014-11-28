@@ -13,7 +13,7 @@ namespace MVC_DATABASE.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class CONTRACT
+    public partial class CONTRACT : IValidatableObject
     {
         [Display(Name = "Contract Id")]
         public int CONTRACTID { get; set; }
@@ -37,5 +37,17 @@ namespace MVC_DATABASE.Models
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> validationList = new List<ValidationResult>();
+
+            if (EXPIRES < DateTime.Now.Date)
+            {
+                ValidationResult lessThanToday = new ValidationResult("Start date must be greater than or equal todays date");
+                validationList.Add(lessThanToday);
+            }
+            return validationList;
+        }
     }
 }
