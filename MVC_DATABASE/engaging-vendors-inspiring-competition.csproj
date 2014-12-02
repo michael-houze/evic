@@ -387,6 +387,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\Videos\Administrator\AdminDashboardFINAL.mp4" />
     <Content Include="Content\Videos\Administrator\BaptistEmployeeAccountManagementFINAL.mp4" />
+    <Content Include="Content\Videos\Administrator\BaptistUserContractFINAL.mp4" />
     <Content Include="Content\Videos\Administrator\CreateEmployeeFINAL.mp4" />
     <Content Include="Content\Videos\Administrator\FAQFINAL.mp4" />
     <Content Include="Content\Videos\Employee\CreateRFIFINAL.mp4" />
@@ -396,6 +397,7 @@
     <Content Include="Content\Videos\Vendor\VendorDashboardFINAL.mp4" />
     <Content Include="Content\Videos\Vendor\VendorRegistrationFINALFinal.mp4" />
     <Content Include="Content\Videos\Vendor\VendorRFIResponseFINAL.mp4" />
+    <Content Include="Content\Videos\Vendor\VendorRFPFINAL.mp4" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\BaptistLogo.png" />
     <Content Include="Content\Images\Caldendar.PNG" />
