@@ -220,6 +220,7 @@ namespace MVC_DATABASE.Controllers
 
 
         // GET: NEGOTIATIONs/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Administrator,Employee,Vendor")]
         public ActionResult Edit(int? id)
         {
@@ -277,24 +278,29 @@ namespace MVC_DATABASE.Controllers
                     {
                         count = model.responselist.Count + 1;
                     }
-                    
-                    RESPONSE newResponse = new RESPONSE { NEGID = model.negotiation.NEGID, Id = User.Identity.GetUserId(), CREATED = DateTime.Now, PATH = "" };
+
                     //Extract the file name.
-                    var fileName = Path.GetFileName(model.file.FileName);
+                    var fileName = Path.GetFileName(model.file.FileName);                   
                     //Establishes where to save the path using the extracted name.
-                    var path = Path.Combine(Server.MapPath("~/Content/Negotiation/" + model.negotiation.NEGID + "/" + count +"/" ), fileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/Negotiation/" + model.negotiation.NEGID + "/" + count + "/"), fileName);
                     //Saves file.
                     string responsepath = "~/Content/Negotiation/" + model.negotiation.NEGID + "/" + count + "/" + fileName;
-                    newResponse.PATH = responsepath;
+                    
+
+                    RESPONSE newResponse = new RESPONSE { NEGID = model.negotiation.NEGID, Id = User.Identity.GetUserId(), CREATED = DateTime.Now, PATH = responsepath};
+                    
 
                     //checks to see if file path exists, if it doesn't it creates
                     var folderpath = Server.MapPath("~/Content/Negotiation/" + model.negotiation.NEGID + "/" + count + "/");
                     if (!System.IO.Directory.Exists(folderpath))
+                    {
                         System.IO.Directory.CreateDirectory(folderpath);
+                    }
 
                     model.file.SaveAs(path);
                     db.RESPONSEs.Add(newResponse);
-                    db.SaveChanges();
+                    
+                    
 
                 }
 
@@ -335,7 +341,7 @@ namespace MVC_DATABASE.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("Edit");
+                return RedirectToAction("Index");
                 
             }
             //if we got this far something failed, reload page

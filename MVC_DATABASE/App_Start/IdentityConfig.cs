@@ -23,7 +23,7 @@ namespace MVC_DATABASE
             //Credentials ---Added by Bongo.
             var credentialUserName = "baptisthealthtest@gmail.com";
             var sentFrom = "baptisthealthtest@gmail.com";
-            var pwd = "Pa555w0rd";
+            var pwd = "{St0ng35t{P455w0rd}Ever]";
 
             //Configures the client ---Added by Bongo.
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com");
