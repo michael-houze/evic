@@ -1,4 +1,4 @@
-﻿@model MVC_DATABASE.Models.ViewModels.NegIndex
+﻿@model MVC_DATABASE.Models.ViewModels.NegResponse
 
 @using MVC_DATABASE.Models;
 
@@ -31,8 +31,10 @@
                 @Html.TextBoxFor(model => model.negotiation.AspNetUser.VENDOR.ORGANIZATION, new { @readonly = "readonly", @class = "form-control" })
             </div>
         </div>
-
-        <table id="rfiresponsetable" class="table tablesorter">
+        @*Required else the form posts as invalid*@
+        @Html.HiddenFor(model => model.negotiation.AspNetUser.VENDOR.FIRSTNAME)
+        @Html.HiddenFor(model => model.negotiation.AspNetUser.VENDOR.LASTNAME)
+        <table id="negresponsetable" class="table tablesorter">
             <thead>
                 <tr>
                     <th>
@@ -46,10 +48,11 @@
 
                 </tr>
             </thead>
-            <tbody>
-                @if (Model.responselist != null)
+            @if (Model.responselist != null)
                 {
-                    
+            <tbody>
+               
+                  @{  
                     int count = 1;
                     string owner;
                     string path;
@@ -57,6 +60,7 @@
                     {
                         path = item.PATH;
                         VENDOR ven = item.AspNetUser.VENDOR;
+                        
                         if (ven == null)
                         {
                             owner = "Baptist Health";
@@ -65,6 +69,7 @@
                         {
                             owner = ven.ORGANIZATION;
                         }
+                    
                         <tr>
                             <td>
                                 @count                             
@@ -78,12 +83,12 @@
                         </tr>
                         
                              count++;
-                        
-
+                       
                     }
-                }
+                    }
+                
             </tbody>
-
+            }
         </table>
 
         <dl class="dl-horizontal">

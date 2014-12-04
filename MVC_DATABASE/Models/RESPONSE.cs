@@ -25,6 +25,7 @@ namespace MVC_DATABASE.Models
         public string PATH { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual VENDOR VENDOR { get; set; }
         public virtual NEGOTIATION NEGOTIATION { get; set; }
     }
 }

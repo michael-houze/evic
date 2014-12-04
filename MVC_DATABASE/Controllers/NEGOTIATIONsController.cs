@@ -29,6 +29,7 @@ namespace MVC_DATABASE.Controllers
     {
         private EVICEntities db = new EVICEntities();
         private NegIndex negindex = new NegIndex();
+        private NegResponse negresponse = new NegResponse();
         private ApplicationUserManager _userManager;
 
         public NEGOTIATIONsController()
@@ -221,7 +222,6 @@ namespace MVC_DATABASE.Controllers
 
         // GET: NEGOTIATIONs/Edit/5
         [HttpGet]
-        [Authorize(Roles = "Administrator,Employee,Vendor")]
         public ActionResult Edit(int? id)
         {
 
@@ -229,24 +229,24 @@ namespace MVC_DATABASE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            negindex.negotiation = db.NEGOTIATIONs.Find(id);
-            if (negindex.negotiation == null)
+            negresponse.negotiation = db.NEGOTIATIONs.Find(id);
+            if (negresponse.negotiation == null)
             {
                 return HttpNotFound();
             }
-            else if (negindex.negotiation.CLOSED == true)
+            else if (negresponse.negotiation.CLOSED == true)
             {
                 return RedirectToAction("Details", new { id = id });
             }
 
             var responses = from x in db.RESPONSEs
-                            where x.NEGID == negindex.negotiation.NEGID
+                            where x.NEGID == negresponse.negotiation.NEGID
                             orderby x.CREATED ascending
                             select x;
+            
+            negresponse.responselist = responses.ToList<RESPONSE>();
 
-            negindex.responselist = responses.ToList<RESPONSE>();
-
-            return View(negindex);
+            return View(negresponse);
         }
 
         // POST: NEGOTIATIONs/Edit/5
@@ -254,9 +254,10 @@ namespace MVC_DATABASE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator,Employee,Vendor")]
-        public ActionResult Edit(NegIndex model)
+       // [Authorize(Roles = "Administrator,Employee,Vendor")]
+        public ActionResult Edit(NegResponse model)
         {
+            
             if (ModelState.IsValid)
             {
                 
@@ -341,17 +342,18 @@ namespace MVC_DATABASE.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit");
                 
             }
+            
             //if we got this far something failed, reload page
-            negindex.negotiation = db.NEGOTIATIONs.Find(model.negotiation.NEGID);
+            model.negotiation = db.NEGOTIATIONs.Find(model.negotiation.NEGID);
             var responsecount = from x in db.RESPONSEs
-                            where x.NEGID == negindex.negotiation.NEGID
+                            where x.NEGID == model.negotiation.NEGID
                             orderby x.CREATED ascending
                             select x;
 
-            negindex.responselist = responsecount.ToList<RESPONSE>();
+            model.responselist = responsecount.ToList<RESPONSE>();
             return View(model);
         }
 
