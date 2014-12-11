@@ -386,6 +386,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\Videos\Administrator\ActivateAVendor.mp4" />
     <Content Include="Content\Videos\Administrator\AdminDashboardFINAL.mp4" />
     <Content Include="Content\Videos\Administrator\BaptistEmployeeAccountManagementFINAL.mp4" />
     <Content Include="Content\Videos\Administrator\BaptistUserContractFINAL.mp4" />
