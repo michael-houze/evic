@@ -421,8 +421,9 @@ namespace MVC_DATABASE.Controllers
                 model.File.SaveAs(path);
 
 
-
-                //Begin background analytics
+                try
+                {
+                    //Begin background analytics
                     var categoryQuery = from i in db.RFPINVITEs
                                         join r in db.RFPs on i.RFPID equals r.RFPID
                                         where r.RFPID == model.RFPInvite.RFPID
@@ -443,35 +444,41 @@ namespace MVC_DATABASE.Controllers
                     //string filePath = model.RFPInvite.OFFER_PATH;
                     string hostPath = System.Web.Hosting.HostingEnvironment.MapPath(offerpath);
 
-                var excelFile = new ExcelQueryFactory(hostPath);
+                    var excelFile = new ExcelQueryFactory(hostPath);
 
-                var lines = from l in excelFile.WorksheetRange<ReportAnalytics>("A12", "V138", "Financial Analysis")
-                            select l;
+                    var lines = from l in excelFile.WorksheetRange<ReportAnalytics>("A12", "V138", "Financial Analysis")
+                                select l;
 
-                foreach (var l in lines)
+                    foreach (var l in lines)
+                    {
+                        if (l.Description != null)
+                        {//analytics for responses
+                            var analytics = new ANALYTIC();
+
+                            string mmisConvert = l.MMIS.ToString();
+                            string descriptionConvert = l.Description.ToString();
+                            decimal newPriceConvert = Convert.ToDecimal(l.NewPriceEach);
+                            int quantityConvert = Convert.ToInt32(l.Quantity);
+
+
+                            analytics.CATEGORY = category;
+                            analytics.RFPID = rfpIdInt;
+                            analytics.Id = id;
+
+                            analytics.MMIS = mmisConvert;
+                            analytics.DESCRIPTION = descriptionConvert;
+                            analytics.NEWPRICE = newPriceConvert;
+                            analytics.QUANTITY = quantityConvert;
+
+                            db.ANALYTICS.Add(analytics);
+                        }
+                    }   //end analytics
+                }
+
+                catch (Exception ex)
                 {
-                    if (l.Description != null)
-                    {//analytics for responses
-                        var analytics = new ANALYTIC();
-
-                        string mmisConvert = l.MMIS.ToString();
-                        string descriptionConvert = l.Description.ToString();
-                        decimal newPriceConvert = Convert.ToDecimal(l.NewPriceEach);
-                        int quantityConvert = Convert.ToInt32(l.Quantity);
-
-
-                        analytics.CATEGORY = category;
-                        analytics.RFPID = rfpIdInt;
-                        analytics.Id = id;
-
-                        analytics.MMIS = mmisConvert;
-                        analytics.DESCRIPTION = descriptionConvert;
-                        analytics.NEWPRICE = newPriceConvert;
-                        analytics.QUANTITY = quantityConvert;
-
-                        db.ANALYTICS.Add(analytics);
-                    }
-                }   //end analytics
+                    //If exception is caught, analytics will not capture from that upload but will prevent a crash.
+                }
 
                 await db.SaveChangesAsync();
                 //db.SaveChanges();
